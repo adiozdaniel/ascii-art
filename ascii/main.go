@@ -1,13 +1,14 @@
 package main
 
 import (
-	ascii "ascii/functions"
 	"fmt"
 	"os"
 	"strings"
+
+	ascii "github.com/adiozdaniel/ascii-art/art_work"
 )
 
-func main(){
+func main() {
 	arg := os.Args
 	if len(os.Args) > 3 {
 		fmt.Println("Incorrect number of arguments")
@@ -27,22 +28,30 @@ func main(){
 
 	new := strings.Split(arg[1], "\\n")
 
-	filename := ""
+	filename := "../data/standard.txt"
 
+	_ , err := os.Open(filename)
+	if err != nil{
+		fmt.Println("file error")
+	}
 
-	input , err := os.ReadFile(filename)
+	input, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	
+
 	var input2 []string
-	if filename == "thinkertoy.txt" {
+	if filename == "../data/thinkertoy.txt" {
 		input2 = strings.Split(string(input), "\r\n")
 	} else {
 		input2 = strings.Split(string(input), "\n")
 	}
 
-	output := ascii.Writer(new, input2)
+	
+
+	output := ascii.Output(new, input2)
 
 	fmt.Print(output)
 }

@@ -1,12 +1,12 @@
 package utilities
 
-func NonAsciiMap(splitInput []string) map[rune]int {
-	nonAsciiMap := make(map[rune]int)
+func NonAsciiMap(splitInput []string) map[rune]bool {
+	nonAsciiMap := make(map[rune]bool)
 
-	for index, line := range splitInput {
+	for _, line := range splitInput {
 		for _, char := range line {
 			if char < 32 || char > 126 {
-				nonAsciiMap[char] = index + 1
+				nonAsciiMap[char] = true
 			}
 		}
 	}

@@ -62,21 +62,27 @@ will prompt the program to select the appropriate file and display the output in
 For example:
 
 ```
-$ go run . "Hello\nThere" "t"
+$ go run . "Hello\nThere" "t"  //"t" as flag for thinkertoy.txt
 ```
 
 will have the following output:
 
 ```
+//output as per thinkertoy.txt format
 
-
-
-
-
-
-
-
-
+o  o     o o     
+|  |     | |     
+O--O o-o | | o-o 
+|  | |-' | | | | 
+o  o o-o o o o-o 
+                 
+                 
+                       
+o-O-o o                
+  |   |                
+  |   O--o o-o o-o o-o 
+  |   |  | |-' |   |-' 
+  o   o  o o-o o   o-o 
 
 ```
 

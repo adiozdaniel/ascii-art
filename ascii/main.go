@@ -25,11 +25,13 @@ func main() {
 	_ , err := os.Open(filename)
 	if err != nil{
 		fmt.Println("file error")
+		return
 	}
 
 	readFile, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 
 	var splitFile []string

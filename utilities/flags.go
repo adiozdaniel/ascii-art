@@ -10,16 +10,16 @@ func CorrectFile(args []string) string {
 
 	if len(os.Args) > 3 {
 		fmt.Println("Incorrect number of arguments. Use: go run . <input_text> <flag>")
-		return ""
+		os.Exit(0)
 	}
 
 	if len(os.Args) == 1 {
-		fmt.Println("Incorrect number of arguments")
-		return ""
+		fmt.Println("Incorrect number of arguments. Use: go run . <input_text> <flag>")
+		os.Exit(0)
 	}
 
 	if len(os.Args) == 3 {
-		if os.Args[2] == "s" || os.Args[2] == "t" || os.Args[2] == "shadow" || os.Args[2] == "thinkertoy" || os.Args[2] == "standard" {
+		if os.Args[2] == "s" || os.Args[2] == "t" || os.Args[2] == "shadow" || os.Args[2] == "thinkertoy" || os.Args[2] == "standard" || os.Args[2] == "st" {
 			switch os.Args[2] {
 			case "s", "shadow":
 				filename = "../data/shadow.txt"
@@ -27,9 +27,10 @@ func CorrectFile(args []string) string {
 				filename = "../data/thinkertoy.txt"
 			case "st", "standard":
 				filename = "../data/standard.txt"
-			default:
-				fmt.Println("Available options are shadow.txt and thinkertoy.txt")
 			}
+		} else {
+			fmt.Println("Available flag options are:\ns & shadow\nt & thinkertoy\nst & standard")
+			os.Exit(0)
 		}
 	} else {
 		filename = "../data/standard.txt"

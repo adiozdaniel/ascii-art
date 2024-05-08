@@ -6,52 +6,41 @@ import (
 	"strings"
 
 	ascii "github.com/adiozdaniel/ascii-art/art_work"
+	"github.com/adiozdaniel/ascii-art/utilities"
 )
 
 func main() {
-	arg := os.Args
-	if len(os.Args) > 3 {
-		fmt.Println("Incorrect number of arguments")
+	filename := utilities.CorrectFile(os.Args)
+
+	if os.Args[1] == "" {
 		return
 	}
-	if len(os.Args) == 1 {
-		fmt.Println("Incorrect number of arguments")
-		return
-	}
-	if arg[1] == "" {
-		return
-	}
-	if arg[1] == "\\n" {
+	if os.Args[1] == "\\n" {
 		fmt.Println()
 		return
 	}
 
-	new := strings.Split(arg[1], "\\n")
-
-	filename := "../data/standard.txt"
+	new := strings.Split(os.Args[1], "\\n")
 
 	_ , err := os.Open(filename)
 	if err != nil{
 		fmt.Println("file error")
 	}
 
-	input, err := os.ReadFile(filename)
+	readFile, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	
+	var splitFile []string
 
-	var input2 []string
 	if filename == "../data/thinkertoy.txt" {
-		input2 = strings.Split(string(input), "\r\n")
+		splitFile = strings.Split(string(readFile), "\r\n")
 	} else {
-		input2 = strings.Split(string(input), "\n")
+		splitFile = strings.Split(string(readFile), "\n")
 	}
 
-	
-
-	output := ascii.Output(new, input2)
+	output := ascii.Output(new, splitFile)
 
 	fmt.Print(output)
 }

@@ -19,18 +19,20 @@ func CorrectFile(args []string) string {
 	}
 
 	if len(os.Args) == 3 {
-		if os.Args[2] == "s" || os.Args[2] == "t" || os.Args[2] == "shadow" || os.Args[2] == "thinkertoy" {
+		if os.Args[2] == "s" || os.Args[2] == "t" || os.Args[2] == "shadow" || os.Args[2] == "thinkertoy" || os.Args[2] == "standard" {
 			switch os.Args[2] {
 			case "s", "shadow":
 				filename = "../data/shadow.txt"
 			case "t", "thinkertoy":
 				filename = "../data/thinkertoy.txt"
+			case "st", "standard":
+				filename = "../data/standard.txt"
 			default:
 				fmt.Println("Available options are shadow.txt and thinkertoy.txt")
 			}
 		}
 	} else {
-		filename = ".../data/standard.txt"
+		filename = "../data/standard.txt"
 	}
 
 	return filename

@@ -57,21 +57,21 @@ and watch the magic happen!!😃
 <tr>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://learn.zone01kisumu.ke/git/adaniel>
-            <img src=https://learn.zone01kisumu.ke/git/avatars/4f09df65142ebdeb582566255916d89c?size=870 width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Aaron/>
+            <img src=https://learn.zone01kisumu.ke/git/avatars/4f09df65142ebdeb582566255916d89c?size=870 width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Adioz/>
             <br />
             <sub style="font-size:14px"><b>Adioz Eshitemi</b></sub>
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://learn.zone01kisumu.ke/git/aosindo>
-            <img src=https://learn.zone01kisumu.ke/git/avatars/fa966ef34b0ccdfe772414745aeee49f?size=870 width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Emmanuel/>
+            <img src=https://learn.zone01kisumu.ke/git/avatars/248ebb81529cc2dcee5e20f60e2e4d24?size=870 width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Andrew/>
             <br />
             <sub style="font-size:14px"><b>Andrew Osindo</b></sub>
         </a>
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://learn.zone01kisumu.ke/git/josopondo>
-            <img src=https://learn.zone01kisumu.ke/git/avatars/150a3fdbc5cc89dd642dd783c474b61c?=870 width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Abraham/>
+            <img src=https://learn.zone01kisumu.ke/git/avatars/150a3fdbc5cc89dd642dd783c474b61c?=870 width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Josephine/>
             <br />
             <sub style="font-size:14px"><b>Josephine Opondo</b></sub>
         </a>

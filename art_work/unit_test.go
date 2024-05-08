@@ -8,6 +8,7 @@ import (
 	"testing"
 )
 
+//global variables
 var input []string = []string{"Hello", "Google"}
 var raw_data string = ` _    _          _   _  ` + "\n" +
 	`| |  | |        | | | |         ` + "\n" +

@@ -22,11 +22,15 @@ func main() {
 
 	new := strings.Split(os.Args[1], "\\n")
 
-	non_ascii := utilities.NonAsciiOutput(new)
+	non_ascii , effected := utilities.NonAsciiOutput(new)
+	if effected {
+		fmt.Print(non_ascii)
+		return
+	}
 	fmt.Print(non_ascii)
 
-	_ , err := os.Open(filename)
-	if err != nil{
+	_, err := os.Open(filename)
+	if err != nil {
 		fmt.Println("file error")
 		return
 	}

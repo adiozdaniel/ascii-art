@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	ascii "github.com/adiozdaniel/ascii-art/art_work"
+	utils "github.com/adiozdaniel/ascii-art/utilities"
 )
 
 func main() {
@@ -26,21 +27,16 @@ func main() {
 		return
 	}
 
-	new := strings.Split(arg[1], "\\n")
-
-	filename := "../data/standard.txt"
-
-	_ , err := os.Open(filename)
-	if err != nil{
-		fmt.Println("file error")
-	}
-
-	input, err := os.ReadFile(filename)
+	err := utils.ProtectFilesInDirectory()
 	if err != nil {
 		fmt.Println(err)
+		os.Exit(0)
 	}
 
-	
+	new := strings.Split(arg[1], "\\n")
+	filename := "../data/standard.txt"
+
+	input, _ := os.ReadFile(filename)
 
 	var input2 []string
 	if filename == "../data/thinkertoy.txt" {
@@ -48,8 +44,6 @@ func main() {
 	} else {
 		input2 = strings.Split(string(input), "\n")
 	}
-
-	
 
 	output := ascii.Output(new, input2)
 

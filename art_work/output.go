@@ -2,17 +2,17 @@ package art_work
 
 import "strings"
 
-func Output(input, outputFile []string) string {
+func Output(input, fileContents []string) string {
 	var art_work strings.Builder
 
-	ascii_map := asciiMap(outputFile)
+	ascii_map := AsciiMap(fileContents)
 
 	for _, word := range input {
 		for i := 0; i < 8; i++ {
 			var builder strings.Builder
 			for _, char := range word {
 				if ascii, ok := ascii_map[char]; ok {
-					builder.WriteString(outputFile[ascii+i])
+					builder.WriteString(fileContents[ascii+i])
 				}
 			}
 			art_work.WriteString(builder.String())

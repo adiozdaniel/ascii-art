@@ -10,6 +10,6 @@ import (
 
 func main() {
 	fileContents := ascii.FileContents()
-	output := ascii.Output(strings.Split(os.Args[1], "\n"), fileContents)
+	output := ascii.Output(strings.Split(os.Args[1], "\\n"), fileContents)
 	fmt.Print(output)
 }

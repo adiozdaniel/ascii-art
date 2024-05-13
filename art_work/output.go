@@ -1,6 +1,8 @@
 package art_work
 
-import "strings"
+import (
+	"strings"
+)
 
 func Output(input, fileContents []string) string {
 	var art_work strings.Builder
@@ -14,6 +16,7 @@ func Output(input, fileContents []string) string {
 		} else {
 			height = 8
 		}
+
 		for i := 0; i < height; i++ {
 			var builder strings.Builder
 			for _, char := range word {

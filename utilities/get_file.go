@@ -7,15 +7,11 @@ import (
 
 // GetFile returns the ascii graphic file to use.
 func GetFile(args []string) string {
-	if len(args) == 1 {
+	if len(args) == 1 || len(args) > 3 {
 		fmt.Println("To run the program type go run . <text> [-flag].")
 		os.Exit(0)
 	}
 
-	if len(os.Args) == 1 {
-		fmt.Println("Incorrect number of arguments")
-		os.Exit(0)
-	}
 	if args[1] == "" {
 		os.Exit(0)
 	}
@@ -45,6 +41,6 @@ func GetFile(args []string) string {
 		fmt.Println(err)
 		os.Exit(0)
 	}
-	//If there was a typing typo, return standard.txt
+	// If there was a typing typo, return standard.txt
 	return results
 }

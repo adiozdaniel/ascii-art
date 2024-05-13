@@ -8,12 +8,16 @@ import (
 func CorrectFile(args []string) string {
 	var filename string
 
-	if len(os.Args) > 3 {
-		fmt.Println("Incorrect number of arguments. Use: go run . <input_text> <flag>")
+	if os.Args[1] == "" {
 		os.Exit(0)
 	}
 
-	if len(os.Args) == 1 {
+	if os.Args[1] == "\\n" {
+		fmt.Println()
+		os.Exit(0)
+	}
+
+	if len(os.Args) > 3 || len(os.Args) == 1 {
 		fmt.Println("Incorrect number of arguments. Use: go run . <input_text> <flag>")
 		os.Exit(0)
 	}

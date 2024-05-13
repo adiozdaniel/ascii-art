@@ -11,23 +11,14 @@ import (
 
 func main() {
 	filename := utilities.CorrectFile(os.Args)
+	splitInput := strings.Split(os.Args[1], "\\n")
 
-	if os.Args[1] == "" {
-		return
-	}
-	if os.Args[1] == "\\n" {
-		fmt.Println()
-		return
-	}
+	non_ascii  := utilities.NonAsciiOutput(splitInput)
+	// if effected {
+	// 	fmt.Print(non_ascii)
+	// 	return
+	// }
 
-	new := strings.Split(os.Args[1], "\\n")
-
-	non_ascii , effected := utilities.NonAsciiOutput(new)
-	if effected {
-		fmt.Print(non_ascii)
-		return
-	}
-	fmt.Print(non_ascii)
 
 	_, err := os.Open(filename)
 	if err != nil {
@@ -49,7 +40,8 @@ func main() {
 		splitFile = strings.Split(string(readFile), "\n")
 	}
 
-	output := ascii.Output(new, splitFile)
+	output := ascii.Output(splitInput, splitFile)
 
 	fmt.Print(output)
+	fmt.Print(non_ascii)
 }

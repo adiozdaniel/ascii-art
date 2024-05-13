@@ -5,7 +5,7 @@ func asciiMap(outputFile []string) map[rune]int {
 	ascii := 32
 
 	for index, line := range outputFile {
-		if len(line) == 0 {
+		if len(line) == 0 || len(line) == 1 {
 			ascii_map[rune(ascii)] = index + 1
 			ascii++
 		}

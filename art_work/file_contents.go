@@ -17,7 +17,7 @@ func FileContents() []string {
 
 	var fileContents []string
 
-	if fileName == "thinkertoy.txt" {
+	if fileName == "../data/thinkertoy.txt" {
 		fileContents = strings.Split(string(contents), "\r\n")
 	} else {
 		fileContents = strings.Split(string(contents), "\n")

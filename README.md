@@ -72,7 +72,7 @@ $ go run . "Hello\nThere" "t"  //"t" as flag for thinkertoy.txt
 will have the following output:
 
 ```
-//output as per thinkertoy.txt format
+# output as per thinkertoy.txt format
 
 o  o     o o     
 |  |     | |     
@@ -94,13 +94,27 @@ Try with more examples and watch the magic happen!!😃
 
 ### Handling Non-ASCII Characters
 
-In the case of special non-ASCII characters like emojis, the program is designed to 
-print the valid ASCII characters and let you know which invalid (non-ascii) characters were not printed.
+In the case of special non-ASCII characters like emojis, 
+the program is designed to 
+
+print the valid ASCII characters and let you know which invalid (non-ascii) characters were skipped.
 
 For instance:
 
 ```
 $ go run . "Google😋🤯🫣"
+
+# output
+
+  _____                           _         
+ / ____|                         | |        
+| |  __    ___     ___     __ _  | |   ___  
+| | |_ |  / _ \   / _ \   / _` | | |  / _ \ 
+| |__| | | (_) | | (_) | | (_| | | | |  __/ 
+ \_____|  \___/   \___/   \__, | |_|  \___| 
+                           __/ |            
+                          |___/             
+😋 🤯 🫣 These characters were skipped!
 ```
 
 **Note:**
@@ -133,15 +147,3 @@ Special characters can only appear once.
     </td>
 </tr>
 </table>
-
-### Todos
-
-- unit testing
-- map non-ascii
-- if the file is corrupted
-- if the file is missing
-- data security
-- tabs
-- backspace
-- flags
-- default settings

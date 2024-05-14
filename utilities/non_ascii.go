@@ -1,29 +1,25 @@
 package utilities
 
 import (
+	"fmt"
 	"strings"
-	// "unicode/utf8"
 )
 
-func NonAsciiOutput(input []string) (string) {
-	var art_work strings.Builder
-	non_ascii_map := NonAsciiMap(input)
-	printedChars := make(map[rune]bool)
-	// effected := false
+func NonAsciiOutput(input []string) string {
+	var artWork strings.Builder
+	nonAsciiMap := NonAsciiMap(input)
 
-	for _, word := range input {
-
-		var builder strings.Builder
-		for _, char := range word {
-			if _, ok := non_ascii_map[char]; ok && !printedChars[char] {
-				builder.WriteString("The non ascii character "+ string(char) +" was not printed\n")
-				printedChars[char] = true
-				// effected = true
-			}
-		}
-		art_work.WriteString(builder.String())
-		// art_work.WriteRune('\n')
-
+	for _, char := range nonAsciiMap {
+		artWork.WriteString(string(char) + " ")
 	}
-	return art_work.String() 
+
+	count := len(nonAsciiMap)
+	word := "character"
+	plural := "was"
+	if count > 1 {
+		word = "characters"
+		plural = "were"
+	}
+	artWork.WriteString(fmt.Sprintf("These %d %s %s printed only once!\n", count, word, plural))
+	return artWork.String()
 }

@@ -1,4 +1,5 @@
 # ASCII-Graphics Tool
+
 This program is designed to graphically represent an input string using different ASCII formats.
 
 These formats are represented in banner files; standard.txt, shadow.txt and thinkertoy.txt.
@@ -10,21 +11,22 @@ To better showcase this, here is an example:
 $ go run . "Hello"
 
 # example output using "standard.txt" format
- _    _          _   _          
-| |  | |        | | | |         
-| |__| |   ___  | | | |   ___   
-|  __  |  / _ \ | | | |  / _ \  
-| |  | | |  __/ | | | | | (_) | 
-|_|  |_|  \___| |_| |_|  \___/  
-                                
+ _    _          _   _
+| |  | |        | | | |
+| |__| |   ___  | | | |   ___
+|  __  |  / _ \ | | | |  / _ \
+| |  | | |  __/ | | | | | (_) |
+|_|  |_|  \___| |_| |_|  \___/
+
 ```
+
 To correctly graphically represent this input, we mapped the contents of the banner files and checked the input string against the map.
 
-If a character in the input string is found in the map, this character will be printed. 
+If a character in the input string is found in the map, this character will be printed.
 
 **😃Fun fact: Each ASCII character in the banner files has a height of 8.**
 
-This program can handle an input with printable ASCII charcters (numbers, letters, spaces, special characters) and ``` \n ``` (newline character).
+This program can handle an input with printable ASCII charcters (numbers, letters, spaces, special characters) and `\n` (newline character).
 
 ## Installation
 
@@ -42,6 +44,7 @@ $ cd ascii-art
 #open a code editor like VS Code
 $ code .
 ```
+
 ## How To Use
 
 Once the program has been installed and opened, on the terminal, run the program using an input string of choice, like this:
@@ -49,7 +52,20 @@ Once the program has been installed and opened, on the terminal, run the program
 ```
 $ go run . "It's a wonderful day!!"
 ```
+
 and watch the magic happen!!😃
+
+### Special Characters Handling
+
+You can use the special characters like emojis without spaces between them.
+You can also use them to form a special pattern of your choice.
+
+for instance:
+
+`go run . "Google😋🤯🫣"`
+
+**Note**
+Special characters can only appear once.
 
 ## Contributors
 

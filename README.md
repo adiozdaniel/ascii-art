@@ -59,7 +59,7 @@ the graphical representation will be as per the format in standard.txt.
 
 If you want to use a different format, introduce a third argument: ***A Flag***.
 
-The flags for this program are only ***s*** and ***shadow*** for shadow.txt, and ***t*** and ***thinkertoy*** for thinkertoy.txt. The flags
+The flags for this program are only ***"-s", "-shadow", "shadow"** for shadow.txt, and ***"-t", "-thinkertoy", "thinkertoy"*** for thinkertoy.txt. The flags
 
 will prompt the program to select the appropriate file and display the output in the correct format.
 

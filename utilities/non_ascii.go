@@ -22,5 +22,9 @@ func NonAsciiOutput(input []string) string {
 		plurals[1] = "were"
 	}
 	artWork.WriteString(fmt.Sprintf("%s %s %s skipped!\n", plurals[0], word, plurals[1]))
+	if len(artWork.String()) == 28 {
+		return ""
+	}
+
 	return artWork.String()
 }

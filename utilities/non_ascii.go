@@ -1,26 +1,26 @@
 package utilities
 
 import (
+	"fmt"
 	"strings"
 )
 
-func NonAsciiOutput(input []string) (string) {
-	var art_work strings.Builder
-	non_ascii_map := NonAsciiMap(input)
-	printedChars := make(map[rune]bool)
+func NonAsciiOutput(input []string) string {
+	var artWork strings.Builder
+	nonAsciiMap := NonAsciiMap(input)
 
-	for _, word := range input {
-
-		var builder strings.Builder
-		for _, char := range word {
-			if _, ok := non_ascii_map[char]; ok && !printedChars[char] {
-				builder.WriteString("\nThe non ascii character "+ string(char) +" was skipped!")
-				printedChars[char] = true
-			}
-		}
-		art_work.WriteString(builder.String())
-		art_work.WriteRune('\n')
-
+	for _, char := range nonAsciiMap {
+		artWork.WriteString(string(char) + " ")
 	}
-	return art_work.String() 
+
+	count := len(nonAsciiMap)
+	word := "character"
+	plurals := []string{"This", "was"}
+	if count > 1 {
+		word = "characters"
+		plurals[0] = "These"
+		plurals[1] = "were"
+	}
+	artWork.WriteString(fmt.Sprintf("%s %s %s skipped!\n", plurals[0], word, plurals[1]))
+	return artWork.String()
 }

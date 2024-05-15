@@ -6,9 +6,7 @@ import (
 )
 
 // ErrorHandler outputs errors and safely exits the program
-func ErrorHandler(err error) {
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(0)
-	}
+func ErrorHandler(err string) {
+	fmt.Println(err)
+	os.Exit(0)
 }

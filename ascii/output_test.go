@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"os"
 	"reflect"
 	"strings"
 	"testing"
@@ -13,7 +11,7 @@ import (
 func TestOutput(t *testing.T) {
 	fileContent := fileContentTests()
 	tests := []tests{
-		{name: "ProcessInputWithHelloGoogle", args: args{fileContents: fileContent, input: []string{"Hello", "Google"}}, expected: 624},
+		{name: "ProcessInputWithHelloGoogle", args: args{fileContents: fileContent, input: []string{"Hello", "Google"}}, expected: len(asciiArt)},
 		{name: "ProcessInputEmptyInput", args: args{fileContents: strings.Split("", "\n"), input: []string{}}, expected: 0},
 	}
 
@@ -25,16 +23,4 @@ func TestOutput(t *testing.T) {
 			}
 		})
 	}
-}
-
-func fileContentTests() []string {
-	fileName := "../data/standard.txt"
-	contents, err := os.ReadFile(fileName)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(0)
-	}
-
-	fileContents := strings.Split(string(contents), "\n")
-	return fileContents
 }

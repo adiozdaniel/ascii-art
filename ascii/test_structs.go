@@ -8,5 +8,5 @@ type args struct {
 type tests struct {
 	name     string
 	args     args
-	expected int
+	expected interface{}
 }

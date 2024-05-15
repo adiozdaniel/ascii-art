@@ -9,11 +9,7 @@ import (
 )
 
 func TestAsciiMap(t *testing.T) {
-	tests := []struct {
-		name     string
-		args     args
-		expected map[rune]int
-	}{
+	tests := []tests {
 		{name: "HelloGoogle", args: args{fileContents: strings.Split(asciiArt, "\n"), input: []string{"Hello", "Google"}}, expected: map[rune]int{32: 17}},
 	}
 

@@ -12,12 +12,12 @@ func FileContents() []string {
 	fileName := utils.GetFile(os.Args)
 	contents, err := os.ReadFile(fileName)
 	if err != nil {
-		utils.ErrorHandler(err)
+		utils.ErrorHandler("seems '" + fileName + "' is missing")
 	}
 
 	var fileContents []string
 
-	if fileName == "thinkertoy.txt" {
+	if fileName == "../data/thinkertoy.txt" {
 		fileContents = strings.Split(string(contents), "\r\n")
 	} else {
 		fileContents = strings.Split(string(contents), "\n")

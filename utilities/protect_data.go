@@ -6,7 +6,6 @@ import (
 )
 
 func ProtectFilesInDirectory() error {
-	// Open the directory
 	directoryPath := "../data"
 
 	err := filepath.Walk(directoryPath, func(path string, info os.FileInfo, err error) error {

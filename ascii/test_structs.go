@@ -3,5 +3,10 @@ package main
 type args struct {
 	input        []string
 	fileContents []string
-	asciiMap     map[rune]int
+}
+
+type tests struct {
+	name     string
+	args     args
+	expected int
 }

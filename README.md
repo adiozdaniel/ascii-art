@@ -133,7 +133,7 @@ Special characters can only appear once.
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/andyosyndoh>
-            <img src=https://lh3.googleusercontent.com/a/ACg8ocJxdK377MFuE7RWjNgvNWAzUXOGYu7axz1M55VZDeEgGy1CMuDV=s96-c-rg-br100 width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Andrew/>
+            <img src=https://lh3.googleusercontent.com/a/ACg8ocLUKAW3QwBqLDqDcmkFTC3wmCPq0dd25wVFn3CPEkCfhQQme9Lx=s288-c-no width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Andrew/>
             <br />
             <sub style="font-size:14px"><b>Andrew Osindo</b></sub>
         </a>

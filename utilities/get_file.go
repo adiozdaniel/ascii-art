@@ -35,6 +35,8 @@ func GetFile(args []string) string {
 			results = "../data/thinkertoy.txt"
 		case "-s", "-shadow", "shadow":
 			results = "../data/shadow.txt"
+		case "-st", "-standard", "standard":
+			results = "../data/standard.txt"
 		}
 	}
 	err := ProtectFilesInDirectory()

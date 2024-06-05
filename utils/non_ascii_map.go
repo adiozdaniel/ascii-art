@@ -1,4 +1,4 @@
-package utilities
+package utils
 
 func NonAsciiMap(splitInput []string) map[rune]rune {
 	nonAsciiMap := make(map[rune]rune)

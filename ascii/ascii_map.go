@@ -1,4 +1,4 @@
-package art_work
+package ascii
 
 func AsciiMap(fileContents []string) map[rune]int {
 	ascii_map := make(map[rune]int)

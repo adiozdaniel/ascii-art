@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	ascii "github.com/adiozdaniel/ascii-art/art_work"
+	ascii "github.com/adiozdaniel/ascii-art/ascii"
 )
 
 func TestAsciiMap(t *testing.T) {

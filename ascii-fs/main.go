@@ -32,6 +32,10 @@ func Channel() {
 		// 	fmt.Println("err")
 		// 	os.Exit(1)
 		// }
+		if len(os.Args[1]) == 8 {
+			fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
+			os.Exit(0)
+		}
 		if len(os.Args) == 5 && (os.Args[4] == "-standard" || os.Args[4] == "-thinkertoy" || os.Args[4] == "-shadow") {
 			color = os.Args[1][8:]
 			reff = os.Args[2]

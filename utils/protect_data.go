@@ -6,7 +6,7 @@ import (
 )
 
 func ProtectFilesInDirectory() error {
-	directoryPath := "../data"
+	directoryPath := "../banners"
 
 	err := filepath.Walk(directoryPath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {

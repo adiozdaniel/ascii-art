@@ -28,14 +28,6 @@ func Channel() {
 		os.Exit(0)
 	}
 	if strings.Contains(os.Args[1], "--color=") {
-		// if len(os.Args) == 1 || len(os.Args) > 5 {
-		// 	fmt.Println("err")
-		// 	os.Exit(1)
-		// }
-		if len(os.Args) == 8 {
-			fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
-			os.Exit(0)
-		}
 		if len(os.Args[1]) == 8 {
 			fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
 			os.Exit(0)

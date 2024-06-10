@@ -10,78 +10,7 @@ import (
 )
 
 func main() {
-	// fileContents := ascii.FileContents()
-	// // input := strings.ReplaceAll(os.Args[1], "\\n", "\n")
-	// // output := ascii.Output(strings.Split(input, "\n"), fileContents)
-	// nonAsciis := utils.NonAsciiOutput(strings.Split(input, "\n"))
-	// fmt.Print(output, nonAsciis)
-	Channel()
-}
-
-func Channel() {
-	reff := ""
-	str := ""
-	color := ""
-	banner := ""
-	if len(os.Args) == 1 || len(os.Args) > 5 {
-		fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
-		os.Exit(0)
-	}
-	if strings.Contains(os.Args[1], "--color=") {
-		if len(os.Args[1]) == 8 {
-			fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
-			os.Exit(0)
-		}
-		if len(os.Args) == 5 && (os.Args[4] == "-standard" || os.Args[4] == "-thinkertoy" || os.Args[4] == "-shadow") {
-			color = os.Args[1][8:]
-			reff = os.Args[2]
-			str = os.Args[3]
-			banner = os.Args[4]
-		} else if len(os.Args) == 4 && (os.Args[3] == "-standard" || os.Args[3] == "-thinkertoy" || os.Args[3] == "-shadow") {
-			color = os.Args[1][8:]
-			reff = os.Args[2]
-			str = os.Args[2]
-			banner = os.Args[3]
-		} else if len(os.Args) == 4 && os.Args[3] != "-standard" && os.Args[3] != "-thinkertoy" && os.Args[3] != "-shadow" {
-			color = os.Args[1][8:]
-			reff = os.Args[2]
-			str = os.Args[3]
-			banner = "-standard"
-		} else if len(os.Args) == 3 {
-			color = os.Args[1][8:]
-			reff = os.Args[2]
-			str = os.Args[2]
-			banner = "-standard"
-		} else {
-			fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
-			os.Exit(0)
-		}
-	}
-	if !strings.Contains(os.Args[1], "--color=") {
-		if len(os.Args) == 1 || len(os.Args) > 3 {
-			fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
-			os.Exit(0)
-		}
-		if len(os.Args) == 2 {
-			color = "white"
-			reff = os.Args[1]
-			str = os.Args[1]
-			banner = "-standard"
-		} else if len(os.Args) == 3 {
-			color = "white"
-			reff = os.Args[1]
-			str = os.Args[1]
-			banner = os.Args[2]
-		}
-	}
-
-	if str == "" {
-		os.Exit(0)
-	}
-	if str == "\\n" {
-		fmt.Println()
-		os.Exit(0)
-	}
+	color, reff, str, banner := parseArgs(os.Args)
 
 	fileContents := ascii.FileContents(banner)
 	input := strings.ReplaceAll(str, "\\n", "\n")
@@ -89,3 +18,57 @@ func Channel() {
 	nonAsciis := utils.NonAsciiOutput(strings.Split(input, "\n"))
 	fmt.Print(output, nonAsciis)
 }
+
+func parseArgs(args []string) (color, reff, str, banner string) {
+	if len(args) == 1 || len(args) > 5 {
+		utils.PrintUsage()
+	}
+
+	if strings.Contains(args[1], "--color=") {
+		color, reff, str, banner = parseColorArgs(args)
+	} else {
+		color, reff, str, banner = parseStandardArgs(args)
+	}
+
+	if str == "" || str == "\\n" {
+		os.Exit(0)
+	}
+
+	return color, reff, str, banner
+}
+
+func parseColorArgs(args []string) (color, reff, str, banner string) {
+	color = args[1][8:]
+	reff = args[2]
+	str = args[2]
+
+	if len(args) == 5 && (args[4] == "-standard" || args[4] == "-thinkertoy" || args[4] == "-shadow") {
+		banner = args[4]
+	} else if len(args) == 4 && (args[3] == "-standard" || args[3] == "-thinkertoy" || args[3] == "-shadow") {
+		banner = args[3]
+	} else if len(args) == 4 && args[3] != "-standard" && args[3] != "-thinkertoy" && args[3] != "-shadow" {
+		str = args[3]
+		banner = "-standard"
+	} else if len(args) == 3 {
+		banner = "-standard"
+	}
+
+	return color, reff, str, banner
+}
+
+func parseStandardArgs(args []string) (color, reff, str, banner string) {
+	if len(args) == 2 {
+		color = "white"
+		reff = args[1]
+		str = args[1]
+		banner = "-standard"
+	} else if len(args) == 3 {
+		color = "white"
+		reff = args[1]
+		str = args[1]
+		banner = args[2]
+	}
+
+	return color, reff, str, banner
+}
+

@@ -22,6 +22,20 @@ func init() {
 		{color: "Gray", ansicode: "\033[37m"},
 		{color: "White", ansicode: "\033[97m"},
 		{color: "Orange", ansicode: "\033[38;5;208m"},
+		// {color: "Purple", ansicode: "\033[35m"},
+		{color: "Lime", ansicode: "\033[38;5;118m"},
+		{color: "Pink", ansicode: "\033[38;5;205m"},
+		{color: "Teal", ansicode: "\033[38;5;37m"},
+		{color: "Lavender", ansicode: "\033[38;5;183m"},
+		{color: "Brown", ansicode: "\033[38;5;130m"},
+		{color: "Beige", ansicode: "\033[38;5;230m"},
+		{color: "Maroon", ansicode: "\033[38;5;52m"},
+		{color: "Mint", ansicode: "\033[38;5;121m"},
+		{color: "Olive", ansicode: "\033[38;5;142m"},
+		{color: "Apricot", ansicode: "\033[38;5;215m"},
+		{color: "Navy", ansicode: "\033[38;5;18m"},
+		{color: "Grey", ansicode: "\033[38;5;245m"},
+		{color: "Black", ansicode: "\033[30m"},
 	}
 }
 

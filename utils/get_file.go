@@ -5,35 +5,32 @@ import (
 	"os"
 )
 
-// GetFile returns the ascii graphic file to use.
-func GetFile(args string) string {
-	// fmt.Print("\033c")
-	// if len(args) == 1 || len(args) > 3 {
-	// 	fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard")
-	// 	os.Exit(0)
-	// }
+var bannerFiles = map[string]string{
+	"-shadow":     "../banners/shadow.txt",
+	"shadow":      "../banners/shadow.txt",
+	"-thinkertoy": "../banners/thinkertoy.txt",
+	"thinkertoy":  "../banners/thinkertoy.txt",
+	"-standard":   "../banners/standard.txt",
+	"standard":    "../banners/standard.txt",
+}
 
-	results := "../banners/standard.txt"
+func isBanner(s []string)string{
+	for _, word := range s {
+		if _, ok := bannerFiles[word]; ok {
+			return bannerFiles[word]
+		}
+	}
+	return bannerFiles["standard"]
+}
 
-	if (args != "-standard") && (args != "-shadow") && (args != "-thinkertoy") {
-		fmt.Println(`Invalid banner. Available banner options are:
-			 -thinkertoy
-			 -shadow
-			 -standard`)
+// GetFile returns the ascii graphic filepath to use.
+func GetFile() string {
+	if len(os.Args) == 1 || len(os.Args) > 5 {
+		fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
 		os.Exit(0)
 	}
-	switch args {
-	case "-thinkertoy":
-		results = "../banners/thinkertoy.txt"
-	case "-shadow":
-		results = "../banners/shadow.txt"
-	}
 
-	err := ProtectFilesInDirectory()
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(0)
-	}
-	// return standard.txt as the default incase thinkertoy or shadow was not selected
-	return results
+	args := os.Args[2:]
+
+	return isBanner(args)
 }

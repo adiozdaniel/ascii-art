@@ -14,7 +14,7 @@ var bannerFiles = map[string]string{
 	"standard":    "../banners/standard.txt",
 }
 
-func isBanner(s []string)(string, string){
+func isBanner(s []string) (string, string) {
 	for _, flag := range s {
 		if _, ok := bannerFiles[flag]; ok {
 			return bannerFiles[flag], flag
@@ -31,6 +31,8 @@ func GetFile() (string, string) {
 	}
 
 	args := os.Args[2:]
+
+	// fmt.Println(isBanner(args))
 
 	return isBanner(args)
 }

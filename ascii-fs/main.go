@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"os"
+	// "os"
 	"strings"
 
 	ascii "github.com/adiozdaniel/ascii-art/ascii"
@@ -11,20 +11,13 @@ import (
 
 func main() {
 	fileContents := ascii.FileContents()
-	input := strings.ReplaceAll(strings.Join(os.Args[1:], "\n"), "\\n", "\n")
-	fmt.Println(input)
-	output := ascii.Output("reff", strings.Split(input, "\n"), fileContents)
-	nonAsciis := utils.NonAsciiOutput(strings.Split(input, "\n"))
-	fmt.Print(output, nonAsciis)
-	
-	// Channel()
-}
+	inputs := utils.GetInputs()
+	output := ascii.Output(inputs["color"],
+		inputs["reff"],
+		strings.Split(strings.ReplaceAll(inputs["inputStr"],
+			"\\n", "\n"), "\n"),
+		fileContents)
+	nonAsciis := utils.NonAsciiOutput(strings.Split(inputs["inputStr"], "\n"))
 
-// func Channel() {
-	
-// 	fileContents := ascii.FileContents(banner)
-// 	input := strings.ReplaceAll(str, "\\n", "\n")
-// 	output := ascii.Output(color, reff, strings.Split(input, "\n"), fileContents)
-// 	nonAsciis := utils.NonAsciiOutput(strings.Split(input, "\n"))
-// 	fmt.Print(output, nonAsciis)
-// }
+	fmt.Print(output, nonAsciis)
+}

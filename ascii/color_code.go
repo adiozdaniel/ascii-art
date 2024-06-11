@@ -1,7 +1,6 @@
 package ascii
 
 import (
-	"os"
 	"strings"
 )
 
@@ -24,7 +23,7 @@ func init() {
 		{color: "Orange", ansicode: "\033[38;5;208m"},
 		{color: "Purple", ansicode: "\033[95m"},
 		{color: "Lime", ansicode: "\033[38;5;118m"},
-		{color: "Pink", ansicode: "\033[38;5;205m"},
+		{color: "pink", ansicode: "\033[38;5;205m"},
 		{color: "Teal", ansicode: "\033[38;5;37m"},
 		{color: "Lavender", ansicode: "\033[38;5;183m"},
 		{color: "Brown", ansicode: "\033[38;5;130m"},
@@ -40,14 +39,11 @@ func init() {
 }
 
 // GetColorCode gets the ANSI code of the input color after iterating through the structs in asciiColors
-func GetColorCode() string {
-	colorName := strings.ToLower(strings.Split(os.Args[1], "=")[1])
-
+func GetColorCode(color string) string {
 	for _, c := range asciiColors {
-		if strings.ToLower(c.color) == colorName {
+		if strings.ToLower(c.color) == color {
 			return c.ansicode
 		}
 	}
 	return "\033[97m" // Default to white
 }
-

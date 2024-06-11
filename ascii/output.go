@@ -1,14 +1,13 @@
 package ascii
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
 // The function output now Writes our desired Output on the command line
-func Output(reff string, input []string, fileContents []string) string {
+func Output(color, reff string, input []string, fileContents []string) string {
 	var art_work strings.Builder
 	ascii_map := AsciiMap(fileContents)
 	reset := "\033[0m"
@@ -25,7 +24,7 @@ func Output(reff string, input []string, fileContents []string) string {
 			var builder strings.Builder
 			for _, char := range word {
 				if ascii, ok := ascii_map[char]; ok {
-					colorName := GetColorCode()
+					colorName := GetColorCode(color)
 					if strings.Contains(reff, string(char)) {
 						builder.WriteString(colorName + fileContents[ascii+i] + reset)
 					} else {
@@ -54,6 +53,6 @@ func cleanInput(input []string) []string {
 			input = input[i+1:]
 		}
 	}
-	fmt.Println(input)
+	// fmt.Println(input)
 	return input
 }

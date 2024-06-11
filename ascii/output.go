@@ -8,6 +8,7 @@ import (
 func Output(color string, reff string, input []string, fileContents []string) string {
 	var art_work strings.Builder
 	ascii_map := AsciiMap(fileContents)
+	reset := "\033[0m"
 
 	var height int
 	for _, word := range input {
@@ -22,7 +23,7 @@ func Output(color string, reff string, input []string, fileContents []string) st
 				if ascii, ok := ascii_map[char]; ok {
 					colorName := GetColorCode(color)
 					if strings.Contains(reff, string(char)) {
-						builder.WriteString(colorName + fileContents[ascii+i] + "\033[0m")
+						builder.WriteString(colorName + fileContents[ascii+i] + reset)
 					} else {
 						builder.WriteString(fileContents[ascii+i])
 					}

@@ -14,17 +14,17 @@ var bannerFiles = map[string]string{
 	"standard":    "../banners/standard.txt",
 }
 
-func isBanner(s []string)string{
-	for _, word := range s {
-		if _, ok := bannerFiles[word]; ok {
-			return bannerFiles[word]
+func isBanner(s []string)(string, string){
+	for _, flag := range s {
+		if _, ok := bannerFiles[flag]; ok {
+			return bannerFiles[flag], flag
 		}
 	}
-	return bannerFiles["standard"]
+	return bannerFiles["standard"], ""
 }
 
 // GetFile returns the ascii graphic filepath to use.
-func GetFile() string {
+func GetFile() (string, string) {
 	if len(os.Args) == 1 || len(os.Args) > 5 {
 		fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
 		os.Exit(0)

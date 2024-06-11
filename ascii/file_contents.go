@@ -12,7 +12,7 @@ import (
 
 // FileContents returns a slice of strings containing ascii artwork characters
 func FileContents() []string {
-	fileName := utils.GetFile()
+	fileName, _ := utils.GetFile()
 	contents, err := os.ReadFile(fileName)
 	var ans string
 	if err != nil {

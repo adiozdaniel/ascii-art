@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 )
-
+ 
 func GetInputs() map[string]string {
 	var input []string = os.Args[1:]
 	var inputs = make(map[string]string)
@@ -20,7 +20,7 @@ func GetInputs() map[string]string {
 	if isColor {
 		input = removeItem(input, color)
 		color = strings.Split(color, "=")[1]
-		inputs["color"] = color
+		inputs["color"] = strings.TrimSpace(color)
 	}
 
 	if len(input) == 2 {
@@ -33,9 +33,9 @@ func GetInputs() map[string]string {
 		inputs["inputStr"] = input[0]
 	}
 
-	if len(input) == 0 {
-		fmt.Println("Usage: ...")
-		os.Exit(1)
+	if len(input) == 0 || len(input) > 2 {
+		fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
+		os.Exit(0)
 	}
 
 	inputs["output"] = "output"

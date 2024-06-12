@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	// "os"
 	"strings"
 
 	ascii "github.com/adiozdaniel/ascii-art/ascii"

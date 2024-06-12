@@ -15,12 +15,17 @@ var bannerFiles = map[string]string{
 }
 
 func isBanner(s []string) (string, string) {
-	for _, flag := range s {
-		if _, ok := bannerFiles[flag]; ok {
-			return bannerFiles[flag], flag
+	ourBanner:= "../banners/standard.txt"
+	flag := ""
+
+	for _, val := range s {
+		if value, ok := bannerFiles[val]; ok {
+			ourBanner = value
+			flag = val
 		}
 	}
-	return bannerFiles["standard"], ""
+
+	return ourBanner, flag
 }
 
 // GetFile returns the ascii graphic filepath to use.

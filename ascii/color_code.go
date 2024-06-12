@@ -41,7 +41,7 @@ func init() {
 // GetColorCode gets the ANSI code of the input color after iterating through the structs in asciiColors
 func GetColorCode(color string) string {
 	for _, c := range asciiColors {
-		if strings.ToLower(c.color) == color {
+		if strings.EqualFold(c.color, color) {
 			return c.ansicode
 		}
 	}

@@ -42,6 +42,10 @@ func init() {
 
 // GetColorCode gets the ANSI code of the input color after iterating through the structs in asciiColors
 func GetColorCode(color string) string {
+	if len(color) == 0 {
+		return "\033[97m" // Default to white
+	}
+
 	for _, c := range asciiColors {
 		if strings.EqualFold(c.color, color) {
 			return c.ansicode
@@ -61,8 +65,8 @@ func GetColorCode(color string) string {
 }
 
 func getAnsiColor(s string) (string, error) {
-	if len(s) < 3 {
-		return "", nil
+	if !strings.Contains(s, "(") && !strings.Contains(s, ")"){
+		return "", fmt.Errorf("not rgb")
 	}
 
 	temp1 := strings.Split(s, "(")[1]
@@ -85,7 +89,9 @@ func getAnsiColor(s string) (string, error) {
 }
 
 func hexToRGB(hex string) (string, error) {
-	if len(hex) != 7 { // #RRGGBB
+	if len(hex) == 4 {
+		hex = fmt.Sprintf("#%c%c%c%c%c%c", hex[1], hex[1], hex[2], hex[2], hex[3], hex[3])
+	} else if len(hex) != 7 { // #RRGGBB
 		return "", fmt.Errorf("invalid hex color: %s", hex)
 	}
 	red, err := strconv.ParseInt(hex[1:3], 16, 64)

@@ -52,7 +52,7 @@ func GetColorCode(color string) string {
 		}
 	}
 
-	if color[0] == ('#') {
+	if strings.HasPrefix(color, "#") {
 		myColor, _ := hexToRGB(color)
 		return myColor
 	}
@@ -65,27 +65,27 @@ func GetColorCode(color string) string {
 }
 
 func getAnsiColor(s string) (string, error) {
-	if !strings.Contains(s, "(") && !strings.Contains(s, ")"){
-		return "", fmt.Errorf("not rgb")
+	if strings.HasPrefix(s, "rgb(") && strings.HasSuffix(s, ")") {
+		temp1 := strings.Split(s, "(")[1]
+		temp2 := strings.Split(temp1, ")")[0]
+		colorSlice := strings.Split(temp2, ",")
+		red, err := strconv.Atoi(strings.TrimSpace(colorSlice[0]))
+		if err != nil {
+			return "", err
+		}
+		green, err := strconv.Atoi(strings.TrimSpace(colorSlice[1]))
+		if err != nil {
+			return "", err
+		}
+		blue, err := strconv.Atoi(strings.TrimSpace(colorSlice[2]))
+		if err != nil {
+			return "", err
+		}
+
+		return fmt.Sprintf("\033[38;2;%d;%d;%dm", red, green, blue), nil
 	}
 
-	temp1 := strings.Split(s, "(")[1]
-	temp2 := strings.Split(temp1, ")")[0]
-	colorSlice := strings.Split(temp2, ",")
-	red, err := strconv.Atoi(strings.TrimSpace(colorSlice[0]))
-	if err != nil {
-		return "", err
-	}
-	green, err := strconv.Atoi(strings.TrimSpace(colorSlice[1]))
-	if err != nil {
-		return "", err
-	}
-	blue, err := strconv.Atoi(strings.TrimSpace(colorSlice[2]))
-	if err != nil {
-		return "", err
-	}
-
-	return fmt.Sprintf("\033[38;2;%d;%d;%dm", red, green, blue), nil
+	return "\033[97m", nil // Default to white
 }
 
 func hexToRGB(hex string) (string, error) {

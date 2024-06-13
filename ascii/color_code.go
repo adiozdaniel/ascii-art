@@ -48,6 +48,11 @@ func GetColorCode(color string) string {
 		}
 	}
 
+	if color[0] == ('#') {
+		myColor, _:= hexToRGB(color)
+		return myColor
+	}
+
 	ansciColor, err := getAnsiColor(color)
 	if err != nil {
 		return "\033[97m" // Default to white
@@ -72,5 +77,24 @@ func getAnsiColor(s string) (string, error) {
 		return "", err
 	}
 
+	return fmt.Sprintf("\033[38;2;%d;%d;%dm", red, green, blue), nil
+}
+
+func hexToRGB(hex string) (string, error) {
+	if len(hex) != 7 { // #RRGGBB
+		return "", fmt.Errorf("invalid hex color: %s", hex)
+	}
+	red, err := strconv.ParseInt(hex[1:3], 16, 64)
+	if err != nil {
+		return "", err
+	}
+	green, err := strconv.ParseInt(hex[3:5], 16, 64)
+	if err != nil {
+		return "", err
+	}
+	blue, err := strconv.ParseInt(hex[5:7], 16, 64)
+	if err != nil {
+		return "", err
+	}
 	return fmt.Sprintf("\033[38;2;%d;%d;%dm", red, green, blue), nil
 }

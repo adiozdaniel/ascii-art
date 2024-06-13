@@ -9,7 +9,6 @@ import (
 	utils "github.com/adiozdaniel/ascii-art/utils"
 )
 
-
 // FileContents returns a slice of strings containing ascii artwork characters
 func FileContents() []string {
 	fileName, _ := utils.GetFile()

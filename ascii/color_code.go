@@ -1,6 +1,8 @@
 package ascii
 
 import (
+	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -23,7 +25,7 @@ func init() {
 		{color: "Orange", ansicode: "\033[38;5;208m"},
 		{color: "Purple", ansicode: "\033[95m"},
 		{color: "Lime", ansicode: "\033[38;5;118m"},
-		{color: "pink", ansicode: "\033[38;5;205m"},
+		{color: "Pink", ansicode: "\033[38;5;205m"},
 		{color: "Teal", ansicode: "\033[38;5;37m"},
 		{color: "Lavender", ansicode: "\033[38;5;183m"},
 		{color: "Brown", ansicode: "\033[38;5;130m"},
@@ -45,5 +47,30 @@ func GetColorCode(color string) string {
 			return c.ansicode
 		}
 	}
-	return "\033[97m" // Default to white
+
+	ansciColor, err := getAnsiColor(color)
+	if err != nil {
+		return "\033[97m" // Default to white
+	}
+	return ansciColor
+}
+
+func getAnsiColor(s string) (string, error) {
+	temp1 := strings.Split(s, "(")[1]
+	temp2 := strings.Split(temp1, ")")[0]
+	colorSlice := strings.Split(temp2, ",")
+	red, err := strconv.Atoi(colorSlice[0])
+	if err != nil {
+		return "", err
+	}
+	green, err := strconv.Atoi(colorSlice[1])
+	if err != nil {
+		return "", err
+	}
+	blue, err := strconv.Atoi(colorSlice[2])
+	if err != nil {
+		return "", err
+	}
+
+	return fmt.Sprintf("\033[38;2;%d;%d;%dm", red, green, blue), nil
 }

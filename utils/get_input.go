@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	// ascii "github.com/adiozdaniel/ascii-art/ascii"
 )
- 
+
 func GetInputs() map[string]string {
 	var input []string = os.Args[1:]
-	var inputs = make(map[string]string)
+	inputs := make(map[string]string)
 
 	banner, flag := GetFile()
 	if flag != "" {
@@ -20,7 +21,9 @@ func GetInputs() map[string]string {
 	if isColor {
 		input = removeItem(input, color)
 		color = strings.Split(color, "=")[1]
-		inputs["color"] = strings.TrimSpace(color)
+		if len(color) > 2 {
+			inputs["color"] = strings.TrimSpace(color)
+		}
 	}
 
 	if len(input) == 2 {

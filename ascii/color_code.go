@@ -49,7 +49,7 @@ func GetColorCode(color string) string {
 	}
 
 	if color[0] == ('#') {
-		myColor, _:= hexToRGB(color)
+		myColor, _ := hexToRGB(color)
 		return myColor
 	}
 
@@ -61,18 +61,22 @@ func GetColorCode(color string) string {
 }
 
 func getAnsiColor(s string) (string, error) {
+	if len(s) < 3 {
+		return "", nil
+	}
+
 	temp1 := strings.Split(s, "(")[1]
 	temp2 := strings.Split(temp1, ")")[0]
 	colorSlice := strings.Split(temp2, ",")
-	red, err := strconv.Atoi(colorSlice[0])
+	red, err := strconv.Atoi(strings.TrimSpace(colorSlice[0]))
 	if err != nil {
 		return "", err
 	}
-	green, err := strconv.Atoi(colorSlice[1])
+	green, err := strconv.Atoi(strings.TrimSpace(colorSlice[1]))
 	if err != nil {
 		return "", err
 	}
-	blue, err := strconv.Atoi(colorSlice[2])
+	blue, err := strconv.Atoi(strings.TrimSpace(colorSlice[2]))
 	if err != nil {
 		return "", err
 	}

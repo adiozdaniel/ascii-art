@@ -11,19 +11,19 @@ func GetInputs() map[string]string {
 	var input []string = os.Args[1:]
 	inputs := make(map[string]string)
 
-	banner, flag := GetFile()
-	if flag != "" {
-		input = removeItem(input, flag)
-		inputs[banner] = flag
-	}
-
 	color, isColor := contains(input, "--color=")
-	if isColor {
+	if isColor && strings.Contains(input[0], "--color=") {
 		input = removeItem(input, color)
 		color = strings.Split(color, "=")[1]
 		if len(color) > 2 {
 			inputs["color"] = strings.TrimSpace(color)
 		}
+	}
+
+	banner, flag := GetFile()
+	if flag != "" {
+		input = removeItem(input, flag)
+		inputs[banner] = flag
 	}
 
 	if len(input) == 2 {
@@ -39,7 +39,6 @@ func GetInputs() map[string]string {
 		inputs["reff"] = input[0]
 		inputs["inputStr"] = input[0]
 	}
-
 
 	if len(input) == 0 || len(input) > 2 {
 		fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")

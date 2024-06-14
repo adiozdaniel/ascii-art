@@ -65,7 +65,7 @@ func GetColorCode(color string) string {
 }
 
 func getAnsiColor(s string) (string, error) {
-	if strings.HasPrefix(s, "rgb(") && strings.HasSuffix(s, ")") {
+	if (strings.HasPrefix(s, "rgb(") || strings.HasPrefix(s, "RGB(")) && strings.HasSuffix(s, ")") {
 		temp1 := strings.Split(s, "(")[1]
 		temp2 := strings.Split(temp1, ")")[0]
 		colorSlice := strings.Split(temp2, ",")

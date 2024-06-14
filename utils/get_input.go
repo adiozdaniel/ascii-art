@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	// ascii "github.com/adiozdaniel/ascii-art/ascii"
 )
 
 func GetInputs() map[string]string {
@@ -22,6 +21,10 @@ func GetInputs() map[string]string {
 
 	banner, flag := GetFile()
 	if flag != "" {
+		if flag != input[len(input)-1] {
+			fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
+			os.Exit(0)
+		}
 		input = removeItem(input, flag)
 		inputs[banner] = flag
 	}

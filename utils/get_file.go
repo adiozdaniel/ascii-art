@@ -35,7 +35,7 @@ func GetFile() (string, string) {
 		os.Exit(0)
 	}
 
-	args := os.Args[2:]
+	args := os.Args[1:]
 
 	// fmt.Println(isBanner(args))
 

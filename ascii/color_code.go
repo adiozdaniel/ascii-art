@@ -64,10 +64,6 @@ func GetColorCode(color string) string {
 	return ansciColor
 }
 
-/*
-1.go run . Data thinkertot thinkerto
-*/
-
 func getAnsiColor(s string) (string, error) {
 	if strings.HasPrefix(s, "rgb(") && strings.HasSuffix(s, ")") {
 		temp1 := strings.Split(s, "(")[1]

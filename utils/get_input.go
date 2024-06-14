@@ -27,6 +27,10 @@ func GetInputs() map[string]string {
 	}
 
 	if len(input) == 2 {
+		if _, ok := inputs["color"]; !ok {
+			fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
+			os.Exit(0)
+		}
 		inputs["reff"] = input[0]
 		inputs["inputStr"] = input[1]
 	}
@@ -35,6 +39,7 @@ func GetInputs() map[string]string {
 		inputs["reff"] = input[0]
 		inputs["inputStr"] = input[0]
 	}
+
 
 	if len(input) == 0 || len(input) > 2 {
 		fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")

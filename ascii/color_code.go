@@ -2,6 +2,7 @@ package ascii
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 )
@@ -57,11 +58,45 @@ func GetColorCode(color string) string {
 		return myColor
 	}
 
+	if strings.HasPrefix(color, "hsl(") || strings.HasPrefix(color, "HSL(") {
+		myColor, err := getHSLColor(color)
+		if err == nil {
+			return myColor
+		}
+	}
+
 	ansciColor, err := getAnsiColor(color)
 	if err != nil {
 		return "\033[97m" // Default to white
 	}
 	return ansciColor
+}
+
+func getHSLColor(s string) (string, error) {
+	if (strings.HasPrefix(s, "hsl(") || strings.HasPrefix(s, "HSL(")) && strings.HasSuffix(s, ")") {
+		temp1 := strings.Split(s, "(")[1]
+		temp2 := strings.Split(temp1, ")")[0]
+		colorSlice := strings.Split(temp2, ",")
+		h, err := strconv.ParseFloat(strings.TrimSpace(colorSlice[0]), 64)
+		if err != nil {
+			return "", err
+		}
+		s, err := strconv.ParseFloat(strings.TrimSpace(strings.TrimSuffix(colorSlice[1], "%")), 64)
+		if err != nil {
+			return "", err
+		}
+		s /= 100
+		l, err := strconv.ParseFloat(strings.TrimSpace(strings.TrimSuffix(colorSlice[2], "%")), 64)
+		if err != nil {
+			return "", err
+		}
+		l /= 100
+
+		r, g, b := hslToRGB(h, s, l)
+		return fmt.Sprintf("\033[38;2;%d;%d;%dm", r, g, b), nil
+	}
+
+	return "\033[97m", nil // Default to white
 }
 
 func getAnsiColor(s string) (string, error) {
@@ -107,4 +142,34 @@ func hexToRGB(hex string) (string, error) {
 		return "", err
 	}
 	return fmt.Sprintf("\033[38;2;%d;%d;%dm", red, green, blue), nil
+}
+
+func hslToRGB(h, s, l float64) (int, int, int) {
+	c := (1 - abs(2*l-1)) * s
+	x := c * (1 - abs(math.Mod(h/60.0, 2)-1))
+	m := l - c/2
+
+	var r, g, b float64
+	if 0 <= h && h < 60 {
+		r, g, b = c, x, 0
+	} else if 60 <= h && h < 120 {
+		r, g, b = x, c, 0
+	} else if 120 <= h && h < 180 {
+		r, g, b = 0, c, x
+	} else if 180 <= h && h < 240 {
+		r, g, b = 0, x, c
+	} else if 240 <= h && h < 300 {
+		r, g, b = x, 0, c
+	} else {
+		r, g, b = c, 0, x
+	}
+
+	return int((r + m) * 255), int((g + m) * 255), int((b + m) * 255)
+}
+
+func abs(x float64) float64 {
+	if x < 0 {
+		return -x
+	}
+	return x
 }

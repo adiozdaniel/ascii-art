@@ -23,6 +23,7 @@ func FileContents() []string {
 			err := utils.DownloadFile("https://learn.zone01kisumu.ke/git/root/public/raw/branch/master/subjects/ascii-art/"+fileName[11:], fileName)
 			if err != nil {
 				fmt.Println(err)
+				os.Remove(fileName)
 				os.Exit(0)
 			}
 			fmt.Print("\033[2A")

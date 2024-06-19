@@ -47,80 +47,59 @@ func GetColorCode(color string) string {
 		return "\033[97m" // Default to white
 	}
 
-	for _, c := range asciiColors {
-		if strings.EqualFold(c.color, color) {
-			return c.ansicode
+	if strings.HasPrefix(color, "#") {
+		myColor, err := hexToRGB(color)
+		if err == nil {
+			return myColor
 		}
 	}
 
-	if strings.HasPrefix(color, "#") {
-		myColor, _ := hexToRGB(color)
-		return myColor
-	}
-
-	if strings.HasPrefix(color, "hsl(") || strings.HasPrefix(color, "HSL(") {
+	if strings.HasPrefix(color, "hsl(") || strings.HasPrefix(color, "HSL(") && strings.HasSuffix(color, ")") {
 		myColor, err := getHSLColor(color)
 		if err == nil {
 			return myColor
 		}
 	}
 
-	ansciColor, err := getAnsiColor(color)
-	if err != nil {
-		return "\033[97m" // Default to white
-	}
-	return ansciColor
-}
-
-func getHSLColor(s string) (string, error) {
-	if (strings.HasPrefix(s, "hsl(") || strings.HasPrefix(s, "HSL(")) && strings.HasSuffix(s, ")") {
-		temp1 := strings.Split(s, "(")[1]
-		temp2 := strings.Split(temp1, ")")[0]
-		colorSlice := strings.Split(temp2, ",")
-		h, err := strconv.ParseFloat(strings.TrimSpace(colorSlice[0]), 64)
-		if err != nil {
-			return "", err
+	if (strings.HasPrefix(color, "rgb(") || strings.HasPrefix(color, "RGB(")) && strings.HasSuffix(color, ")") {
+		ansciColor, err := getAnsiColor(color)
+		if err == nil {
+			return ansciColor
 		}
-		s, err := strconv.ParseFloat(strings.TrimSpace(strings.TrimSuffix(colorSlice[1], "%")), 64)
-		if err != nil {
-			return "", err
-		}
-		s /= 100
-		l, err := strconv.ParseFloat(strings.TrimSpace(strings.TrimSuffix(colorSlice[2], "%")), 64)
-		if err != nil {
-			return "", err
-		}
-		l /= 100
-
-		r, g, b := hslToRGB(h, s, l)
-		return fmt.Sprintf("\033[38;2;%d;%d;%dm", r, g, b), nil
 	}
 
-	return "\033[97m", nil // Default to white
+	for _, c := range asciiColors {
+		if strings.EqualFold(c.color, color) {
+			return c.ansicode
+		}
+	}
+
+	return "\033[97m" // Default to white
 }
 
 func getAnsiColor(s string) (string, error) {
-	if (strings.HasPrefix(s, "rgb(") || strings.HasPrefix(s, "RGB(")) && strings.HasSuffix(s, ")") {
-		temp1 := strings.Split(s, "(")[1]
-		temp2 := strings.Split(temp1, ")")[0]
-		colorSlice := strings.Split(temp2, ",")
-		red, err := strconv.Atoi(strings.TrimSpace(colorSlice[0]))
-		if err != nil {
-			return "", err
-		}
-		green, err := strconv.Atoi(strings.TrimSpace(colorSlice[1]))
-		if err != nil {
-			return "", err
-		}
-		blue, err := strconv.Atoi(strings.TrimSpace(colorSlice[2]))
-		if err != nil {
-			return "", err
-		}
+	temp1 := strings.Split(s, "(")[1]
+	temp2 := strings.Split(temp1, ")")[0]
+	colorSlice := strings.Split(temp2, ",")
 
-		return fmt.Sprintf("\033[38;2;%d;%d;%dm", red, green, blue), nil
+	if len(colorSlice) != 3 {
+		return "", fmt.Errorf("invalid rgb format")
 	}
 
-	return "\033[97m", nil // Default to white
+	red, err := strconv.Atoi(strings.TrimSpace(colorSlice[0]))
+	if err != nil {
+		return "", err
+	}
+	green, err := strconv.Atoi(strings.TrimSpace(colorSlice[1]))
+	if err != nil {
+		return "", err
+	}
+	blue, err := strconv.Atoi(strings.TrimSpace(colorSlice[2]))
+	if err != nil {
+		return "", err
+	}
+
+	return fmt.Sprintf("\033[38;2;%d;%d;%dm", red, green, blue), nil
 }
 
 func hexToRGB(hex string) (string, error) {
@@ -142,6 +121,36 @@ func hexToRGB(hex string) (string, error) {
 		return "", err
 	}
 	return fmt.Sprintf("\033[38;2;%d;%d;%dm", red, green, blue), nil
+}
+
+func getHSLColor(str string) (string, error) {
+	temp1 := strings.Split(str, "(")[1]
+	temp2 := strings.Split(temp1, ")")[0]
+	colorSlice := strings.Split(temp2, ",")
+
+	if len(colorSlice) != 3 {
+		return "", fmt.Errorf("invalid hsl format")
+	}
+
+	h, err := strconv.ParseFloat(strings.TrimSpace(colorSlice[0]), 64)
+	if err != nil {
+		return "", err
+	}
+	s, err := strconv.ParseFloat(strings.TrimSpace(strings.TrimSuffix(colorSlice[1], "%")), 64)
+	if err != nil {
+		return "", err
+	}
+	s /= 100
+	l, err := strconv.ParseFloat(strings.TrimSpace(strings.TrimSuffix(colorSlice[2], "%")), 64)
+	if err != nil {
+		return "", err
+	}
+	l /= 100
+
+	// if s < 0
+
+	r, g, b := hslToRGB(h, s, l)
+	return fmt.Sprintf("\033[38;2;%d;%d;%dm", r, g, b), nil
 }
 
 func hslToRGB(h, s, l float64) (int, int, int) {

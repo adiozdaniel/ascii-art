@@ -6,7 +6,7 @@ These formats are represented in banner files; standard.txt, shadow.txt and thin
 
 To better showcase this, here is an example:
 
-```
+```Bash
 # example input
 $ go run . "Hello"
 
@@ -35,7 +35,7 @@ To clone and run this program, you'll need **Git** installed on your computer.
 
 From the **command line**,
 
-```
+```Bash
 # clone this repository
 $ git clone https://learn.zone01kisumu.ke/git/josopondo/ascii-art-color
 
@@ -50,9 +50,7 @@ $ code .
 
 Once the program has been installed and opened, on the terminal, run the program using an input string of choice, like this:
 
-```
-$ go run . "It's a wonderful day!"
-```
+`$ go run . "It's a wonderful day!"`
 
 With only one argument (input_text) the program is designed to select the standard.txt banner 
 file as the default. Hence 
@@ -67,13 +65,11 @@ The flags will prompt the program to select the appropriate file and display the
 
 For example:
 
-```
-$ go run . "Hello\nThere" "-thinkertoy"  //"-thinkertoy" as flag for thinkertoy.txt
-```
+`$ go run . "Hello\nThere" "-thinkertoy"  //"-thinkertoy" as flag for thinkertoy.txt`
 
 will have the following output:
 
-```
+```Bash
 # output as per thinkertoy.txt format
 
 o  o     o o     
@@ -104,7 +100,7 @@ print the valid ASCII characters and let you know which invalid (non-ascii) char
 
 For instance:
 
-```
+```Bash
 $ go run . "Google😋🤯🫣"
 
 # output
@@ -149,11 +145,11 @@ On the terminal, you should be able to see letters ***h*** and ***o*** in mint a
 
     - `$ go run . "--color=rgb(100, 150, 180)" hello`
 
- **Note:** Using the RGB flag requires that the flag be enclosed in quotation marks. This is because brackets have a syntactical interpretation in bash. 
+ **Note:** The RGB color format requires that the color flag and it's RGB value be enclosed in quotation marks; as shown above. This is because brackets have a syntactical interpretation in bash. 
 
 #### Hex-format
 
- 1. By adding an hexadecimal color codes, like this:
+ 1. By adding hexadecimal color codes, like this:
 
     - `$ go run . --color=#e3ee38 hello hello`
 
@@ -162,8 +158,16 @@ On the terminal, you should be able to see letters ***h*** and ***o*** in mint a
     - `$ go run . --color=#ff0 hello hello`
     - `$ go run . --color=#333 hello hello`
 
+#### HSL-format
 
- The ***Text-color-format*** supports a limited number of colors (22); while ***RGB-*** and ***hex-color-formats*** have an unlimited number of colors.
+ 1. By adding HSL color codes, like this:
+    - `$ go run . "--color=hsl(176, 95%, 50%)" hello hello`
+    - `$ go run . "--color=HSL(176, 95%, 50%)" hello hello`
+
+**Note:** The HSL color format requires that the color flag and it's HSL value be enclosed in quotation marks; as shown above. This is because brackets have a syntactical interpretation in bash.
+
+
+ The ***Text-color-format*** supports a limited number of colors (22); while ***RGB-***, ***Hex-*** and ***HSL-color-formats*** have an unlimited number of colors.
 
  ***The color flag has to be written as one argument; without spaces or with double quotes enclosing the flag. This way, the program will give an accurate output.***
 

@@ -12,8 +12,8 @@ import (
 func TestOutput(t *testing.T) {
 	fileContent := FileContentTests()
 	tests := []tests{
-		{name: "ProcessInputWithHelloGoogle", args: args{color: "White", reff: "" ,fileContents: fileContent, input: []string{"Hello", "Google"}}, expected: len(asciiArt)},
-		{name: "ProcessInputEmptyInput", args: args{color: "White", reff: "" ,fileContents: strings.Split("", "\n"), input: []string{}}, expected: 0},
+		{name: "ProcessInputWithHelloGoogle", args: args{color: "White", reff: "", fileContents: fileContent, input: []string{"Hello", "Google"}}, expected: len(asciiArt)},
+		{name: "ProcessInputEmptyInput", args: args{color: "White", reff: "", fileContents: strings.Split("", "\n"), input: []string{}}, expected: 0},
 	}
 
 	for _, tt := range tests {

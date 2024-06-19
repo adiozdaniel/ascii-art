@@ -6,7 +6,7 @@ These formats are represented in banner files; standard.txt, shadow.txt and thin
 
 To better showcase this, here is an example:
 
-```
+```Bash
 # example input
 $ go run . "Hello"
 
@@ -28,15 +28,16 @@ If a character in the input string is found in the map, this character will be p
 
 This program can handle an input with printable ASCII charcters (numbers, letters, spaces, special characters) and `\n` (newline character).
 
+
 ## Installation
 
 To clone and run this program, you'll need **Git** installed on your computer.
 
 From the **command line**,
 
-```
+```Bash
 # clone this repository
-$ git clone https://learn.zone01kisumu.ke/git/adaniel/ascii-art.git
+$ git clone https://learn.zone01kisumu.ke/git/josopondo/ascii-art-color
 
 # go into the repository
 $ cd ascii-art
@@ -49,29 +50,26 @@ $ code .
 
 Once the program has been installed and opened, on the terminal, run the program using an input string of choice, like this:
 
-```
-$ go run . "It's a wonderful day!"
-```
+`$ go run . "It's a wonderful day!"`
 
-With only two arguments (program_name and input_text) the program is designed to select the standard.txt banner file as the default. Hence 
+With only one argument (input_text) the program is designed to select the standard.txt banner 
+file as the default. Hence 
 
 the graphical representation will be as per the format in standard.txt.
 
-If you want to use a different format, introduce a third argument: ***A Flag***.
+If you want to use a different format, introduce a third argument: ***A Flag***
 
-The flags for this program are only ***"-s", "-shadow", "shadow"*** for shadow.txt, and ***"-t", "-thinkertoy", "thinkertoy"*** for thinkertoy.txt. The flags
+The flags for the banner files are ***"-standard", "standard"*** for standard.txt, ***"-shadow", "shadow"*** for shadow.txt, and ***"-thinkertoy", "thinkertoy"*** for thinkertoy.txt. 
 
-will prompt the program to select the appropriate file and display the output in the correct format.
+The flags will prompt the program to select the appropriate file and display the output in the correct format.
 
 For example:
 
-```
-$ go run . "Hello\nThere" "-t"  //"-t" as flag for thinkertoy.txt
-```
+`$ go run . "Hello\nThere" "-thinkertoy"  //"-thinkertoy" as flag for thinkertoy.txt`
 
 will have the following output:
 
-```
+```Bash
 # output as per thinkertoy.txt format
 
 o  o     o o     
@@ -92,6 +90,7 @@ o-O-o o
 
 Try with more examples and watch the magic happen!!😃
 
+
 ### Handling Non-ASCII Characters
 
 In the case of special non-ASCII characters like emojis, 
@@ -101,7 +100,7 @@ print the valid ASCII characters and let you know which invalid (non-ascii) char
 
 For instance:
 
-```
+```Bash
 $ go run . "Google😋🤯🫣"
 
 # output
@@ -119,6 +118,61 @@ $ go run . "Google😋🤯🫣"
 
 **Note:**
 Special characters can only appear once.
+
+## Features
+
+### 1. Color
+
+The output can be displayed in different colors in any of the following formats:
+
+#### Text-format
+
+1. By adding a color flag and a refference string, i.e letters to be colored in the input string, like this:
+
+    - `$ go run . --color=mint ho hello`
+
+On the terminal, you should be able to see letters ***h*** and ***o*** in mint and the remaining letters in white.
+
+2. By adding only the color flag, like this:
+
+    - `$ go run . --color=mint hello`
+
+ In this case, all the letters in ***hello*** will be colored in mint. Here, the string `hello` acts as the reference string.
+
+#### RGB-format
+
+ 1. By adding an RGB color code, like this:
+
+    - `$ go run . "--color=rgb(100, 150, 180)" hello`
+
+ **Note:** The RGB color format requires that the color flag and it's RGB value be enclosed in quotation marks; as shown above. This is because brackets have a syntactical interpretation in bash. 
+
+#### Hex-format
+
+ 1. By adding hexadecimal color codes, like this:
+
+    - `$ go run . --color=#e3ee38 hello hello`
+
+ 2. This program also supports shorthand hexadecimal color codes:
+    
+    - `$ go run . --color=#ff0 hello hello`
+    - `$ go run . --color=#333 hello hello`
+
+#### HSL-format
+
+ 1. By adding HSL color codes, like this:
+    - `$ go run . "--color=hsl(176, 95%, 50%)" hello hello`
+    - `$ go run . "--color=HSL(176, 95%, 50%)" hello hello`
+
+**Note:** The HSL color format requires that the color flag and it's HSL value be enclosed in quotation marks; as shown above. This is because brackets have a syntactical interpretation in bash.
+
+
+ The ***Text-color-format*** supports a limited number of colors (22); while ***RGB-***, ***Hex-*** and ***HSL-color-formats*** have an unlimited number of colors.
+
+ ***The color flag has to be written as one argument; without spaces or with double quotes enclosing the flag. This way, the program will give an accurate output.***
+
+ Get more color combinations [here](https://htmlcolorcodes.com/) 
+
 
 ## Contributors
 

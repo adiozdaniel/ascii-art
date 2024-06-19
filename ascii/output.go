@@ -4,45 +4,11 @@ import (
 	"strings"
 )
 
-var (
-	Reset   = "\033[0m"
-	Red     = "\033[31m"
-	Green   = "\033[32m"
-	Yellow  = "\033[33m"
-	Blue    = "\033[34m"
-	Magenta = "\033[35m"
-	Cyan    = "\033[36m"
-	Gray    = "\033[37m"
-	White   = "\033[97m"
-	Orange  = "\033[38;5;208m"
-)
-
 // The function output now Writes our desired Output on the command line
-func Output(color string, reff string, input []string, fileContents []string) string {
-	switch color {
-	case "Red" , "red":
-		color = Red
-	case "Green", "green":
-		color = Green
-	case "Yellow" , "yellow":
-		color = Yellow
-	case "Blue" , "blue":
-		color = Blue
-	case "Magenta", "magneta":
-		color = Magenta
-	case "Cyan" , "cyan":
-		color = Cyan
-	case "Gray" , "gray":
-		color = Gray
-	case "White" , "white":
-		color = White
-	case "Orange" , "orange":
-		color = Orange
-	default:
-		color = White
-	}
+func Output(color, reff string, input []string, fileContents []string) string {
 	var art_work strings.Builder
 	ascii_map := AsciiMap(fileContents)
+	reset := "\033[0m"
 
 	var height int
 	for _, word := range input {
@@ -55,8 +21,9 @@ func Output(color string, reff string, input []string, fileContents []string) st
 			var builder strings.Builder
 			for _, char := range word {
 				if ascii, ok := ascii_map[char]; ok {
+					colorCode := GetColorCode(color)
 					if strings.Contains(reff, string(char)) {
-						builder.WriteString(color + fileContents[ascii+i] + Reset)
+						builder.WriteString(colorCode + fileContents[ascii+i] + reset)
 					} else {
 						builder.WriteString(fileContents[ascii+i])
 					}

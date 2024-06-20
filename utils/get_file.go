@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+//bannerFiles is a map for banner files and their paths
 var bannerFiles = map[string]string{
 	"-shadow":     "../banners/shadow.txt",
 	"shadow":      "../banners/shadow.txt",
@@ -14,6 +15,7 @@ var bannerFiles = map[string]string{
 	"standard":    "../banners/standard.txt",
 }
 
+//isBanner returns the appropriate banner file path and the banner name
 func isBanner(s []string) (string, string) {
 	ourBanner := "../banners/standard.txt"
 	flag := ""
@@ -36,8 +38,6 @@ func GetFile() (string, string) {
 	}
 
 	args := os.Args[1:]
-
-	// fmt.Println(isBanner(args))
 
 	return isBanner(args)
 }

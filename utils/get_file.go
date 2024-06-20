@@ -6,8 +6,6 @@ import (
 )
 
 var bannerFiles = map[string]string{
-	"curly":       "../banners/curly.txt",
-	"-curly":      "../banners/curly.txt",
 	"-shadow":     "../banners/shadow.txt",
 	"shadow":      "../banners/shadow.txt",
 	"-thinkertoy": "../banners/thinkertoy.txt",

@@ -7,12 +7,15 @@ import (
 	"strings"
 )
 
+//Color struct stores the color name and its ansicode equivalent
 type Color struct {
 	color, ansicode string
 }
 
+//asciiColors global slice stores Color structs
 var asciiColors []Color
 
+//init populates asciiColors slice with data
 func init() {
 	asciiColors = []Color{
 		{color: "Red", ansicode: "\033[31m"},
@@ -77,6 +80,7 @@ func GetColorCode(color string) string {
 	return "\033[97m" // Default to white
 }
 
+//getAnsiColor converts rgb color format to ansicodes
 func getAnsiColor(s string) (string, error) {
 	temp1 := strings.Split(s, "(")[1]
 	temp2 := strings.Split(temp1, ")")[0]
@@ -102,6 +106,7 @@ func getAnsiColor(s string) (string, error) {
 	return fmt.Sprintf("\033[38;2;%d;%d;%dm", red, green, blue), nil
 }
 
+//hexToRGB converts hexadecimal colors to ansicodes
 func hexToRGB(hex string) (string, error) {
 	if len(hex) == 4 {
 		hex = fmt.Sprintf("#%c%c%c%c%c%c", hex[1], hex[1], hex[2], hex[2], hex[3], hex[3])
@@ -123,6 +128,7 @@ func hexToRGB(hex string) (string, error) {
 	return fmt.Sprintf("\033[38;2;%d;%d;%dm", red, green, blue), nil
 }
 
+//getHSLColor converts hsl color formats to ansicodes
 func getHSLColor(str string) (string, error) {
 	temp1 := strings.Split(str, "(")[1]
 	temp2 := strings.Split(temp1, ")")[0]
@@ -153,6 +159,7 @@ func getHSLColor(str string) (string, error) {
 	return fmt.Sprintf("\033[38;2;%d;%d;%dm", r, g, b), nil
 }
 
+//hslToRGB helper function to calculate hsl values to rgb 
 func hslToRGB(h, s, l float64) (int, int, int) {
 	c := (1 - abs(2*l-1)) * s
 	x := c * (1 - abs(math.Mod(h/60.0, 2)-1))
@@ -176,6 +183,7 @@ func hslToRGB(h, s, l float64) (int, int, int) {
 	return int((r + m) * 255), int((g + m) * 255), int((b + m) * 255)
 }
 
+//abs helper function to always return positive numbers
 func abs(x float64) float64 {
 	if x < 0 {
 		return -x

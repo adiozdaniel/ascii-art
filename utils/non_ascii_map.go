@@ -1,5 +1,6 @@
 package utils
 
+//NonAsciiMap maps the non-printable ascii characters
 func NonAsciiMap(splitInput []string) map[rune]rune {
 	nonAsciiMap := make(map[rune]rune)
 

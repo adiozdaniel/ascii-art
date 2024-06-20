@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"os"
 	"strings"
 )
@@ -23,8 +22,7 @@ func GetInputs() map[string]string {
 	banner, flag := GetFile()
 	if flag != "" {
 		if flag != input[len(input)-1] {
-			fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
-			os.Exit(0)
+			ErrorHandler()
 		}
 		input = removeItem(input, flag)
 		inputs[banner] = flag
@@ -32,8 +30,7 @@ func GetInputs() map[string]string {
 
 	if len(input) == 2 {
 		if _, ok := inputs["color"]; !ok {
-			fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
-			os.Exit(0)
+			ErrorHandler()
 		}
 		inputs["reff"] = input[0]
 		inputs["inputStr"] = input[1]
@@ -45,8 +42,7 @@ func GetInputs() map[string]string {
 	}
 
 	if len(input) == 0 || len(input) > 2 {
-		fmt.Println("Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <letters to be colored> \"something\"")
-		os.Exit(0)
+		ErrorHandler()
 	}
 
 	inputs["output"] = "output"

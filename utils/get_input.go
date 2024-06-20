@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+//GetInputs maps each arguement and flag to its equivalent value
 func GetInputs() map[string]string {
 	var input []string = os.Args[1:]
 	inputs := make(map[string]string)

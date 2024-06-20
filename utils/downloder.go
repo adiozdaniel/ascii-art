@@ -1,14 +1,22 @@
 package utils
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"os"
+	"path/filepath"
 )
 
-func DownloadFile(url string, filepath string) error {
+func DownloadFile(url string, bannerPath string) error {
+	dir := filepath.Dir(bannerPath)
+	err := os.MkdirAll(dir, 0755)
+	if err != nil {
+		return err
+	}
+
 	// Create the file
-	file, err := os.Create(filepath)
+	file, err := os.Create(bannerPath)
 	if err != nil {
 		return err
 	}
@@ -17,7 +25,7 @@ func DownloadFile(url string, filepath string) error {
 	// Get the data
 	resp, err := http.Get(url)
 	if err != nil {
-		return err
+		return fmt.Errorf("🧐 oops, check your internet connection")
 	}
 	defer resp.Body.Close()
 

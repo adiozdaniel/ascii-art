@@ -6,7 +6,8 @@ import (
 )
 
 var bannerFiles = map[string]string{
-	"curly":    "../banners/curly.txt",
+	"curly":       "../banners/curly.txt",
+	"-curly":      "../banners/curly.txt",
 	"-shadow":     "../banners/shadow.txt",
 	"shadow":      "../banners/shadow.txt",
 	"-thinkertoy": "../banners/thinkertoy.txt",
@@ -16,7 +17,7 @@ var bannerFiles = map[string]string{
 }
 
 func isBanner(s []string) (string, string) {
-	ourBanner:= "../banners/standard.txt"
+	ourBanner := "../banners/standard.txt"
 	flag := ""
 
 	for _, val := range s {

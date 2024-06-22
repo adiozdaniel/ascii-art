@@ -44,7 +44,7 @@ var validFlags = map[string]bool{
 
 //init initializes the Input
 func init() {
-	if strings.Contains(os.Args[0], "test") {
+	if strings.Contains(os.Args[0], "test") || os.Args[1] == "-web" {
 		return
 	}
 

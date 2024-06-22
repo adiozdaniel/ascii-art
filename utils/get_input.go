@@ -1,84 +1,76 @@
 package utils
 
 import (
-	"fmt"
+	"flag"
 	"os"
 	"strings"
 )
 
-//GetInputs maps each arguement and flag to its equivalent value
-func GetInputs() map[string]string {
-	var input []string = os.Args[1:]
-	inputs := make(map[string]string)
+type Input struct {
+	Color    string
+	ColorRef string
+	Banner   string
+	isBanner bool
+	Justify  string
+	Output   string
+	Input    string
+	Args     []string
+}
 
-	color, isColor := contains(input, "--color=")
-	if isColor && strings.Contains(input[0], "--color=") {
-		input = removeItem(input, color)
-		color = strings.Split(color, "=")[1]
-		if len(color) > 2 {
-			// inputs["color"] = strings.TrimSpace(color)
-			Inputs.Color = strings.TrimSpace(color)
-		}
-	}
+var Inputs Input
 
-	// if flag != "" {
-	// 	if flag != input[len(input)-1] {
-	// 		fmt.Println("Erororor")
-	// 		ErrorHandler()
-	// 	}
-	// 	input = removeItem(input, flag)
-	// 	inputs[banner] = flag
-	// }
+//bannerFiles is a map for banner files and their paths
+var bannerFiles = map[string]string{
+	"-shadow":     "../banners/shadow.txt",
+	"shadow":      "../banners/shadow.txt",
+	"-thinkertoy": "../banners/thinkertoy.txt",
+	"thinkertoy":  "../banners/thinkertoy.txt",
+	"-standard":   "../banners/standard.txt",
+	"standard":    "../banners/standard.txt",
+}
 
-	args := Inputs.Args
-	fmt.Println(args)
+//validFlags stores allowed flags
+var validFlags = map[string]bool{
+	"--color":     true,
+	"--justify":   true,
+	"--output":    true,
+	"-shadow":     true,
+	"-thinkertoy": true,
+	"-standard":   true,
+}
 
-	if len(input) == 2 {
-		if Inputs.Color == "" {
-			ErrorHandler()
-		}
-		inputs["reff"] = input[0]
-		inputs["inputStr"] = input[1]
-	}
+//init initializes the Input
+func init() {
+	flag.StringVar(&Inputs.Color, "color", "", "specify a color")
+	flag.StringVar(&Inputs.Justify, "justify", "", "specify text justification")
+	flag.StringVar(&Inputs.Output, "output", "", "specify output file")
+	flag.StringVar(&Inputs.Input, "input", "", "specify your text")
 
-	if len(input) == 1 {
-		inputs["reff"] = input[0]
-		inputs["inputStr"] = input[0]
-	}
-
-	if len(Inputs.Args) != 1 {
+	flag.Usage = func() {
 		ErrorHandler()
 	}
 
-	return inputs
-}
-
-// removeItem function to remove a specific item from a slice
-func removeItem(input []string, item string) []string {
-	var index int
-	var found bool
-
-	for i, v := range input {
-		if v == item {
-			index = i
-			found = true
-			break
+	for _, arg := range os.Args[1:] {
+		if strings.HasPrefix(arg, "-") {
+			flagName := strings.SplitN(arg, "=", 2)[0]
+			if !validFlags[flagName] {
+				flag.Usage()
+			}
 		}
 	}
 
-	if found {
-		input = append(input[:index], input[index+1:]...)
+	flag.Parse()
+	Inputs.Args = flag.Args()
+	getFile()
+	if len(Inputs.Args) == 2 {
+		Inputs.ColorRef = Inputs.Args[0]
+		Inputs.Input = Inputs.Args[1]
+		return
 	}
 
-	return input
-}
-
-// contains function to check if a slice contains a specific item
-func contains(slice []string, item string) (string, bool) {
-	for _, v := range slice {
-		if strings.HasPrefix(v, item) {
-			return v, true
-		}
+	if len(Inputs.Args) == 1 && Inputs.Color != "" {
+		Inputs.ColorRef = Inputs.Args[0]
+		Inputs.Input = Inputs.Args[0]
+		return
 	}
-	return "", false
 }

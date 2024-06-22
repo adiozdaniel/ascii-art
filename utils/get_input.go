@@ -2,7 +2,6 @@ package utils
 
 import (
 	"flag"
-	"fmt"
 	"os"
 	"strings"
 )
@@ -66,19 +65,19 @@ func init() {
 
 	flag.Parse()
 	Inputs.Args = flag.Args()
-	fmt.Println(Inputs.Args)
+	getFile()
 
-	if len(Inputs.Args) > 1 {
+	if len(Inputs.Args) == 2 || len(Inputs.Args) == 3 {
 		Inputs.ColorRef = Inputs.Args[0]
 		Inputs.Input = Inputs.Args[1]
 		Inputs.Args = Inputs.Args[2:]
+		return
 	}
 
 	if len(Inputs.Args) == 1 && Inputs.Color != "" {
 		Inputs.ColorRef = Inputs.Args[0]
 		Inputs.Input = Inputs.Args[0]
 	}
-	getFile()
 }
 
 // GetFile returns the ascii graphic filepath to use.

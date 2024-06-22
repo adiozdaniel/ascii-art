@@ -36,7 +36,6 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 	nonAsciis := utils.NonAsciiOutput()
 	result := output + "\n\n" + nonAsciis
 
-	// fmt.Printf("You typed: %s\nYou selected: %s", textInput, fileName)
 	data := struct {
 		Body string
 	}{

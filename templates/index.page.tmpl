@@ -82,7 +82,9 @@ pre {
         <input type="submit" value="Submit">
     </form>
     <div>
-       <pre>{{.Body}}</pre> 
+       {{if .Body}}
+				<pre>{{.Body}}</pre>
+			{{end}}
     </div>
 
     <!-- Footer-Start -->

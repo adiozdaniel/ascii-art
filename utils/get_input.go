@@ -15,7 +15,8 @@ func GetInputs() map[string]string {
 		input = removeItem(input, color)
 		color = strings.Split(color, "=")[1]
 		if len(color) > 2 {
-			inputs["color"] = strings.TrimSpace(color)
+			// inputs["color"] = strings.TrimSpace(color)
+			Inputs.Color = strings.TrimSpace(color)
 		}
 	}
 
@@ -29,7 +30,7 @@ func GetInputs() map[string]string {
 	}
 
 	if len(input) == 2 {
-		if _, ok := inputs["color"]; !ok {
+		if Inputs.Color == "" {
 			ErrorHandler()
 		}
 		inputs["reff"] = input[0]

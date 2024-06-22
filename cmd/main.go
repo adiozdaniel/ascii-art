@@ -11,7 +11,7 @@ import (
 func main() {
 	fileContents := ascii.FileContents()
 	inputs := utils.GetInputs()
-	output := ascii.Output(inputs["color"],
+	output := ascii.Output(utils.Inputs.Color,
 		inputs["reff"],
 		strings.Split(strings.ReplaceAll(inputs["inputStr"],
 			"\\n", "\n"), "\n"),

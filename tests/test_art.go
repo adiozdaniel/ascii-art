@@ -1,4 +1,4 @@
-package main
+package tests
 
 const asciiArt = `      _    _          _   _  ` + "\n" +
 	`| |  | |        | | | |         ` + "\n" +

@@ -1,4 +1,4 @@
-package main
+package tests
 
 import (
 	"reflect"
@@ -9,7 +9,7 @@ import (
 )
 
 func TestAsciiMap(t *testing.T) {
-	tests := []tests {
+	tests := []tests{
 		{name: "HelloGoogle", args: args{fileContents: strings.Split(asciiArt, "\n"), input: []string{"Hello", "Google"}}, expected: map[rune]int{32: 17}},
 	}
 

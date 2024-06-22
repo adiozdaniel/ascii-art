@@ -1,5 +1,4 @@
-package main
-
+package tests
 
 // Structs used to store the data in test files
 type args struct {

@@ -3,11 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"strings"
 	"text/template"
-
-	ascii "github.com/adiozdaniel/ascii-art/ascii"
-	utils "github.com/adiozdaniel/ascii-art/utils"
 )
 
 var tmpl2 = template.Must(template.ParseFiles("index.html"))

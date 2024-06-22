@@ -21,7 +21,7 @@ type Input struct {
 var Inputs Input
 
 //bannerFiles is a map for banner files and their paths
-var bannerFiles = map[string]string{
+var BannerFiles = map[string]string{
 	"-shadow":     "../banners/shadow.txt",
 	"shadow":      "../banners/shadow.txt",
 	"-thinkertoy": "../banners/thinkertoy.txt",
@@ -104,7 +104,7 @@ func getFile() {
 	}
 
 	for _, val := range Inputs.Args {
-		if value, ok := bannerFiles[val]; ok {
+		if value, ok := BannerFiles[val]; ok {
 			ourBanner = value
 			Inputs.isBanner = true
 		} else {

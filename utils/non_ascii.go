@@ -6,9 +6,9 @@ import (
 )
 
 //NonAsciiOutput returns the non-printable ascii characters
-func NonAsciiOutput(input []string) string {
+func NonAsciiOutput() string {
 	var artWork strings.Builder
-	nonAsciiMap := NonAsciiMap(input)
+	nonAsciiMap := NonAsciiMap(Inputs.Input)
 
 	for _, char := range nonAsciiMap {
 		artWork.WriteString(string(char) + " ")

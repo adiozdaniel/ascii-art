@@ -2,7 +2,6 @@ package main
 
 import (
 	"net/http"
-	"strings"
 
 	ascii "github.com/adiozdaniel/ascii-art/ascii"
 	utils "github.com/adiozdaniel/ascii-art/utils"
@@ -21,7 +20,7 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	textInput := r.FormValue("textInput")
+	utils.Inputs.Input = r.FormValue("textInput")
 	banner := utils.BannerFiles[r.FormValue("FileName")]
 	if banner == "" {
 		utils.Inputs.Banner = utils.BannerFiles["standard"]
@@ -30,14 +29,8 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fileContents := ascii.FileContents()
-	input := utils.Inputs.Input
 	output := ascii.Output(fileContents)
-	nonAsciis := utils.NonAsciiOutput(strings.Split(input, "\n"))
-
-	fileContents := ascii.FileContents()
-	input := strings.ReplaceAll(textInput, "\\n", "\n")
-	output := ascii.Output(strings.Split(input, "\n"), fileContents)
-	nonAsciis := utils.NonAsciiOutput(strings.Split(input, "\n"))
+	nonAsciis := utils.NonAsciiOutput()
 	result := output + "\n\n" + nonAsciis
 
 	// fmt.Printf("You typed: %s\nYou selected: %s", textInput, fileName)

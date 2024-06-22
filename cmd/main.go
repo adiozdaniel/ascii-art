@@ -9,7 +9,6 @@ import (
 var tmpl2 = template.Must(template.ParseFiles("index.html"))
 
 func main() {
-
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/submit-form", submitHandler)
 

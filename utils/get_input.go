@@ -32,8 +32,10 @@ var bannerFiles = map[string]string{
 //validFlags stores allowed flags
 var validFlags = map[string]bool{
 	"--color":     true,
+	"-color":      true,
 	"--justify":   true,
 	"--output":    true,
+	"-output":     true,
 	"-shadow":     true,
 	"-thinkertoy": true,
 	"-standard":   true,
@@ -44,7 +46,9 @@ func init() {
 	flag.StringVar(&Inputs.Color, "color", "", "specify a color")
 	flag.StringVar(&Inputs.Justify, "justify", "", "specify text justification")
 	flag.StringVar(&Inputs.Output, "output", "", "specify output file")
-	flag.StringVar(&Inputs.Input, "input", "", "specify your text")
+	flag.StringVar(&Inputs.Input, "thinkertoy", "", "specify thinkertoy as your banner")
+	flag.StringVar(&Inputs.Input, "shadow", "", "specify shadow as your banner")
+	flag.StringVar(&Inputs.Input, "standard", "", "specify standard as your banner")
 
 	flag.Usage = func() {
 		ErrorHandler()
@@ -61,16 +65,35 @@ func init() {
 
 	flag.Parse()
 	Inputs.Args = flag.Args()
-	getFile()
+
 	if len(Inputs.Args) == 2 {
 		Inputs.ColorRef = Inputs.Args[0]
 		Inputs.Input = Inputs.Args[1]
-		return
 	}
 
 	if len(Inputs.Args) == 1 && Inputs.Color != "" {
 		Inputs.ColorRef = Inputs.Args[0]
 		Inputs.Input = Inputs.Args[0]
-		return
+	}
+	getFile()
+}
+
+// GetFile returns the ascii graphic filepath to use.
+func getFile() {
+	ourBanner := "../banners/standard.txt"
+	flag := ""
+
+	for _, val := range Inputs.Args {
+		if value, ok := bannerFiles[val]; ok {
+			ourBanner = value
+			flag = val
+		}
+	}
+
+	Inputs.Banner = ourBanner
+	if flag == "" {
+		Inputs.isBanner = false
+	} else {
+		Inputs.isBanner = true
 	}
 }

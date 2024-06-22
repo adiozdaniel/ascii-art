@@ -11,11 +11,7 @@ import (
 func main() {
 	fileContents := ascii.FileContents()
 	input := utils.Inputs.Input
-	output := ascii.Output(utils.Inputs.Color,
-		utils.Inputs.ColorRef,
-		strings.Split(strings.ReplaceAll(input,
-			"\\n", "\n"), "\n"),
-		fileContents)
+	output := ascii.Output(fileContents)
 	nonAsciis := utils.NonAsciiOutput(strings.Split(input, "\n"))
 
 	fmt.Print(output, nonAsciis)

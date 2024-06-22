@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ascii Art Web</title>
+    <link rel="stylesheet" href="./static/styles.css">
+</head>
+<body>
+    <h1>Ascii Art Web</h1>
+    <h2>Welcome to Ascii Art. Please type something:</h2>
+    <form action="/submit-form" method="post">
+        <input type="text" name="textInput" placeholder="Type something">
+        <br><br>
+        <label for="FileName">Choose a font:</label>
+        <select id="FileName" name="FileName">
+            <option value="Standard">Standard</option>
+            <option value="Thinkertoy">Thinkertoy</option>
+            <option value="Shadow">Shadow</option>
+        </select>
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
+    <div>
+       <pre>{{.Body}}</pre> 
+    </div>
+</body>
+</html>

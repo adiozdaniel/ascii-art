@@ -44,6 +44,10 @@ var validFlags = map[string]bool{
 
 //init initializes the Input
 func init() {
+	if strings.Contains(os.Args[0], "test") {
+		return
+	}
+
 	flag.StringVar(&Inputs.Color, "color", "", "specify a color")
 	flag.StringVar(&Inputs.Justify, "justify", "", "specify text justification")
 	flag.StringVar(&Inputs.Output, "output", "", "specify output file")

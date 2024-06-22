@@ -22,7 +22,12 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	textInput := r.FormValue("textInput")
-	utils.Inputs. := r.FormValue("FileName")
+	banner := utils.BannerFiles[r.FormValue("FileName")]
+	if banner == "" {
+		utils.Inputs.Banner = utils.BannerFiles["standard"]
+	} else {
+		utils.Inputs.Banner = utils.BannerFiles[r.FormValue("FileName")]
+	}
 
 	fileContents := ascii.FileContents()
 	input := utils.Inputs.Input

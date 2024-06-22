@@ -6,13 +6,33 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", homeHandler)
-	http.HandleFunc("/submit-form", submitHandler)
+	mux := http.NewServeMux()
 
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/" {
+			homeHandler(w, r)
+		} else if r.URL.Path == "/submit-form" {
+			submitHandler(w, r)
+		} else {
+			notFoundHandler(w, r)
+		}
+	})
+
+	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../static"))))
+	mux.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "../static/favicon.ico")
+	})
+
+	server := &http.Server{
+		Addr:    ":8080",
+		Handler: mux,
+	}
 
 	fmt.Println("Server is running on http://localhost:8080")
-	http.ListenAndServe(":8080", nil)
+	err := server.ListenAndServe()
+	if err != nil {
+		panic(err)
+	}
 }
 
 // func main() {

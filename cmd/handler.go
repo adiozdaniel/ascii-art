@@ -9,6 +9,7 @@ import (
 )
 
 var tmpl2 = template.Must(template.ParseFiles("../templates/index.page.tmpl"))
+var tmplNotFound = template.Must(template.ParseFiles("../templates/notfound.page.tmpl"))
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	err := tmpl2.Execute(w, nil)
@@ -28,7 +29,7 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 	if banner == "" {
 		utils.Inputs.Banner = utils.BannerFiles["standard"]
 	} else {
-		utils.Inputs.Banner = utils.BannerFiles[r.FormValue("FileName")]
+		utils.Inputs.Banner = banner
 	}
 
 	fileContents := ascii.FileContents()
@@ -42,5 +43,16 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 		Body: result,
 	}
 
-	tmpl2.Execute(w, data)
+	err := tmpl2.Execute(w, data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func notFoundHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotFound)
+	err := tmplNotFound.Execute(w, nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }

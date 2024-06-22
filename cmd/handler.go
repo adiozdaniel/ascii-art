@@ -1,11 +1,14 @@
 package main
 
 import (
+	"html/template"
 	"net/http"
 
 	ascii "github.com/adiozdaniel/ascii-art/ascii"
 	utils "github.com/adiozdaniel/ascii-art/utils"
 )
+
+var tmpl2 = template.Must(template.ParseFiles("index.html"))
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	err := tmpl2.Execute(w, nil)

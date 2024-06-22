@@ -3,10 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"text/template"
 )
-
-var tmpl2 = template.Must(template.ParseFiles("index.html"))
 
 func main() {
 	http.HandleFunc("/", homeHandler)

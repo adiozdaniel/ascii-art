@@ -2,6 +2,7 @@ package utils
 
 import (
 	"flag"
+	"fmt"
 	"os"
 	"strings"
 )
@@ -67,35 +68,38 @@ func init() {
 	Inputs.Args = flag.Args()
 	getFile()
 
-	if len(Inputs.Args) == 2 || len(Inputs.Args) == 3 {
+	if len(Inputs.Args) == 2 {
 		Inputs.ColorRef = Inputs.Args[0]
 		Inputs.Input = Inputs.Args[1]
 		Inputs.Args = Inputs.Args[2:]
 		return
 	}
 
-	if len(Inputs.Args) == 1 && Inputs.Color != "" {
+	if len(Inputs.Args) == 1 {
 		Inputs.ColorRef = Inputs.Args[0]
 		Inputs.Input = Inputs.Args[0]
+	}
+
+	if len(Inputs.Args) > 2 {
+		ErrorHandler()
 	}
 }
 
 // GetFile returns the ascii graphic filepath to use.
 func getFile() {
 	ourBanner := "../banners/standard.txt"
-	flag := ""
+	args := []string{}
 
 	for _, val := range Inputs.Args {
 		if value, ok := bannerFiles[val]; ok {
 			ourBanner = value
-			flag = val
+			Inputs.isBanner = true
+		} else {
+			args = append(args, val)
 		}
 	}
 
+	Inputs.Args = args
 	Inputs.Banner = ourBanner
-	if flag == "" {
-		Inputs.isBanner = false
-	} else {
-		Inputs.isBanner = true
-	}
+	fmt.Println()
 }

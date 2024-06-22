@@ -32,11 +32,11 @@ func validateBanner(banner []byte) bool {
 
 // FileContents returns a slice of strings containing ascii artwork characters
 func FileContents() []string {
-	fileName, _ := utils.GetFile()
+	fileName := utils.Inputs.Banner
 	contents, err := os.ReadFile(fileName)
 	var ans string
 
-	if err != nil || !validateBanner(contents){
+	if err != nil || !validateBanner(contents) {
 		fmt.Printf("'%v' is either missing or corrupted\nDo you wish to download it (yes/no): ", fileName[11:])
 		fmt.Scan(&ans)
 		if ans == "yes" {

@@ -21,15 +21,14 @@ func GetInputs() map[string]string {
 		}
 	}
 
-	banner, flag := GetFile()
-	if flag != "" {
-		if flag != input[len(input)-1] {
-			fmt.Println("Erororor")
-			ErrorHandler()
-		}
-		input = removeItem(input, flag)
-		inputs[banner] = flag
-	}
+	// if flag != "" {
+	// 	if flag != input[len(input)-1] {
+	// 		fmt.Println("Erororor")
+	// 		ErrorHandler()
+	// 	}
+	// 	input = removeItem(input, flag)
+	// 	inputs[banner] = flag
+	// }
 
 	args := Inputs.Args
 	fmt.Println(args)

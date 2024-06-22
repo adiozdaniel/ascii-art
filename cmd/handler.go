@@ -8,7 +8,7 @@ import (
 	utils "github.com/adiozdaniel/ascii-art/utils"
 )
 
-var tmpl2 = template.Must(template.ParseFiles("index.page.tmpl"))
+var tmpl2 = template.Must(template.ParseFiles("../templates/index.page.tmpl"))
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	err := tmpl2.Execute(w, nil)

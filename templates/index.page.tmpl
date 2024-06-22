@@ -6,37 +6,38 @@
     <title>Ascii Art Web</title>
     <style>
         body {
-  background-color: powderblue;
+  background-color: #333;
   font-family: Arial, sans-serif;
   text-align: center;
   margin: 0;
   padding: 0;
+  color: bisque
 }
 
 h1, h2 {
-  color: #333;
+  color: bisque;
 }
 
 form {
-  background-color: white;
+  background-color: rgb(106, 104, 104);
   padding: 20px;
   margin: 50px auto;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   display: inline-block;
 }
 
 input[type="text"], select {
   padding: 10px;
   margin: 10px 0;
-  width: calc(100% - 22px);
+  width: calc(100% - 20px);
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
 input[type="submit"] {
-  background-color: #4CAF50;
-  color: white;
+  background-color: #235525;
+  color: rgb(233, 230, 230);
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
@@ -44,11 +45,11 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-  background-color: #45a049;
+  background-color: #4c9850;
 }
 
 pre {
-  background-color: #f4f4f4;
+  background-color: rgb(106, 104, 104);
   padding: 20px;
   margin: 20px auto;
   border-radius: 8px;
@@ -60,7 +61,8 @@ pre {
 </head>
 <body>
     <h1>Ascii Art Web</h1>
-    <h2>Welcome to Ascii Art. Please type something:</h2>
+    <h2>The Web Version of Ascii-art-web</h2>
+    <p>Ascii-art-web consists in creating and running a server, in which it will be possible to use a web GUI (graphical user interface) version of your last project, ascii-art.</p>
     <form action="/submit-form" method="POST">
         <label for="textInput">Enter text:</label>
         <input type="text" id="textInput" name="textInput" placeholder="Type something">

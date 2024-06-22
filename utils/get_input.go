@@ -90,6 +90,10 @@ func getFile() {
 	ourBanner := "../banners/standard.txt"
 	args := []string{}
 
+	if len(Inputs.Args) == 0 {
+		ErrorHandler()
+	}
+
 	if len(Inputs.Args) == 1 {
 		Inputs.Banner = ourBanner
 		return

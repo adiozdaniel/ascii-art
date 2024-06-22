@@ -20,7 +20,7 @@ type Input struct {
 
 var Inputs Input
 
-//bannerFiles is a map for banner files and their paths
+//BannerFiles is a map for banner files and their paths
 var BannerFiles = map[string]string{
 	"-shadow":     "../banners/shadow.txt",
 	"shadow":      "../banners/shadow.txt",

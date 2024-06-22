@@ -1,7 +1,6 @@
 package ascii
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/adiozdaniel/ascii-art/utils"
@@ -16,8 +15,6 @@ func Output(fileContents []string) string {
 	var color = utils.Inputs.Color
 	var reff = utils.Inputs.ColorRef
 	var word = utils.Inputs.Input
-
-	fmt.Println(word)
 
 	for i := 0; i < height; i++ {
 		var builder strings.Builder

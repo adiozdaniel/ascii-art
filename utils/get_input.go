@@ -2,6 +2,7 @@ package utils
 
 import (
 	"flag"
+	"fmt"
 	"os"
 	"strings"
 )
@@ -65,10 +66,12 @@ func init() {
 
 	flag.Parse()
 	Inputs.Args = flag.Args()
+	fmt.Println(Inputs.Args)
 
-	if len(Inputs.Args) == 2 {
+	if len(Inputs.Args) > 1 {
 		Inputs.ColorRef = Inputs.Args[0]
 		Inputs.Input = Inputs.Args[1]
+		Inputs.Args = Inputs.Args[2:]
 	}
 
 	if len(Inputs.Args) == 1 && Inputs.Color != "" {

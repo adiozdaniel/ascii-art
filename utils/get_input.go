@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"os"
 	"strings"
 )
@@ -23,11 +24,15 @@ func GetInputs() map[string]string {
 	banner, flag := GetFile()
 	if flag != "" {
 		if flag != input[len(input)-1] {
+			fmt.Println("Erororor")
 			ErrorHandler()
 		}
 		input = removeItem(input, flag)
 		inputs[banner] = flag
 	}
+
+	args := Inputs.Args
+	fmt.Println(args)
 
 	if len(input) == 2 {
 		if Inputs.Color == "" {
@@ -42,13 +47,9 @@ func GetInputs() map[string]string {
 		inputs["inputStr"] = input[0]
 	}
 
-	if len(input) == 0 || len(input) > 2 {
+	if len(Inputs.Args) != 1 {
 		ErrorHandler()
 	}
-
-	inputs["output"] = "output"
-	inputs["justify"] = "justify"
-	inputs["reverse"] = "reverse"
 
 	return inputs
 }

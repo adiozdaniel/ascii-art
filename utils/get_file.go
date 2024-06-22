@@ -1,9 +1,5 @@
 package utils
 
-import (
-	"os"
-)
-
 //bannerFiles is a map for banner files and their paths
 var bannerFiles = map[string]string{
 	"-shadow":     "../banners/shadow.txt",
@@ -31,11 +27,5 @@ func isBanner(s []string) (string, string) {
 
 // GetFile returns the ascii graphic filepath to use.
 func GetFile() (string, string) {
-	if len(os.Args) == 1 || len(os.Args) > 5 {
-		ErrorHandler()
-	}
-
-	args := os.Args[1:]
-
-	return isBanner(args)
+	return isBanner(Inputs.Args)
 }

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	ascii "github.com/adiozdaniel/ascii-art/ascii"
-	utils "github.com/adiozdaniel/ascii-art/utils"
+	"github.com/adiozdaniel/ascii-art/ascii"
+	"github.com/adiozdaniel/ascii-art/utils"
 )
 
 func main() {

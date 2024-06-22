@@ -9,9 +9,19 @@ func main() {
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/submit-form", submitHandler)
 
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+
 	fmt.Println("Server is running on http://localhost:8080")
 	http.ListenAndServe(":8080", nil)
 }
+
+// func main() {
+// 	http.HandleFunc("/", homeHandler)
+// 	http.HandleFunc("/submit-form", submitHandler)
+
+// 	fmt.Println("Server is running on http://localhost:8080")
+// 	http.ListenAndServe(":8080", nil)
+// }
 
 // package main
 

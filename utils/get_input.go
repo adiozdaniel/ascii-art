@@ -2,7 +2,6 @@ package utils
 
 import (
 	"flag"
-	"fmt"
 	"os"
 	"strings"
 )
@@ -120,5 +119,4 @@ func getFile() {
 
 	Inputs.Args = args
 	Inputs.Banner = ourBanner
-	fmt.Println()
 }

@@ -8,7 +8,7 @@ import (
 
 func LogOutput(output string) {
 	// Open the log file in append mode, create it if it doesn't exist
-	file, err := os.OpenFile(Inputs.Output, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile(Inputs.Output, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		fmt.Println("Error opening log file:", err)
 		return

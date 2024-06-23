@@ -9,7 +9,7 @@ func RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path == "/" {
 			handlers.HomeHandler(w, r)
-		} else if r.URL.Path == "/submit-form" {
+		} else if r.URL.Path == "/ascii-art" {
 			handlers.SubmitHandler(w, r)
 		} else {
 			handlers.NotFoundHandler(w, r)

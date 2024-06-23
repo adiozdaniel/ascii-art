@@ -9,6 +9,7 @@ import (
 
 var tmpl2 = template.Must(template.ParseFiles("../templates/index.page.tmpl"))
 var tmplNotFound = template.Must(template.ParseFiles("../templates/notfound.page.tmpl"))
+var tmplBadRequest = template.Must(template.ParseFiles("../templates/badrequest.page.tmpl"))
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	err := tmpl2.Execute(w, nil)
@@ -19,9 +20,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, `
-		<h1>"🧐 Can I treat this as an invalid request?"</h1>
-		`, http.StatusMethodNotAllowed)
+		http.Error(w, "🧐 Can I treat this as an invalid request?", http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -31,13 +30,6 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		utils.Inputs.Banner = utils.BannerFiles["standard"]
 	} else {
 		utils.Inputs.Banner = utils.BannerFiles[r.FormValue("FileName")]
-	}
-
-	if utils.Inputs.Input == "" {
-		http.Error(w, `
-		<h1>"🧐 Can I treat this as an invalid request?"</h1>
-		`, http.StatusMethodNotAllowed)
-		return
 	}
 
 	fileContents := ascii.FileContents()
@@ -58,6 +50,14 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
 	err := tmplNotFound.Execute(w, nil)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusNotFound)
+	}
+}
+
+func BadRequestHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusForbidden)
+	err := tmplBadRequest.Execute(w, nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusForbidden)
 	}
 }

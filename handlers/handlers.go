@@ -19,7 +19,9 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		http.Error(w, `
+		<h1>"🧐 Can I treat this as an invalid request?"</h1>
+		`, http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -29,6 +31,13 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		utils.Inputs.Banner = utils.BannerFiles["standard"]
 	} else {
 		utils.Inputs.Banner = utils.BannerFiles[r.FormValue("FileName")]
+	}
+
+	if utils.Inputs.Input == "" {
+		http.Error(w, `
+		<h1>"🧐 Can I treat this as an invalid request?"</h1>
+		`, http.StatusMethodNotAllowed)
+		return
 	}
 
 	fileContents := ascii.FileContents()

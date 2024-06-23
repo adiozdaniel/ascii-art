@@ -158,20 +158,13 @@
         <input type="text" id="textInput" name="textInput" placeholder="Type something">
         <br><br>
         <label for="FileName">Choose a font:</label>
-        <div class="radio-btns">
-            <br>
-            <div><input type="radio" id="standard" name="FileName" value="standard" checked>
-            <label for="standard">Standard</label></div>
-            
-            <br>
-            <div><input type="radio" id="thinkertoy" name="FileName" value="thinkertoy">
-            <label for="thinkertoy">Thinkertoy</label></div>
-            
-            <br>
-            <div><input type="radio" id="shadow" name="FileName" value="shadow">
-            <label for="shadow">Shadow</label></div>
-            
-        </div>
+        <!-- <div class="radio-btns"> -->
+        <br>
+            <select id="FileName" name="FileName">
+                <option value="standard">Standard</option>
+                <option value="thinkertoy">Thinkertoy</option>
+                <option  value="shadow">Shadow</option>
+            </select>            
         <br><br>
         <input type="submit" value="Submit">
     </form>

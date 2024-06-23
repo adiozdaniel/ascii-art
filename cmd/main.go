@@ -28,9 +28,15 @@ func main() {
 			panic(err)
 		}
 	}
+
 	fileContents := ascii.FileContents()
 	output := ascii.Output(fileContents)
 	nonAsciis := utils.NonAsciiOutput()
+
+	if utils.Inputs.Output != "" {
+		utils.LogOutput(output)
+		return
+	}
 
 	fmt.Print(output, nonAsciis)
 }

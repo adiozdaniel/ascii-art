@@ -18,6 +18,9 @@
         h1, h2 {
             color: bisque;
         }
+        p {
+            padding:0 80px;
+        }
 
         svg {
             padding: 10px;
@@ -42,6 +45,11 @@
             text-align: left;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 1);
             border-radius: 8px;
+        }
+
+        .radio-btns:hover {
+            box-shadow: 0 3px 20px rgba(0, 0, 0, 1);
+            background-color: rgb(25, 25, 25);
         }
 
         .radio-btns label {
@@ -142,8 +150,9 @@
         <h1>Ascii Art Web</h1>
     </a>
     <h2>ASCII-Graphics Tool</h2>
-    <p>This program is designed to graphically represent an input string using different ASCII formats.</p>
-    <p>These formats are represented in banner files; standard.txt, shadow.txt and thinkertoy.txt.</p>
+    <p>This program is designed to graphically represent an input string using different ASCII formats. These formats are represented in banner files; 'standard.txt', 'shadow.txt' and 'thinkertoy.txt'.</p>
+    <p>You can try it by entering text below and pressing enter. You can also use the submit button below.</p>
+    <p>Remember to scroll down to find your text in A colorful output.</p>
     <form action="/ascii-art" method="POST">
         <label for="textInput">Enter text:</label>
         <input type="text" id="textInput" name="textInput" placeholder="Type something">

@@ -34,6 +34,7 @@ func main() {
 	nonAsciis := utils.NonAsciiOutput()
 
 	if utils.Inputs.Output != "" {
+		fmt.Printf("😋 writing.... '%s'. To check output, kindly use: `cat %s | cat -e`\n", utils.Inputs.Input, utils.Inputs.Output)
 		utils.LogOutput(output)
 		return
 	}

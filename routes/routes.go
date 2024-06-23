@@ -21,7 +21,7 @@ func RegisterRoutes(mux *http.ServeMux) {
 			handlers.HomeHandler(w, r)
 		} else if utils.Inputs.Input != "" && r.FormValue("FileName") != "" {
 			handlers.SubmitHandler(w, r)
-		} else if utils.Inputs.Input == "" || r.FormValue("FileName") == "" {
+		} else if utils.Inputs.Input == "" && r.URL.Path == "/ascii-art" {
 			handlers.BadRequestHandler(w, r)
 		} else {
 			handlers.NotFoundHandler(w, r)

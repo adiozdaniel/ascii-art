@@ -104,8 +104,6 @@ func getFile() {
 	}
 
 	ourBanner := "../banners/standard.txt"
-	args := []string{}
-
 	if len(Inputs.Args) == 1 {
 		Inputs.Banner = ourBanner
 		return
@@ -113,14 +111,12 @@ func getFile() {
 
 	if !Inputs.isBanner {
 		if value, ok := BannerFiles[Inputs.Args[len(Inputs.Args)-1]]; ok {
-			ourBanner = value
+			Inputs.Banner = value
 			Inputs.isBanner = true
-			args = Inputs.Args[:len(Inputs.Args)-1]
-		} else {
-			args = Inputs.Args
+			Inputs.Args = Inputs.Args[:len(Inputs.Args)-1]
+			return
 		}
 	}
 
-	Inputs.Args = args
 	Inputs.Banner = ourBanner
 }

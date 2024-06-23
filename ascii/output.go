@@ -8,6 +8,10 @@ import (
 
 // The function output now Writes our desired Output on the command line
 func Output(fileContents []string) string {
+	if utils.Inputs.Input == "" {
+		utils.ErrorHandler()
+	}
+
 	var art_work strings.Builder
 	var ascii_map = AsciiMap(fileContents)
 	var reset = "\033[0m"

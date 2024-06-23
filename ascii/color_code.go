@@ -153,13 +153,11 @@ func getHSLColor(str string) (string, error) {
 	}
 	l /= 100
 
-	// if s < 0
-
 	r, g, b := hslToRGB(h, s, l)
 	return fmt.Sprintf("\033[38;2;%d;%d;%dm", r, g, b), nil
 }
 
-//hslToRGB helper function to calculate hsl values to rgb 
+//hslToRGB helper function to calculate hsl values to rgb
 func hslToRGB(h, s, l float64) (int, int, int) {
 	c := (1 - abs(2*l-1)) * s
 	x := c * (1 - abs(math.Mod(h/60.0, 2)-1))

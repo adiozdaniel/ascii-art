@@ -5,28 +5,17 @@ import (
 	"net/http"
 	"os"
 
-	ascii "github.com/adiozdaniel/ascii-art/ascii"
-	utils "github.com/adiozdaniel/ascii-art/utils"
+	"github.com/adiozdaniel/ascii-art/ascii"
+	"github.com/adiozdaniel/ascii-art/routes"
+	"github.com/adiozdaniel/ascii-art/utils"
 )
 
 func main() {
 	if os.Args[1] == "-web" {
 		mux := http.NewServeMux()
 
-		mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-			if r.URL.Path == "/" {
-				homeHandler(w, r)
-			} else if r.URL.Path == "/submit-form" {
-				submitHandler(w, r)
-			} else {
-				notFoundHandler(w, r)
-			}
-		})
-
-		mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../static"))))
-		mux.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
-			http.ServeFile(w, r, "../static/favicon.ico")
-		})
+		// Use the routes package to set up your routes
+		routes.RegisterRoutes(mux)
 
 		server := &http.Server{
 			Addr:    ":8080",

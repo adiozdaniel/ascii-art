@@ -106,15 +106,10 @@ func getFile() {
 		return
 	}
 
-	for _, val := range Inputs.Args {
-		if !Inputs.isBanner {
-			if value, ok := BannerFiles[val]; ok {
-				ourBanner = value
-				Inputs.isBanner = true
-			}
-		} else {
-			args = append(args, val)
-		}
+	if value, ok := BannerFiles[Inputs.Args[len(Inputs.Args)-1]]; ok {
+		ourBanner = value
+		Inputs.isBanner = true
+		args = Inputs.Args[:len(Inputs.Args)-1]
 	}
 
 	Inputs.Args = args

@@ -8,7 +8,7 @@ import (
 	ascii "github.com/adiozdaniel/ascii-art/ascii"
 )
 
-// TestOutput tests if the output by checking the length
+// TestOutput tests if the output is meeting requirements by checking the length of its output
 func TestOutput(t *testing.T) {
 	fileContent := FileContentTests()
 	tests := []tests{

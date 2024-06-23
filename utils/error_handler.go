@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+//constant used as an output value in ErrorHandler
 const (
 	usage = "Usage: go run . [OPTION] [STRING] [BANNER]\n\nEX: go run . --color=<color> <letters to be colored> \"something\" standard"
 )

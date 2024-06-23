@@ -6,7 +6,7 @@ import (
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
-// The function output now Writes our desired Output on the command line
+// Output compiles the banner characters to form the desired ascii art work
 func Output(fileContents []string) string {
 	if utils.Inputs.Input == "" {
 		utils.ErrorHandler()

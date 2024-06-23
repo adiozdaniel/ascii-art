@@ -14,7 +14,6 @@ func main() {
 	if os.Args[1] == "-web" {
 		mux := http.NewServeMux()
 
-		// Use the routes package to set up your routes
 		routes.RegisterRoutes(mux)
 
 		server := &http.Server{

@@ -7,6 +7,7 @@ import (
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
+//RegisterRoutes manages the routes
 func RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		utils.Inputs.Input = r.FormValue("textInput")

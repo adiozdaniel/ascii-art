@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+//Input holds all the data passed around in the application
 type Input struct {
 	Color    string
 	ColorRef string
@@ -17,6 +18,7 @@ type Input struct {
 	Args     []string
 }
 
+//Inputs is a placeholder for the Input struct
 var Inputs Input
 
 //BannerFiles is a map for banner files and their paths

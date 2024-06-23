@@ -24,14 +24,6 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	utils.Inputs.Input = r.FormValue("textInput")
-	banner := utils.BannerFiles[r.FormValue("FileName")]
-	if banner == "" {
-		utils.Inputs.Banner = utils.BannerFiles["standard"]
-	} else {
-		utils.Inputs.Banner = utils.BannerFiles[r.FormValue("FileName")]
-	}
-
 	fileContents := ascii.FileContents()
 	output := ascii.Output(fileContents)
 	nonAsciis := utils.NonAsciiOutput()

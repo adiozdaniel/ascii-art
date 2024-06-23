@@ -73,6 +73,11 @@ func init() {
 
 	flag.Parse()
 	Inputs.Args = flag.Args()
+
+	if Inputs.Banner != "" {
+		Inputs.isBanner = true
+	}
+
 	getFile()
 
 	if len(Inputs.Args) == 2 {
@@ -94,22 +99,26 @@ func init() {
 
 // GetFile returns the ascii graphic filepath to use.
 func getFile() {
-	ourBanner := "../banners/standard.txt"
-	args := []string{}
-
 	if len(Inputs.Args) == 0 {
 		ErrorHandler()
 	}
+
+	ourBanner := "../banners/standard.txt"
+	args := []string{}
 
 	if len(Inputs.Args) == 1 {
 		Inputs.Banner = ourBanner
 		return
 	}
 
-	if value, ok := BannerFiles[Inputs.Args[len(Inputs.Args)-1]]; ok {
-		ourBanner = value
-		Inputs.isBanner = true
-		args = Inputs.Args[:len(Inputs.Args)-1]
+	if !Inputs.isBanner {
+		if value, ok := BannerFiles[Inputs.Args[len(Inputs.Args)-1]]; ok {
+			ourBanner = value
+			Inputs.isBanner = true
+			args = Inputs.Args[:len(Inputs.Args)-1]
+		} else {
+			args = Inputs.Args
+		}
 	}
 
 	Inputs.Args = args

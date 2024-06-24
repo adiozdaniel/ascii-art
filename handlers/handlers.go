@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/adiozdaniel/ascii-art/utils"
 	"html/template"
 	"net/http"
 
@@ -11,6 +12,7 @@ import (
 var tmpl2 = template.Must(template.ParseFiles("../templates/index.page.tmpl"))
 var tmplNotFound = template.Must(template.ParseFiles("../templates/notfound.page.tmpl"))
 var tmplBadRequest = template.Must(template.ParseFiles("../templates/badrequest.page.tmpl"))
+var tmplInternalError = template.Must(template.ParseFiles("../templates/badrequest.page.tmpl"))
 
 //HomeHandler handles the homepage route '/'
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
@@ -26,6 +28,8 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "🧐 Can I treat this as an invalid request?", http.StatusMethodNotAllowed)
 		return
 	}
+
+	utils.Inputs.IsWeb = true
 
 	fileContents := ascii.FileContents()
 	output := ascii.Output(fileContents)

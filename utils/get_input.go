@@ -15,6 +15,7 @@ type Input struct {
 	Justify    string
 	Output     string
 	Input      string
+	IsWeb      bool
 	Args       []string
 }
 

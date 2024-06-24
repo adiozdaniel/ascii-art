@@ -115,6 +115,12 @@
             text-align: left;
         }
 
+        .ascii{
+            overflow-y: scroll;
+            width: 80%;
+            margin: 30px auto;
+        }
+
         .authors {
             margin: 50px 0 10px 0;
         }
@@ -182,7 +188,7 @@
         <br><br>
         <input type="submit" value="Submit">
     </form>
-    <div>
+    <div class="ascii">
         {{if .Body}}
             <pre>{{.Body}}</pre>
         {{end}}

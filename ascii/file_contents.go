@@ -31,11 +31,14 @@ func validateBanner(banner []byte) bool {
 }
 
 // FileContents returns a slice of strings containing ascii artwork characters
-func FileContents() []string {
+func FileContents() ([]string, error) {
 	fileName := utils.Inputs.BannerPath
 	contents, err := os.ReadFile(fileName)
 
 	if err != nil || !validateBanner(contents) {
+		if utils.Inputs.IsWeb {
+			return []string{}, fmt.Errorf("not valid")
+		}
 		fmt.Print("Be patient while downloading...\n")
 		time.Sleep(1 * time.Second)
 		err := utils.DownloadFile("https://learn.zone01kisumu.ke/git/root/public/raw/branch/master/subjects/ascii-art/"+fileName[11:], fileName)
@@ -68,5 +71,5 @@ func FileContents() []string {
 	} else {
 		fileContents = strings.Split(string(contents), "\n")
 	}
-	return fileContents
+	return fileContents, nil
 }

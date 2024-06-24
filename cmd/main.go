@@ -12,6 +12,7 @@ import (
 
 func main() {
 	if os.Args[1] == "-web" {
+		utils.Inputs.IsWeb = true
 		mux := http.NewServeMux()
 
 		routes.RegisterRoutes(mux)
@@ -28,7 +29,7 @@ func main() {
 		}
 	}
 
-	fileContents := ascii.FileContents()
+	fileContents, _ := ascii.FileContents()
 	output := ascii.Output(fileContents)
 	nonAsciis := utils.NonAsciiOutput()
 

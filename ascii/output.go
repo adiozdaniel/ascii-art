@@ -30,9 +30,13 @@ func Output(fileContents []string) string {
 			var builder strings.Builder
 			for _, char := range word {
 				if ascii, ok := ascii_map[char]; ok {
-					colorCode := GetColorCode(color)
-					if strings.Contains(reff, string(char)) {
-						builder.WriteString(colorCode + fileContents[ascii+i] + reset)
+					if color != "" {
+						colorCode := GetColorCode(color)
+						if strings.Contains(reff, string(char)) {
+							builder.WriteString(colorCode + fileContents[ascii+i] + reset)
+						} else {
+							builder.WriteString(fileContents[ascii+i])
+						}
 					} else {
 						builder.WriteString(fileContents[ascii+i])
 					}

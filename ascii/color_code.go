@@ -5,6 +5,8 @@ import (
 	"math"
 	"strconv"
 	"strings"
+
+	"github.com/adiozdaniel/ascii-art/utils"
 )
 
 //Color struct stores the color name and its ansicode equivalent
@@ -46,8 +48,8 @@ func init() {
 
 // GetColorCode gets the ANSI code of the input color after iterating through the structs in asciiColors
 func GetColorCode(color string) string {
-	if len(color) == 0 {
-		return ""
+	if len(color) < 3 {
+		utils.ErrorHandler()
 	}
 
 	if strings.HasPrefix(color, "#") {
@@ -77,6 +79,7 @@ func GetColorCode(color string) string {
 		}
 	}
 
+	utils.ErrorHandler()
 	return ""
 }
 

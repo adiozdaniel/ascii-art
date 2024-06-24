@@ -16,7 +16,7 @@ func Output(fileContents []string) string {
 	var ascii_map = AsciiMap(fileContents)
 	var reset = "\033[0m"
 	var height int = 8
-	var color = utils.Inputs.Color
+	var color = strings.TrimSpace(utils.Inputs.Color)
 	var reff = utils.Inputs.ColorRef
 	var input = strings.Split(strings.ReplaceAll(utils.Inputs.Input, "\\n", "\n"), "\n")
 

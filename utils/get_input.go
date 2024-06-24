@@ -83,9 +83,19 @@ func init() {
 	flag.Parse()
 	Inputs.Args = flag.Args()
 
+	for _, arg := range os.Args[1:] {
+		if Inputs.Output == arg {
+			ErrorHandler("output")
+		}
+		if Inputs.Color == arg {
+			ErrorHandler("fatal")
+		}
+	}
+
 	if Inputs.BannerPath != "" {
 		Inputs.isBanner = true
 	}
+
 	getFile()
 
 	if len(Inputs.Args) == 2 && Inputs.Color != "" {
@@ -119,6 +129,10 @@ func getFile() {
 		ErrorHandler("fatal")
 	}
 	if Inputs.Output != "" && len(Inputs.Args) == 0 {
+		ErrorHandler("output")
+	}
+
+	if Inputs.Output != "" && !strings.HasSuffix(Inputs.Output, ".txt") {
 		ErrorHandler("output")
 	}
 

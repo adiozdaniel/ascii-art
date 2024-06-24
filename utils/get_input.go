@@ -65,9 +65,9 @@ func init() {
 	}
 
 	for _, arg := range os.Args[1:] {
-		if strings.HasPrefix(arg, "-") {
-			flagName := strings.SplitN(arg, "=", 2)[0]
-			flagValue := strings.SplitN(arg, "=", 2)[1]
+		if strings.HasPrefix(arg, "-") && strings.Contains(arg, "=") {
+			flagValue := strings.Split(arg, "=")[1]
+			flagName := strings.Split(arg, "=")[0]
 			if !validFlags[flagName] {
 				flag.Usage()
 			}
@@ -94,6 +94,10 @@ func init() {
 	}
 
 	if Inputs.Output != "" && (len(Inputs.Args) != 1) {
+		ErrorHandler("output")
+	}
+
+	if Inputs.Output != "" && Inputs.Color != "" {
 		ErrorHandler("output")
 	}
 

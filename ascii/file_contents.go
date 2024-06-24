@@ -34,36 +34,36 @@ func validateBanner(banner []byte) bool {
 func FileContents() []string {
 	fileName := utils.Inputs.BannerPath
 	contents, err := os.ReadFile(fileName)
-	var ans string
+	// var ans string
 
 	if err != nil || !validateBanner(contents) {
-		fmt.Printf("'%v' is either missing or corrupted\nDo you wish to download it (yes/no): ", fileName[11:])
-		fmt.Scan(&ans)
-		if ans == "yes" {
-			fmt.Print("Be patient while downloading...\n")
-			time.Sleep(1 * time.Second)
-			err := utils.DownloadFile("https://learn.zone01kisumu.ke/git/root/public/raw/branch/master/subjects/ascii-art/"+fileName[11:], fileName)
-			if err != nil {
-				fmt.Println(err)
-				os.Remove(fileName)
-				os.Exit(0)
-			}
-			fmt.Print("\033[2A")
-			fmt.Print("\033[2K")
-			fmt.Print("\033[G")
-			fmt.Print("\033[2K")
-			fmt.Println("Download Complete, This is awesome right?😎😎😎")
-			fmt.Print("\033[2K")
-			time.Sleep(2 * time.Second)
-			fmt.Print("\033[1A")
-			fmt.Print("\033[2K")
-			fmt.Print("\033[1A")
-			fmt.Print("\033[2K")
-
-		} else {
-			fmt.Println("The banner file is missing or corrupted!")
+		// fmt.Printf("'%v' is either missing or corrupted\nDo you wish to download it (yes/no): ", fileName[11:])
+		// fmt.Scan(&ans)
+		// if ans == "yes" {
+		fmt.Print("Be patient while downloading...\n")
+		time.Sleep(1 * time.Second)
+		err := utils.DownloadFile("https://learn.zone01kisumu.ke/git/root/public/raw/branch/master/subjects/ascii-art/"+fileName[11:], fileName)
+		if err != nil {
+			fmt.Println(err)
+			os.Remove(fileName)
 			os.Exit(0)
 		}
+		fmt.Print("\033[2A")
+		fmt.Print("\033[2K")
+		fmt.Print("\033[G")
+		fmt.Print("\033[2K")
+		fmt.Println("Download Complete, This is awesome right?😎😎😎")
+		fmt.Print("\033[2K")
+		time.Sleep(2 * time.Second)
+		fmt.Print("\033[1A")
+		fmt.Print("\033[2K")
+		// fmt.Print("\033[1A")
+		// fmt.Print("\033[2K")
+
+		// } else {
+		// 	fmt.Println("The banner file is missing or corrupted!")
+		// 	os.Exit(0)
+		// }
 		contents, err = os.ReadFile(fileName)
 		if err != nil {
 			fmt.Println("not succesfull")

@@ -54,7 +54,7 @@ $ code .
 
 The program supports three interfaces:
 
-### Command Line Interface (CLI)
+### 1. Command Line Interface (CLI)
 
 Once the program has been installed and opened, on the terminal, run the program using an input string of choice, like this:
 
@@ -99,7 +99,7 @@ o-O-o o
 Try with more examples and watch the magic happen!!😃
 
 
-### Handling Non-ASCII Characters
+#### Handling Non-ASCII Characters
 
 In the case of special non-ASCII characters like emojis, 
 the program is designed to 
@@ -127,15 +127,20 @@ $ go run . "Google😋🤯🫣"
 **Note:**
 Special characters can only appear once.
 
-### File Interface
+### 2. File Interface
 
 The program transfers the ascii output to a given file as in the example below:
 
 `go run . --output=sample.txt "Hello World!"`
 
-### Web Interface
+### 3. Web Interface
 
-The program 
+The program displays a graphical Web Interface.
+
+To start the web server:
+- Navigate to /cmd: `cd cmd`
+- Start the server by entering: `go run . -web`
+The server will start as long as the first arguement is '-web' flag.
 
 ## Features
 
@@ -190,9 +195,6 @@ On the terminal, you should be able to see letters ***h*** and ***o*** in mint a
  ***The color flag has to be written as one argument; without spaces or with double quotes enclosing the flag. This way, the program will give an accurate output.***
 
  Get more color combinations [here](https://htmlcolorcodes.com/) 
-
-### 2. 
-
 
 ## Contributors
 

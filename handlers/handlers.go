@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	ascii "github.com/adiozdaniel/ascii-art/ascii"
-	utils "github.com/adiozdaniel/ascii-art/utils"
 	"html/template"
 	"net/http"
+
+	ascii "github.com/adiozdaniel/ascii-art/ascii"
 )
 
 //html files passed as templates
@@ -29,8 +29,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 
 	fileContents := ascii.FileContents()
 	output := ascii.Output(fileContents)
-	nonAsciis := utils.NonAsciiOutput()
-	result := output + "\n\n" + nonAsciis
+	result := output
 
 	data := struct {
 		Body string
@@ -52,9 +51,9 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 
 //BadRequestHandler handles the bad requests routes
 func BadRequestHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusForbidden)
+	w.WriteHeader(http.StatusBadRequest)
 	err := tmplBadRequest.Execute(w, nil)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusForbidden)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 }

@@ -17,7 +17,7 @@ func LogOutput(output string) {
 
 	cleanOutput := removeANSICodes(output)
 
-	_, err = file.WriteString(cleanOutput + "\n")
+	_, err = file.WriteString(cleanOutput)
 	if err != nil {
 		fmt.Println("Error writing to log file:", err)
 	}

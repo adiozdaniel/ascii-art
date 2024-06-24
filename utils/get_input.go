@@ -47,7 +47,7 @@ var validFlags = map[string]bool{
 //init initializes the Input
 func init() {
 	if len(os.Args) < 2 {
-		ErrorHandler()
+		ErrorHandler("fatal")
 	}
 
 	if strings.Contains(os.Args[0], "test") || os.Args[1] == "-web" {
@@ -62,7 +62,7 @@ func init() {
 	flag.StringVar(&Inputs.Input, "standard", "", "specify standard as your banner")
 
 	flag.Usage = func() {
-		ErrorHandler()
+		ErrorHandler("fatal")
 	}
 
 	for _, arg := range os.Args[1:] {
@@ -88,7 +88,7 @@ func init() {
 	getFile()
 
 	if Inputs.Output != "" && len(Inputs.Args) > 1 {
-		ErrorHandler()
+		ErrorHandler("output")
 	}
 
 	fmt.Println(Inputs.Output)
@@ -106,14 +106,14 @@ func init() {
 	}
 
 	if len(Inputs.Args) > 2 {
-		ErrorHandler()
+		ErrorHandler("fatal")
 	}
 }
 
 // GetFile returns the ascii graphic filepath to use.
 func getFile() {
 	if len(Inputs.Args) == 0 {
-		ErrorHandler()
+		ErrorHandler("fatal")
 	}
 
 	ourBanner := "../banners/standard.txt"
@@ -121,10 +121,6 @@ func getFile() {
 		Inputs.Banner = ourBanner
 		return
 	}
-
-	// if Inputs.isBanner {
-	// 	return
-	// }
 
 	if !Inputs.isBanner {
 		if value, ok := BannerFiles[Inputs.Args[len(Inputs.Args)-1]]; ok {

@@ -1,8 +1,12 @@
 # ASCII-Graphics Tool
 
+## Description
+
 This program is designed to graphically represent an input string using different ASCII formats.
 
 These formats are represented in banner files; standard.txt, shadow.txt and thinkertoy.txt.
+
+This program can handle an input with printable ASCII charcters (numbers, letters, spaces, special characters) and `\n` (newline character).
 
 To better showcase this, here is an example:
 
@@ -20,13 +24,13 @@ $ go run . "Hello"
 
 ```
 
+## Implementation
+
 To correctly graphically represent this input, we mapped the contents of the banner files and checked the input string against the map.
 
 If a character in the input string is found in the map, this character will be printed.
 
 **😃Fun fact: Each ASCII character in the banner files has a height of 8.**
-
-This program can handle an input with printable ASCII charcters (numbers, letters, spaces, special characters) and `\n` (newline character).
 
 
 ## Installation
@@ -46,7 +50,11 @@ $ cd ascii-art
 $ code .
 ```
 
-## How To Use
+## Usage
+
+The program supports three interfaces:
+
+### Command Line Interface (CLI)
 
 Once the program has been installed and opened, on the terminal, run the program using an input string of choice, like this:
 
@@ -119,6 +127,16 @@ $ go run . "Google😋🤯🫣"
 **Note:**
 Special characters can only appear once.
 
+### File Interface
+
+The program transfers the ascii output to a given file as in the example below:
+
+`go run . --output=sample.txt "Hello World!"`
+
+### Web Interface
+
+The program 
+
 ## Features
 
 ### 1. Color
@@ -172,6 +190,8 @@ On the terminal, you should be able to see letters ***h*** and ***o*** in mint a
  ***The color flag has to be written as one argument; without spaces or with double quotes enclosing the flag. This way, the program will give an accurate output.***
 
  Get more color combinations [here](https://htmlcolorcodes.com/) 
+
+### 2. 
 
 
 ## Contributors

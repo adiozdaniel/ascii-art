@@ -2,6 +2,7 @@ package utils
 
 import (
 	"flag"
+	"fmt"
 	"os"
 	"strings"
 )
@@ -81,6 +82,12 @@ func init() {
 	}
 
 	getFile()
+
+	if Inputs.Output != "" && len(Inputs.Args) > 1 {
+		ErrorHandler()
+	}
+
+	fmt.Println(Inputs.Output)
 
 	if len(Inputs.Args) == 2 {
 		Inputs.ColorRef = Inputs.Args[0]

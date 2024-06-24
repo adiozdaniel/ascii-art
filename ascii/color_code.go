@@ -47,7 +47,7 @@ func init() {
 // GetColorCode gets the ANSI code of the input color after iterating through the structs in asciiColors
 func GetColorCode(color string) string {
 	if len(color) == 0 {
-		return "\033[97m" // Default to white
+		return ""
 	}
 
 	if strings.HasPrefix(color, "#") {
@@ -77,7 +77,7 @@ func GetColorCode(color string) string {
 		}
 	}
 
-	return "\033[97m" // Default to white
+	return ""
 }
 
 //getAnsiColor converts rgb color format to ansicodes

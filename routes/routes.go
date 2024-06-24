@@ -13,9 +13,9 @@ func RegisterRoutes(mux *http.ServeMux) {
 		utils.Inputs.Input = r.FormValue("textInput")
 		banner := utils.BannerFiles[r.FormValue("FileName")]
 		if banner == "" {
-			utils.Inputs.Banner = utils.BannerFiles["standard"]
+			utils.Inputs.BannerPath = utils.BannerFiles["standard"]
 		} else {
-			utils.Inputs.Banner = utils.BannerFiles[r.FormValue("FileName")]
+			utils.Inputs.BannerPath = utils.BannerFiles[r.FormValue("FileName")]
 		}
 
 		if r.URL.Path == "/" {

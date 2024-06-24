@@ -32,7 +32,7 @@ func validateBanner(banner []byte) bool {
 
 // FileContents returns a slice of strings containing ascii artwork characters
 func FileContents() []string {
-	fileName := utils.Inputs.Banner
+	fileName := utils.Inputs.BannerPath
 	contents, err := os.ReadFile(fileName)
 	var ans string
 

@@ -2,7 +2,6 @@ package utils
 
 import (
 	"flag"
-	"fmt"
 	"os"
 	"strings"
 )
@@ -87,17 +86,15 @@ func init() {
 
 	getFile()
 
-	if Inputs.Output != "" && len(Inputs.Args) > 1 {
-		ErrorHandler("output")
-	}
-
-	fmt.Println(Inputs.Output)
-
-	if len(Inputs.Args) == 2 {
+	if len(Inputs.Args) == 2 && Inputs.Color != "" {
 		Inputs.ColorRef = Inputs.Args[0]
 		Inputs.Input = Inputs.Args[1]
 		Inputs.Args = Inputs.Args[2:]
 		return
+	}
+
+	if Inputs.Output != "" && (len(Inputs.Args) != 1) {
+		ErrorHandler("output")
 	}
 
 	if len(Inputs.Args) == 1 {
@@ -105,7 +102,7 @@ func init() {
 		Inputs.Input = Inputs.Args[0]
 	}
 
-	if len(Inputs.Args) > 2 {
+	if len(Inputs.Args) > 1 {
 		ErrorHandler("fatal")
 	}
 }

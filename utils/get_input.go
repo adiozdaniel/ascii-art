@@ -68,7 +68,11 @@ func init() {
 	for _, arg := range os.Args[1:] {
 		if strings.HasPrefix(arg, "-") {
 			flagName := strings.SplitN(arg, "=", 2)[0]
+			flagValue := strings.SplitN(arg, "=", 2)[1]
 			if !validFlags[flagName] {
+				flag.Usage()
+			}
+			if flagValue == "" {
 				flag.Usage()
 			}
 		}
@@ -117,6 +121,10 @@ func getFile() {
 		Inputs.Banner = ourBanner
 		return
 	}
+
+	// if Inputs.isBanner {
+	// 	return
+	// }
 
 	if !Inputs.isBanner {
 		if value, ok := BannerFiles[Inputs.Args[len(Inputs.Args)-1]]; ok {

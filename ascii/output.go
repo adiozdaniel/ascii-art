@@ -1,7 +1,6 @@
 package ascii
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/adiozdaniel/ascii-art/utils"
@@ -27,7 +26,7 @@ func Output(fileContents []string) string {
 		} else {
 			height = 8
 		}
-		fmt.Println(word)
+
 		for i := 0; i < height; i++ {
 			var builder strings.Builder
 			for _, char := range word {

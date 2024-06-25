@@ -56,6 +56,8 @@ func init() {
 		ErrorHandler("fatal")
 	}
 
+	
+
 	if strings.Contains(os.Args[0], "test") || os.Args[1] == "-web" {
 		Inputs.IsWeb = true
 		return

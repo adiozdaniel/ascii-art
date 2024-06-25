@@ -64,6 +64,7 @@ func BadRequestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+//ServerError handles server failures that result to status 500
 func ServerError(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusInternalServerError)
 	err := tmplInternalError.Execute(w, nil)
@@ -71,4 +72,3 @@ func ServerError(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "🧐 Internal Server Error", http.StatusInternalServerError)
 	}
 }
-

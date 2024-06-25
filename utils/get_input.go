@@ -2,6 +2,7 @@ package utils
 
 import (
 	"flag"
+	"fmt"
 	"os"
 	"strings"
 )
@@ -66,6 +67,8 @@ func init() {
 	flag.StringVar(&Inputs.Output, "output", "", "specify output file")
 
 	flag.Usage = func() {
+		fmt.Print("\033[1A")
+		fmt.Print("\033[2K")
 		ErrorHandler("fatal")
 	}
 
@@ -74,10 +77,10 @@ func init() {
 			flagValue := strings.Split(arg, "=")[1]
 			flagName := strings.Split(arg, "=")[0]
 			if !validFlags[flagName] {
-				flag.Usage()
+				ErrorHandler("fatal")
 			}
 			if flagValue == "" {
-				flag.Usage()
+				ErrorHandler("fatal")
 			}
 		}
 	}
@@ -89,7 +92,7 @@ func init() {
 		if Inputs.Output != "" && Inputs.Output == arg {
 			ErrorHandler("output")
 		}
-		if Inputs.Color !="" && Inputs.Color == arg {
+		if Inputs.Color != "" && Inputs.Color == arg {
 			ErrorHandler("fatal")
 		}
 	}

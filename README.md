@@ -4,7 +4,7 @@
 
 This program is designed to graphically represent an input string using different ASCII formats.
 
-These formats are represented in banner files:
+These formats are represented in the following banner files:
 
 - standard.txt
 - shadow.txt
@@ -12,7 +12,7 @@ These formats are represented in banner files:
 
 This program can handle an input with printable ASCII charcters (numbers, letters, spaces, special characters) and `\n` (newline character).
 
-To better showcase this, here is an example:
+Here is an example:
 
 ```Bash
 # example input
@@ -66,21 +66,21 @@ The program supports three interfaces:
 
 `$ go run . "It's a wonderful day!"`
 
-With only one argument (input_text) the program is designed to select the standard.txt banner 
+With only one argument the program is designed to select the standard.txt banner 
 file as the default. Hence the graphical representation will be as per the format in standard.txt.
 
-If you want to use a different format, introduce a third argument:
+If you want to use a different format, introduce a second argument; a flag.
 
 The flags for the banner files are: 
-- ***"standard"*** for standard.txt
-- ***"shadow"*** for shadow.txt
-- ***"thinkertoy"*** for thinkertoy.txt.
+- ***"standard"*** or ***"-standard"*** for standard.txt
+- ***"shadow"*** or ***"-shadow"*** for shadow.txt
+- ***"thinkertoy"*** or ***"-thinkertoy"*** for thinkertoy.txt.
 
 The flags will prompt the program to select the appropriate file and display the output in the correct format.
 
 For example:
 
-`$ go run . "Hello\nThere" "thinkertoy"  //"thinkertoy" as flag for thinkertoy.txt`
+`$ go run . "Hello\nThere" "-thinkertoy"  //"-thinkertoy" as flag for thinkertoy.txt`
 
 will have the following output:
 
@@ -130,13 +130,15 @@ $ go run . "Google😋🤯🫣"
 ```
 
 **Note:**
-Special characters can only appear once.
+These characters can only appear once.
 
 ### 2. File Interface
 
-The program transfers the ascii output to a given file as in the example below:
+The program writes the ascii output to a given file, when run like this:
 
 `go run . --output=sample.txt "Hello World!"`
+
+Take a good look at ***--output=sample.txt***. Here we have to use the flag ***--output=*** and specify the ***text*** file we are writing to, in the exact same format as in this example. 
 
 ### 3. Web Interface
 
@@ -145,7 +147,7 @@ The program displays a graphical Web Interface.
 To start the web server:
 - Navigate to /cmd: `cd cmd`
 - Start the server by entering: `go run . -web`
-The server will start as long as the first arguement is '-web' flag.
+The server will start as long as the first argument is '-web' flag.
 
 ## Features
 
@@ -207,7 +209,7 @@ On the terminal, you should be able to see letters ***h*** and ***o*** in mint a
 
 The program currently supports three interfaces. You are thus adviced to **explicitly declare** your intended use, or else, you may encounter wrong output or wrong usage errors.
 
-***For instance:***
+For instance:
 
 `go run .` will throw a full fledged usage error like:
 
@@ -217,7 +219,7 @@ Usage: go run . [OPTION] [STRING]
 EX: go run . --color=<color> <letters to be colored> "something" standard
 ```
 
-But explicitly telling your program the intend like `go run . --output=something` will lead you to output features.
+But explicitly telling your program the intended use, such as `go run . --output=sample.txt something`, will prompt the program to use the file interface.
 
 ## Authors
 

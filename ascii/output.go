@@ -9,7 +9,7 @@ import (
 // Output compiles the banner characters to form the desired ascii art work
 func Output(fileContents []string) string {
 	if utils.Inputs.Input == "" {
-		utils.ErrorHandler("outputs")
+		return ""
 	}
 
 	var art_work strings.Builder

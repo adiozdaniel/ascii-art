@@ -56,8 +56,6 @@ func init() {
 		ErrorHandler("fatal")
 	}
 
-	
-
 	if strings.Contains(os.Args[0], "test") || os.Args[1] == "-web" {
 		Inputs.IsWeb = true
 		return
@@ -88,10 +86,10 @@ func init() {
 	Inputs.Args = flag.Args()
 
 	for _, arg := range os.Args[1:] {
-		if Inputs.Output == arg {
+		if Inputs.Output != "" && Inputs.Output == arg {
 			ErrorHandler("output")
 		}
-		if Inputs.Color == arg {
+		if Inputs.Color !="" && Inputs.Color == arg {
 			ErrorHandler("fatal")
 		}
 	}

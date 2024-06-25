@@ -11,7 +11,7 @@ import (
 //TestAsciiMap tests fileContents output
 func TestAsciiMap(t *testing.T) {
 	tests := []tests{
-		{name: "HelloGoogle", args: args{fileContents: strings.Split(asciiArt, "\n"), input: []string{"Hello", "Google"}}, expected: map[rune]int{32: 17}},
+		{name: "HelloGoogle", args: args{fileContents: strings.Split(asciiArt, "\n"), input: "Hello\nGoogle"}, expected: map[rune]int{32: 17}},
 	}
 
 	for _, tt := range tests {

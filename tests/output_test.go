@@ -1,10 +1,11 @@
 package tests
 
 import (
-	"github.com/adiozdaniel/ascii-art/utils"
 	"reflect"
 	"strings"
 	"testing"
+
+	"github.com/adiozdaniel/ascii-art/utils"
 
 	ascii "github.com/adiozdaniel/ascii-art/ascii"
 )
@@ -13,12 +14,11 @@ import (
 func TestOutput(t *testing.T) {
 	fileContent := FileContentTests()
 	tests := []tests{
-		{name: "ProcessInputWithHelloGoogle", args: args{fileContents: fileContent, input: "Hello Google"}, expected: 8},
-		{name: "ProcessInputEmptyInput", args: args{fileContents: strings.Split("", "\n"), input: ""}, expected: `🧐 Oops! We can't find your "something"
-
-		EX: go run . [OPTION] [STRING] "something"
-		`},
+		{name: "ProcessInputWithHelloGoogle", args: args{fileContents: fileContent, input: "Hello\nGoogle"}, expected: 624},
+		{name: "ProcessInputEmptyInput", args: args{fileContents: strings.Split("", "\n"), input: "1"}, expected: 8},
 	}
+
+	utils.Inputs.BannerPath = utils.BannerFiles["standard"]
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

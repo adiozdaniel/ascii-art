@@ -35,12 +35,10 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	output := ascii.Output(fileContents)
-	result := output
-
 	data := struct {
 		Body string
 	}{
-		Body: result,
+		Body: output,
 	}
 
 	tmpl2.Execute(w, data)

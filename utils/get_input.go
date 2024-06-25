@@ -2,6 +2,7 @@ package utils
 
 import (
 	"flag"
+	"fmt"
 	"os"
 	"strings"
 )
@@ -24,15 +25,15 @@ var Inputs Input
 
 //BannerFiles is a map for banner files and their paths
 var BannerFiles = map[string]string{
-	"-shadow":      "../banners/shadow.txt",
-	"--shadow":     "../banners/shadow.txt",
-	"shadow":       "../banners/shadow.txt",
-	"-thinkertoy":  "../banners/thinkertoy.txt",
-	"--thinkertoy": "../banners/thinkertoy.txt",
-	"thinkertoy":   "../banners/thinkertoy.txt",
-	"-standard":    "../banners/standard.txt",
-	"--standard":   "../banners/standard.txt",
-	"standard":     "../banners/standard.txt",
+	// "-shadow":      "../banners/shadow.txt",
+	// "--shadow":     "../banners/shadow.txt",
+	"shadow": "../banners/shadow.txt",
+	// "-thinkertoy":  "../banners/thinkertoy.txt",
+	// "--thinkertoy": "../banners/thinkertoy.txt",
+	"thinkertoy": "../banners/thinkertoy.txt",
+	// "-standard":    "../banners/standard.txt",
+	// "--standard":   "../banners/standard.txt",
+	"standard": "../banners/standard.txt",
 }
 
 //validFlags stores allowed flags
@@ -57,6 +58,7 @@ func init() {
 	}
 
 	if strings.Contains(os.Args[0], "test") || os.Args[1] == "-web" {
+		Inputs.IsWeb = true
 		return
 	}
 
@@ -83,7 +85,7 @@ func init() {
 
 	flag.Parse()
 	Inputs.Args = flag.Args()
-
+	fmt.Println(Inputs.Args)
 	for _, arg := range os.Args[1:] {
 		if Inputs.Output == arg {
 			ErrorHandler("output")

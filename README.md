@@ -4,7 +4,11 @@
 
 This program is designed to graphically represent an input string using different ASCII formats.
 
-These formats are represented in banner files; standard.txt, shadow.txt and thinkertoy.txt.
+These formats are represented in banner files:
+
+- standard.txt
+- shadow.txt
+- thinkertoy.txt.
 
 This program can handle an input with printable ASCII charcters (numbers, letters, spaces, special characters) and `\n` (newline character).
 
@@ -56,24 +60,27 @@ The program supports three interfaces:
 
 ### 1. Command Line Interface (CLI)
 
-Once the program has been installed and opened, on the terminal, run the program using an input string of choice, like this:
+- Once the program has been installed, navigate to the `cmd` directory.
+
+- Run the program using an input string of choice, like this:
 
 `$ go run . "It's a wonderful day!"`
 
 With only one argument (input_text) the program is designed to select the standard.txt banner 
-file as the default. Hence 
+file as the default. Hence the graphical representation will be as per the format in standard.txt.
 
-the graphical representation will be as per the format in standard.txt.
+If you want to use a different format, introduce a third argument:
 
-If you want to use a different format, introduce a third argument: ***A Flag***
-
-The flags for the banner files are ***"-standard", "standard"*** for standard.txt, ***"-shadow", "shadow"*** for shadow.txt, and ***"-thinkertoy", "thinkertoy"*** for thinkertoy.txt. 
+The flags for the banner files are: 
+- ***"standard"*** for standard.txt
+- ***"shadow"*** for shadow.txt
+- ***"thinkertoy"*** for thinkertoy.txt.
 
 The flags will prompt the program to select the appropriate file and display the output in the correct format.
 
 For example:
 
-`$ go run . "Hello\nThere" "-thinkertoy"  //"-thinkertoy" as flag for thinkertoy.txt`
+`$ go run . "Hello\nThere" "thinkertoy"  //"thinkertoy" as flag for thinkertoy.txt`
 
 will have the following output:
 
@@ -102,9 +109,7 @@ Try with more examples and watch the magic happen!!😃
 #### Handling Non-ASCII Characters
 
 In the case of special non-ASCII characters like emojis, 
-the program is designed to 
-
-print the valid ASCII characters and let you know which invalid (non-ascii) characters were skipped.
+the program is designed to print the valid ASCII characters and let you know which invalid (non-ascii) characters were skipped.
 
 For instance:
 
@@ -144,7 +149,7 @@ The server will start as long as the first arguement is '-web' flag.
 
 ## Features
 
-### 1. Color
+### Color
 
 The output can be displayed in different colors in any of the following formats:
 
@@ -194,9 +199,27 @@ On the terminal, you should be able to see letters ***h*** and ***o*** in mint a
 
  ***The color flag has to be written as one argument; without spaces or with double quotes enclosing the flag. This way, the program will give an accurate output.***
 
- Get more color combinations [here](https://htmlcolorcodes.com/) 
+ Get more color combinations [here](https://htmlcolorcodes.com/)
 
-## Contributors
+**Note:** This feature is only available in the CLI mode.
+
+## Disclaimer
+
+The program currently supports three interfaces. You are thus adviced to **explicitly declare** your intended use, or else, you may encounter wrong output or wrong usage errors.
+
+***For instance:***
+
+`go run .` will throw a full fledged usage error like:
+
+```Bash
+Usage: go run . [OPTION] [STRING]
+
+EX: go run . --color=<color> <letters to be colored> "something" standard
+```
+
+But explicitly telling your program the intend like `go run . --output=something` will lead you to output features.
+
+## Authors
 
 <table>
 <tr>

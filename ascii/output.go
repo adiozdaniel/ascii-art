@@ -1,6 +1,8 @@
 package ascii
 
 import (
+	"fmt"
+	"os"
 	"strings"
 
 	"github.com/adiozdaniel/ascii-art/utils"
@@ -10,6 +12,11 @@ import (
 func Output(fileContents []string) string {
 	if utils.Inputs.Input == "" {
 		return ""
+	}
+
+	if utils.Inputs.Input == "\\n" && !utils.Inputs.IsWeb {
+		fmt.Println()
+		os.Exit(0)
 	}
 
 	var art_work strings.Builder

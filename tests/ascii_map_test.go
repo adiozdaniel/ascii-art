@@ -8,7 +8,7 @@ import (
 	ascii "github.com/adiozdaniel/ascii-art/ascii"
 )
 
-//TestAsciiMap tests fileContents output
+// TestAsciiMap tests fileContents output
 func TestAsciiMap(t *testing.T) {
 	tests := []tests{
 		{name: "HelloGoogle", args: args{fileContents: strings.Split(asciiArt, "\n"), input: "Hello\nGoogle"}, expected: map[rune]int{32: 17}},

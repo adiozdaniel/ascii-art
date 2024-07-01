@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-//NonAsciiOutput returns the non-printable ascii characters
+// NonAsciiOutput returns the non-printable ascii characters
 func NonAsciiOutput() string {
 	var artWork strings.Builder
 	nonAsciiMap := NonAsciiMap(Inputs.Input)

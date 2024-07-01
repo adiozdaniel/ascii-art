@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-//Input holds all the data passed around in the application
+// Input holds all the data passed around in the application
 type Input struct {
 	Color      string
 	ColorRef   string
@@ -20,10 +20,10 @@ type Input struct {
 	Args       []string
 }
 
-//Inputs is a placeholder for the Input struct
+// Inputs is a placeholder for the Input struct
 var Inputs Input
 
-//BannerFiles is a map for banner files and their paths
+// BannerFiles is a map for banner files and their paths
 var BannerFiles = map[string]string{
 	"-shadow":      "../banners/shadow.txt",
 	"--shadow":     "../banners/shadow.txt",
@@ -36,7 +36,7 @@ var BannerFiles = map[string]string{
 	"standard":     "../banners/standard.txt",
 }
 
-//validFlags stores allowed flags
+// validFlags stores allowed flags
 var validFlags = map[string]bool{
 	"--color":      true,
 	"-color":       true,
@@ -51,7 +51,7 @@ var validFlags = map[string]bool{
 	"--standard":   true,
 }
 
-//init initializes the Input
+// init initializes the Input
 func init() {
 	if len(os.Args) < 2 {
 		ErrorHandler("fatal")

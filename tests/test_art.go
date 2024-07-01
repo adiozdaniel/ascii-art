@@ -1,6 +1,6 @@
 package tests
 
-//asciiArt is used as a test case
+// asciiArt is used as a test case
 const asciiArt = `      _    _          _   _  ` + "\n" +
 	`| |  | |        | | | |         ` + "\n" +
 	`| |__| |   ___  | | | |   ___   ` + "\n" +

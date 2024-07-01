@@ -1,6 +1,6 @@
 package ascii
 
-//AsciiMap maps the indices of the characters in the banner file
+// AsciiMap maps the indices of the characters in the banner file
 func AsciiMap(fileContents []string) map[rune]int {
 	ascii_map := make(map[rune]int)
 	ascii := 32

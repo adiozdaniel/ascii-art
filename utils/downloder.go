@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 )
 
-//DownloadFile downloads the banner file and/or creates the banner directory
+// DownloadFile downloads the banner file and/or creates the banner directory
 func DownloadFile(url string, bannerPath string) error {
 	dir := filepath.Dir(bannerPath)
 	err := os.MkdirAll(dir, 0755)

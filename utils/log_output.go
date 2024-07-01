@@ -6,7 +6,7 @@ import (
 	"regexp"
 )
 
-//LogOutput writes ascii art to a given file
+// LogOutput writes ascii art to a given file
 func LogOutput(output string) {
 	file, err := os.OpenFile(Inputs.Output, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
@@ -23,7 +23,7 @@ func LogOutput(output string) {
 	}
 }
 
-//removeANSICodes removes the ansci escape codes
+// removeANSICodes removes the ansci escape codes
 func removeANSICodes(input string) string {
 	re := regexp.MustCompile(`\x1b\[[0-9;]*m`)
 	return re.ReplaceAllString(input, "")

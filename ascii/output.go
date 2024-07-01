@@ -36,11 +36,14 @@ func Output(fileContents []string) string {
 
 		for i := 0; i < height; i++ {
 			var builder strings.Builder
-			for _, char := range word {
+			for j, char := range word {
 				if ascii, ok := ascii_map[char]; ok {
 					if color != "" {
 						colorCode := GetColorCode(color)
-						if strings.Contains(reff, string(char)) {
+
+						if containsReff() && j >= indexes.startIndex && j <= indexes.endIndex {
+							builder.WriteString(colorCode + fileContents[ascii+i] + reset)
+						} else if strings.Contains(reff, string(char)) && indexes.startIndex == 0 {
 							builder.WriteString(colorCode + fileContents[ascii+i] + reset)
 						} else {
 							builder.WriteString(fileContents[ascii+i])
@@ -56,4 +59,36 @@ func Output(fileContents []string) string {
 	}
 
 	return art_work.String()
+}
+
+// contains hosts the startIndex and endIndex for substrings
+type contains struct {
+	startIndex, endIndex int
+}
+
+// indexes is a placeholder for the struct
+var indexes contains
+
+// containsReff checks for color substrings and initialises contains struct
+func containsReff() bool {
+	var reff = utils.Inputs.ColorRef
+	var input = utils.Inputs.Input
+	var x, y = len(input), len(reff)
+
+	if y > x {
+		return false
+	}
+
+	for i := 0; i < x; i++ {
+		lastIndex := y + i
+		if lastIndex > x {
+			lastIndex = x - 1
+		}
+		if input[i:lastIndex] == reff {
+			indexes.startIndex = i
+			indexes.endIndex = lastIndex
+			return true
+		}
+	}
+	return false
 }

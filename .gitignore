@@ -1,3 +1,4 @@
 # ignore all text files
 
+*.mod
 *.txt

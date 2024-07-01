@@ -42,7 +42,6 @@ func Output(fileContents []string) string {
 						colorCode := GetColorCode(color)
 
 						if containsReff() && j >= indexes.startIndex && j <= indexes.endIndex {
-							fmt.Println("here")
 							builder.WriteString(colorCode + fileContents[ascii+i] + reset)
 						} else if strings.Contains(reff, string(char)) && indexes.startIndex == 0 {
 							builder.WriteString(colorCode + fileContents[ascii+i] + reset)

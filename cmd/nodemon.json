@@ -1,5 +1,5 @@
 {
-  "watch": ["../"],
+  "watch": ["../**/*"],
   "ext": "go",
   "exec": "go run ."
 }

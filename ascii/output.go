@@ -86,16 +86,10 @@ func containsReff() bool {
 	for i, line := range input {
 		var x, y = len(line), len(reff)
 
-		for j := 0; j < len(line); j++ {
-			lastIndex := y + j
-
-			if lastIndex > x {
-				lastIndex = x - 1
-			}
-
-			if line[j:lastIndex] == reff {
+		for j := 0; j <= x-y; j++ {
+			if line[j:j+y] == reff {
 				indexes.startIndex[line] = j
-				indexes.endIndex[line] = lastIndex
+				indexes.endIndex[line] = j + y
 				indexes.lineIndex[i] = line
 				hasReff = true
 			}

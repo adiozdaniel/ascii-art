@@ -8,6 +8,14 @@ import (
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
+// variables declaration
+var art_work strings.Builder
+var reset = "\033[0m"
+var height int = 8
+var color = strings.TrimSpace(utils.Inputs.Color)
+var reff = utils.Inputs.ColorRef
+var input = strings.Split(strings.ReplaceAll(utils.Inputs.Input, "\\n", "\n"), "\n")
+
 // Output compiles the banner characters to form the desired ascii art work
 func Output(fileContents []string) string {
 	if utils.Inputs.Input == "" {
@@ -19,15 +27,8 @@ func Output(fileContents []string) string {
 		os.Exit(0)
 	}
 
-	var art_work strings.Builder
 	var ascii_map = AsciiMap(fileContents)
-	var reset = "\033[0m"
-	var height int = 8
-	var color = strings.TrimSpace(utils.Inputs.Color)
-	var reff = utils.Inputs.ColorRef
-	var input = strings.Split(strings.ReplaceAll(utils.Inputs.Input, "\\n", "\n"), "\n")
-
-	for _, word := range input {
+	for index, word := range input {
 		if word == "" {
 			height = 1
 		} else {
@@ -41,9 +42,13 @@ func Output(fileContents []string) string {
 					if color != "" {
 						colorCode := GetColorCode(color)
 
-						if containsReff(word) && j >= indexes.startIndex && j < indexes.endIndex {
-							builder.WriteString(colorCode + fileContents[ascii+i] + reset)
-						} else if strings.Contains(reff, string(char)) && indexes.startIndex == 0 {
+						if containsReff() {
+							if word == indexes.lineIndex[index] && j >= indexes.startIndex[word] && j < indexes.endIndex[word] {
+								builder.WriteString(colorCode + fileContents[ascii+i] + reset)
+							} else {
+								builder.WriteString(fileContents[ascii+i])
+							}
+						} else if strings.Contains(reff, string(char)) {
 							builder.WriteString(colorCode + fileContents[ascii+i] + reset)
 						} else {
 							builder.WriteString(fileContents[ascii+i])
@@ -63,32 +68,39 @@ func Output(fileContents []string) string {
 
 // contains hosts the startIndex and endIndex for substrings
 type contains struct {
-	startIndex, endIndex int
+	startIndex, endIndex map[string]int
+	lineIndex            map[int]string
 }
 
 // indexes is a placeholder for the struct
-var indexes contains
+var indexes = contains{
+	startIndex: make(map[string]int),
+	endIndex:   make(map[string]int),
+	lineIndex:  make(map[int]string),
+}
 
 // containsReff checks for color substrings and initialises contains struct
-func containsReff(word string) bool {
-	var reff = utils.Inputs.ColorRef
-	var input = word
-	var x, y = len(input), len(reff)
+func containsReff() bool {
+	var hasReff bool
 
-	if y > x {
-		return false
+	for i, line := range input {
+		var x, y = len(line), len(reff)
+
+		for j := 0; j < len(line); j++ {
+			lastIndex := y + j
+
+			if lastIndex > x {
+				lastIndex = x - 1
+			}
+
+			if line[j:lastIndex] == reff {
+				indexes.startIndex[line] = j
+				indexes.endIndex[line] = lastIndex
+				indexes.lineIndex[i] = line
+				hasReff = true
+			}
+		}
 	}
 
-	for i := 0; i < x; i++ {
-		lastIndex := y + i
-		if lastIndex > x {
-			lastIndex = x - 1
-		}
-		if input[i:lastIndex] == reff {
-			indexes.startIndex = i
-			indexes.endIndex = lastIndex
-			return true
-		}
-	}
-	return false
+	return hasReff
 }

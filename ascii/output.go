@@ -9,25 +9,54 @@ import (
 )
 
 // variables declaration
-var art_work strings.Builder
 var reset = "\033[0m"
-var height int = 8
 var color = strings.TrimSpace(utils.Inputs.Color)
 var reff = utils.Inputs.ColorRef
 var input = strings.Split(strings.ReplaceAll(utils.Inputs.Input, "\\n", "\n"), "\n")
+var art_work strings.Builder
+var height int = 8
 
 // Output compiles the banner characters to form the desired ascii art work
 func Output(fileContents []string) string {
-	if utils.Inputs.Input == "" {
+	if strings.TrimSpace(utils.Inputs.Input) == "" {
 		return ""
 	}
 
-	if utils.Inputs.Input == "\\n" && !utils.Inputs.IsWeb {
+	var ascii_map = AsciiMap(fileContents)
+
+	if utils.Inputs.IsWeb {
+		processWebInput(ascii_map, fileContents)
+	} else {
+		processTerminalInput(ascii_map, fileContents)
+	}
+
+	return art_work.String()
+}
+
+// processWebInput processes input from the web
+func processWebInput(ascii_map map[rune]int, fileContents []string) {
+	for _, line := range strings.Split(utils.Inputs.Input, "\n") {
+		for i := 0; i < height; i++ {
+			var builder strings.Builder
+			for _, char := range line {
+				if ascii, ok := ascii_map[char]; ok {
+					builder.WriteString(fileContents[ascii+i])
+				}
+			}
+			art_work.WriteString(builder.String())
+			art_work.WriteRune('\n')
+		}
+		art_work.WriteRune('\n')
+	}
+}
+
+// processTerminalInput processes input from the internal
+func processTerminalInput(ascii_map map[rune]int, fileContents []string) {
+	if utils.Inputs.Input == "\\n" {
 		fmt.Println()
 		os.Exit(0)
 	}
 
-	var ascii_map = AsciiMap(fileContents)
 	for index, word := range input {
 		if word == "" {
 			height = 1
@@ -62,8 +91,6 @@ func Output(fileContents []string) string {
 			art_work.WriteRune('\n')
 		}
 	}
-
-	return art_work.String()
 }
 
 // contains hosts the startIndex and endIndex for substrings

@@ -41,7 +41,7 @@ func Output(fileContents []string) string {
 					if color != "" {
 						colorCode := GetColorCode(color)
 
-						if containsReff() && j >= indexes.startIndex && j < indexes.endIndex {
+						if containsReff(word) && j >= indexes.startIndex && j < indexes.endIndex {
 							builder.WriteString(colorCode + fileContents[ascii+i] + reset)
 						} else if strings.Contains(reff, string(char)) && indexes.startIndex == 0 {
 							builder.WriteString(colorCode + fileContents[ascii+i] + reset)
@@ -70,9 +70,9 @@ type contains struct {
 var indexes contains
 
 // containsReff checks for color substrings and initialises contains struct
-func containsReff() bool {
+func containsReff(word string) bool {
 	var reff = utils.Inputs.ColorRef
-	var input = utils.Inputs.Input
+	var input = word
 	var x, y = len(input), len(reff)
 
 	if y > x {

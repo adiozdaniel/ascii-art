@@ -10,22 +10,22 @@ import (
 // RegisterRoutes manages the routes
 func RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		utils.Inputs.Input = r.FormValue("textInput")
-		banner := utils.BannerFiles[r.FormValue("FileName")]
-		if banner == "" {
-			utils.Inputs.BannerPath = utils.BannerFiles["standard"]
-		} else {
-			utils.Inputs.BannerPath = utils.BannerFiles[r.FormValue("FileName")]
-		}
+		if r.Method == http.MethodPost {
+			utils.Inputs.Input = r.FormValue("textInput")
+			banner := utils.BannerFiles[r.FormValue("FileName")]
+			if banner == "" {
+				utils.Inputs.BannerPath = utils.BannerFiles["standard"]
+			} else {
+				utils.Inputs.BannerPath = banner
+			}
 
-		if r.URL.Path == "/" {
-			handlers.HomeHandler(w, r)
-		} else if utils.Inputs.Input != "" {
-			handlers.SubmitHandler(w, r)
-		} else if utils.Inputs.Input == "" && r.URL.Path == "/ascii-art" {
-			handlers.BadRequestHandler(w, r)
+			if utils.Inputs.Input != "" {
+				handlers.SubmitHandler(w, r)
+			} else {
+				handlers.BadRequestHandler(w, r)
+			}
 		} else {
-			handlers.NotFoundHandler(w, r)
+			handlers.HomeHandler(w, r)
 		}
 	})
 

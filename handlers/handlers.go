@@ -4,7 +4,8 @@ import (
 	"html/template"
 	"net/http"
 
-	ascii "github.com/adiozdaniel/ascii-art/ascii"
+	"github.com/adiozdaniel/ascii-art/ascii"
+	"github.com/adiozdaniel/ascii-art/utils"
 )
 
 // html files passed as templates
@@ -13,8 +14,15 @@ var tmplNotFound = template.Must(template.ParseFiles("../templates/notfound.page
 var tmplBadRequest = template.Must(template.ParseFiles("../templates/badrequest.page.tmpl"))
 var tmplInternalError = template.Must(template.ParseFiles("../templates/serverError.page.tmpl"))
 
+type FormData struct {
+	Body string
+}
+
+var data FormData
+
 // HomeHandler handles the homepage route '/'
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	utils.Inputs.Input = ""
 	err := tmpl2.Execute(w, nil)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -35,11 +43,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	output := ascii.Output(fileContents)
-	data := struct {
-		Body string
-	}{
-		Body: output,
-	}
+	data.Body = output
 
 	tmpl2.Execute(w, data)
 }

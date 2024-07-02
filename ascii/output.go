@@ -40,9 +40,7 @@ func processWebInput(ascii_map map[rune]int, fileContents []string) {
 			var builder strings.Builder
 			for _, char := range line {
 				if ascii, ok := ascii_map[char]; ok {
-					{
-						builder.WriteString(fileContents[ascii+i])
-					}
+					builder.WriteString(fileContents[ascii+i])
 				}
 			}
 			art_work.WriteString(builder.String())

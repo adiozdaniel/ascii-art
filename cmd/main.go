@@ -40,6 +40,7 @@ func main() {
 
 	if utils.Inputs.Justify != "" {
 		utils.Display(output)
+		return
 	}
 
 	fmt.Print(output, nonAsciis)

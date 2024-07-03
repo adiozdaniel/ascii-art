@@ -9,17 +9,21 @@ import (
 
 func Display(asciiArt string) {
 	// Get the terminal width dynamically
+	justification := Inputs.Justify
 	width := getTerminalWidth()
-	justification := "center" // change to "left", "center", or "right" as needed
+
+	if width == 0 {
+		width = 80 // fallback to default width
+	}
 
 	// Justify and print ASCII art
 	switch justification {
 	case "center":
-		fmt.Println(centerJustify(asciiArt, width))
+		fmt.Println(centerJustify(removeANSICodes(asciiArt), width))
 	case "right":
-		fmt.Println(rightJustify(asciiArt, width))
+		fmt.Println(rightJustify(removeANSICodes(asciiArt), width))
 	default:
-		fmt.Println(leftJustify(asciiArt, width))
+		fmt.Println(leftJustify(removeANSICodes(asciiArt), width))
 	}
 }
 
@@ -31,7 +35,6 @@ func getTerminalWidth() int {
 		Ypixel uint16
 	}
 
-	width := 0
 	ws := &winsize{}
 	retCode, _, errno := syscall.Syscall(syscall.SYS_IOCTL,
 		uintptr(syscall.Stdout),
@@ -43,12 +46,7 @@ func getTerminalWidth() int {
 		return 0
 	}
 
-	width = int(ws.Col)
-
-	if width == 0 {
-		width = 80 // fallback to default width
-	}
-	return width
+	return int(ws.Col)
 }
 
 func leftJustify(text string, width int) string {

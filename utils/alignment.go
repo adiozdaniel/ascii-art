@@ -8,13 +8,6 @@ import (
 )
 
 func Display(asciiArt string) {
-	// 	asciiArt := `
-	//     _.-;;-._
-	//  '-..-'|   ||   |
-	//  '-..-'|_.-;;-._|
-	//  '-..-'|   ||   |
-	//  '-..-'|_.-''-._|`
-
 	// Get the terminal width dynamically
 	width := getTerminalWidth()
 	justification := "center" // change to "left", "center", or "right" as needed

@@ -38,5 +38,9 @@ func main() {
 		return
 	}
 
+	if utils.Inputs.Justify != "" {
+		utils.Display(output)
+	}
+
 	fmt.Print(output, nonAsciis)
 }

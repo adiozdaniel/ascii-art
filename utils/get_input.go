@@ -41,6 +41,7 @@ var validFlags = map[string]bool{
 	"--color":      true,
 	"-color":       true,
 	"--justify":    true,
+	"-justify":     true,
 	"--output":     true,
 	"-output":      true,
 	"-shadow":      true,

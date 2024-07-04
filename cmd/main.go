@@ -24,7 +24,7 @@ func main() {
 		fmt.Println("Server is running on http://localhost:8080")
 		err := server.ListenAndServe()
 		if err != nil {
-			panic(err)
+			utils.ErrorHandler("web")
 		}
 	}
 

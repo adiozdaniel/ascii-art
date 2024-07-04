@@ -39,11 +39,8 @@ var BannerFiles = map[string]string{
 // validFlags stores allowed flags
 var validFlags = map[string]bool{
 	"--color":      true,
-	"-color":       true,
 	"--align":      true,
-	"-align":       true,
 	"--output":     true,
-	"-output":      true,
 	"-shadow":      true,
 	"--shadow":     true,
 	"-thinkertoy":  true,
@@ -81,6 +78,15 @@ func init() {
 				ErrorHandler("fatal")
 			}
 			if flagValue == "" {
+				if flagName == "--output" {
+					ErrorHandler("output")
+				}
+				if flagName == "--align" {
+					ErrorHandler("justify")
+				}
+				if flagName == "--color" {
+					ErrorHandler("colors")
+				}
 				ErrorHandler("fatal")
 			}
 		}

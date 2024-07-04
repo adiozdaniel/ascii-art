@@ -22,7 +22,7 @@ func Alignment(asciiArt string) {
 	case "right":
 		fmt.Println(rightJustify(removeANSICodes(asciiArt), width))
 	default:
-		fmt.Println(leftJustify(removeANSICodes(asciiArt), width))
+		fmt.Println(leftJustify(removeANSICodes(asciiArt)))
 	}
 }
 
@@ -50,13 +50,8 @@ func getTerminalWidth() int {
 }
 
 // leftJustify aligns characters to the left of the screen
-func leftJustify(text string, width int) string {
-	lines := strings.Split(text, "\n")
-	var justifiedLines []string
-	for _, line := range lines {
-		justifiedLines = append(justifiedLines, line)
-	}
-	return strings.Join(justifiedLines, "\n")
+func leftJustify(text string) string {
+	return text
 }
 
 // centerJustify aligns characters to the center of the screen

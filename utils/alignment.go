@@ -58,28 +58,28 @@ func getTerminalWidth() int {
 }
 
 /*
-leftJustify aligns text to the left within the terminal width.
+leftAlign aligns output to the left within the terminal width.
 Parameters:
 
-	text: Text to be left-aligned.
+	output: output to be left-aligned.
 
-Returns: text as is.
+Returns: output as is.
 */
-func leftAlign(text string) string {
-	return text
+func leftAlign(output string) string {
+	return output
 }
 
 /*
-centerJustify centers text within the terminal width by padding spaces.
+centerAlign centers output within the terminal width by padding spaces.
 Parameters:
 
-	text: Text to be centered.
+	output: output to be centered.
 	width: Width of the terminal.
 
-Returns: Centered text.
+Returns: Centered output.
 */
-func centerAlign(text string, width int) string {
-	lines := strings.Split(text, "\n")
+func centerAlign(output string, width int) string {
+	lines := strings.Split(output, "\n")
 	var justifiedLines []string
 	for _, line := range lines {
 		cleanLine := removeANSICodes(line)
@@ -93,16 +93,16 @@ func centerAlign(text string, width int) string {
 }
 
 /*
-rightJustify aligns text to the right within the terminal width by padding spaces.
+rightAlign aligns output to the right within the terminal width by padding spaces.
 Parameters:
 
-	text: Text to be right-aligned.
+	output: output to be right-aligned.
 	width: Width of the terminal.
 
-Returns: Right-aligned text.
+Returns: Right-aligned output.
 */
-func rightAlign(text string, width int) string {
-	lines := strings.Split(text, "\n")
+func rightAlign(output string, width int) string {
+	lines := strings.Split(output, "\n")
 	var justifiedLines []string
 	for _, line := range lines {
 		cleanLine := removeANSICodes(line)

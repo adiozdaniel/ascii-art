@@ -11,7 +11,7 @@ var errors = map[string]string{
 	"align":   "Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <substring to be colored> \"something\" standard",
 	"color":   "🤯 Oops! We couldn't recognise your color\n\nKindly search supported colors here: https://htmlcolorcodes.com/",
 	"outputs": "🧐 Oops! We can't find your \"something\"\n\nEX: go run . [OPTION] [STRING] \"something\"",
-	"output":  "Usage: go run . [OPTION] [STRING] [BANNER]\n\nEX: go run . --output=<banner.txt> \"something\" standard",
+	"output":  "Usage: go run . [OPTION] [STRING] [BANNER]\n\nEX: go run . --output=<fileName.txt> something standard",
 	"txt":     "😣Oops! We currently only support text files\n\nSee Documentation in: ../README.md",
 }
 

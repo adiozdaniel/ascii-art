@@ -23,11 +23,11 @@ func Alignment(output string) {
 
 	switch justification {
 	case "center":
-		fmt.Println(centerJustify(output, width))
+		fmt.Println(centerAlign(output, width))
 	case "right":
-		fmt.Println(rightJustify(output, width))
+		fmt.Println(rightAlign(output, width))
 	default:
-		fmt.Println(leftJustify(output))
+		fmt.Println(leftAlign(output))
 	}
 }
 
@@ -65,7 +65,7 @@ Parameters:
 
 Returns: text as is.
 */
-func leftJustify(text string) string {
+func leftAlign(text string) string {
 	return text
 }
 
@@ -78,7 +78,7 @@ Parameters:
 
 Returns: Centered text.
 */
-func centerJustify(text string, width int) string {
+func centerAlign(text string, width int) string {
 	lines := strings.Split(text, "\n")
 	var justifiedLines []string
 	for _, line := range lines {
@@ -101,7 +101,7 @@ Parameters:
 
 Returns: Right-aligned text.
 */
-func rightJustify(text string, width int) string {
+func rightAlign(text string, width int) string {
 	lines := strings.Split(text, "\n")
 	var justifiedLines []string
 	for _, line := range lines {

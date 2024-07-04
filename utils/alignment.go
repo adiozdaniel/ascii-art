@@ -13,7 +13,7 @@ It removes ANSI escape codes from the input before applying alignment.
 Supported justifications: "left", "center", "right".
 Inputs.Justify should be set to the desired justification mode.
 */
-func Alignment(asciiArt string) {
+func Alignment(output string) {
 	justification := Inputs.Justify
 	width := getTerminalWidth()
 
@@ -23,11 +23,11 @@ func Alignment(asciiArt string) {
 
 	switch justification {
 	case "center":
-		fmt.Println(centerJustify(asciiArt, width))
+		fmt.Println(centerJustify(output, width))
 	case "right":
-		fmt.Println(rightJustify(asciiArt, width))
+		fmt.Println(rightJustify(output, width))
 	default:
-		fmt.Println(leftJustify(asciiArt))
+		fmt.Println(leftJustify(output))
 	}
 }
 

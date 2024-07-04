@@ -58,7 +58,7 @@ func processTerminalInput(ascii_map map[rune]int, fileContents []string) {
 		os.Exit(0)
 	}
 
-	for _, word := range input {
+	for strIndex, word := range input {
 		if word == "" {
 			height = 1
 		} else {
@@ -73,7 +73,7 @@ func processTerminalInput(ascii_map map[rune]int, fileContents []string) {
 						colorCode := GetColorCode(color)
 
 						if containsReff() {
-							if _, ok := indexes.indexMap[j]; ok {
+							if _, ok := indexes.indexMap[strIndex][j]; ok {
 								builder.WriteString(colorCode + fileContents[ascii+i] + reset)
 							} else {
 								builder.WriteString(fileContents[ascii+i])
@@ -96,31 +96,29 @@ func processTerminalInput(ascii_map map[rune]int, fileContents []string) {
 
 // contains hosts the indexMap for substrings characters
 type contains struct {
-	indexMap map[int]int
+	indexMap map[int]map[int]int
 }
 
 // indexes is a placeholder for the struct
-var indexes = contains{indexMap: make(map[int]int)}
+var indexes = contains{
+	indexMap: make(map[int]map[int]int),
+}
 
 // containsReff checks for color substrings and initialises contains struct
 func containsReff() bool {
 	var hasReff bool
 
-	for _, line := range input {
-		var x, y = len(line), len(reff)
+	for i, line := range input {
+		x, y := len(line), len(reff)
 
-		for j := range line {
-			var end = j + y
-
-			if end > x {
-				end = x
-			}
-
-			if line[j:end] == reff {
-				for k := j; k < j+y; k++ {
-					indexes.indexMap[k] = k
+		for j := 0; j <= x-y; j++ {
+			if line[j:j+y] == reff {
+				if _, ok := indexes.indexMap[i]; !ok {
+					indexes.indexMap[i] = make(map[int]int)
 				}
-
+				for k := j; k < j+y; k++ {
+					indexes.indexMap[i][k] = k
+				}
 				hasReff = true
 			}
 		}

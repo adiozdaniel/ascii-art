@@ -26,6 +26,7 @@ func Alignment(asciiArt string) {
 	}
 }
 
+// getTerminalWidth gets the current terminal width
 func getTerminalWidth() int {
 	type winsize struct {
 		Row    uint16
@@ -48,6 +49,7 @@ func getTerminalWidth() int {
 	return int(ws.Col)
 }
 
+// leftJustify aligns characters to the left of the screen
 func leftJustify(text string, width int) string {
 	lines := strings.Split(text, "\n")
 	var justifiedLines []string
@@ -57,6 +59,7 @@ func leftJustify(text string, width int) string {
 	return strings.Join(justifiedLines, "\n")
 }
 
+// centerJustify aligns characters to the center of the screen
 func centerJustify(text string, width int) string {
 	lines := strings.Split(text, "\n")
 	var justifiedLines []string
@@ -70,6 +73,7 @@ func centerJustify(text string, width int) string {
 	return strings.Join(justifiedLines, "\n")
 }
 
+// rightJustify aligns characters to the right of the screen
 func rightJustify(text string, width int) string {
 	lines := strings.Split(text, "\n")
 	var justifiedLines []string

@@ -58,8 +58,8 @@ func processTerminalInput(ascii_map map[rune]int, fileContents []string) {
 		os.Exit(0)
 	}
 
-	for strIndex, word := range input {
-		if word == "" {
+	for lineIndex, line := range input {
+		if line == "" {
 			height = 1
 		} else {
 			height = 8
@@ -67,13 +67,13 @@ func processTerminalInput(ascii_map map[rune]int, fileContents []string) {
 
 		for i := 0; i < height; i++ {
 			var builder strings.Builder
-			for j, char := range word {
+			for j, char := range line {
 				if ascii, ok := ascii_map[char]; ok {
 					if color != "" {
 						colorCode := GetColorCode(color)
 
 						if containsReff() {
-							if _, ok := indexes.indexMap[strIndex][j]; ok {
+							if _, ok := indexes.indexMap[lineIndex][j]; ok {
 								builder.WriteString(colorCode + fileContents[ascii+i] + reset)
 							} else {
 								builder.WriteString(fileContents[ascii+i])

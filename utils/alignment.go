@@ -7,7 +7,12 @@ import (
 	"unsafe"
 )
 
-// Alignment sets the output to the desired alignment
+/*
+Alignment formats the given ASCII art on the specified justification and terminal width.
+It removes ANSI escape codes from the input before applying alignment.
+Supported justifications: "left", "center", "right".
+Inputs.Justify should be set to the desired justification mode.
+*/
 func Alignment(asciiArt string) {
 	justification := Inputs.Justify
 	width := getTerminalWidth()
@@ -26,7 +31,11 @@ func Alignment(asciiArt string) {
 	}
 }
 
-// getTerminalWidth gets the current terminal width
+/*
+getTerminalWidth retrieves the current width of the terminal.
+It uses a system call to obtain terminal size information.
+Returns: The width of the terminal in columns. Zero if the width cannot be determined.
+*/
 func getTerminalWidth() int {
 	type winsize struct {
 		Row    uint16
@@ -48,12 +57,27 @@ func getTerminalWidth() int {
 	return int(ws.Col)
 }
 
-// leftJustify aligns characters to the left of the screen
+/*
+leftJustify aligns text to the left within the terminal width.
+Parameters:
+
+	text: Text to be left-aligned.
+
+Returns: Left-aligned text.
+*/
 func leftJustify(text string) string {
 	return text
 }
 
-// centerJustify aligns characters to the center of the screen
+/*
+centerJustify centers text within the terminal width by padding spaces.
+Parameters:
+
+	text: Text to be centered.
+	width: Width of the terminal.
+
+Returns: Centered text.
+*/
 func centerJustify(text string, width int) string {
 	lines := strings.Split(text, "\n")
 	var justifiedLines []string
@@ -67,7 +91,15 @@ func centerJustify(text string, width int) string {
 	return strings.Join(justifiedLines, "\n")
 }
 
-// rightJustify aligns characters to the right of the screen
+/*
+rightJustify aligns text to the right within the terminal width by padding spaces.
+Parameters:
+
+	text: Text to be right-aligned.
+	width: Width of the terminal.
+
+Returns: Right-aligned text.
+*/
 func rightJustify(text string, width int) string {
 	lines := strings.Split(text, "\n")
 	var justifiedLines []string

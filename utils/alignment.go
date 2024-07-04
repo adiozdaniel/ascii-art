@@ -63,7 +63,7 @@ Parameters:
 
 	text: Text to be left-aligned.
 
-Returns: Left-aligned text.
+Returns: text as is.
 */
 func leftJustify(text string) string {
 	return text

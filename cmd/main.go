@@ -39,7 +39,7 @@ func main() {
 	}
 
 	if utils.Inputs.Justify != "" {
-		utils.Display(output)
+		utils.Alignment(output)
 		return
 	}
 

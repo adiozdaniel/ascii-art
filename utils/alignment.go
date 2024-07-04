@@ -7,8 +7,8 @@ import (
 	"unsafe"
 )
 
-func Display(asciiArt string) {
-	// Get the terminal width dynamically
+// Alignment sets the output to the desired alignment
+func Alignment(asciiArt string) {
 	justification := Inputs.Justify
 	width := getTerminalWidth()
 
@@ -16,7 +16,6 @@ func Display(asciiArt string) {
 		width = 80 // fallback to default width
 	}
 
-	// Justify and print ASCII art
 	switch justification {
 	case "center":
 		fmt.Println(centerJustify(removeANSICodes(asciiArt), width))

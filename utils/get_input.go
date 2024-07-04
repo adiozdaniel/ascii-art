@@ -40,8 +40,8 @@ var BannerFiles = map[string]string{
 var validFlags = map[string]bool{
 	"--color":      true,
 	"-color":       true,
-	"--justify":    true,
-	"-justify":     true,
+	"--align":      true,
+	"-align":       true,
 	"--output":     true,
 	"-output":      true,
 	"-shadow":      true,
@@ -64,7 +64,7 @@ func init() {
 	}
 
 	flag.StringVar(&Inputs.Color, "color", "", "specify a color")
-	flag.StringVar(&Inputs.Justify, "justify", "", "specify text justification")
+	flag.StringVar(&Inputs.Justify, "align", "", "specify text justification")
 	flag.StringVar(&Inputs.Output, "output", "", "specify output file")
 
 	flag.Usage = func() {

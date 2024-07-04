@@ -23,11 +23,11 @@ func Alignment(asciiArt string) {
 
 	switch justification {
 	case "center":
-		fmt.Println(centerJustify(removeANSICodes(asciiArt), width))
+		fmt.Println(centerJustify(asciiArt, width))
 	case "right":
-		fmt.Println(rightJustify(removeANSICodes(asciiArt), width))
+		fmt.Println(rightJustify(asciiArt, width))
 	default:
-		fmt.Println(leftJustify(removeANSICodes(asciiArt)))
+		fmt.Println(leftJustify(asciiArt))
 	}
 }
 
@@ -82,7 +82,8 @@ func centerJustify(text string, width int) string {
 	lines := strings.Split(text, "\n")
 	var justifiedLines []string
 	for _, line := range lines {
-		padding := (width - len(line)) / 2
+		cleanLine := removeANSICodes(line)
+		padding := (width - len(cleanLine)) / 2
 		if padding < 0 {
 			padding = 0
 		}
@@ -104,7 +105,8 @@ func rightJustify(text string, width int) string {
 	lines := strings.Split(text, "\n")
 	var justifiedLines []string
 	for _, line := range lines {
-		padding := width - len(line)
+		cleanLine := removeANSICodes(line)
+		padding := width - len(cleanLine)
 		if padding < 0 {
 			padding = 0
 		}

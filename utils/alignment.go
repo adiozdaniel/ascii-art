@@ -36,14 +36,13 @@ func getTerminalWidth() int {
 	}
 
 	ws := &winsize{}
-	retCode, _, errno := syscall.Syscall(syscall.SYS_IOCTL,
+	retCode, _, _ := syscall.Syscall(syscall.SYS_IOCTL,
 		uintptr(syscall.Stdout),
 		uintptr(syscall.TIOCGWINSZ),
 		uintptr(unsafe.Pointer(ws)))
 
 	if int(retCode) == -1 {
-		fmt.Println("Error getting terminal size:", errno)
-		return 0
+		ErrorHandler("align")
 	}
 
 	return int(ws.Col)

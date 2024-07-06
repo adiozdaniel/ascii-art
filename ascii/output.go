@@ -19,7 +19,7 @@ var height int = 8
 
 // Output compiles the banner characters to form the desired ascii art work
 func Output(fileContents []string) string {
-	if strings.TrimSpace(utils.Inputs.Input) == "" {
+	if utils.Inputs.Input == "" {
 		return ""
 	}
 

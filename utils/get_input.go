@@ -112,7 +112,7 @@ func init() {
 
 	if len(Inputs.Args) == 2 && Inputs.Color != "" {
 		Inputs.ColorRef = strings.TrimSpace(Inputs.Args[0])
-		Inputs.Input = strings.TrimSpace(Inputs.Args[1])
+		Inputs.Input = Inputs.Args[1]
 		Inputs.Args = Inputs.Args[2:]
 		return
 	}
@@ -127,7 +127,7 @@ func init() {
 
 	if len(Inputs.Args) == 1 {
 		Inputs.ColorRef = strings.TrimSpace(Inputs.Args[0])
-		Inputs.Input = strings.TrimSpace(Inputs.Args[0])
+		Inputs.Input = Inputs.Args[0]
 	}
 
 	if len(Inputs.Args) > 1 {

@@ -100,7 +100,10 @@ func init() {
 			ErrorHandler("output")
 		}
 		if Inputs.Color != "" && Inputs.Color == arg {
-			ErrorHandler("fatal")
+			ErrorHandler("colors")
+		}
+		if Inputs.Justify != "" && Inputs.Justify == arg {
+			ErrorHandler("justify")
 		}
 	}
 

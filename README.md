@@ -41,8 +41,12 @@ $ git clone https://learn.zone01kisumu.ke/git/aosindo/ascii-art-output
 # go into the repository
 $ cd ascii-art
 
-#open a code editor like VS Code
+# open a code editor like VS Code
 $ code .
+
+# you may be required to rebuild the Go module
+# thus, delete the existing module, if any and run
+$ go mod init github.com/adiozdaniel/ascii-art
 ```
 
 ## Usage

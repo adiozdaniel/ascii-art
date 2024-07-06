@@ -3,3 +3,4 @@
 
 # ignore Go module file
 go.mod
+go.sum

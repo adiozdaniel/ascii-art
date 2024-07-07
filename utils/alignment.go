@@ -15,7 +15,7 @@ Inputs.Justify should be set to the desired justification mode.
 */
 func Alignment(output string) {
 	justification := Inputs.Justify
-	width := getTerminalWidth()
+	width := GetTerminalWidth()
 
 	if width == 0 {
 		width = 80 // fallback to default width
@@ -36,7 +36,7 @@ getTerminalWidth retrieves the current width of the terminal.
 It uses a system call to obtain terminal size information.
 Returns: The width of the terminal in columns. Zero if the width cannot be determined.
 */
-func getTerminalWidth() int {
+func GetTerminalWidth() int {
 	type winsize struct {
 		Row    uint16
 		Col    uint16

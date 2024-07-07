@@ -55,8 +55,8 @@ func justified() {
 		select {
 		case input := <-inputChan:
 			if input == "exit" {
-				fmt.Println("\n\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
-				return
+				fmt.Println("\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
+				os.Exit(0)
 			} else {
 				scanInput(input)
 			}
@@ -74,6 +74,7 @@ func justified() {
 	}
 }
 
+// scanInput reads input from cli interface and updates the input struct.
 func scanInput(input string) {
 	newInput := strings.Split(input, " ")
 

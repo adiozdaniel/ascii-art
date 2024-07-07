@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"net/http"
+	"os"
+	"time"
 
 	"github.com/adiozdaniel/ascii-art/routes"
 	"github.com/adiozdaniel/ascii-art/utils"
@@ -36,6 +39,33 @@ func runWeb() {
 }
 
 func justified(output, nonAsciis string) {
-	utils.Alignment(output)
-	fmt.Print(nonAsciis)
+	inputChan := make(chan string)
+
+	go func() {
+		scanner := bufio.NewScanner(os.Stdin)
+		for scanner.Scan() {
+			inputChan <- scanner.Text()
+		}
+	}()
+
+	for {
+		select {
+		case input := <-inputChan:
+			if input == "exit" {
+				fmt.Println("Exiting...")
+				return
+			} else {
+				fmt.Printf("Received input: %s\n", input)
+			}
+		default:
+			width := utils.GetTerminalWidth()
+			utils.Alignment(output, nonAsciis, width)
+
+			time.Sleep(2 * time.Second)
+
+			// fmt.Print("\033[H\033[2J")
+
+			fmt.Println("To exit, type \"exit\" at the bottom of the screen.")
+		}
+	}
 }

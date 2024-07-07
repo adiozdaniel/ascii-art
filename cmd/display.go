@@ -41,6 +41,10 @@ func runWeb() {
 func justified(output, nonAsciis string) {
 	inputChan := make(chan string)
 
+	// Track the previous terminal width
+	prevWidth := 0
+
+	// Goroutine to handle user input
 	go func() {
 		scanner := bufio.NewScanner(os.Stdin)
 		for scanner.Scan() {
@@ -48,6 +52,7 @@ func justified(output, nonAsciis string) {
 		}
 	}()
 
+	// Main loop to adjust terminal output and handle user input
 	for {
 		select {
 		case input := <-inputChan:
@@ -59,13 +64,15 @@ func justified(output, nonAsciis string) {
 			}
 		default:
 			width := utils.GetTerminalWidth()
-			utils.Alignment(output, nonAsciis, width)
+
+			// Only update if the width has changed
+			if width != prevWidth {
+				fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
+				utils.Alignment(output, nonAsciis, width)
+				prevWidth = width
+			}
 
 			time.Sleep(2 * time.Second)
-
-			// fmt.Print("\033[H\033[2J")
-
-			fmt.Println("To exit, type \"exit\" at the bottom of the screen.")
 		}
 	}
 }

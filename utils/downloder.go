@@ -38,8 +38,8 @@ func DownloadFile(url string, bannerPath string) error {
 }
 
 // CleanPath removes /cmd/ from a path to clean absolute paths
-func CleanPath(path, dirSeg string) string {
-	escapedDirSegment := regexp.QuoteMeta(dirSeg)
+func CleanPath(path string) string {
+	escapedDirSegment := regexp.QuoteMeta("cmd")
 	pattern := fmt.Sprintf(`%s\/`, escapedDirSegment)
 	regex := regexp.MustCompile(pattern)
 	newPath := regex.ReplaceAllString(path, "")

@@ -8,14 +8,14 @@ import (
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
+var fileContents, _ = ascii.FileContents()
+var output = ascii.Output(fileContents)
+var nonAsciis = utils.NonAsciiOutput()
+
 func main() {
 	if os.Args[1] == "-web" {
 		runWeb()
 	}
-
-	fileContents, _ := ascii.FileContents()
-	output := ascii.Output(fileContents)
-	nonAsciis := utils.NonAsciiOutput()
 
 	if utils.Inputs.Output != "" {
 		runOutput(output, nonAsciis)
@@ -23,7 +23,7 @@ func main() {
 	}
 
 	if utils.Inputs.Justify != "" {
-		justified(output, nonAsciis)
+		justified()
 		return
 	}
 

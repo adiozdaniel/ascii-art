@@ -23,7 +23,7 @@ func main() {
 	}
 
 	if utils.Inputs.Justify != "" {
-		utils.Alignment(output)
+		justified(output, nonAsciis)
 		return
 	}
 

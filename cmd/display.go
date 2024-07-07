@@ -34,3 +34,8 @@ func runWeb() {
 		utils.ErrorHandler("web")
 	}
 }
+
+func justified(output, nonAsciis string) {
+	utils.Alignment(output)
+	fmt.Print(nonAsciis)
+}

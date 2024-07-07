@@ -7,3 +7,4 @@ go.sum
 
 # ignore development binaries
 cmd/tmp
+tmp

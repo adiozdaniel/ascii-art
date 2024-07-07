@@ -13,7 +13,7 @@ import (
 )
 
 // runOutput writes the output to the specified file.
-func runOutput(output, nonAsciis string) {
+func runOutput() {
 	if utils.Inputs.Justify != "" {
 		fmt.Printf("🙄 alignment request: 'align=%s'; was ignored\n=================================================\n\n", utils.Inputs.Justify)
 	}
@@ -40,7 +40,7 @@ func runWeb() {
 }
 
 // justified runs alignment mode of the application.
-func justified(output, nonAsciis string) {
+func justified() {
 	inputChan := make(chan string)
 	prevWidth := 0
 

@@ -18,7 +18,7 @@ func main() {
 	}
 
 	if utils.Inputs.Output != "" {
-		runOutput(output, nonAsciis)
+		runOutput()
 		return
 	}
 

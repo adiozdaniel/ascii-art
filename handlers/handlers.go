@@ -1,20 +1,22 @@
 package handlers
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 	"path/filepath"
+	"regexp"
 
 	"github.com/adiozdaniel/ascii-art/ascii"
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
 // html files passed as templates
-var filePrefix, _ = filepath.Abs("templates/")
-var tmpl2 = template.Must(template.ParseFiles(filePrefix + "/index.page.tmpl"))
-var tmplNotFound = template.Must(template.ParseFiles(filePrefix + "/notfound.page.tmpl"))
-var tmplBadRequest = template.Must(template.ParseFiles(filePrefix + "/badrequest.page.tmpl"))
-var tmplInternalError = template.Must(template.ParseFiles(filePrefix + "/serverError.page.tmpl"))
+var filePrefix, _ = (filepath.Abs("templates/"))
+var tmpl2 = template.Must(template.ParseFiles(cleanPath(filePrefix) + "/index.page.tmpl"))
+var tmplNotFound = template.Must(template.ParseFiles(cleanPath(filePrefix) + "/notfound.page.tmpl"))
+var tmplBadRequest = template.Must(template.ParseFiles(cleanPath(filePrefix) + "/badrequest.page.tmpl"))
+var tmplInternalError = template.Must(template.ParseFiles(cleanPath(filePrefix) + "/serverError.page.tmpl"))
 
 type FormData struct {
 	Body string
@@ -75,4 +77,14 @@ func ServerError(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, "🧐 Internal Server Error", http.StatusInternalServerError)
 	}
+}
+
+// cleanPath removes /cmd/ from a path to clean absolute paths
+func cleanPath(path string) string {
+	escapedDirSegment := regexp.QuoteMeta("cmd")
+	pattern := fmt.Sprintf(`%s\/`, escapedDirSegment)
+	regex := regexp.MustCompile(pattern)
+	newPath := regex.ReplaceAllString(path, "")
+
+	return newPath
 }

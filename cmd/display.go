@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/adiozdaniel/ascii-art/routes"
@@ -57,7 +58,7 @@ func justified(output, nonAsciis string) {
 				fmt.Println("\n\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
 				return
 			} else {
-				fmt.Printf("Received input: %s\n", input)
+				scanInput(input)
 			}
 		default:
 			width := utils.GetTerminalWidth()
@@ -69,6 +70,17 @@ func justified(output, nonAsciis string) {
 			}
 
 			time.Sleep(2 * time.Second)
+		}
+	}
+}
+
+func scanInput(input string) {
+	newInput := strings.Split(input, " ")
+
+	for _, word := range newInput {
+		if strings.Contains(word, "--color=") {
+			utils.Inputs.Color = strings.TrimPrefix(word, "--color=")
+			fmt.Println(utils.Inputs.Color)
 		}
 	}
 }

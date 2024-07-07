@@ -54,7 +54,7 @@ func justified(output, nonAsciis string) {
 		select {
 		case input := <-inputChan:
 			if input == "exit" {
-				fmt.Println("🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
+				fmt.Println("\n\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
 				return
 			} else {
 				fmt.Printf("Received input: %s\n", input)

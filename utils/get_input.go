@@ -95,17 +95,7 @@ func init() {
 	flag.Parse()
 	Inputs.Args = flag.Args()
 
-	for _, arg := range os.Args[1:] {
-		if Inputs.Output != "" && Inputs.Output == arg {
-			ErrorHandler("output")
-		}
-		if Inputs.Color != "" && Inputs.Color == arg {
-			ErrorHandler("colors")
-		}
-		if Inputs.Justify != "" && Inputs.Justify == arg {
-			ErrorHandler("justify")
-		}
-	}
+	CheckInput(os.Args[1:])
 
 	if Inputs.BannerPath != "" {
 		Inputs.isBanner = true
@@ -135,6 +125,20 @@ func init() {
 
 	if len(Inputs.Args) > 1 {
 		ErrorHandler("fatal")
+	}
+}
+
+func CheckInput(input []string) {
+	for _, arg := range input {
+		if Inputs.Output != "" && Inputs.Output == arg {
+			ErrorHandler("output")
+		}
+		if Inputs.Color != "" && Inputs.Color == arg {
+			ErrorHandler("colors")
+		}
+		if Inputs.Justify != "" && Inputs.Justify == arg {
+			ErrorHandler("justify")
+		}
 	}
 }
 

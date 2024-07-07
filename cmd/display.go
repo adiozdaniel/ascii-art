@@ -43,12 +43,14 @@ func runWeb() {
 func justified() {
 	inputChan := make(chan string)
 	prevWidth := 0
+	temp := ""
 
 	go func() {
 		scanner := bufio.NewScanner(os.Stdin)
 		for scanner.Scan() {
 			inputChan <- scanner.Text()
 		}
+		close(inputChan)
 	}()
 
 	for {
@@ -58,15 +60,16 @@ func justified() {
 				fmt.Println("\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
 				os.Exit(0)
 			} else {
+				temp += input
 				scanInput(input)
 			}
 		default:
 			width := utils.GetTerminalWidth()
-
-			if width != prevWidth {
+			if width != prevWidth || temp != "" {
 				fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
 				utils.Alignment(output, nonAsciis, width)
 				prevWidth = width
+				temp = ""
 			}
 
 			time.Sleep(2 * time.Second)
@@ -76,12 +79,8 @@ func justified() {
 
 // scanInput reads input from cli interface and updates the input struct.
 func scanInput(input string) {
-	newInput := strings.Split(input, " ")
+	utils.Inputs.Args = strings.Split(input, " ")
 
-	for _, word := range newInput {
-		if strings.Contains(word, "--color=") {
-			utils.Inputs.Color = strings.TrimPrefix(word, "--color=")
-			fmt.Println(utils.Inputs.Color)
-		}
-	}
+	// TODO
+	// consider adding more options for cli input handling
 }

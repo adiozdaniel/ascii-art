@@ -206,6 +206,37 @@ go run . -web
 
 But explicitly telling the program the intended use, such as `go run . --output=sample.txt something`, will prompt the program to use the file interface.
 
+### Alignment
+
+To change the alignment of your output dynamically, you need to include the use of `--align=<type>` flag.
+This can be:
+
+- center
+- left
+- right
+- justify
+
+Your representation adopts to the terminal size. If you reduce the terminal window the graphical representation adapts to the terminal size.
+
+The input MUST follow a specified format:
+
+            [OPTION]       [YOUR INPUT]     [BANNER]
+
+`go run . --align=center     "My Papa"       standard`
+
+The updated version 0.3 supports color as an option:
+
+**Disclaimer**
+Note, this is an added feature for the web that would still work for justified.
+
+            [       OPTION          ]      [         YOUR INPUT          ]          [BANNER]
+
+`go run . --align=center --color=#ff0       "Papa" "My Papa\nIs Papa?\nNo Papa"    thinkertoy`
+
+**Note:** Only text that fits the terminal size should be tested.
+
+To quit the program, type `exit` in lowercase only. This is case sensitive
+
 ## Enjoy!
 
 ## Authors

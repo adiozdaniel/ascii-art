@@ -38,13 +38,11 @@ func runWeb() {
 	}
 }
 
+// justified runs alignment mode of the application.
 func justified(output, nonAsciis string) {
 	inputChan := make(chan string)
-
-	// Track the previous terminal width
 	prevWidth := 0
 
-	// Goroutine to handle user input
 	go func() {
 		scanner := bufio.NewScanner(os.Stdin)
 		for scanner.Scan() {
@@ -52,12 +50,11 @@ func justified(output, nonAsciis string) {
 		}
 	}()
 
-	// Main loop to adjust terminal output and handle user input
 	for {
 		select {
 		case input := <-inputChan:
 			if input == "exit" {
-				fmt.Println("Exiting...")
+				fmt.Println("🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
 				return
 			} else {
 				fmt.Printf("Received input: %s\n", input)
@@ -65,7 +62,6 @@ func justified(output, nonAsciis string) {
 		default:
 			width := utils.GetTerminalWidth()
 
-			// Only update if the width has changed
 			if width != prevWidth {
 				fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
 				utils.Alignment(output, nonAsciis, width)

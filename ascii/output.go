@@ -3,6 +3,7 @@ package ascii
 import (
 	"fmt"
 	"os"
+
 	"strings"
 
 	"github.com/adiozdaniel/ascii-art/utils"
@@ -57,6 +58,7 @@ func processTerminalInput(ascii_map map[rune]int, fileContents []string) {
 		os.Exit(0)
 	}
 
+	var ascii_map = AsciiMap(fileContents)
 	for index, word := range input {
 		if word == "" {
 			height = 1
@@ -66,13 +68,13 @@ func processTerminalInput(ascii_map map[rune]int, fileContents []string) {
 
 		for i := 0; i < height; i++ {
 			var builder strings.Builder
-			for j, char := range word {
+			for j, char := range line {
 				if ascii, ok := ascii_map[char]; ok {
 					if color != "" {
 						colorCode := GetColorCode(color)
 
 						if containsReff() {
-							if word == indexes.lineIndex[index] && j >= indexes.startIndex[word] && j < indexes.endIndex[word] {
+							if _, ok := indexes.indexMap[lineIndex][j]; ok {
 								builder.WriteString(colorCode + fileContents[ascii+i] + reset)
 							} else {
 								builder.WriteString(fileContents[ascii+i])
@@ -93,17 +95,14 @@ func processTerminalInput(ascii_map map[rune]int, fileContents []string) {
 	}
 }
 
-// contains hosts the startIndex and endIndex for substrings
+// contains hosts the indexMap for substrings characters
 type contains struct {
-	startIndex, endIndex map[string]int
-	lineIndex            map[int]string
+	indexMap map[int]map[int]int
 }
 
 // indexes is a placeholder for the struct
 var indexes = contains{
-	startIndex: make(map[string]int),
-	endIndex:   make(map[string]int),
-	lineIndex:  make(map[int]string),
+	indexMap: make(map[int]map[int]int),
 }
 
 // containsReff checks for color substrings and initialises contains struct
@@ -111,13 +110,16 @@ func containsReff() bool {
 	var hasReff bool
 
 	for i, line := range input {
-		var x, y = len(line), len(reff)
+		x, y := len(line), len(reff)
 
 		for j := 0; j <= x-y; j++ {
 			if line[j:j+y] == reff {
-				indexes.startIndex[line] = j
-				indexes.endIndex[line] = j + y
-				indexes.lineIndex[i] = line
+				if _, ok := indexes.indexMap[i]; !ok {
+					indexes.indexMap[i] = make(map[int]int)
+				}
+				for k := j; k < j+y; k++ {
+					indexes.indexMap[i][k] = k
+				}
 				hasReff = true
 			}
 		}

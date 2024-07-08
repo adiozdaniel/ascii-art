@@ -39,10 +39,8 @@ var BannerFiles = map[string]string{
 // validFlags stores allowed flags
 var validFlags = map[string]bool{
 	"--color":      true,
-	"-color":       true,
-	"--justify":    true,
+	"--align":      true,
 	"--output":     true,
-	"-output":      true,
 	"-shadow":      true,
 	"--shadow":     true,
 	"-thinkertoy":  true,
@@ -63,7 +61,7 @@ func init() {
 	}
 
 	flag.StringVar(&Inputs.Color, "color", "", "specify a color")
-	flag.StringVar(&Inputs.Justify, "justify", "", "specify text justification")
+	flag.StringVar(&Inputs.Justify, "align", "", "specify text justification")
 	flag.StringVar(&Inputs.Output, "output", "", "specify output file")
 
 	flag.Usage = func() {
@@ -80,6 +78,15 @@ func init() {
 				ErrorHandler("fatal")
 			}
 			if flagValue == "" {
+				if flagName == "--output" {
+					ErrorHandler("output")
+				}
+				if flagName == "--align" {
+					ErrorHandler("justify")
+				}
+				if flagName == "--color" {
+					ErrorHandler("colors")
+				}
 				ErrorHandler("fatal")
 			}
 		}
@@ -88,14 +95,7 @@ func init() {
 	flag.Parse()
 	Inputs.Args = flag.Args()
 
-	for _, arg := range os.Args[1:] {
-		if Inputs.Output != "" && Inputs.Output == arg {
-			ErrorHandler("output")
-		}
-		if Inputs.Color != "" && Inputs.Color == arg {
-			ErrorHandler("fatal")
-		}
-	}
+	CheckInput(os.Args[1:])
 
 	if Inputs.BannerPath != "" {
 		Inputs.isBanner = true
@@ -105,7 +105,7 @@ func init() {
 
 	if len(Inputs.Args) == 2 && Inputs.Color != "" {
 		Inputs.ColorRef = strings.TrimSpace(Inputs.Args[0])
-		Inputs.Input = strings.TrimSpace(Inputs.Args[1])
+		Inputs.Input = Inputs.Args[1]
 		Inputs.Args = Inputs.Args[2:]
 		return
 	}
@@ -118,13 +118,42 @@ func init() {
 		ErrorHandler("output")
 	}
 
+	if Inputs.Output != "" && Inputs.Justify != "" {
+		ErrorHandler("output")
+	}
+
 	if len(Inputs.Args) == 1 {
 		Inputs.ColorRef = strings.TrimSpace(Inputs.Args[0])
-		Inputs.Input = strings.TrimSpace(Inputs.Args[0])
+		Inputs.Input = Inputs.Args[0]
 	}
 
 	if len(Inputs.Args) > 1 {
+		if Inputs.Color != "" {
+			ErrorHandler("colors")
+		}
+
+		if Inputs.Output != "" {
+			ErrorHandler("output")
+		}
+
+		if Inputs.Justify != "" {
+			ErrorHandler("align")
+		}
 		ErrorHandler("fatal")
+	}
+}
+
+func CheckInput(input []string) {
+	for _, arg := range input {
+		if Inputs.Output != "" && Inputs.Output == arg {
+			ErrorHandler("output")
+		}
+		if Inputs.Color != "" && Inputs.Color == arg {
+			ErrorHandler("colors")
+		}
+		if Inputs.Justify != "" && Inputs.Justify == arg {
+			ErrorHandler("justify")
+		}
 	}
 }
 

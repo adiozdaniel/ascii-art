@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 )
 
 // DownloadFile downloads the banner file and/or creates the banner directory
@@ -34,4 +35,14 @@ func DownloadFile(url string, bannerPath string) error {
 	}
 
 	return nil
+}
+
+// CleanPath removes /cmd/ from a path to clean absolute paths
+func CleanPath(path string) string {
+	escapedDirSegment := regexp.QuoteMeta("cmd")
+	pattern := fmt.Sprintf(`%s\/`, escapedDirSegment)
+	regex := regexp.MustCompile(pattern)
+	newPath := regex.ReplaceAllString(path, "")
+
+	return newPath
 }

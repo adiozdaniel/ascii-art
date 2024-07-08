@@ -1,4 +1,10 @@
 # ignore all text files
-
-*.mod
 *.txt
+
+# ignore Go module file
+go.mod
+go.sum
+
+# ignore development binaries
+cmd/tmp
+tmp

@@ -15,9 +15,6 @@ import (
 
 // runOutput writes the output to the specified file.
 func runOutput() {
-	if utils.Inputs.Justify != "" {
-		fmt.Printf("🙄 alignment request: 'align=%s'; was ignored\n=================================================\n\n", utils.Inputs.Justify)
-	}
 	utils.LogOutput(output)
 	fmt.Printf("😋 writing.... '%s'. To check output, kindly use: `cat %s | cat -e`\n====================================\n %s", utils.Inputs.Input, utils.Inputs.Output, nonAsciis)
 }

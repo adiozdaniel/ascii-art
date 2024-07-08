@@ -110,6 +110,10 @@ func init() {
 		return
 	}
 
+	if strings.Contains(Inputs.Output, "/banners/") {
+		ErrorHandler("restricted")
+	}
+
 	if Inputs.Output != "" && (len(Inputs.Args) != 1) {
 		ErrorHandler("output")
 	}

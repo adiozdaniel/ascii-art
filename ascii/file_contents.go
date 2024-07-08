@@ -47,15 +47,11 @@ func FileContents() ([]string, error) {
 			os.Remove(fileName)
 			os.Exit(0)
 		}
-		fmt.Print("\033[2A")
-		fmt.Print("\033[2K")
-		fmt.Print("\033[G")
-		fmt.Print("\033[2K")
+		fmt.Print("\033[1A","\033[G","\033[2K")
 		fmt.Println("Download Complete, This is awesome right?😎😎😎")
 		fmt.Print("\033[2K")
 		time.Sleep(2 * time.Second)
-		fmt.Print("\033[1A")
-		fmt.Print("\033[2K")
+		fmt.Print("\033[1A","\033[2K")
 
 		contents, err = os.ReadFile(fileName)
 		if err != nil {

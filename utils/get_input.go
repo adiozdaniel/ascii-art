@@ -128,6 +128,17 @@ func init() {
 	}
 
 	if len(Inputs.Args) > 1 {
+		if Inputs.Color !="" {
+			ErrorHandler("colors")
+		}
+		
+		if Inputs.Output !="" {
+			ErrorHandler("output")
+		}
+
+		if Inputs.Justify !="" {
+			ErrorHandler("align")
+		}
 		ErrorHandler("fatal")
 	}
 }

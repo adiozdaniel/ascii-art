@@ -134,21 +134,27 @@ The output can be displayed in different colors in any of the following formats:
 1. By adding only the color flag, like this:
 
    - `$ go run . --color=blue hello`
+
      ![go run . --color=blue hello](/static/sample5.png)
+
 
    In this case, all the letters in **_hello_** will be colored in blue. Here, the string `hello` acts as the reference string.
 
 2. By adding a color flag and a refference string that is not a substring of the next word,like in the example below, the program will look for the instance of the characters in the input string and color them with the provided color, like this:
 
    - `$ go run . --color=blue ho hello`
+
      ![go run . --color=blue ho hello](/static/sample4.png)
+
 
      On the terminal, you should be able to see letters **_h_** and **_o_** in blue and the remaining letters in default terminal color(possibly, white).
 
 3. By adding a color flag and a refference string that is a substring of the next word,like in the example below, the program will look for the instance of the substring in the input string and color them with the provided color, like this:
 
    - `$ go run . --color=#f0f "Will" "Will will come\nTo fetch the Will\nTo Will James"`
+
      ![go run . --color=blue ho hello](/static/sample6.png)
+
 
      On the terminal, you should be able to see the substring **_Will_** in yellow (or the provided colour) and the remaining letters in default terminal color(possibly, white).
 

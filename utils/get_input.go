@@ -118,6 +118,10 @@ func init() {
 		ErrorHandler("output")
 	}
 
+	if Inputs.Output != "" && Inputs.Justify != "" {
+		ErrorHandler("output")
+	}
+
 	if len(Inputs.Args) == 1 {
 		Inputs.ColorRef = strings.TrimSpace(Inputs.Args[0])
 		Inputs.Input = Inputs.Args[0]

@@ -8,12 +8,12 @@ import (
 
 // errors is a map of error output value in ErrorHandler
 var errors = map[string]string{
-	"colors": "Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <substring to be colored> \"something\" standard",
-	"justify":  "Usage: go run . [OPTION] [STRING] [BANNER]\n\nExample: go run . --align=right something standard",
-	"color":  "🤯 Oops! We couldn't recognise your color\n\nKindly search supported colors here: https://htmlcolorcodes.com/",
-	"output": "Usage: go run . [OPTION] [STRING] [BANNER]\n\nExample: go run . --output=<fileName.txt> something standard",
-	"txt":    "😣Oops! We currently only support text files\n\nSee Documentation in: ../README.md",
-	"web":    "😮Oops! Something went wrong",
+	"colors":  "Usage: go run . [OPTION] [STRING]\n\nEX: go run . --color=<color> <substring to be colored> \"something\" standard",
+	"justify": "Usage: go run . [OPTION] [STRING] [BANNER]\n\nExample: go run . --align=right something standard",
+	"color":   "🤯 Oops! We couldn't recognise your color\n\nKindly search supported colors here: https://htmlcolorcodes.com/",
+	"output":  "Usage: go run . [OPTION] [STRING] [BANNER]\n\nExample: go run . --output=<fileName.txt> something standard",
+	"txt":     "😣Oops! We currently only support text files\n\nSee Documentation in: ../README.md",
+	"web":     "😮Oops! Something went wrong",
 }
 
 // ErrorHandler outputs errors and safely exits the program

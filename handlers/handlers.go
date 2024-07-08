@@ -22,12 +22,6 @@ type FormData struct {
 
 var data FormData
 
-type FormData struct {
-	Body string
-}
-
-var data FormData
-
 // HomeHandler handles the homepage route '/'
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	utils.Inputs.Input = ""

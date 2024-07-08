@@ -16,7 +16,8 @@ import (
 // runOutput writes the output to the specified file.
 func runOutput() {
 	utils.LogOutput(output)
-	fmt.Printf("😋 writing.... '%s'. To check output, kindly use: `cat %s | cat -e`\n====================================\n %s", utils.Inputs.Input, utils.Inputs.Output, nonAsciis)
+	outputString := fmt.Sprintf("  😋 writing.... '%s'. To check output, kindly use: `cat %s | cat -e` %s", utils.Inputs.Input, utils.Inputs.Output, nonAsciis)
+	fmt.Printf("%s\n %s\n", outputString, strings.Repeat("=", len(outputString)-3))
 }
 
 // runWeb starts the web server to handle HTTP requests.

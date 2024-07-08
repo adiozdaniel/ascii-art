@@ -30,6 +30,8 @@ If a character in the input string is found in the map, this character will be p
 
 ## Installation
 
+This application requires Go (golang) 1.18 or higher to run. You can get it [here](https://go.dev/doc/install)
+
 To clone and run this program, you'll need **Git** installed on your computer.
 
 From the **command line**,

@@ -13,7 +13,7 @@ It removes ANSI escape codes from the input before applying alignment.
 Supported justifications: "left", "center", "right".
 Inputs.Justify should be set to the desired justification mode.
 */
-func Alignment(output, nonAsciis string, width int) {
+func Alignment(fileContents []string, ascii_map map[rune]int, output, nonAsciis string, width int) {
 	justification := Inputs.Justify
 
 	if width == 0 {
@@ -25,6 +25,8 @@ func Alignment(output, nonAsciis string, width int) {
 		fmt.Println(centerAlign(output, width), nonAsciis)
 	case "right":
 		fmt.Println(rightAlign(output, width), nonAsciis)
+	case "justify":
+		fmt.Println(justifyAlign(fileContents, ascii_map, output, width), nonAsciis)
 	default:
 		fmt.Println(leftAlign(output), nonAsciis)
 	}
@@ -112,4 +114,51 @@ func rightAlign(output string, width int) string {
 		justifiedLines = append(justifiedLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), line))
 	}
 	return strings.Join(justifiedLines, "\n")
+}
+
+/*
+justifyAlign centers output within the terminal width by inserting spaces between words.
+Parameters:
+
+	output: output to be justified.
+	width: Width of the terminal.
+
+Returns: Justified output.
+*/
+func justifyAlign(fileContents []string, ascii_map map[rune]int, output string, width int) string {
+	var justifiedLine strings.Builder
+	var words = strings.Fields(removeANSICodes(output))
+
+	wordsLength := 0
+	for _, word := range words {
+		wordsLength += len(word)
+	}
+
+	totalSpaces := width - wordsLength
+	spaceSlots := len(words) - 1
+	evenSpaces := totalSpaces / spaceSlots
+	extraSpaces := totalSpaces % spaceSlots
+
+	for _, line := range strings.Split(Inputs.Input, "\n") {
+		for i := 0; i < 8; i++ {
+			var builder strings.Builder
+			for _, char := range line {
+				if ascii, ok := ascii_map[char]; ok {
+					builder.WriteString(fileContents[ascii+i])
+				}
+				if i < spaceSlots {
+					builder.WriteString(strings.Repeat(" ", evenSpaces))
+					if i < extraSpaces {
+						builder.WriteString(" ")
+						extraSpaces--
+					}
+				}
+			}
+			justifiedLine.WriteString(builder.String())
+			justifiedLine.WriteRune('\n')
+		}
+		justifiedLine.WriteRune('\n')
+	}
+
+	return justifiedLine.String()
 }

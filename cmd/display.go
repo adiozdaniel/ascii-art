@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/adiozdaniel/ascii-art/ascii"
 	"github.com/adiozdaniel/ascii-art/routes"
 	"github.com/adiozdaniel/ascii-art/utils"
 )
@@ -42,6 +43,7 @@ func runWeb() {
 // justified runs alignment mode of the application.
 func justified() {
 	inputChan := make(chan string)
+	var ascii_map = ascii.AsciiMap(fileContents)
 	prevWidth := 0
 	temp := ""
 
@@ -67,7 +69,7 @@ func justified() {
 			width := utils.GetTerminalWidth()
 			if width != prevWidth || temp != "" {
 				fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
-				utils.Alignment(output, nonAsciis, width)
+				utils.Alignment(fileContents, ascii_map, output, nonAsciis, width)
 				prevWidth = width
 				temp = ""
 			}

@@ -127,8 +127,8 @@ func init() {
 	}
 
 	if len(Inputs.Args) == 1 {
-		Inputs.ColorRef = strings.TrimSpace(Inputs.Args[0])
 		Inputs.Input = Inputs.Args[0]
+		Inputs.ColorRef = strings.TrimSpace(Inputs.Args[0])
 	}
 
 	if len(Inputs.Args) > 1 {

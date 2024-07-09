@@ -18,7 +18,6 @@ func LogOutput(output string) {
 		}
 	}
 
-	// Write the cleaned output to the file
 	err := os.WriteFile(Inputs.Output, []byte(cleanOutput), 0644)
 	if err != nil {
 		ErrorHandler("restricted")

@@ -1,9 +1,6 @@
 package ascii
 
 import (
-	"fmt"
-	"os"
-
 	"strings"
 
 	"github.com/adiozdaniel/ascii-art/utils"
@@ -53,11 +50,6 @@ func processWebInput(ascii_map map[rune]int, fileContents []string) {
 
 // processTerminalInput processes input from the internal
 func processTerminalInput(ascii_map map[rune]int, fileContents []string) {
-	if utils.Inputs.Input == "\\n" {
-		fmt.Println()
-		os.Exit(0)
-	}
-
 	for lineIndex, line := range input {
 		if line == "" {
 			height = 1

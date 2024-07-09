@@ -20,6 +20,10 @@ func Output(fileContents []string) string {
 		return ""
 	}
 
+	if utils.Inputs.Input == "\\n" {
+		return "\n"
+	}
+
 	var ascii_map = AsciiMap(fileContents)
 
 	if utils.Inputs.IsWeb {

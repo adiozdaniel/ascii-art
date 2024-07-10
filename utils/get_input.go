@@ -52,7 +52,7 @@ var validFlags = map[string]bool{
 // init initializes the Input
 func init() {
 	if len(os.Args) < 2 {
-		ErrorHandler("fatal")
+		ErrorHandler("output") //enforce output usage error
 	}
 
 	if strings.Contains(os.Args[0], "test") || os.Args[1] == "-web" {
@@ -67,7 +67,7 @@ func init() {
 	flag.Usage = func() {
 		fmt.Print("\033[1A")
 		fmt.Print("\033[2K")
-		ErrorHandler("fatal")
+		ErrorHandler("output") //enforce output usage error
 	}
 
 	for _, arg := range os.Args[1:] {
@@ -75,7 +75,7 @@ func init() {
 			flagValue := strings.Split(arg, "=")[1]
 			flagName := strings.Split(arg, "=")[0]
 			if !validFlags[flagName] {
-				ErrorHandler("fatal")
+				ErrorHandler("output") //enforce output usage error
 			}
 			if flagValue == "" {
 				if flagName == "--output" {
@@ -87,7 +87,7 @@ func init() {
 				if flagName == "--color" {
 					ErrorHandler("colors")
 				}
-				ErrorHandler("fatal")
+				ErrorHandler("output") //enforce output usage error
 			}
 		}
 	}
@@ -143,7 +143,7 @@ func init() {
 		if Inputs.Justify != "" {
 			ErrorHandler("align")
 		}
-		ErrorHandler("fatal")
+		ErrorHandler("output") //enforce output usage error
 	}
 }
 

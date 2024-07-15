@@ -8,7 +8,6 @@ import (
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
-var fileContents, _ = ascii.FileContents()
 var output = ascii.Output(utils.Inputs.Input)
 var nonAsciis = utils.NonAsciiOutput()
 

@@ -19,7 +19,6 @@ func Output(inputStr string) string {
 	if inputStr == "" {
 		inputStr = utils.Inputs.Input
 	}
-	var input = strings.Split(strings.ReplaceAll(inputStr, "\\n", "\n"), "\n")
 
 	if utils.Inputs.Input == "" {
 		return ""
@@ -30,6 +29,7 @@ func Output(inputStr string) string {
 	}
 
 	var ascii_map = AsciiMap(fileContents)
+	var input = strings.Split(strings.ReplaceAll(inputStr, "\\n", "\n"), "\n")
 
 	if utils.Inputs.IsWeb {
 		processWebInput(ascii_map, fileContents)

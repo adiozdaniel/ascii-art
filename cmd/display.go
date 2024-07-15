@@ -38,13 +38,11 @@ func runWeb() {
 	}
 }
 
-// justified runs alignment mode of the application.
+// justified runs the alignment mode of the application.
 func justified() {
 	inputChan := make(chan string)
-	var inputStr string
 	prevWidth := 0
-	var tempInput string
-	var prevOutput string
+	tempStr := ""
 
 	go func() {
 		scanner := bufio.NewScanner(os.Stdin)
@@ -56,37 +54,25 @@ func justified() {
 
 	for {
 		select {
-		case inputStr = <-inputChan:
-			if inputStr == "exit" {
-				fmt.Println("\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
-				os.Exit(0)
+		case input := <-inputChan:
+			if input == "exit" {
+				fmt.Println("\n\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
+				return
 			} else {
-				tempInput = inputStr
-				scanInput(inputStr)
+				scanInput(input)
+				tempStr = input
 			}
 		default:
-			width := utils.GetTerminalWidth()
-			var output = ascii.Output(tempInput)
-			var termOutput = utils.Alignment(output, width)
-			utils.Inputs.Input = ""
+			newWidth := utils.GetTerminalWidth()
+			outputs := ascii.Output(tempStr)
 
-			if width != prevWidth || tempInput != "" {
-				// Clear only the artwork, not the entire screen
-				if prevOutput != "" || utils.Inputs.Input != "" {
-					lines := strings.Split(prevOutput, "\n")
-					for range lines {
-						// fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
-					}
-				}
-				// Print new output
+			if newWidth != prevWidth || tempStr != "" {
+				// fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
+				termOutput := utils.Alignment(outputs, newWidth)
 				fmt.Print(termOutput)
-
-				// Update previous values
-				prevOutput = termOutput
-				prevWidth = width
-				tempInput = ""
+				prevWidth = newWidth
+				tempStr = ""
 			}
-
 			time.Sleep(2 * time.Second)
 		}
 	}
@@ -94,7 +80,7 @@ func justified() {
 
 // scanInput reads input from cli interface and updates the input struct.
 func scanInput(input string) {
-	// utils.Inputs.Input = input
+	utils.Inputs.Input = input
 
 	// TODO
 	// consider adding more options for cli input handling

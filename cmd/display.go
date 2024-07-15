@@ -64,11 +64,10 @@ func justified() {
 			}
 		default:
 			newWidth := utils.GetTerminalWidth()
-			outputs := ascii.Output(tempStr)
-
 			if newWidth != prevWidth || tempStr != "" {
-				// fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
-				termOutput := utils.Alignment(outputs, newWidth)
+				fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
+				output := ascii.Output(tempStr)
+				termOutput := utils.Alignment(output, newWidth)
 				fmt.Print(termOutput)
 				prevWidth = newWidth
 				tempStr = ""
@@ -78,10 +77,29 @@ func justified() {
 	}
 }
 
-// scanInput reads input from cli interface and updates the input struct.
+// scanInput reads input from CLI interface and updates the input struct.
 func scanInput(input string) {
 	utils.Inputs.Input = input
 
-	// TODO
-	// consider adding more options for cli input handling
+	for i := 0; i < len(utils.Inputs.Args); i++ {
+		word := utils.Inputs.Args[i]
+		if strings.HasPrefix(word, "--align=") || strings.HasPrefix(word, "-align=") {
+			utils.Inputs.Justify = strings.TrimPrefix(strings.TrimPrefix(word, "--align="), "-align=")
+			utils.Inputs.Args = append(utils.Inputs.Args[:i], utils.Inputs.Args[i+1:]...)
+			i--
+			continue
+		}
+
+		if strings.HasPrefix(word, "--color=") || strings.HasPrefix(word, "-color=") {
+			utils.Inputs.Color = strings.TrimPrefix(strings.TrimPrefix(word, "--color="), "-color=")
+			utils.Inputs.Args = append(utils.Inputs.Args[:i], utils.Inputs.Args[i+1:]...)
+			i--
+			continue
+		}
+
+		if strings.HasPrefix(word, "--output") || strings.HasPrefix(word, "-output") {
+			fmt.Println("sorry, FS Mode cannot be set in alignment mode.\nprogram exiting...")
+			os.Exit(0)
+		}
+	}
 }

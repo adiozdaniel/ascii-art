@@ -16,10 +16,6 @@ var fileContents, _ = FileContents()
 // Output compiles the banner characters to form the desired ascii art work
 func Output(inputStr string) string {
 	if inputStr == "" {
-		inputStr = utils.Inputs.Input
-	}
-
-	if utils.Inputs.Input == "" {
 		return ""
 	}
 

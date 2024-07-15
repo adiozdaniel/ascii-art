@@ -97,7 +97,7 @@ func scanInput(input string) {
 			fmt.Println("Sorry, FS Mode cannot be set in alignment mode. Exiting program...")
 			os.Exit(0)
 		default:
-			newInput += word + " " // Include space to separate words in the input
+			newInput += word + " "
 		}
 	}
 

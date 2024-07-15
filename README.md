@@ -193,27 +193,6 @@ Get more color combinations [here](https://htmlcolorcodes.com/)
 
 **Note:** This feature is only available in the CLI mode.
 
-## Disclaimer
-
-The program currently supports three interfaces. You are thus adviced to **explicitly declare** your intended use, or else, you may encounter wrong output or wrong usage errors.
-
-For instance:
-
-`go run .` will throw a full fledged usage error like:
-
-```Bash
-For color:
-EX: go run . --color=<color> <substring to be colored> "something" standard
-For output:
-EX: go run . --output=<fileName.txt> something standard
-For justify:
-Example: go run . --align=right something standard
-For web:
-go run . -web
-```
-
-But explicitly telling the program the intended use, such as `go run . --output=sample.txt something`, will prompt the program to use the file interface.
-
 ### Alignment
 
 To change the alignment of your output dynamically, you need to include the use of `--align=<type>` flag.

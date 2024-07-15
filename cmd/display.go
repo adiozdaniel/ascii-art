@@ -59,13 +59,17 @@ func justified() {
 				fmt.Println("\n\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
 				return
 			} else {
-				scanInput(input)
 				tempStr = input
+
+				if input != "" {
+					tempStr = input
+					scanInput(input)
+				}
 			}
 		default:
 			newWidth := utils.GetTerminalWidth()
 			if newWidth != prevWidth || tempStr != "" {
-				outputs := ascii.Output(tempStr)
+				outputs := ascii.Output(utils.Inputs.Input)
 				termOutput := utils.Alignment(outputs, newWidth)
 				fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
 				fmt.Print(termOutput)
@@ -80,27 +84,24 @@ func justified() {
 
 // scanInput reads input from CLI interface and updates the input struct.
 func scanInput(input string) {
-	utils.Inputs.Input = input
+	words := strings.Fields(input)
+	newInput := ""
 
-	for i := 0; i < len(utils.Inputs.Args); i++ {
-		word := utils.Inputs.Args[i]
-		if strings.HasPrefix(word, "--align=") || strings.HasPrefix(word, "-align=") {
+	for _, word := range words {
+		switch {
+		case strings.Contains(word, "--align=") || strings.HasPrefix(word, "-align="):
 			utils.Inputs.Justify = strings.TrimPrefix(strings.TrimPrefix(word, "--align="), "-align=")
-			utils.Inputs.Args = append(utils.Inputs.Args[:i], utils.Inputs.Args[i+1:]...)
-			i--
-			continue
-		}
-
-		if strings.HasPrefix(word, "--color=") || strings.HasPrefix(word, "-color=") {
+		case strings.Contains(word, "--color=") || strings.Contains(word, "-color="):
 			utils.Inputs.Color = strings.TrimPrefix(strings.TrimPrefix(word, "--color="), "-color=")
-			utils.Inputs.Args = append(utils.Inputs.Args[:i], utils.Inputs.Args[i+1:]...)
-			i--
-			continue
-		}
-
-		if strings.HasPrefix(word, "--output") || strings.HasPrefix(word, "-output") {
-			fmt.Println("sorry, FS Mode cannot be set in alignment mode.\nprogram exiting...")
+		case strings.Contains(word, "--output") || strings.Contains(word, "-output"):
+			fmt.Println("Sorry, FS Mode cannot be set in alignment mode. Exiting program...")
 			os.Exit(0)
+		default:
+			newInput += word + " " // Include space to separate words in the input
 		}
+	}
+
+	if newInput != "" {
+		utils.Inputs.Input = newInput
 	}
 }

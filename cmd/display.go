@@ -65,9 +65,9 @@ func justified() {
 		default:
 			newWidth := utils.GetTerminalWidth()
 			if newWidth != prevWidth || tempStr != "" {
-				fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
-				output := ascii.Output(tempStr)
-				termOutput := utils.Alignment(output, newWidth)
+				outputs := ascii.Output(tempStr)
+				termOutput := utils.Alignment(outputs, newWidth)
+				// fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
 				fmt.Print(termOutput)
 				prevWidth = newWidth
 				tempStr = ""

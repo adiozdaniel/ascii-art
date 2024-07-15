@@ -39,11 +39,9 @@ func runWeb() {
 }
 
 // justified runs alignment mode of the application.
-// justified runs alignment mode of the application.
 func justified() {
 	inputChan := make(chan string)
 	var inputStr string
-	var asciiMap = ascii.AsciiMap(fileContents)
 	prevWidth := 0
 	var tempInput string
 	var prevOutput string
@@ -68,19 +66,18 @@ func justified() {
 			}
 		default:
 			width := utils.GetTerminalWidth()
-			var output = ascii.Output(fileContents, tempInput)
+			var output = ascii.Output(tempInput)
+			var termOutput = utils.Alignment(output, width)
+			utils.Inputs.Input = ""
 
 			if width != prevWidth || tempInput != "" {
 				// Clear only the artwork, not the entire screen
-				if prevOutput != "" {
+				if prevOutput != "" || utils.Inputs.Input != "" {
 					lines := strings.Split(prevOutput, "\n")
 					for range lines {
-						fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
+						// fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
 					}
 				}
-
-				termOutput := utils.Alignment(fileContents, asciiMap, output, width)
-
 				// Print new output
 				fmt.Print(termOutput)
 
@@ -97,7 +94,7 @@ func justified() {
 
 // scanInput reads input from cli interface and updates the input struct.
 func scanInput(input string) {
-	utils.Inputs.Args = strings.Split(input, " ")
+	// utils.Inputs.Input = input
 
 	// TODO
 	// consider adding more options for cli input handling

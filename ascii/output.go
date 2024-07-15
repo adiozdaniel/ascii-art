@@ -12,9 +12,10 @@ var color = strings.TrimSpace(utils.Inputs.Color)
 var reff = utils.Inputs.ColorRef
 var art_work strings.Builder
 var height int = 8
+var fileContents, _ = FileContents()
 
 // Output compiles the banner characters to form the desired ascii art work
-func Output(fileContents []string, inputStr string) string {
+func Output(inputStr string) string {
 	if inputStr == "" {
 		inputStr = utils.Inputs.Input
 	}

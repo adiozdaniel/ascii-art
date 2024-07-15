@@ -38,13 +38,13 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fileContents, err := ascii.FileContents()
+	_, err := ascii.FileContents()
 	if err != nil {
 		ServerError(w, r)
 		return
 	}
 
-	output := ascii.Output(fileContents, utils.Inputs.Input)
+	output := ascii.Output(utils.Inputs.Input)
 	data.Body = output
 
 	tmpl2.Execute(w, data)

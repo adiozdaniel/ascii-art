@@ -110,7 +110,7 @@ func init() {
 		return
 	}
 
-	if strings.Contains(Inputs.Output, "/banners/") {
+	if strings.Contains(Inputs.Output, "/banners/") || strings.Contains(Inputs.Output, "/static/") || strings.Contains(Inputs.Output, "/templates/") {
 		ErrorHandler("restricted")
 	}
 

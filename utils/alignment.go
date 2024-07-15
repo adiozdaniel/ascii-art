@@ -22,13 +22,13 @@ func Alignment(fileContents []string, ascii_map map[rune]int, output string, wid
 
 	switch justification {
 	case "center":
-		return fmt.Sprintf(centerAlign(output, width))
+		return centerAlign(output, width)
 	case "right":
-		return fmt.Sprintf(rightAlign(output, width))
+		return rightAlign(output, width)
 	case "justify":
-		return fmt.Sprintf(justifyAlign(fileContents, ascii_map, output, width))
+		return justifyAlign(fileContents, ascii_map, output, width)
 	default:
-		return fmt.Sprintf(leftAlign(output))
+		return leftAlign(output)
 	}
 }
 

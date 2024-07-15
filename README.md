@@ -260,7 +260,7 @@ To quit the program, type `exit` in lowercase only. This is case sensitive
     </td>
     <td align="center" style="word-wrap: break-word; width: 150.0; height: 150.0">
         <a href=https://github.com/andyosyndoh>
-            <img src=https://lh3.googleusercontent.com/a/ACg8ocLUKAW3QwBqLDqDcmkFTC3wmCPq0dd25wVFn3CPEkCfhQQme9Lx=s288-c-no width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Andrew/>
+            <img src=https://avatars.githubusercontent.com/u/163721517?v=4 width="100;"  style="border-radius:50%;align-items:center;justify-content:center;overflow:hidden;padding-top:10px" alt=Andrew/>
             <br />
             <sub style="font-size:14px"><b>Andrew Osindo</b></sub>
         </a>

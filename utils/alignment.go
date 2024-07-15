@@ -13,7 +13,7 @@ It removes ANSI escape codes from the input before applying alignment.
 Supported justifications: "left", "center", "right".
 Inputs.Justify should be set to the desired justification mode.
 */
-func Alignment(fileContents []string, ascii_map map[rune]int, output, nonAsciis string, width int) {
+func Alignment(fileContents []string, ascii_map map[rune]int, output string, width int) string {
 	justification := Inputs.Justify
 
 	if width == 0 {
@@ -22,13 +22,13 @@ func Alignment(fileContents []string, ascii_map map[rune]int, output, nonAsciis 
 
 	switch justification {
 	case "center":
-		fmt.Println(centerAlign(output, width), nonAsciis)
+		return fmt.Sprintf(centerAlign(output, width))
 	case "right":
-		fmt.Println(rightAlign(output, width), nonAsciis)
+		return fmt.Sprintf(rightAlign(output, width))
 	case "justify":
-		fmt.Println(justifyAlign(fileContents, ascii_map, output, width), nonAsciis)
+		return fmt.Sprintf(justifyAlign(fileContents, ascii_map, output, width))
 	default:
-		fmt.Println(leftAlign(output), nonAsciis)
+		return fmt.Sprintf(leftAlign(output))
 	}
 }
 

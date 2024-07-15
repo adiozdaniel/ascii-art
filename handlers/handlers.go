@@ -44,7 +44,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	output := ascii.Output(fileContents)
+	output := ascii.Output(fileContents, utils.Inputs.Input)
 	data.Body = output
 
 	tmpl2.Execute(w, data)

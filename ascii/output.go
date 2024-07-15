@@ -10,17 +10,21 @@ import (
 var reset = "\033[0m"
 var color = strings.TrimSpace(utils.Inputs.Color)
 var reff = utils.Inputs.ColorRef
-var input = strings.Split(strings.ReplaceAll(utils.Inputs.Input, "\\n", "\n"), "\n")
 var art_work strings.Builder
 var height int = 8
 
 // Output compiles the banner characters to form the desired ascii art work
-func Output(fileContents []string) string {
+func Output(fileContents []string, inputStr string) string {
+	if inputStr == "" {
+		inputStr = utils.Inputs.Input
+	}
+	var input = strings.Split(strings.ReplaceAll(inputStr, "\\n", "\n"), "\n")
+
 	if utils.Inputs.Input == "" {
 		return ""
 	}
 
-	if utils.Inputs.Input == "\\n" {
+	if inputStr == "\\n" {
 		return "\n"
 	}
 
@@ -29,7 +33,7 @@ func Output(fileContents []string) string {
 	if utils.Inputs.IsWeb {
 		processWebInput(ascii_map, fileContents)
 	} else {
-		processTerminalInput(ascii_map, fileContents)
+		processTerminalInput(ascii_map, fileContents, input)
 	}
 
 	return art_work.String()
@@ -53,7 +57,7 @@ func processWebInput(ascii_map map[rune]int, fileContents []string) {
 }
 
 // processTerminalInput processes input from the internal
-func processTerminalInput(ascii_map map[rune]int, fileContents []string) {
+func processTerminalInput(ascii_map map[rune]int, fileContents, input []string) {
 	for lineIndex, line := range input {
 		if line == "" {
 			height = 1
@@ -68,7 +72,7 @@ func processTerminalInput(ascii_map map[rune]int, fileContents []string) {
 					if color != "" {
 						colorCode := GetColorCode(color)
 
-						if containsReff() {
+						if containsReff(input) {
 							if _, ok := indexes.indexMap[lineIndex][j]; ok {
 								builder.WriteString(colorCode + fileContents[ascii+i] + reset)
 							} else {
@@ -101,7 +105,7 @@ var indexes = contains{
 }
 
 // containsReff checks for color substrings and initialises contains struct
-func containsReff() bool {
+func containsReff(input []string) bool {
 	var hasReff bool
 
 	for i, line := range input {

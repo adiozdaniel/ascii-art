@@ -39,11 +39,14 @@ func runWeb() {
 }
 
 // justified runs alignment mode of the application.
+// justified runs alignment mode of the application.
 func justified() {
 	inputChan := make(chan string)
-	var ascii_map = ascii.AsciiMap(fileContents)
+	var inputStr string
+	var asciiMap = ascii.AsciiMap(fileContents)
 	prevWidth := 0
-	temp := ""
+	var tempInput string
+	var prevOutput string
 
 	go func() {
 		scanner := bufio.NewScanner(os.Stdin)
@@ -55,21 +58,36 @@ func justified() {
 
 	for {
 		select {
-		case input := <-inputChan:
-			if input == "exit" {
+		case inputStr = <-inputChan:
+			if inputStr == "exit" {
 				fmt.Println("\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
 				os.Exit(0)
 			} else {
-				temp += input
-				scanInput(input)
+				tempInput = inputStr
+				scanInput(inputStr)
 			}
 		default:
 			width := utils.GetTerminalWidth()
-			if width != prevWidth || temp != "" {
-				fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
-				utils.Alignment(fileContents, ascii_map, output, nonAsciis, width)
+			var output = ascii.Output(fileContents, tempInput)
+
+			if width != prevWidth || tempInput != "" {
+				// Clear only the artwork, not the entire screen
+				if prevOutput != "" {
+					lines := strings.Split(prevOutput, "\n")
+					for range lines {
+						fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
+					}
+				}
+
+				termOutput := utils.Alignment(fileContents, asciiMap, output, width)
+
+				// Print new output
+				fmt.Print(termOutput)
+
+				// Update previous values
+				prevOutput = termOutput
 				prevWidth = width
-				temp = ""
+				tempInput = ""
 			}
 
 			time.Sleep(2 * time.Second)

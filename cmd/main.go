@@ -9,7 +9,7 @@ import (
 )
 
 var fileContents, _ = ascii.FileContents()
-var output = ascii.Output(fileContents)
+var output = ascii.Output(fileContents, utils.Inputs.Input)
 var nonAsciis = utils.NonAsciiOutput()
 
 func main() {

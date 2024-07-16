@@ -107,20 +107,28 @@ func justifyAlign(ascii_map map[rune]int, fileContents []string, art_work *strin
 		totalSpaces := width - wordsLength
 		spaceSlots := len(words) - 1
 		evenSpaces := totalSpaces / spaceSlots
-		extraSpaces := totalSpaces % spaceSlots
+		// extraSpaces := totalSpaces % spaceSlots
+		spacesIndex :=  mapSpace(line)
 		for i := 0; i < 8; i++ {
 			var builder strings.Builder
 			for j, char := range line {
+				
 				if ascii, ok := ascii_map[char]; ok {
-					builder.WriteString(fileContents[ascii+i])
-				}
-				if j < spaceSlots {
-					builder.WriteString(strings.Repeat(" ", evenSpaces))
-					if j < extraSpaces {
-						builder.WriteString(" ")
-						extraSpaces--
+					if ok := spacesIndex[j] ; ok {
+						builder.WriteString(strings.Repeat(" ", evenSpaces))
+					} else {
+						builder.WriteString(fileContents[ascii+i])
 					}
+					
 				}
+				
+				// if j < spaceSlots {
+				// 	builder.WriteString(strings.Repeat(" ", evenSpaces))
+				// 	if j < extraSpaces {
+				// 		builder.WriteString(" ")
+				// 		extraSpaces--
+				// 	}
+				// }
 			}
 			art_work.WriteString(builder.String())
 			art_work.WriteRune('\n')
@@ -160,4 +168,14 @@ func containsReff(input []string) bool {
 	}
 
 	return hasReff
+}
+
+func mapSpace (input string) map[int]bool {
+	var spaceMap  = make(map[int]bool)
+	for i , char := range input {
+		if char == ' ' {
+			spaceMap[i] = true
+		}
+	}
+	return spaceMap
 }

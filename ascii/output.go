@@ -7,11 +7,13 @@ import (
 )
 
 // variables declaration
-var reset = "\033[0m"
-var color = strings.TrimSpace(utils.Inputs.Color)
-var reff = utils.Inputs.ColorRef
-var height int = 8
-var fileContents, _ = FileContents()
+var (
+	reset               = "\033[0m"
+	color               = strings.TrimSpace(utils.Inputs.Color)
+	reff                = utils.Inputs.ColorRef
+	height          int = 8
+	fileContents, _     = FileContents()
+)
 
 // Output compiles the banner characters to form the desired ascii art work
 func Output(inputStr string) string {
@@ -23,12 +25,14 @@ func Output(inputStr string) string {
 		return "\n"
 	}
 
-	var ascii_map = AsciiMap(fileContents)
-	var input = strings.Split(strings.ReplaceAll(inputStr, "\\n", "\n"), "\n")
+	ascii_map := AsciiMap(fileContents)
+	input := strings.Split(strings.ReplaceAll(inputStr, "\\n", "\n"), "\n")
 	var art_work strings.Builder
 
 	if utils.Inputs.IsWeb {
 		processWebInput(ascii_map, fileContents, &art_work)
+	} else if utils.Inputs.Justify == "justify" {
+		justifyAlign(ascii_map, fileContents, &art_work)
 	} else {
 		processTerminalInput(ascii_map, fileContents, input, &art_work)
 	}
@@ -88,6 +92,40 @@ func processTerminalInput(ascii_map map[rune]int, fileContents, input []string, 
 			art_work.WriteString(builder.String())
 			art_work.WriteRune('\n')
 		}
+	}
+}
+
+func justifyAlign(ascii_map map[rune]int, fileContents []string, art_work *strings.Builder) {
+	width := utils.GetTerminalWidth()
+
+	for _, line := range strings.Split(utils.Inputs.Input, "\n") {
+		words := strings.Fields(line)
+		wordsLength := 0
+		for _, word := range words {
+			wordsLength += len(word)
+		}
+		totalSpaces := width - wordsLength
+		spaceSlots := len(words) - 1
+		evenSpaces := totalSpaces / spaceSlots
+		extraSpaces := totalSpaces % spaceSlots
+		for i := 0; i < 8; i++ {
+			var builder strings.Builder
+			for j, char := range line {
+				if ascii, ok := ascii_map[char]; ok {
+					builder.WriteString(fileContents[ascii+i])
+				}
+				if j < spaceSlots {
+					builder.WriteString(strings.Repeat(" ", evenSpaces))
+					if j < extraSpaces {
+						builder.WriteString(" ")
+						extraSpaces--
+					}
+				}
+			}
+			art_work.WriteString(builder.String())
+			art_work.WriteRune('\n')
+		}
+		art_work.WriteRune('\n')
 	}
 }
 

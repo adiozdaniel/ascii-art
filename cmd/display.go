@@ -57,7 +57,7 @@ func justified() {
 		case input := <-inputChan:
 			if input == "exit" {
 				fmt.Println("\n\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
-				return
+				os.Exit(0)
 			} else {
 				tempStr = input
 
@@ -73,7 +73,7 @@ func justified() {
 				termOutput := utils.Alignment(outputs, newWidth)
 				fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
 				fmt.Print(termOutput)
-				fmt.Print("\033[9;1H")
+				fmt.Print("\033[999;1H")
 				prevWidth = newWidth
 				tempStr = ""
 			}

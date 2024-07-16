@@ -59,8 +59,6 @@ func justified() {
 				fmt.Println("\n\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
 				os.Exit(0)
 			} else {
-				tempStr = input
-
 				if input != "" {
 					tempStr = input
 					scanInput(input)

@@ -95,6 +95,7 @@ func processTerminalInput(ascii_map map[rune]int, fileContents, input []string, 
 	}
 }
 
+// justifyAlign formats the input for justified alignment mode
 func justifyAlign(ascii_map map[rune]int, fileContents []string, art_work *strings.Builder) {
 	for _, line := range strings.Split(utils.Inputs.Input, "\n") {
 		for i := 0; i < height; i++ {
@@ -146,14 +147,4 @@ func containsReff(input []string) bool {
 	}
 
 	return hasReff
-}
-
-func mapSpace(input string) map[int]bool {
-	spaceMap := make(map[int]bool)
-	for i, char := range input {
-		if char == ' ' {
-			spaceMap[i] = true
-		}
-	}
-	return spaceMap
 }

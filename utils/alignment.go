@@ -126,6 +126,7 @@ Parameters:
 Returns: Justified output.
 */
 func justifyAlign(output string, width int) string {
+	var justifiedLines strings.Builder
 	var justifyedLines = output
 	var spaceSlots, len = spaceSlots(output)
 	var givenSpaces = width - len
@@ -134,9 +135,9 @@ func justifyAlign(output string, width int) string {
 	if spacePerSlot < 1 {
 		return strings.ReplaceAll(output, "$", " ")
 	}
-	justifyedLines = strings.ReplaceAll(string(justifyedLines), "$", strings.Repeat(" ", spacePerSlot))
+	justifiedLines.WriteString(strings.ReplaceAll(string(justifyedLines), "$", strings.Repeat(" ", spacePerSlot)))
 
-	return justifyedLines
+	return justifiedLines.String()
 }
 
 func spaceSlots(output string) (int, int) {

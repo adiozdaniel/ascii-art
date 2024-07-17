@@ -14,13 +14,13 @@ Supported justifications: "left", "center", "right".
 Inputs.Justify should be set to the desired justification mode.
 */
 func Alignment(output string, width int) string {
-	justification := Inputs.Justify
+	alignment := Inputs.Justify
 
 	if width == 0 {
 		width = 80 // fallback to default width
 	}
 
-	switch justification {
+	switch alignment {
 	case "center":
 		return centerAlign(output, width)
 	case "right":
@@ -41,8 +41,6 @@ func GetTerminalWidth() int {
 	type winsize struct {
 		Row uint16
 		Col uint16
-		// Xpixel uint16
-		// Ypixel uint16
 	}
 
 	ws := &winsize{}
@@ -81,16 +79,16 @@ Returns: Centered output.
 */
 func centerAlign(output string, width int) string {
 	lines := strings.Split(output, "\n")
-	var justifiedLines []string
+	var centeredLines []string
 	for _, line := range lines {
 		cleanLine := removeANSICodes(line)
 		padding := (width - len(cleanLine)) / 2
 		if padding < 0 {
 			padding = 0
 		}
-		justifiedLines = append(justifiedLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), line))
+		centeredLines = append(centeredLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), line))
 	}
-	return strings.Join(justifiedLines, "\n")
+	return strings.Join(centeredLines, "\n")
 }
 
 /*
@@ -104,16 +102,16 @@ Returns: Right-aligned output.
 */
 func rightAlign(output string, width int) string {
 	lines := strings.Split(output, "\n")
-	var justifiedLines []string
+	var rightLines []string
 	for _, line := range lines {
 		cleanLine := removeANSICodes(line)
 		padding := width - len(cleanLine)
 		if padding < 0 {
 			padding = 0
 		}
-		justifiedLines = append(justifiedLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), line))
+		rightLines = append(rightLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), line))
 	}
-	return strings.Join(justifiedLines, "\n")
+	return strings.Join(rightLines, "\n")
 }
 
 /*

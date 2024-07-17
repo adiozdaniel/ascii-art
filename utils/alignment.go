@@ -26,7 +26,7 @@ func Alignment(output string, width int) string {
 	case "right":
 		return rightAlign(output, width)
 	case "justify":
-	return justifyAlign(output, width)
+		return justifyAlign(output, width)
 	default:
 		return leftAlign(output)
 	}
@@ -39,8 +39,8 @@ Returns: The width of the terminal in columns. Zero if the width cannot be deter
 */
 func GetTerminalWidth() int {
 	type winsize struct {
-		Row    uint16
-		Col    uint16
+		Row uint16
+		Col uint16
 		// Xpixel uint16
 		// Ypixel uint16
 	}
@@ -129,14 +129,17 @@ func justifyAlign(output string, width int) string {
 	var justifyedLines = output
 	var spaceSlots, len = spaceSlots(output)
 	var givenSpaces = width - len
-	var spacePerSlot = givenSpaces/spaceSlots
+	var spacePerSlot = givenSpaces / spaceSlots
 
+	if spacePerSlot < 1 {
+		return strings.ReplaceAll(output, "$", " ")
+	}
 	justifyedLines = strings.ReplaceAll(string(justifyedLines), "$", strings.Repeat(" ", spacePerSlot))
 
 	return justifyedLines
 }
 
-func spaceSlots(output string) (int, int)  {
+func spaceSlots(output string) (int, int) {
 	var slots int
 	var len int
 
@@ -144,8 +147,8 @@ func spaceSlots(output string) (int, int)  {
 		if char == '$' {
 			slots++
 		}
-		
-		len = i+1
+
+		len = i + 1
 	}
 	return slots, len
 }

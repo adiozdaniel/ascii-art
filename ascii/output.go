@@ -96,39 +96,17 @@ func processTerminalInput(ascii_map map[rune]int, fileContents, input []string, 
 }
 
 func justifyAlign(ascii_map map[rune]int, fileContents []string, art_work *strings.Builder) {
-	width := utils.GetTerminalWidth()
-
 	for _, line := range strings.Split(utils.Inputs.Input, "\n") {
-		words := strings.Fields(line)
-		wordsLength := 0
-		for _, word := range words {
-			wordsLength += len(word)
-		}
-		totalSpaces := width - wordsLength
-		spaceSlots := len(words) - 1
-		evenSpaces := totalSpaces / spaceSlots
-		// extraSpaces := totalSpaces % spaceSlots
-		spacesIndex :=  mapSpace(line)
-		for i := 0; i < 8; i++ {
+		for i := 0; i < height; i++ {
 			var builder strings.Builder
-			for j, char := range line {
-				
-				if ascii, ok := ascii_map[char]; ok {
-					if ok := spacesIndex[j] ; ok {
-						builder.WriteString(strings.Repeat(" ", evenSpaces))
-					} else {
-						builder.WriteString(fileContents[ascii+i])
-					}
-					
+			for _, char := range line {
+				if char == ' ' {
+					builder.WriteRune('$')
+					continue
 				}
-				
-				// if j < spaceSlots {
-				// 	builder.WriteString(strings.Repeat(" ", evenSpaces))
-				// 	if j < extraSpaces {
-				// 		builder.WriteString(" ")
-				// 		extraSpaces--
-				// 	}
-				// }
+				if ascii, ok := ascii_map[char]; ok {
+					builder.WriteString(fileContents[ascii+i])
+				}
 			}
 			art_work.WriteString(builder.String())
 			art_work.WriteRune('\n')
@@ -170,9 +148,9 @@ func containsReff(input []string) bool {
 	return hasReff
 }
 
-func mapSpace (input string) map[int]bool {
-	var spaceMap  = make(map[int]bool)
-	for i , char := range input {
+func mapSpace(input string) map[int]bool {
+	spaceMap := make(map[int]bool)
+	for i, char := range input {
 		if char == ' ' {
 			spaceMap[i] = true
 		}

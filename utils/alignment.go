@@ -25,8 +25,8 @@ func Alignment(output string, width int) string {
 		return centerAlign(output, width)
 	case "right":
 		return rightAlign(output, width)
-	// case "justify":
-	// return justifyAlign(fileContents, ascii_map, output, width)
+	case "justify":
+	return justifyAlign(output, width)
 	default:
 		return leftAlign(output)
 	}
@@ -41,8 +41,8 @@ func GetTerminalWidth() int {
 	type winsize struct {
 		Row    uint16
 		Col    uint16
-		Xpixel uint16
-		Ypixel uint16
+		// Xpixel uint16
+		// Ypixel uint16
 	}
 
 	ws := &winsize{}
@@ -125,40 +125,27 @@ Parameters:
 
 Returns: Justified output.
 */
-func justifyAlign(fileContents []string, ascii_map map[rune]int, output string, width int) string {
-	var justifiedLine strings.Builder
-	var words = strings.Fields(removeANSICodes(output))
+func justifyAlign(output string, width int) string {
+	var justifyedLines = output
+	var spaceSlots, len = spaceSlots(output)
+	var givenSpaces = width - len
+	var spacePerSlot = givenSpaces/spaceSlots
 
-	wordsLength := 0
-	for _, word := range words {
-		wordsLength += len(word)
-	}
+	justifyedLines = strings.ReplaceAll(string(justifyedLines), "$", strings.Repeat(" ", spacePerSlot))
 
-	totalSpaces := width - wordsLength
-	spaceSlots := len(words) - 1
-	evenSpaces := totalSpaces / spaceSlots
-	extraSpaces := totalSpaces % spaceSlots
+	return justifyedLines
+}
 
-	for _, line := range strings.Split(Inputs.Input, "\n") {
-		for i := 0; i < 8; i++ {
-			var builder strings.Builder
-			for _, char := range line {
-				if ascii, ok := ascii_map[char]; ok {
-					builder.WriteString(fileContents[ascii+i])
-				}
-				if i < spaceSlots {
-					builder.WriteString(strings.Repeat(" ", evenSpaces))
-					if i < extraSpaces {
-						builder.WriteString(" ")
-						extraSpaces--
-					}
-				}
-			}
-			justifiedLine.WriteString(builder.String())
-			justifiedLine.WriteRune('\n')
+func spaceSlots(output string) (int, int)  {
+	var slots int
+	var len int
+
+	for i, char := range strings.Split(output, "\n")[0] {
+		if char == '$' {
+			slots++
 		}
-		justifiedLine.WriteRune('\n')
+		
+		len = i+1
 	}
-
-	return justifiedLine.String()
+	return slots, len
 }

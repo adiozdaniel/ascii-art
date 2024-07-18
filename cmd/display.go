@@ -89,19 +89,23 @@ func scanInput(input string) {
 
 	for _, word := range words {
 		switch {
-		case strings.Contains(word, "--align=") || strings.HasPrefix(word, "-align="):
+		case strings.Contains(word, "--align") || strings.HasPrefix(word, "-align"):
 			alignment := strings.TrimPrefix(strings.TrimPrefix(word, "--align="), "-align=")
 			if alignment == "left" || alignment == "center" || alignment == "right" || alignment == "justify" {
 				utils.Inputs.Justify = alignment
+				continue
 			}
-		case strings.Contains(word, "--color=") || strings.Contains(word, "-color="):
+			utils.ErrorHandler("justify")
+		case strings.Contains(word, "--color") || strings.Contains(word, "-color"):
 			color := strings.TrimPrefix(strings.TrimPrefix(word, "--color="), "-color=")
 			if color != "" {
 				utils.Inputs.Color = color
+				continue
 			}
+			utils.ErrorHandler("colors")
 		case strings.Contains(word, "--output") || strings.Contains(word, "-output"):
 			fmt.Println("🙄 Sorry, FS Mode cannot be set in alignment mode.")
-			return
+			os.Exit(0)
 		default:
 			newInput += word + " "
 		}

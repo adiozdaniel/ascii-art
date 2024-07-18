@@ -9,7 +9,6 @@ import (
 // global variables declaration
 var (
 	reset               = "\033[0m"
-	color               = strings.TrimSpace(utils.Inputs.Color)
 	reff                = utils.Inputs.ColorRef
 	height          int = 8
 	fileContents, _     = FileContents()
@@ -26,8 +25,11 @@ func Output(inputStr string) string {
 	}
 
 	ascii_map := AsciiMap(fileContents)
-	utils.Inputs.Input = strings.ReplaceAll(inputStr, "\\n", "\n")
 	var art_work strings.Builder
+
+	if inputStr != "" {
+		utils.Inputs.Input = strings.ReplaceAll(inputStr, "\\n", "\n")
+	}
 
 	if utils.Inputs.IsWeb {
 		processWebInput(ascii_map, fileContents, &art_work)
@@ -58,6 +60,7 @@ func processWebInput(ascii_map map[rune]int, fileContents []string, art_work *st
 // processTerminalInput processes input from the internal
 func processTerminalInput(ascii_map map[rune]int, fileContents []string, art_work *strings.Builder) {
 	input := strings.Split(utils.Inputs.Input, "\n")
+	color := strings.TrimSpace(utils.Inputs.Color)
 
 	for lineIndex, line := range input {
 		if line == "" {

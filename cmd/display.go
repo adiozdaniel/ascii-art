@@ -42,7 +42,7 @@ func runWeb() {
 func justified() {
 	inputChan := make(chan string)
 	prevWidth := 0
-	prevColor := utils.Inputs.Color
+	prevColor := ""
 	tempStr := ""
 
 	go func() {

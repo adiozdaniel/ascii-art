@@ -6,7 +6,7 @@ import (
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
-// variables declaration
+// global variables declaration
 var (
 	reset               = "\033[0m"
 	color               = strings.TrimSpace(utils.Inputs.Color)

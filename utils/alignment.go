@@ -161,6 +161,14 @@ func justifyAlign(output string, width int) string {
 	return strings.Join(justifiedLines, "\n")
 }
 
+/*
+spaceSlots calculates the number of spaces and words in the given output.
+Parameters:
+
+	output: Output to be analyzed.
+
+Returns: Number of spaces and length of the output.
+*/
 func spaceSlots(output string) (int, int) {
 	var slots int
 	var len int

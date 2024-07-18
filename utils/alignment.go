@@ -28,7 +28,7 @@ func Alignment(output string, width int) string {
 	case "justify":
 		return justifyAlign(output, width)
 	default:
-		return leftAlign(output)
+		return leftAlign(output, width)
 	}
 }
 
@@ -64,8 +64,16 @@ Parameters:
 
 Returns: output as is.
 */
-func leftAlign(output string) string {
-	return output
+func leftAlign(output string, width int) string {
+	lines := strings.Split(output, "\n")
+	var leftLines []string
+	for _, line := range lines {
+		cleanLine := removeANSICodes(line)
+		if len(cleanLine) <= width {
+			leftLines = append(leftLines, line)
+		}
+	}
+	return strings.Join(leftLines, "\n")
 }
 
 /*
@@ -86,7 +94,10 @@ func centerAlign(output string, width int) string {
 		if padding < 0 {
 			padding = 0
 		}
-		centeredLines = append(centeredLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), line))
+
+		if len(cleanLine) <= width {
+			centeredLines = append(centeredLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), line))
+		}
 	}
 	return strings.Join(centeredLines, "\n")
 }
@@ -109,7 +120,10 @@ func rightAlign(output string, width int) string {
 		if padding < 0 {
 			padding = 0
 		}
-		rightLines = append(rightLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), line))
+
+		if len(cleanLine) <= width {
+			rightLines = append(rightLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), line))
+		}
 	}
 	return strings.Join(rightLines, "\n")
 }

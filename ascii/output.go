@@ -11,7 +11,6 @@ var (
 	reset               = "\033[0m"
 	reff                = utils.Inputs.ColorRef
 	height          int = 8
-	fileContents, _     = FileContents()
 )
 
 // Output compiles the banner characters to form the desired ascii art work
@@ -24,7 +23,8 @@ func Output(inputStr string) string {
 		return "\n"
 	}
 
-	ascii_map := AsciiMap(fileContents)
+	var fileContents, _     = FileContents()
+	var ascii_map = AsciiMap(fileContents)
 	var art_work strings.Builder
 
 	if inputStr != "" {

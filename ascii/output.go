@@ -26,7 +26,7 @@ func Output(inputStr string) string {
 	}
 
 	ascii_map := AsciiMap(fileContents)
-	input := strings.Split(strings.ReplaceAll(inputStr, "\\n", "\n"), "\n")
+	utils.Inputs.Input = strings.ReplaceAll(inputStr, "\\n", "\n")
 	var art_work strings.Builder
 
 	if utils.Inputs.IsWeb {
@@ -34,7 +34,7 @@ func Output(inputStr string) string {
 	} else if utils.Inputs.Justify == "justify" {
 		justifyAlign(ascii_map, fileContents, &art_work)
 	} else {
-		processTerminalInput(ascii_map, fileContents, input, &art_work)
+		processTerminalInput(ascii_map, fileContents, &art_work)
 	}
 
 	return art_work.String()
@@ -58,7 +58,9 @@ func processWebInput(ascii_map map[rune]int, fileContents []string, art_work *st
 }
 
 // processTerminalInput processes input from the internal
-func processTerminalInput(ascii_map map[rune]int, fileContents, input []string, art_work *strings.Builder) {
+func processTerminalInput(ascii_map map[rune]int, fileContents []string, art_work *strings.Builder) {
+	input := strings.Split(utils.Inputs.Input, "\n")
+
 	for lineIndex, line := range input {
 		if line == "" {
 			height = 1
@@ -97,7 +99,8 @@ func processTerminalInput(ascii_map map[rune]int, fileContents, input []string, 
 
 // justifyAlign formats the input for justified alignment mode
 func justifyAlign(ascii_map map[rune]int, fileContents []string, art_work *strings.Builder) {
-	for _, line := range strings.Split(utils.Inputs.Input, "\n") {
+	input := strings.Split(utils.Inputs.Input, "\n")
+	for _, line := range input {
 		for i := 0; i < height; i++ {
 			var builder strings.Builder
 			for _, char := range line {

@@ -31,8 +31,6 @@ func Output(inputStr string) string {
 
 	if utils.Inputs.IsWeb {
 		processWebInput(ascii_map, fileContents, &art_work)
-	} else if utils.Inputs.Justify == "justify" {
-		justifyAlign(ascii_map, fileContents, &art_work)
 	} else {
 		processTerminalInput(ascii_map, fileContents, &art_work)
 	}
@@ -72,6 +70,10 @@ func processTerminalInput(ascii_map map[rune]int, fileContents []string, art_wor
 			var builder strings.Builder
 			for j, char := range line {
 				if ascii, ok := ascii_map[char]; ok {
+					if char == ' ' && utils.Inputs.Justify == "justify" {
+						builder.WriteRune('$')
+						continue
+					}
 					if color != "" {
 						colorCode := GetColorCode(color)
 
@@ -94,28 +96,6 @@ func processTerminalInput(ascii_map map[rune]int, fileContents []string, art_wor
 			art_work.WriteString(builder.String())
 			art_work.WriteRune('\n')
 		}
-	}
-}
-
-// justifyAlign formats the input for justified alignment mode
-func justifyAlign(ascii_map map[rune]int, fileContents []string, art_work *strings.Builder) {
-	input := strings.Split(utils.Inputs.Input, "\n")
-	for _, line := range input {
-		for i := 0; i < height; i++ {
-			var builder strings.Builder
-			for _, char := range line {
-				if char == ' ' {
-					builder.WriteRune('$')
-					continue
-				}
-				if ascii, ok := ascii_map[char]; ok {
-					builder.WriteString(fileContents[ascii+i])
-				}
-			}
-			art_work.WriteString(builder.String())
-			art_work.WriteRune('\n')
-		}
-		art_work.WriteRune('\n')
 	}
 }
 

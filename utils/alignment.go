@@ -128,7 +128,8 @@ func justifyAlign(output string, width int) string {
 	var justifiedLines []string
 
 	for _, line := range lines {
-		var spaceSlots, len = spaceSlots(line)
+		var cleanLine = removeANSICodes(line)
+		var spaceSlots, len = spaceSlots(cleanLine)
 		var givenSpaces = width - len
 
 		if spaceSlots < 1 {

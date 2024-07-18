@@ -142,18 +142,17 @@ func justifyAlign(output string, width int) string {
 	var justifiedLines []string
 
 	for _, line := range lines {
-		var cleanLine = removeANSICodes(line)
-		var spaceSlots, len = spaceSlots(cleanLine)
-		var givenSpaces = width - len
+		cleanLine := removeANSICodes(line)
+		slots, len := spaceSlots(cleanLine)
+		givenSpaces := width - len
+		var spacePerSlot int
 
-		if spaceSlots < 1 {
-			justifiedLines = append(justifiedLines, strings.ReplaceAll(line, "$", " "))
-			spaceSlots = 1
+		if slots == 0 {
+			justifiedLines = append(justifiedLines, line)
 		}
 
-		var spacePerSlot = givenSpaces / spaceSlots
-
-		if spacePerSlot > 1 {
+		if slots > 0 {
+			spacePerSlot = givenSpaces / slots
 			justifiedLines = append(justifiedLines, strings.ReplaceAll(string(line), "$", strings.Repeat(" ", spacePerSlot)))
 		}
 	}

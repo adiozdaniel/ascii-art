@@ -1,4 +1,4 @@
-# ASCII-Graphics Tool
+# ASCII-Graphics Tool Version 0.4
 
 ## Description
 
@@ -137,7 +137,6 @@ The output can be displayed in different colors in any of the following formats:
 
      ![go run . --color=blue hello](/static/sample5.png)
 
-
    In this case, all the letters in **_hello_** will be colored in blue. Here, the string `hello` acts as the reference string.
 
 2. By adding a color flag and a refference string that is not a substring of the next word,like in the example below, the program will look for the instance of the characters in the input string and color them with the provided color, like this:
@@ -146,7 +145,6 @@ The output can be displayed in different colors in any of the following formats:
 
      ![go run . --color=blue ho hello](/static/sample4.png)
 
-
      On the terminal, you should be able to see letters **_h_** and **_o_** in blue and the remaining letters in default terminal color(possibly, white).
 
 3. By adding a color flag and a refference string that is a substring of the next word,like in the example below, the program will look for the instance of the substring in the input string and color them with the provided color, like this:
@@ -154,7 +152,6 @@ The output can be displayed in different colors in any of the following formats:
    - `$ go run . --color=#f0f "Will" "Will will come\nTo fetch the Will\nTo Will James"`
 
      ![go run . --color=blue ho hello](/static/sample6.png)
-
 
      On the terminal, you should be able to see the substring **_Will_** in yellow (or the provided colour) and the remaining letters in default terminal color(possibly, white).
 
@@ -226,22 +223,35 @@ This can be:
 
 Your representation adopts to the terminal size. If you reduce the terminal window the graphical representation adapts to the terminal size.
 
-The input MUST follow a specified format:
+The input follows a specified format:
 
             [OPTION]       [YOUR INPUT]     [BANNER]
 
 `go run . --align=center     "My Papa"       standard`
 
-The updated version 0.3 supports color as an option:
+#### Current Version Updates
+
+- The updated version 0.4 supports color as an option and runs with or without [BANNER](###) specified:
+
+`go run . --color=#ff0 --align=center "Will" "Will will come\nHe has Will\n& Will"`
 
 **Disclaimer**
-Note, this is an added feature for the web that would still work for justified.
+
+- Note, this is an added feature for open source purposes.
 
             [       OPTION          ]      [         YOUR INPUT          ]          [BANNER]
 
 `go run . --align=center --color=#ff0       "Papa" "My Papa\nIs Papa?\nNo Papa"    thinkertoy`
 
-**Note:** Only text that fits the terminal size should be tested.
+    or
+
+`go run . --color=#ff0 --align=center       "Will" "Will will come\nHe has Will\n& Will"`
+
+- You can change the following during runtime:
+  - color by entering a different color : "--color=<[your color choice](https://htmlcolorcodes.com/)>". You need to follow color rules to get expected output.
+  - align by entering a different alignment choice `--align=<justify>` or `left` or `center` or `right`. other choices will be ignored.
+  - lack of specifying flag option for instance `--align` will make the program to use it as input.
+  - the program only displays characters that fit the screen size, this turns taking amazing screenshots into a beautiful experience.
 
 To quit the program, type `exit` in lowercase only. This is case sensitive
 

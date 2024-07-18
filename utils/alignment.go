@@ -131,7 +131,7 @@ func justifyAlign(output string, width int) string {
 		var spaceSlots, len = spaceSlots(line)
 		var givenSpaces = width - len
 
-		if spaceSlots < 2 {
+		if spaceSlots < 1 {
 			justifiedLines = append(justifiedLines, strings.ReplaceAll(line, "$", " "))
 			spaceSlots = 1
 		}

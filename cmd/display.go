@@ -42,6 +42,7 @@ func runWeb() {
 func justified() {
 	inputChan := make(chan string)
 	prevWidth := 0
+	prevColor := utils.Inputs.Color
 	tempStr := ""
 
 	go func() {
@@ -66,7 +67,7 @@ func justified() {
 			}
 		default:
 			newWidth := utils.GetTerminalWidth()
-			if newWidth != prevWidth || tempStr != "" {
+			if newWidth != prevWidth || tempStr != "" || utils.Inputs.Color != prevColor {
 				outputs := ascii.Output(utils.Inputs.Input)
 				termOutput := utils.Alignment(outputs, newWidth)
 				fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
@@ -74,6 +75,7 @@ func justified() {
 				fmt.Print("\033[999;1H")
 				prevWidth = newWidth
 				tempStr = ""
+				prevColor = utils.Inputs.Color
 			}
 			time.Sleep(2 * time.Second)
 		}
@@ -88,12 +90,18 @@ func scanInput(input string) {
 	for _, word := range words {
 		switch {
 		case strings.Contains(word, "--align=") || strings.HasPrefix(word, "-align="):
-			utils.Inputs.Justify = strings.TrimPrefix(strings.TrimPrefix(word, "--align="), "-align=")
+			alignment := strings.TrimPrefix(strings.TrimPrefix(word, "--align="), "-align=")
+			if alignment == "left" || alignment == "center" || alignment == "right" || alignment == "justify" {
+				utils.Inputs.Justify = alignment
+			}
 		case strings.Contains(word, "--color=") || strings.Contains(word, "-color="):
-			utils.Inputs.Color = strings.TrimPrefix(strings.TrimPrefix(word, "--color="), "-color=")
+			color := strings.TrimPrefix(strings.TrimPrefix(word, "--color="), "-color=")
+			if color != "" {
+				utils.Inputs.Color = color
+			}
 		case strings.Contains(word, "--output") || strings.Contains(word, "-output"):
-			fmt.Println("Sorry, FS Mode cannot be set in alignment mode. Exiting program...")
-			os.Exit(0)
+			fmt.Println("🙄 Sorry, FS Mode cannot be set in alignment mode.")
+			return
 		default:
 			newInput += word + " "
 		}

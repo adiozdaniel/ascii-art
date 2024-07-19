@@ -232,6 +232,8 @@ The input follows a specified format:
 #### Current Version Updates
 
 - The updated version 0.4 supports color as an option and runs with or without [BANNER](###) specified:
+- This current version 0.4 also supports changing alignment options, input and color during runtime.
+- For best experience, use **full terminal size**
 
 `go run . --color=#ff0 --align=center "Will" "Will will come\nHe has Will\n& Will"`
 
@@ -247,8 +249,11 @@ The input follows a specified format:
 
 `go run . --color=#ff0 --align=center       "Will" "Will will come\nHe has Will\n& Will"`
 
-- You can change the following during runtime:
+**Note**: output that surpasses the screen size will be hidden.
+
+- Try out this latest feature of manipulating output during runtime:
   - color by entering a different color : "--color=<[your color choice](https://htmlcolorcodes.com/)>". You need to follow color rules to get expected output.
+  - to specify color reference (the characters or substring to be coloured); use `--reff=<your ref>` for instance, `reff=come`
   - align by entering a different alignment choice `--align=<justify>` or `left` or `center` or `right`. other choices will be ignored.
   - lack of specifying flag option for instance `--align` will make the program to use it as input.
   - the program only displays characters that fit the screen size, this turns taking amazing screenshots into a beautiful experience.

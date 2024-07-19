@@ -191,3 +191,28 @@ func getFile() {
 
 	Inputs.BannerPath = ourBanner
 }
+
+// RemoveQuotes removes opening or closing quotes in a string
+func RemoveQuotes(input string) string {
+	var result strings.Builder
+	var newInput = strings.Fields(input)
+
+	for _, word := range newInput {
+		var temp strings.Builder
+		skipNext := false
+		for i := 0; i < len(word); i++ {
+			if skipNext {
+				skipNext = false
+				continue
+			}
+			if word[i] == '\\' && i+1 < len(word) && word[i+1] == '"' {
+				temp.WriteByte('"')
+				skipNext = true
+			} else if word[i] != '"' || (i > 0 && word[i-1] == '\\') {
+				temp.WriteByte(word[i])
+			}
+		}
+		result.WriteString(temp.String() + " ")
+	}
+	return strings.TrimSpace(result.String())
+}

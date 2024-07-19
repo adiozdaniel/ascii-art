@@ -86,7 +86,8 @@ func justified() {
 
 // scanInput reads input from CLI interface and updates the input struct.
 func scanInput(input string) {
-	words := strings.Fields(input)
+	cleanInput := utils.RemoveQuotes(input)
+	words := strings.Fields(cleanInput)
 	newInput := ""
 
 	for i, word := range words {

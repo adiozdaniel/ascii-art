@@ -8,9 +8,8 @@ import (
 
 // global variables declaration
 var (
-	reset               = "\033[0m"
-	reff                = utils.Inputs.ColorRef
-	height          int = 8
+	reset      = "\033[0m"
+	height int = 8
 )
 
 // Output compiles the banner characters to form the desired ascii art work
@@ -23,7 +22,7 @@ func Output(inputStr string) string {
 		return "\n"
 	}
 
-	var fileContents, _     = FileContents()
+	var fileContents, _ = FileContents()
 	var ascii_map = AsciiMap(fileContents)
 	var art_work strings.Builder
 
@@ -59,6 +58,7 @@ func processWebInput(ascii_map map[rune]int, fileContents []string, art_work *st
 
 // processTerminalInput processes input from the internal
 func processTerminalInput(ascii_map map[rune]int, fileContents []string, art_work *strings.Builder) {
+	reff := utils.Inputs.ColorRef
 	input := strings.Split(utils.Inputs.Input, "\n")
 	color := strings.TrimSpace(utils.Inputs.Color)
 
@@ -80,7 +80,7 @@ func processTerminalInput(ascii_map map[rune]int, fileContents []string, art_wor
 					if color != "" {
 						colorCode := GetColorCode(color)
 
-						if containsReff(input) {
+						if containsReff(input, &reff) {
 							if _, ok := indexes.indexMap[lineIndex][j]; ok {
 								builder.WriteString(colorCode + fileContents[ascii+i] + reset)
 							} else {
@@ -113,14 +113,14 @@ var indexes = contains{
 }
 
 // containsReff checks for color substrings and initialises contains struct
-func containsReff(input []string) bool {
+func containsReff(input []string, reff *string) bool {
 	var hasReff bool
 
 	for i, line := range input {
-		x, y := len(line), len(reff)
+		x, y := len(line), len(*reff)
 
 		for j := 0; j <= x-y; j++ {
-			if line[j:j+y] == reff {
+			if line[j:j+y] == *reff {
 				if _, ok := indexes.indexMap[i]; !ok {
 					indexes.indexMap[i] = make(map[int]int)
 				}

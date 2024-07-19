@@ -43,6 +43,7 @@ func justified() {
 	inputChan := make(chan string)
 	prevWidth := 0
 	prevColor := ""
+	prevReff := ""
 	tempStr := ""
 
 	go func() {
@@ -67,7 +68,7 @@ func justified() {
 			}
 		default:
 			newWidth := utils.GetTerminalWidth()
-			if newWidth != prevWidth || tempStr != "" || utils.Inputs.Color != prevColor {
+			if newWidth != prevWidth || tempStr != "" || utils.Inputs.Color != prevColor || utils.Inputs.ColorRef != prevReff {
 				outputs := ascii.Output(utils.Inputs.Input)
 				termOutput := utils.Alignment(outputs, newWidth)
 				fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
@@ -76,6 +77,7 @@ func justified() {
 				prevWidth = newWidth
 				tempStr = ""
 				prevColor = utils.Inputs.Color
+				prevReff = utils.Inputs.ColorRef
 			}
 			time.Sleep(2 * time.Second)
 		}
@@ -103,11 +105,18 @@ func scanInput(input string) {
 				continue
 			}
 			utils.ErrorHandler("colors")
+		case strings.Contains(word, "--reff") || strings.Contains(word, "-reff"):
+			reff := strings.TrimPrefix(strings.TrimPrefix(word, "--reff="), "-reff=")
+			if reff != "" {
+				utils.Inputs.ColorRef = reff
+				continue
+			}
+			utils.ErrorHandler("colors")
 		case strings.Contains(word, "--output") || strings.Contains(word, "-output"):
 			fmt.Println("🙄 Sorry, FS Mode cannot be set in alignment mode.")
 			os.Exit(0)
 		case strings.Contains(word, "standard") || strings.Contains(word, "thinkertoy") || strings.Contains(word, "shadow"):
-			if i == len(words)-1  && len(words) != 1 {
+			if i == len(words)-1 && len(words) != 1 {
 				if value, ok := utils.BannerFiles[word]; ok {
 					utils.Inputs.BannerPath = value
 				}

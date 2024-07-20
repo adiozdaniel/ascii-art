@@ -44,6 +44,7 @@ func justified() {
 	prevWidth := 0
 	prevColor := ""
 	prevReff := ""
+	prevBanner := ""
 	tempStr := ""
 
 	go func() {
@@ -68,7 +69,7 @@ func justified() {
 			}
 		default:
 			newWidth := utils.GetTerminalWidth()
-			if newWidth != prevWidth || tempStr != "" || utils.Inputs.Color != prevColor || utils.Inputs.ColorRef != prevReff {
+			if newWidth != prevWidth || tempStr != "" || utils.Inputs.Color != prevColor || utils.Inputs.ColorRef != prevReff || utils.Inputs.BannerPath != prevBanner {
 				outputs := ascii.Output(utils.Inputs.Input)
 				termOutput := utils.Alignment(outputs, newWidth)
 				fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
@@ -78,6 +79,7 @@ func justified() {
 				tempStr = ""
 				prevColor = utils.Inputs.Color
 				prevReff = utils.Inputs.ColorRef
+				prevBanner = utils.Inputs.BannerPath
 			}
 			time.Sleep(2 * time.Second)
 		}
@@ -116,6 +118,13 @@ func scanInput(input string) {
 		case strings.Contains(word, "--output") || strings.Contains(word, "-output"):
 			fmt.Println("🙄 Sorry, FS Mode cannot be set in alignment mode.")
 			os.Exit(0)
+		case strings.Contains(word, "--standard") || strings.Contains(word, "--thinkertoy") || strings.Contains(word, "--shadow"):
+			if value, ok := utils.BannerFiles[word]; ok {
+				utils.Inputs.BannerPath = value
+				continue
+			}
+
+			newInput += word + " "
 		case strings.Contains(word, "standard") || strings.Contains(word, "thinkertoy") || strings.Contains(word, "shadow"):
 			if i == len(words)-1 && len(words) != 1 {
 				if value, ok := utils.BannerFiles[word]; ok {
@@ -123,7 +132,6 @@ func scanInput(input string) {
 				}
 				break
 			}
-
 			newInput += word + " "
 		default:
 			newInput += word + " "

@@ -199,16 +199,28 @@ func RemoveQuotes(input string) string {
 
 	for _, word := range newInput {
 		var temp strings.Builder
-		skipNext := false
+		var skipNext bool
+		var firstQuote bool
+
 		for i := 0; i < len(word); i++ {
 			if skipNext {
 				skipNext = false
 				continue
 			}
-			if word[i] == '\\' && i+1 < len(word) && word[i+1] == '"' {
+			if word[i] == '=' && i+2 < len(word) && word[i+1] == '"' {
+				temp.WriteString("=\"")
+				firstQuote = true
+				continue
+			} else if word[i] == '\\' && i+1 < len(word) && word[i+1] == '"' {
 				temp.WriteByte('"')
 				skipNext = true
-			} else if word[i] != '"' || (i > 0 && word[i-1] == '\\') {
+			} else if word[i] == '"' {
+				if firstQuote {
+					firstQuote = false
+					continue
+				}
+				temp.WriteByte(word[i])
+			} else {
 				temp.WriteByte(word[i])
 			}
 		}

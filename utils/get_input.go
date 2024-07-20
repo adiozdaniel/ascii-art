@@ -140,7 +140,7 @@ func init() {
 			ErrorHandler("output")
 		}
 
-		if Inputs.Justify != "" {
+		if Inputs.Justify != "" && len(Inputs.Args) == 0 {
 			ErrorHandler("align")
 		}
 		ErrorHandler("fatal")
@@ -148,7 +148,10 @@ func init() {
 }
 
 func CheckInput(input []string) {
-	for _, arg := range input {
+	for i, arg := range input {
+		if (strings.HasPrefix(arg, "-align=") || strings.HasPrefix(arg, "--align=")) && i+1 < len(input) && input[i+1] == "--" {
+			Inputs.Args = append(Inputs.Args, "--")
+		}
 		if Inputs.Output != "" && Inputs.Output == arg {
 			ErrorHandler("output")
 		}
@@ -163,6 +166,9 @@ func CheckInput(input []string) {
 
 // GetFile returns the ascii graphic filepath to use.
 func getFile() {
+	if Inputs.Justify != "" && len(Inputs.Args) == 0 {
+		ErrorHandler("justify")
+	}
 	if Inputs.Color != "" && len(Inputs.Args) == 0 {
 		ErrorHandler("fatal")
 	}

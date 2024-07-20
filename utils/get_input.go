@@ -67,6 +67,24 @@ func init() {
 	flag.Usage = func() {
 		fmt.Print("\033[1A")
 		fmt.Print("\033[2K")
+
+		input := os.Args[1:]
+		for _, arg := range input {
+			if strings.Contains(arg, "-align") {
+				ErrorHandler("justify")
+			}
+			if strings.Contains(arg, "-color") {
+				ErrorHandler("colors")
+			}
+
+			if strings.Contains(arg, "-reff") {
+				ErrorHandler("colors")
+			}
+
+			if strings.Contains(arg, "-output") {
+				ErrorHandler("output")
+			}
+		}
 		ErrorHandler("fatal")
 	}
 

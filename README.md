@@ -86,6 +86,8 @@ will have the following output:
 
 ![go run . "Hello\nThere" "-thinkertoy"](/static/sample2.png)
 
+**Note:** Remember to use `"` for enclosing grouped input.
+
 Try with more examples and watch the magic happen!!😃
 
 #### Handling Non-ASCII Characters

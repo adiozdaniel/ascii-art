@@ -231,7 +231,7 @@ The input follows a specified format:
 
 #### Current Version Updates
 
-- The updated version 0.4 supports color as an option and runs with or without [BANNER](###) specified:
+- The updated version 0.4 supports color as an option and runs with or without [BANNER](#) specified:
 - This current version 0.4 also supports changing alignment options, input and color during runtime.
 - For best experience, use **full terminal size**
 
@@ -258,6 +258,10 @@ The input follows a specified format:
   - align by entering a different alignment choice `--align=<justify>` or `left` or `center` or `right`. other choices will be ignored.
   - lack of specifying flag option for instance `--align` will make the program to use it as input.
   - the program only displays characters that fit the screen size, this turns taking amazing screenshots into a beautiful experience.
+  - to change font styling (what was previously done as `--banner=<file>`), you simply type your styling in the flag format:
+    - `--standard` for standard font styling
+    - `--thinkertoy` for thinkertoy font styling
+    - `--shadow` for shadow font styling
 
 To quit the program, type `exit` in lowercase only. This is case sensitive
 

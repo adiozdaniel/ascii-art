@@ -150,16 +150,16 @@ func init() {
 	}
 
 	if len(Inputs.Args) > 1 {
+		if Inputs.Justify != "" {
+			ErrorHandler("justify")
+		}
+
 		if Inputs.Color != "" {
 			ErrorHandler("colors")
 		}
 
 		if Inputs.Output != "" {
 			ErrorHandler("output")
-		}
-
-		if Inputs.Justify != "" && len(Inputs.Args) == 0 {
-			ErrorHandler("align")
 		}
 		ErrorHandler("fatal")
 	}
@@ -189,7 +189,7 @@ func getFile() {
 		ErrorHandler("justify")
 	}
 	if Inputs.Color != "" && len(Inputs.Args) == 0 {
-		ErrorHandler("fatal")
+		ErrorHandler("colors")
 	}
 	if Inputs.Output != "" && len(Inputs.Args) == 0 {
 		ErrorHandler("output")

@@ -23,7 +23,6 @@ func runOutput() {
 // runWeb starts the web server to handle HTTP requests.
 func runWeb() {
 	mux := http.NewServeMux()
-
 	routes.RegisterRoutes(mux)
 
 	server := &http.Server{
@@ -40,12 +39,9 @@ func runWeb() {
 
 // justified runs the alignment mode of the application.
 func justified() {
-	inputChan := make(chan string)
-	prevWidth := 0
-	prevColor := ""
-	prevReff := ""
-	prevBanner := ""
-	tempStr := ""
+	var inputChan = make(chan string)
+	var prevWidth int
+	var prevColor, prevReff, prevBanner, tempStr string
 
 	go func() {
 		scanner := bufio.NewScanner(os.Stdin)
@@ -61,20 +57,19 @@ func justified() {
 			if input == "exit" {
 				fmt.Println("\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
 				os.Exit(0)
-			} else {
-				if input != "" {
-					tempStr = input
-					scanInput(input)
-				}
+			} else if input != "" {
+				tempStr = input
+				scanInput(input)
 			}
 		default:
 			newWidth := utils.GetTerminalWidth()
 			if newWidth != prevWidth || tempStr != "" || utils.Inputs.Color != prevColor || utils.Inputs.ColorRef != prevReff || utils.Inputs.BannerPath != prevBanner {
 				outputs := ascii.Output(utils.Inputs.Input)
 				termOutput := utils.Alignment(outputs, newWidth)
-				fmt.Print("\033[H", "\033[2J", "\033[3J", "\033[?25h")
+				clearTerminal()
 				fmt.Print(termOutput)
-				fmt.Print("\033[999;1H")
+				resetCursor()
+
 				prevWidth = newWidth
 				tempStr = ""
 				prevColor = utils.Inputs.Color
@@ -90,13 +85,13 @@ func justified() {
 func scanInput(input string) {
 	cleanInput := utils.RemoveQuotes(input)
 	words := strings.Fields(cleanInput)
-	newInput := ""
+	var newInput string
 
 	for i, word := range words {
 		switch {
 		case strings.Contains(word, "--align") || strings.HasPrefix(word, "-align"):
 			alignment := strings.TrimPrefix(strings.TrimPrefix(word, "--align="), "-align=")
-			if alignment == "left" || alignment == "center" || alignment == "right" || alignment == "justify" {
+			if isValidAlignment(alignment) {
 				utils.Inputs.Justify = alignment
 				continue
 			}
@@ -125,7 +120,7 @@ func scanInput(input string) {
 			}
 
 			newInput += word + " "
-		case strings.Contains(word, "standard") || strings.Contains(word, "thinkertoy") || strings.Contains(word, "shadow"):
+		case isBannerFile(word):
 			if i == len(words)-1 && len(words) != 1 {
 				if value, ok := utils.BannerFiles[word]; ok {
 					utils.Inputs.BannerPath = value
@@ -141,4 +136,25 @@ func scanInput(input string) {
 	if newInput != "" {
 		utils.Inputs.Input = strings.TrimSpace(newInput)
 	}
+}
+
+// clearTerminal clears the terminal screen.
+func clearTerminal() {
+	fmt.Print("\033[H\033[2J\033[3J\033[?25h")
+}
+
+// resetCursor resets the terminal cursor to the start.
+func resetCursor() {
+	fmt.Print("\033[999;1H")
+}
+
+// isValidAlignment checks if the provided alignment is valid.
+func isValidAlignment(alignment string) bool {
+	return alignment == "left" || alignment == "center" || alignment == "right" || alignment == "justify"
+}
+
+// isBannerFile checks if the provided word is a banner file.
+func isBannerFile(word string) bool {
+	_, exists := utils.BannerFiles[word]
+	return exists
 }

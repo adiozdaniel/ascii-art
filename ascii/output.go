@@ -26,9 +26,7 @@ func Output(inputStr string) string {
 	var ascii_map = AsciiMap(fileContents)
 	var art_work strings.Builder
 
-	if inputStr != "" {
-		utils.Inputs.Input = strings.ReplaceAll(inputStr, "\\n", "\n")
-	}
+	utils.Inputs.Input = strings.ReplaceAll(inputStr, "\\n", "\n")
 
 	if utils.Inputs.IsWeb {
 		processWebInput(ascii_map, fileContents, &art_work)

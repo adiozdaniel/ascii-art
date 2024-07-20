@@ -39,17 +39,13 @@ func runWeb() {
 
 // justified runs the alignment mode of the application.
 func justified() {
-	var inputChan = make(chan string)
-	var prevWidth int
-	var prevColor, prevReff, prevBanner, tempStr string
+	var (
+		inputChan                                = make(chan string)
+		prevWidth                                int
+		prevColor, prevReff, prevBanner, tempStr string
+	)
 
-	go func() {
-		scanner := bufio.NewScanner(os.Stdin)
-		for scanner.Scan() {
-			inputChan <- scanner.Text()
-		}
-		close(inputChan)
-	}()
+	go readInput(inputChan)
 
 	for {
 		select {
@@ -63,7 +59,7 @@ func justified() {
 			}
 		default:
 			newWidth := utils.GetTerminalWidth()
-			if newWidth != prevWidth || tempStr != "" || utils.Inputs.Color != prevColor || utils.Inputs.ColorRef != prevReff || utils.Inputs.BannerPath != prevBanner {
+			if shouldUpdate(newWidth, prevWidth, tempStr, prevColor, prevReff, prevBanner) {
 				outputs := ascii.Output(utils.Inputs.Input)
 				termOutput := utils.Alignment(outputs, newWidth)
 				clearTerminal()
@@ -79,6 +75,20 @@ func justified() {
 			time.Sleep(2 * time.Second)
 		}
 	}
+}
+
+// readInput reads input from the CLI interface and sends it to the input channel.
+func readInput(inputChan chan string) {
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		inputChan <- scanner.Text()
+	}
+	close(inputChan)
+}
+
+// shouldUpdate checks if the terminal output needs to be updated.
+func shouldUpdate(newWidth, prevWidth int, tempStr, prevColor, prevReff, prevBanner string) bool {
+	return newWidth != prevWidth || tempStr != "" || utils.Inputs.Color != prevColor || utils.Inputs.ColorRef != prevReff || utils.Inputs.BannerPath != prevBanner
 }
 
 // scanInput reads input from CLI interface and updates the input struct.

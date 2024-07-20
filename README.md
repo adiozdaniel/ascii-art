@@ -57,7 +57,7 @@ The program supports three interfaces:
 
 ### 1. Command Line Interface (CLI)
 
-- Once the program has been installed, navigate to the `cmd` directory.
+- Once the program has been installed, **navigate to the `cmd` directory**.
 
 - Run the program using an input string of choice, like this:
 
@@ -252,6 +252,7 @@ The input follows a specified format:
 **Note**: output that surpasses the screen size will be hidden.
 
 - Try out this latest feature of manipulating output during runtime:
+  - you can fire up the cli mode by using `go run . --align=center --`
   - color by entering a different color : "--color=<[your color choice](https://htmlcolorcodes.com/)>". You need to follow color rules to get expected output.
   - to specify color reference (the characters or substring to be coloured); use `--reff=<your ref>` for instance, `reff=come`.
   - to reset the reff, use: `reff=""`

@@ -163,6 +163,9 @@ func CheckInput(input []string) {
 
 // GetFile returns the ascii graphic filepath to use.
 func getFile() {
+	if len(Inputs.Args) == 0 {
+		return
+	}
 	if Inputs.Color != "" && len(Inputs.Args) == 0 {
 		ErrorHandler("fatal")
 	}

@@ -115,6 +115,9 @@ var indexes = contains{
 // containsReff checks for color substrings and initialises contains struct
 func containsReff(input []string, reff *string) bool {
 	var hasReff bool
+	indexes = contains{
+		indexMap: make(map[int]map[int]int),
+	}
 
 	for i, line := range input {
 		x, y := len(line), len(*reff)

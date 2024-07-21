@@ -4,26 +4,17 @@ import (
 	"net/http"
 
 	"github.com/adiozdaniel/ascii-art/handlers"
-	"github.com/adiozdaniel/ascii-art/utils"
 )
 
 // RegisterRoutes manages the routes
 func RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == http.MethodPost {
-			utils.Inputs.Input = r.FormValue("textInput")
-			banner := utils.BannerFiles[r.FormValue("FileName")]
-			if banner == "" {
-				utils.Inputs.BannerPath = utils.BannerFiles["standard"]
-			} else {
-				utils.Inputs.BannerPath = banner
-			}
+		handlers.HomeHandler(w, r)
+	})
 
-			if utils.Inputs.Input != "" {
-				handlers.SubmitHandler(w, r)
-			} else {
-				handlers.BadRequestHandler(w, r)
-			}
+	mux.HandleFunc("/ascii-art", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodPost {
+			handlers.SubmitHandler(w, r)
 		} else {
 			handlers.HomeHandler(w, r)
 		}

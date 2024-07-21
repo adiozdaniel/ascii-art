@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	// "fmt"
+	"fmt"
 	"html/template"
 	"net/http"
 	"path/filepath"
@@ -11,7 +13,8 @@ import (
 
 // html files passed as templates
 var filePrefix, _ = (filepath.Abs("templates/"))
-var tmpl2 = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/index.page.html"))
+
+// var tmpl2 = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/index.page.html"))
 var tmplNotFound = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/notfound.page.html"))
 var tmplBadRequest = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/badrequest.page.html"))
 var tmplInternalError = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/serverError.page.html"))
@@ -43,21 +46,26 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 // SubmitHandler handles the output route '/ascii-art'
 func SubmitHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "🧐 Can I treat this as an invalid request?", http.StatusMethodNotAllowed)
+	if r.Method != http.MethodPost || r.FormValue("textInput") == "" {
+		BadRequestHandler(w, r)
 		return
 	}
 
-	_, err := ascii.FileContents()
-	if err != nil {
-		ServerError(w, r)
-		return
+	utils.Inputs.Input = r.FormValue("textInput")
+	banner := utils.BannerFiles[r.FormValue("FileName")]
+
+	if banner == "" {
+		utils.Inputs.BannerPath = utils.BannerFiles["standard"]
+	} else {
+		utils.Inputs.BannerPath = banner
 	}
 
 	output := ascii.Output(utils.Inputs.Input)
 	data.Body = output
 
-	tmpl2.Execute(w, data)
+	fmt.Println(data.Body)
+
+	renderTemplate(w, utils.CleanPath(filePrefix)+"/index.page.html", data)
 }
 
 // NotFoundHandler handles unknown routes; 404 status

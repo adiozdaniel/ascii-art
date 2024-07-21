@@ -8,7 +8,7 @@ import (
 
 // RegisterRoutes manages the routes
 func RegisterRoutes(mux *http.ServeMux) {
-	fs := http.FileServer(http.Dir("static"))
+	fs := http.FileServer(http.Dir("views/static"))
 	mux.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {

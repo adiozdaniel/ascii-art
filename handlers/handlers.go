@@ -22,13 +22,23 @@ type FormData struct {
 
 var data FormData
 
-// HomeHandler handles the homepage route '/'
-func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	utils.Inputs.Input = ""
-	err := tmpl2.Execute(w, nil)
+// renderTemplate is a helper function to render HTML templates
+func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	parsedTemplate, err := template.ParseFiles(tmpl)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+
+	err = parsedTemplate.Execute(w, data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+// HomeHandler handles the homepage route '/'
+func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, utils.CleanPath(filePrefix)+"/index.page.html", nil)
 }
 
 // SubmitHandler handles the output route '/ascii-art'

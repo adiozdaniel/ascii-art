@@ -18,8 +18,6 @@ func RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/ascii-art", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == http.MethodPost {
 			handlers.SubmitHandler(w, r)
-		} else {
-			handlers.HomeHandler(w, r)
 		}
 	})
 }

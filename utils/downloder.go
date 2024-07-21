@@ -46,3 +46,9 @@ func CleanPath(path string) string {
 
 	return newPath
 }
+
+// GetFilePath returns the absolute path of a file
+func GetFilePath(directory, fileName string) string {
+	var filePrefix, _ = (filepath.Abs(directory))
+	return CleanPath(filePrefix + "/" + fileName)
+}

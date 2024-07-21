@@ -5,19 +5,15 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"path/filepath"
 
 	"github.com/adiozdaniel/ascii-art/ascii"
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
-// html files passed as templates
-var filePrefix, _ = (filepath.Abs("templates/"))
-
 // var tmpl2 = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/index.page.html"))
-var tmplNotFound = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/notfound.page.html"))
-var tmplBadRequest = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/badrequest.page.html"))
-var tmplInternalError = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/serverError.page.html"))
+var tmplNotFound = template.Must(template.ParseFiles(utils.GetFilePath("templates", "notfound.page.html")))
+var tmplBadRequest = template.Must(template.ParseFiles(utils.GetFilePath("templates", "badrequest.page.html")))
+var tmplInternalError = template.Must(template.ParseFiles(utils.GetFilePath("templates", "serverError.page.html")))
 
 type FormData struct {
 	Body string
@@ -41,7 +37,7 @@ func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 
 // HomeHandler handles the homepage route '/'
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, utils.CleanPath(filePrefix)+"/index.page.html", nil)
+	renderTemplate(w, utils.GetFilePath("templates", "index.page.html"), nil)
 }
 
 // SubmitHandler handles the output route '/ascii-art'
@@ -65,7 +61,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(data.Body)
 
-	renderTemplate(w, utils.CleanPath(filePrefix)+"/index.page.html", data)
+	renderTemplate(w, utils.GetFilePath("templates", "index.page.html"), data)
 }
 
 // NotFoundHandler handles unknown routes; 404 status

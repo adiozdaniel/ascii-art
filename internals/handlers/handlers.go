@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/adiozdaniel/ascii-art/ascii"
+	"github.com/adiozdaniel/ascii-art/internals/renders"
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
@@ -15,29 +16,9 @@ var tmplNotFound = template.Must(template.ParseFiles(utils.GetFilePath("views/te
 var tmplBadRequest = template.Must(template.ParseFiles(utils.GetFilePath("views/templates", "badrequest.page.html")))
 var tmplInternalError = template.Must(template.ParseFiles(utils.GetFilePath("views/templates", "serverError.page.html")))
 
-type FormData struct {
-	Body string
-}
-
-var data FormData
-
-// renderTemplate is a helper function to render HTML templates
-func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	parsedTemplate, err := template.ParseFiles(tmpl)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-
-	err = parsedTemplate.Execute(w, data)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-}
-
 // HomeHandler handles the homepage route '/'
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, utils.GetFilePath("views/templates", "index.page.html"), nil)
+	renders.RenderTemplate(w, utils.GetFilePath("views/templates", "index.page.html"), nil)
 }
 
 // SubmitHandler handles the output route '/ascii-art'
@@ -57,9 +38,9 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	output := ascii.Output(utils.Inputs.Input)
-	data.Body = output
+	renders.Data.Body = output
 
-	renderTemplate(w, utils.GetFilePath("views/templates", "index.page.html"), data)
+	renders.RenderTemplate(w, utils.GetFilePath("views/templates", "index.page.html"), renders.Data.Body)
 }
 
 // NotFoundHandler handles unknown routes; 404 status

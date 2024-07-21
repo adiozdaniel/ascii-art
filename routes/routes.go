@@ -8,6 +8,12 @@ import (
 
 // RegisterRoutes manages the routes
 func RegisterRoutes(mux *http.ServeMux) {
+	fs := http.FileServer(http.Dir("static"))
+	mux.Handle("/static/", http.StripPrefix("/static/", fs))
+	mux.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "../static/favicon.ico")
+	})
+
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		handlers.HomeHandler(w, r)
 	})
@@ -18,10 +24,5 @@ func RegisterRoutes(mux *http.ServeMux) {
 		} else {
 			handlers.HomeHandler(w, r)
 		}
-	})
-
-	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("../static"))))
-	mux.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "../static/favicon.ico")
 	})
 }

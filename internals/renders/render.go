@@ -1,6 +1,7 @@
 package renders
 
 import (
+	"bytes"
 	"html/template"
 	"net/http"
 	"path/filepath"
@@ -18,46 +19,57 @@ var functions = template.FuncMap{}
 
 // RenderTemplate is a helper function to render HTML templates
 func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	parsedTemplate, err := template.ParseFiles(tmpl)
+	tc, err := getTemplateCache()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
-	err = parsedTemplate.Execute(w, Data)
+	t, ok := tc[tmpl]
+	if !ok {
+		http.Error(w, "😏Oops, something went wrong", http.StatusNotFound)
+		return
+	}
+
+	buf := new(bytes.Buffer)
+
+	_ = t.Execute(buf, data)
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	_, err = buf.WriteTo(w)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 }
 
-// RenderTemplateString is a helper function to render HTML templates as strings
-func RenderTemplateString(w http.ResponseWriter, tmpl string) error {
+// getTemplateCache is a helper function to cache all HTML templates as a map
+func getTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
 	pages, err := filepath.Glob("./views/templates/*.page.html")
 	if err != nil {
-		return err
+		return myCache, err
 	}
 
 	for _, page := range pages {
 		name := filepath.Base(page)
 		ts, err := template.New(name).Funcs(functions).ParseFiles(page)
 		if err != nil {
-			return err
+			return myCache, err
 		}
 
 		matches, err := filepath.Glob("./views/templates/*.layout.html")
 		if err != nil {
-			return err
+			return myCache, err
 		}
 
 		if len(matches) > 0 {
 			ts, err = ts.ParseGlob("./views/templates/*.layout.html")
 			if err != nil {
-				return err
+				return myCache, err
 			}
 		}
 
 		myCache[name] = ts
 	}
-	return nil
+	return myCache, nil
 }

@@ -36,8 +36,13 @@ func FileContents() ([]string, error) {
 		utils.Inputs.BannerPath = "../banners/standard.txt"
 	}
 
-	fileName := utils.Inputs.BannerPath
-	contents, err := os.ReadFile(fileName)
+	fileNames := utils.Inputs.BannerPath
+	fileParts := strings.Split(fileNames, "/")
+	fileDir := fileParts[1]
+	fileName := fileParts[2]
+	filePath := utils.GetFilePath(fileDir, fileName)
+
+	contents, err := os.ReadFile(filePath)
 
 	if err != nil || !validateBanner(contents) {
 		if utils.Inputs.IsWeb {

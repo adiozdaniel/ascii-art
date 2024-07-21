@@ -2,7 +2,7 @@ package handlers
 
 import (
 	// "fmt"
-	"fmt"
+
 	"html/template"
 	"net/http"
 
@@ -58,8 +58,6 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 
 	output := ascii.Output(utils.Inputs.Input)
 	data.Body = output
-
-	fmt.Println(data.Body)
 
 	renderTemplate(w, utils.GetFilePath("templates", "index.page.html"), data)
 }

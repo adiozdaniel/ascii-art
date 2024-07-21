@@ -11,10 +11,10 @@ import (
 
 // html files passed as templates
 var filePrefix, _ = (filepath.Abs("templates/"))
-var tmpl2 = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/index.page.tmpl"))
-var tmplNotFound = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/notfound.page.tmpl"))
-var tmplBadRequest = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/badrequest.page.tmpl"))
-var tmplInternalError = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/serverError.page.tmpl"))
+var tmpl2 = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/index.page.html"))
+var tmplNotFound = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/notfound.page.html"))
+var tmplBadRequest = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/badrequest.page.html"))
+var tmplInternalError = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/serverError.page.html"))
 
 type FormData struct {
 	Body string

@@ -3,7 +3,7 @@ package routes
 import (
 	"net/http"
 
-	"github.com/adiozdaniel/ascii-art/handlers"
+	"github.com/adiozdaniel/ascii-art/internals/handlers"
 )
 
 // RegisterRoutes manages the routes

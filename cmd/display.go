@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/adiozdaniel/ascii-art/ascii"
-	"github.com/adiozdaniel/ascii-art/routes"
+	"github.com/adiozdaniel/ascii-art/internals/routes"
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 

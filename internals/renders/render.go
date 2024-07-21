@@ -8,7 +8,8 @@ import (
 )
 
 type FormData struct {
-	Body string
+	Body          string
+	TemplateCache map[string]*template.Template
 }
 
 // Data is a global variable to hold the form data

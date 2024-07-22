@@ -5,10 +5,7 @@
 />
 
 {{end}} {{define "title"}} Ascii {{end}} {{define "content"}}
-<a
-	href="/"
-	title="Home Page"
-></a>
+
 <form
 	action="/ascii-art"
 	method="POST"
@@ -20,7 +17,6 @@
 		name="textInput"
 		placeholder="Type something"
 	></textarea>
-	<br /><br />
 	<label for="FileName">Choose a font:</label>
 	<br />
 	<select
@@ -31,7 +27,7 @@
 		<option value="thinkertoy">Thinkertoy</option>
 		<option value="shadow">Shadow</option>
 	</select>
-	<br /><br />
+	<br />
 	<input
 		type="submit"
 		value="Submit"

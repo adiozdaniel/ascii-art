@@ -53,7 +53,7 @@ func getTemplateCache() (map[string]*template.Template, error) {
 			return myCache, fmt.Errorf("error parsing page %s: %v", name, err)
 		}
 
-		layoutsPath := filepath.Join(filepath.Dir(page), "*.layout.html")
+		layoutsPath := filepath.Join(baseDir, "*.layout.html")
 		matches, err := filepath.Glob(layoutsPath)
 		if err != nil {
 			return myCache, fmt.Errorf("error finding layout files: %v", err)

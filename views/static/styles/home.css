@@ -98,5 +98,10 @@ pre {
 }
 
 .navbar #home {
-	color: rgb(111, 34, 2);
+	background-color: #235525;
+	cursor: not-allowed;
+	color: rgb(233, 230, 230);
+	padding: 5px 10px;
+	border-radius: 5px;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 1);
 }

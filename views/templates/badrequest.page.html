@@ -1,39 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Bad Request</title>
-    <style>
-      body {
-						background-color: #333;
-						font-family: Arial, sans-serif;
-						text-align: center;
-						margin: 0;
-						padding: 0;
-						color: bisque
-					}
-      h1 {
-        padding: 20px;
-        margin-top: 60px;
-      }
-      .btn {
-        background-color: #235525;
-        text-decoration: none;
-        color: rgb(47, 109, 128)
-      }
-      .btn:hover {
-        background-color: #5b7e5c;
-        color: blanchedalmond;
-        text-decoration: none;
-      }
-    </style>
-  </head>
-  <body>
-      <h1>400 Oops Bad Request! 😏</h1>
-      <h2>Trying to jump the Gun?</h2>
-      <p><strong>You must provide some text.</strong></p>
-      <a href="/" title="Go back to the home page" class="btn">
-        <h1>Home</h1> 
-      </a>
-  </body>
-</html>
+{{template "base" .}} {{define "css"}}
+<style>
+	body {
+		background-color: #333;
+		font-family: Arial, sans-serif;
+		text-align: center;
+		margin: 0;
+		padding: 0;
+		color: bisque;
+	}
+	h1 {
+		padding: 20px;
+		margin-top: 60px;
+	}
+	.btn {
+		background-color: #235525;
+		text-decoration: none;
+		color: rgb(47, 109, 128);
+	}
+	.btn:hover {
+		background-color: #5b7e5c;
+		color: blanchedalmond;
+		text-decoration: none;
+	}
+</style>
+{{end}} {{define "title"}} BadRequest {{end}} {{define "content"}}
+
+<h1>400 Oops Bad Request! 😏</h1>
+<h2>Trying to jump the Gun?</h2>
+<p><strong>You must provide some text.</strong></p>
+<a
+	href="/"
+	title="Go back to the home page"
+	class="btn"
+>
+	<h1>Home</h1>
+</a>
+{{end}}

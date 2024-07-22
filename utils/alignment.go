@@ -137,6 +137,9 @@ Parameters:
 
 Returns: Justified output.
 */
+
+//go run . --align=justify "right\nand left there is nothing to\n fear cause im here" thinkertoy
+
 func justifyAlign(output string, width int) string {
 	lines := strings.Split(output, "\n")
 	var justifiedLines []string

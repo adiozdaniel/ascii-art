@@ -3,7 +3,6 @@ package renders
 import (
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -22,23 +21,16 @@ var functions = template.FuncMap{}
 
 // RenderTemplate is a helper function to render HTML templates
 func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	t, err := getTemplateCache()
-	if err != nil {
-		log.Println(err)
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
+	t, _ := getTemplateCache()
 	ts, ok := t[tmpl]
 	if !ok {
-		http.Error(w, "resource not found", http.StatusNotFound)
+		renderServerErrorTemplate(w, tmpl+" Missing, contact the Network Admin.")
 		return
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	err = ts.Execute(w, data)
+	err := ts.Execute(w, data)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 }
@@ -79,13 +71,54 @@ func getTemplateCache() (map[string]*template.Template, error) {
 	return myCache, nil
 }
 
-// getProjectRoot dynamically finds the project root directory
+// GetProjectRoot dynamically finds the project root directory
 func GetProjectRoot(first, second string) string {
 	cwd, _ := os.Getwd()
-
 	baseDir := cwd
 	if strings.HasSuffix(baseDir, "cmd") {
 		baseDir = filepath.Join(cwd, "../")
 	}
 	return filepath.Join(baseDir, first, second)
+}
+
+// renderServerErrorTemplate renders a simple error template directly
+func renderServerErrorTemplate(w http.ResponseWriter, errMsg string) {
+	tmpl := `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Server Error</title>
+	<style>
+		body {color: bisque; background-color: #333; font-family: Arial, sans-serif; }
+		.container { text-align: center; margin-top: 50px; }
+		.btn { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; }
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>500 Oops Server Error! 🙁</h1>
+		<h2>Something went wrong.</h2>
+		<h3>{{.Error}}</h3>
+		<a href="/" title="Go back to the home page" class="btn">
+			<h1>Home</h1>
+		</a>
+	</div>
+</body>
+</html>`
+
+	t, err := template.New("error").Parse(tmpl)
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	}
+
+	data := struct {
+		Error string
+	}{
+		Error: errMsg,
+	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.WriteHeader(http.StatusInternalServerError)
+	t.Execute(w, data)
 }

@@ -48,9 +48,3 @@ func RegisterRoutes(mux *http.ServeMux) {
 		}
 	})
 }
-
-// func getStaticPath() string {
-// 	myPath := filepath.Join(filepath.Dir(filepath.Dir(filepath.Dir("."))), "views", "static")
-// 	fmt.Println(myPath)
-// 	return myPath
-// }

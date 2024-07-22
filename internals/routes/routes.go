@@ -1,11 +1,12 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
-	"path/filepath"
 	"strings"
 
 	"github.com/adiozdaniel/ascii-art/internals/handlers"
+	"github.com/adiozdaniel/ascii-art/internals/renders"
 )
 
 // Allowed routes
@@ -23,6 +24,7 @@ func RouteChecker(next http.Handler) http.Handler {
 		}
 
 		if _, ok := allowedRoutes[r.URL.Path]; !ok {
+			fmt.Println(r.URL.Path, " is not allowed.")
 			handlers.NotFoundHandler(w, r)
 			return
 		}
@@ -32,7 +34,7 @@ func RouteChecker(next http.Handler) http.Handler {
 
 // RegisterRoutes manages the routes
 func RegisterRoutes(mux *http.ServeMux) {
-	staticDir := getStaticPath()
+	staticDir := renders.GetProjectRoot("views", "static")
 	fs := http.FileServer(http.Dir(staticDir))
 	mux.Handle("/static/", http.StripPrefix("/static/", fs))
 
@@ -47,7 +49,8 @@ func RegisterRoutes(mux *http.ServeMux) {
 	})
 }
 
-func getStaticPath() string {
-	myPath := filepath.Join(filepath.Dir(filepath.Dir(filepath.Dir(filepath.Dir(".")))), "views", "static")
-	return myPath
-}
+// func getStaticPath() string {
+// 	myPath := filepath.Join(filepath.Dir(filepath.Dir(filepath.Dir("."))), "views", "static")
+// 	fmt.Println(myPath)
+// 	return myPath
+// }

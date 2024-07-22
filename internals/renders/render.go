@@ -46,14 +46,9 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 // getTemplateCache is a helper function to cache all HTML templates as a map
 func getTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
-	cwd, _ := os.Getwd()
+	baseDir := GetProjectRoot("views", "templates")
 
-	baseDir := cwd
-	if strings.HasSuffix(baseDir, "cmd") {
-		baseDir = filepath.Join(cwd, "../")
-	}
-
-	templatesDir := filepath.Join(baseDir, "views", "templates", "*.page.html")
+	templatesDir := filepath.Join(baseDir, "*.page.html")
 	pages, err := filepath.Glob(templatesDir)
 	if err != nil {
 		return myCache, fmt.Errorf("error globbing templates: %v", err)
@@ -82,4 +77,15 @@ func getTemplateCache() (map[string]*template.Template, error) {
 		myCache[name] = ts
 	}
 	return myCache, nil
+}
+
+// getProjectRoot dynamically finds the project root directory
+func GetProjectRoot(first, second string) string {
+	cwd, _ := os.Getwd()
+
+	baseDir := cwd
+	if strings.HasSuffix(baseDir, "cmd") {
+		baseDir = filepath.Join(cwd, "../")
+	}
+	return filepath.Join(baseDir, first, second)
 }

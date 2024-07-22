@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -24,7 +23,6 @@ func RouteChecker(next http.Handler) http.Handler {
 		}
 
 		if _, ok := allowedRoutes[r.URL.Path]; !ok {
-			fmt.Println(r.URL.Path, " is not allowed.")
 			handlers.NotFoundHandler(w, r)
 			return
 		}

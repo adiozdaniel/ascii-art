@@ -17,8 +17,13 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 // SubmitHandler handles the output route '/ascii-art'
 func SubmitHandler(w http.ResponseWriter, r *http.Request) {
-	if r.FormValue("textInput") == "" {
+	if r.FormValue("textInput") == "" && r.Method != "POST" {
 		renders.RenderTemplate(w, "ascii.page.html", nil)
+		return
+	}
+
+	if r.Method == "POST" && r.FormValue(("textInput")) == "" {
+		BadRequestHandler(w, r)
 		return
 	}
 

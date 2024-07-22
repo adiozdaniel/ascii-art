@@ -1,0 +1,46 @@
+{{template "base"}} {{define "css"}}
+<link
+	rel="stylesheet"
+	href="/static/styles/ascii.css"
+/>
+
+{{end}} {{define "title"}} Ascii {{end}} {{define "content"}}
+<a
+	href="/"
+	title="Home Page"
+>
+	<form
+		action="/ascii-art"
+		method="POST"
+	>
+		<label for="textInput">Enter text:</label>
+		<textarea
+			type="text"
+			id="textInput"
+			name="textInput"
+			placeholder="Type something"
+		></textarea>
+		<br /><br />
+		<label for="FileName">Choose a font:</label>
+		<br />
+		<select
+			id="FileName"
+			name="FileName"
+		>
+			<option value="standard">Standard</option>
+			<option value="thinkertoy">Thinkertoy</option>
+			<option value="shadow">Shadow</option>
+		</select>
+		<br /><br />
+		<input
+			type="submit"
+			value="Submit"
+		/>
+	</form>
+	<div class="ascii">
+		{{if .Body}}
+		<pre>{{.Body}}</pre>
+		{{ end }}
+	</div>
+	{{end}}
+</a>

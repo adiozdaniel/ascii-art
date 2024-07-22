@@ -3,6 +3,7 @@
 	rel="stylesheet"
 	href="/static/styles/home.css"
 />
+
 {{end}} {{define "title"}} Home {{end}} {{define "content"}}
 <a
 	href="/"
@@ -21,35 +22,7 @@
 	submit button below.
 </p>
 <p>Remember to scroll down to find your text in A colorful output.</p>
-<form
-	action="/ascii-art"
-	method="POST"
->
-	<label for="textInput">Enter text:</label>
-	<textarea
-		type="text"
-		id="textInput"
-		name="textInput"
-		placeholder="Type something"
-	></textarea>
-	<br /><br />
-	<label for="FileName">Choose a font:</label>
-	<!-- <div class="radio-btns"> -->
-	<br />
-	<select
-		id="FileName"
-		name="FileName"
-	>
-		<option value="standard">Standard</option>
-		<option value="thinkertoy">Thinkertoy</option>
-		<option value="shadow">Shadow</option>
-	</select>
-	<br /><br />
-	<input
-		type="submit"
-		value="Submit"
-	/>
-</form>
+
 <div class="ascii">
 	{{if .Body}}
 	<pre>{{.Body}}</pre>

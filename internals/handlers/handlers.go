@@ -33,7 +33,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	output := ascii.Output(utils.Inputs.Input)
 	data.Body = output
 
-	renders.RenderTemplate(w, "home.page.html", data)
+	renders.RenderTemplate(w, "ascii.page.html", data)
 }
 
 // NotFoundHandler handles unknown routes; 404 status

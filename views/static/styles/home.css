@@ -96,3 +96,7 @@ pre {
 	width: 80%;
 	margin: 30px auto;
 }
+
+.navbar #home {
+	color: rgb(111, 34, 2);
+}

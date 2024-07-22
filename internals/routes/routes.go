@@ -13,6 +13,8 @@ import (
 var allowedRoutes = map[string]bool{
 	"/":          true,
 	"/ascii-art": true,
+	"/about":     true,
+	"/contact":   true,
 }
 
 // RouteChecker is a middleware that checkes allowed routes

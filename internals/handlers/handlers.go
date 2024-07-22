@@ -36,6 +36,16 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	renders.RenderTemplate(w, "ascii.page.html", data)
 }
 
+// About handles about route '/about'
+func About(w http.ResponseWriter, r *http.Request) {
+	renders.RenderTemplate(w, "about.page.html", nil)
+}
+
+// Contact handles about route '/about'
+func Contact(w http.ResponseWriter, r *http.Request) {
+	renders.RenderTemplate(w, "contact.page.html", nil)
+}
+
 // NotFoundHandler handles unknown routes; 404 status
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)

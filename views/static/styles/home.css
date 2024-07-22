@@ -1,0 +1,98 @@
+p {
+	padding: 0 80px;
+}
+
+form {
+	background-color: rgb(106, 104, 104);
+	padding: 20px;
+	margin: 50px auto;
+	width: 540px;
+	border-radius: 8px;
+	box-shadow: 0 3px 10px rgba(0, 0, 0, 1);
+	display: inline-block;
+	font-size: larger;
+}
+
+.radio-btns {
+	padding: 15px 30px;
+	margin: 20px;
+	border: 1px solid #ccc;
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+	box-shadow: 0 3px 10px rgba(0, 0, 0, 1);
+	border-radius: 8px;
+}
+.radio-btns:hover {
+	box-shadow: 0 3px 20px rgba(0, 0, 0, 1);
+	background-color: rgb(25, 25, 25);
+}
+
+.radio-btns label {
+	padding: 10px 20px;
+	display: inline-block;
+	cursor: pointer;
+	transition: color 0.3s;
+}
+
+.radio-btns label:active,
+.radio-btns label:hover,
+.radio-btns label:focus {
+	color: rgb(139, 3, 166);
+}
+
+input[type="submit"] {
+	background-color: #235525;
+	color: rgb(233, 230, 230);
+	padding: 10px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	box-shadow: 0 3px 10px rgba(0, 0, 0, 1);
+}
+
+input[type="text"],
+select {
+	padding: 10px;
+	margin: 10px auto;
+	width: calc(100% - 20px);
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background-color: rgb(217, 218, 206);
+	box-shadow: 0 2px 3px rgba(0, 0, 0, 1);
+}
+
+textarea {
+	background-color: #010119;
+	color: rgb(233, 230, 230);
+	margin: 20px auto;
+	width: 80%;
+	padding: 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	box-shadow: 0 1px 2px rgb(255, 255, 255);
+	display: block;
+}
+
+input[type="submit"]:hover {
+	background-color: #4c9850;
+	color: #222;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 1);
+}
+
+pre {
+	background-color: rgb(1, 2, 19);
+	padding: 30px;
+	margin: 20px auto;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	display: inline-block;
+	text-align: left;
+}
+
+.ascii {
+	overflow-y: scroll;
+	width: 80%;
+	margin: 30px auto;
+}

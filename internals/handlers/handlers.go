@@ -16,10 +16,10 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 // SubmitHandler handles the output route '/ascii-art'
 func SubmitHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost || r.FormValue("textInput") == "" {
-		BadRequestHandler(w, r)
-		return
-	}
+	// if r.FormValue("textInput") == "" {
+	// 	BadRequestHandler(w, r)
+	// 	return
+	// }
 
 	utils.Inputs.Input = r.FormValue("textInput")
 	banner := utils.BannerFiles[r.FormValue("FileName")]

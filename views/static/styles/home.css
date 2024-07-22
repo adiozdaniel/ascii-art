@@ -104,4 +104,5 @@ pre {
 	padding: 5px 10px;
 	border-radius: 5px;
 	box-shadow: 0 3px 5px rgba(0, 0, 0, 1);
+	transition: 0.5s;
 }

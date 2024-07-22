@@ -1,0 +1,11 @@
+.btn {
+	background-color: #235525;
+	text-decoration: none;
+	color: rgb(47, 109, 128);
+}
+
+.btn:hover {
+	background-color: #69886a;
+	color: blanchedalmond;
+	text-decoration: none;
+}

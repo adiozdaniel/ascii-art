@@ -1,10 +1,11 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/adiozdaniel/ascii-art/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/renders"
 	"github.com/adiozdaniel/ascii-art/utils"
-	"net/http"
 )
 
 var data renders.FormData
@@ -16,10 +17,10 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 // SubmitHandler handles the output route '/ascii-art'
 func SubmitHandler(w http.ResponseWriter, r *http.Request) {
-	// if r.FormValue("textInput") == "" {
-	// 	BadRequestHandler(w, r)
-	// 	return
-	// }
+	if r.FormValue("textInput") == "" {
+		renders.RenderTemplate(w, "ascii.page.html", nil)
+		return
+	}
 
 	utils.Inputs.Input = r.FormValue("textInput")
 	banner := utils.BannerFiles[r.FormValue("FileName")]
@@ -34,16 +35,6 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	data.Body = output
 
 	renders.RenderTemplate(w, "ascii.page.html", data)
-}
-
-// About handles about route '/about'
-func About(w http.ResponseWriter, r *http.Request) {
-	renders.RenderTemplate(w, "about.page.html", nil)
-}
-
-// Contact handles about route '/about'
-func Contact(w http.ResponseWriter, r *http.Request) {
-	renders.RenderTemplate(w, "contact.page.html", nil)
 }
 
 // NotFoundHandler handles unknown routes; 404 status

@@ -1,20 +1,13 @@
 package handlers
 
 import (
-	// "fmt"
-
-	"html/template"
-	"net/http"
-
 	"github.com/adiozdaniel/ascii-art/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/renders"
 	"github.com/adiozdaniel/ascii-art/utils"
+	"net/http"
 )
 
-// var tmpl2 = template.Must(template.ParseFiles(utils.CleanPath(filePrefix) + "/index.page.html"))
-var tmplNotFound = template.Must(template.ParseFiles(utils.GetFilePath("views/templates", "notfound.page.html")))
-var tmplBadRequest = template.Must(template.ParseFiles(utils.GetFilePath("views/templates", "badrequest.page.html")))
-var tmplInternalError = template.Must(template.ParseFiles(utils.GetFilePath("views/templates", "serverError.page.html")))
+var data renders.FormData
 
 // HomeHandler handles the homepage route '/'
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
@@ -38,34 +31,25 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	output := ascii.Output(utils.Inputs.Input)
-	renders.Data.Body = output
+	data.Body = output
 
-	renders.RenderTemplate(w, "index.page.html", renders.Data.Body)
+	renders.RenderTemplate(w, "index.page.html", data)
 }
 
 // NotFoundHandler handles unknown routes; 404 status
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
-	err := tmplNotFound.Execute(w, nil)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusNotFound)
-	}
+	renders.RenderTemplate(w, "notfound.page.html", nil)
 }
 
-// BadRequestHandler handles the bad requests routes
+// BadRequestHandler handles bad requests routes
 func BadRequestHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusBadRequest)
-	err := tmplBadRequest.Execute(w, nil)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-	}
+	renders.RenderTemplate(w, "badrequest.page.html", nil)
 }
 
-// ServerError handles server failures that result to status 500
-func ServerError(w http.ResponseWriter, r *http.Request) {
+// ServerErrorHandler handles server failures that result in status 500
+func ServerErrorHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusInternalServerError)
-	err := tmplInternalError.Execute(w, nil)
-	if err != nil {
-		http.Error(w, "🧐 Internal Server Error", http.StatusInternalServerError)
-	}
+	renders.RenderTemplate(w, "serverError.page.html", nil)
 }

@@ -45,4 +45,8 @@ func RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/ascii-art", func(w http.ResponseWriter, r *http.Request) {
 		handlers.SubmitHandler(w, r)
 	})
+
+	mux.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
+		handlers.AboutHandler(w, r)
+	})
 }

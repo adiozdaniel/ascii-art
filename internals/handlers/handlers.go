@@ -59,3 +59,8 @@ func ServerErrorHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusInternalServerError)
 	renders.RenderTemplate(w, "serverError.page.html", nil)
 }
+
+// AboutHandler handles the aboutpage route '/about'
+func AboutHandler(w http.ResponseWriter, r *http.Request) {
+	renders.RenderTemplate(w, "about.page.html", nil)
+}

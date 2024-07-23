@@ -49,4 +49,8 @@ func RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
 		handlers.AboutHandler(w, r)
 	})
+
+	mux.HandleFunc("/contact", func(w http.ResponseWriter, r *http.Request) {
+		handlers.ContactHandler(w, r)
+	})
 }

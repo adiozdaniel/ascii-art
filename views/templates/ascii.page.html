@@ -6,33 +6,6 @@
 
 {{end}} {{define "title"}} Ascii {{end}} {{define "content"}}
 
-<form
-	action="/ascii-art"
-	method="POST"
->
-	<label for="textInput">Enter text:</label>
-	<textarea
-		type="text"
-		id="textInput"
-		name="textInput"
-		placeholder="Type something"
-	></textarea>
-	<label for="FileName">Choose a font:</label>
-	<br />
-	<select
-		id="FileName"
-		name="FileName"
-	>
-		<option value="standard">Standard</option>
-		<option value="thinkertoy">Thinkertoy</option>
-		<option value="shadow">Shadow</option>
-	</select>
-	<br />
-	<input
-		type="submit"
-		value="Submit"
-	/>
-</form>
 <div class="ascii">
 	{{if .Body}}
 	<pre>{{.Body}}</pre>

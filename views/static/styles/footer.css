@@ -1,5 +1,8 @@
 .wrapper {
-	position: bottom;
+	bottom: 0%;
+	margin-top: 10%;
+	width: 100%;
+	position: relative;
 }
 
 svg {
@@ -7,19 +10,20 @@ svg {
 }
 
 .authors {
-	margin: 50px 0 10px 0;
+	margin: auto;
 }
 
 .author {
 	display: inline-block;
-	margin: 20px;
+	margin: 5%;
 	text-align: center;
+	font-size: medium;
 }
 
 .author img {
 	border-radius: 50%;
-	width: 150px;
-	height: 150px;
+	width: 80px;
+	height: 80px;
 	object-fit: cover;
 	box-shadow: 2px 8px 15px rgba(0, 0, 0, 1);
 }
@@ -32,7 +36,7 @@ svg {
 
 .my-footer {
 	background-color: #222;
-	padding: 20px 180px;
+	padding: 1% 20%;
 	margin: 0 auto;
 	text-align: center;
 	color: bisque;
@@ -41,7 +45,6 @@ svg {
 	align-items: center;
 	border-top: 1px solid #444;
 	border-bottom: 1px solid #444;
-	position: relative;
 }
 
 .my-footer svg {

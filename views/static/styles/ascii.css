@@ -28,6 +28,22 @@
     font-weight: bold;
 }
 
+pre {
+	background-color: rgb(1, 2, 19);
+	padding: 30px;
+	margin: 10px auto;
+	border-radius: 8px;
+	box-shadow: 0px 0px 3px 3px rgb(241, 216, 186);
+	display: inline-block;
+	text-align: left;
+}
+
+.ascii {
+	overflow-y: scroll;
+	width: 80%;
+	margin: 30px auto;
+}
+
 .navbar #ascii {
 	background-color: #235525;
 	cursor: not-allowed;

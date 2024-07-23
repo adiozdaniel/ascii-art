@@ -36,6 +36,13 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		utils.Inputs.BannerPath = banner
 	}
 
+	_, err := ascii.FileContents()
+	if err != nil {
+		NotFoundHandler(w, r)
+		return
+	}
+
+
 	output := ascii.Output(utils.Inputs.Input)
 	data.Body = output
 

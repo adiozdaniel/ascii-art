@@ -223,8 +223,8 @@ The input follows a specified format:
 - Try out this latest feature of manipulating output during runtime:
   - you can fire up the cli mode by using `go run . --align=center --`
   - color by entering a different color : "--color=<[your color choice](https://htmlcolorcodes.com/)>". You need to follow color rules to get expected output.
-  - to specify color reference (the characters or substring to be coloured); use `--reff=<your ref>` for instance, `reff=come`.
-  - to reset the reff, use: `reff=""`
+  - to specify color reference (the characters or substring to be coloured); use `--reff=<your ref>` for instance, `--reff=come`.
+  - to reset the reff, use: `--reff=""`
     **Note** this _**limited**_ feature is only supported during runtime.
   - align by entering a different alignment choice `--align=<justify>` or `left` or `center` or `right`. other choices will be ignored.
   - lack of specifying flag option for instance `--align` will make the program to use it as input.

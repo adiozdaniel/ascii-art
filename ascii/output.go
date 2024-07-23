@@ -18,7 +18,7 @@ func Output(inputStr string) string {
 		return ""
 	}
 
-	if inputStr == "\\n" && !utils.Inputs.IsWeb{
+	if inputStr == "\\n" && !utils.Inputs.IsWeb {
 		return "\n"
 	}
 

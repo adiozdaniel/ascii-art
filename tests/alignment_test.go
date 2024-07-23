@@ -16,9 +16,9 @@ func TestAlignment(t *testing.T) {
 		args args
 		want int
 	}{
-		{name:"long input", args: args{output:"abcdefghijklmnopqrstuvwxyz", width: 80}, want : 26},
-		{name:"short input", args: args{output:"abcdefghijklm nnopqrstuvwxyz", width: 80}, want : 28},
-		{name:"single character", args: args{output:"a", width: 80}, want : 1},
+		{name: "long input", args: args{output: "abcdefghijklmnopqrstuvwxyz", width: 80}, want: 26},
+		{name: "short input", args: args{output: "abcdefghijklm nnopqrstuvwxyz", width: 80}, want: 28},
+		{name: "single character", args: args{output: "a", width: 80}, want: 1},
 	}
 
 	utils.Inputs.Justify = "left"

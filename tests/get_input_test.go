@@ -15,9 +15,9 @@ func TestRemoveQuotes(t *testing.T) {
 		args args
 		want string
 	}{
-		{name: "single quotes", args: args{input: "'hello'"}, want : "hello"},
-		{name: "double quotes", args: args{input: "\"hello\""}, want : "hello"},
-		{name: "quotes within", args: args{input: "hello \"world"}, want : "hello world"},
+		{name: "single quotes", args: args{input: "'hello'"}, want: "hello"},
+		{name: "double quotes", args: args{input: "\"hello\""}, want: "hello"},
+		{name: "quotes within", args: args{input: "hello \"world"}, want: "hello world"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

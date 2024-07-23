@@ -1,0 +1,34 @@
+.container {
+    .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+        padding: 20px;
+    }
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+header h1 {
+    margin: 0;
+}
+.main-content {
+    background: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.main-content h2 {
+    color: #333;
+}
+.main-content p {
+    color: #666;
+}
+.highlight {
+    color: #e67e22;
+    font-weight: bold;
+}

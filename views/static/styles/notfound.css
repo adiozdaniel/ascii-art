@@ -2,3 +2,7 @@
 	color: blanchedalmond;
 	text-decoration: none;
 }
+.notfound:hover {
+	color: rgb(232, 185, 115);
+	text-decoration: none;
+}

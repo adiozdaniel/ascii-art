@@ -20,6 +20,8 @@ func TestAlignment(t *testing.T) {
 		{name:"short input", args: args{output:"abcdefghijklm nnopqrstuvwxyz", width: 80}, want : 28},
 		{name:"single character", args: args{output:"a", width: 80}, want : 1},
 	}
+
+	utils.Inputs.Justify = "left"
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := utils.Alignment(tt.args.output, tt.args.width); len(got) != tt.want {

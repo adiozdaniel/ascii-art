@@ -44,7 +44,8 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 
 
 	output := ascii.Output(utils.Inputs.Input)
-	data.Body = output
+	noasciis := utils.NonAsciiOutput()
+	data.Body = output + "\n" + noasciis
 
 	renders.RenderTemplate(w, "ascii.page.html", data)
 }

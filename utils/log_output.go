@@ -1,25 +1,26 @@
 package utils
 
 import (
-	"fmt"
 	"os"
+	"path/filepath"
 	"regexp"
 )
 
 // LogOutput writes ascii art to a given file
 func LogOutput(output string) {
-	file, err := os.OpenFile(Inputs.Output, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
-	if err != nil {
-		fmt.Println("Error opening log file:", err)
-		return
-	}
-	defer file.Close()
-
 	cleanOutput := removeANSICodes(output)
 
-	_, err = file.WriteString(cleanOutput)
+	outputDir := filepath.Dir(Inputs.Output)
+	if _, err := os.Stat(outputDir); os.IsNotExist(err) {
+		err := os.MkdirAll(outputDir, 0755)
+		if err != nil {
+			ErrorHandler("restricted")
+		}
+	}
+
+	err := os.WriteFile(Inputs.Output, []byte(cleanOutput), 0644)
 	if err != nil {
-		fmt.Println("Error writing to log file:", err)
+		ErrorHandler("restricted")
 	}
 }
 

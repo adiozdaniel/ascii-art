@@ -1,0 +1,53 @@
+.wrapper {
+	bottom: 0%;
+	margin-top: 10%;
+	width: 100%;
+	position: relative;
+}
+
+svg {
+	padding: 10px;
+}
+
+.authors {
+	margin: auto;
+}
+
+.author {
+	display: inline-block;
+	margin: 5%;
+	text-align: center;
+	font-size: medium;
+}
+
+.author img {
+	border-radius: 50%;
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
+	box-shadow: 2px 8px 15px rgba(0, 0, 0, 1);
+}
+
+.author-name {
+	margin-top: 10px;
+	color: bisque;
+	font-size: 1.2em;
+}
+
+.my-footer {
+	background-color: #222;
+	padding: 1% 20%;
+	margin: 0 auto;
+	text-align: center;
+	color: bisque;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-top: 1px solid #444;
+	border-bottom: 1px solid #444;
+}
+
+.my-footer svg {
+	fill: bisque;
+	margin: 0 10px;
+}

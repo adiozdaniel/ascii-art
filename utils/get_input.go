@@ -67,6 +67,24 @@ func init() {
 	flag.Usage = func() {
 		fmt.Print("\033[1A")
 		fmt.Print("\033[2K")
+
+		input := os.Args[1:]
+		for _, arg := range input {
+			if strings.Contains(arg, "-align") {
+				ErrorHandler("justify")
+			}
+			if strings.Contains(arg, "-color") {
+				ErrorHandler("colors")
+			}
+
+			if strings.Contains(arg, "-reff") {
+				ErrorHandler("colors")
+			}
+
+			if strings.Contains(arg, "-output") {
+				ErrorHandler("output")
+			}
+		}
 		ErrorHandler("fatal")
 	}
 
@@ -127,11 +145,15 @@ func init() {
 	}
 
 	if len(Inputs.Args) == 1 {
-		Inputs.ColorRef = strings.TrimSpace(Inputs.Args[0])
 		Inputs.Input = Inputs.Args[0]
+		Inputs.ColorRef = strings.TrimSpace(Inputs.Args[0])
 	}
 
 	if len(Inputs.Args) > 1 {
+		if Inputs.Justify != "" {
+			ErrorHandler("justify")
+		}
+
 		if Inputs.Color != "" {
 			ErrorHandler("colors")
 		}
@@ -139,16 +161,16 @@ func init() {
 		if Inputs.Output != "" {
 			ErrorHandler("output")
 		}
-
-		if Inputs.Justify != "" {
-			ErrorHandler("align")
-		}
 		ErrorHandler("fatal")
 	}
 }
 
+// CheckInput checks if there is invalid input in the command line arguments.
 func CheckInput(input []string) {
 	for _, arg := range input {
+		if arg == "--" {
+			Inputs.Args = append(Inputs.Args, "--")
+		}
 		if Inputs.Output != "" && Inputs.Output == arg {
 			ErrorHandler("output")
 		}
@@ -163,8 +185,11 @@ func CheckInput(input []string) {
 
 // GetFile returns the ascii graphic filepath to use.
 func getFile() {
+	if Inputs.Justify != "" && len(Inputs.Args) == 0 {
+		ErrorHandler("justify")
+	}
 	if Inputs.Color != "" && len(Inputs.Args) == 0 {
-		ErrorHandler("fatal")
+		ErrorHandler("colors")
 	}
 	if Inputs.Output != "" && len(Inputs.Args) == 0 {
 		ErrorHandler("output")
@@ -172,6 +197,10 @@ func getFile() {
 
 	if Inputs.Output != "" && !strings.HasSuffix(Inputs.Output, ".txt") {
 		ErrorHandler("txt")
+	}
+
+	if len(Inputs.Args) == 0 {
+		return
 	}
 
 	ourBanner := "../banners/standard.txt"
@@ -190,4 +219,50 @@ func getFile() {
 	}
 
 	Inputs.BannerPath = ourBanner
+}
+
+// RemoveQuotes removes opening or closing quotes in a string
+func RemoveQuotes(input string) string {
+	var result strings.Builder
+	var newInput = strings.Fields(input)
+
+	for _, word := range newInput {
+		var temp strings.Builder
+		var skipNext bool
+		var isSpace bool
+
+		for i := 0; i < len(word); i++ {
+			if skipNext {
+				skipNext = false
+				continue
+			}
+
+			if word[i] == '=' && i+2 < len(word) && (word[i+1] == '"' || word[i+1] == '\'') {
+				temp.WriteByte('=')
+				isSpace = true
+				skipNext = true
+			} else if word[i] == '\\' && i+1 < len(word) && (word[i+1] == '"' || word[i+1] == '\'') {
+				if word[i+1] == '"' {
+					temp.WriteByte('"')
+				}
+				if word[i+1] == '\'' {
+					temp.WriteByte('\'')
+				}
+				skipNext = true
+			} else if word[i] == '"' || word[i] == '\'' {
+				if isSpace {
+					temp.WriteByte(word[i])
+					isSpace = false
+				}
+			} else {
+				temp.WriteByte(word[i])
+			}
+		}
+		if isSpace {
+			result.WriteString(temp.String())
+		} else {
+			result.WriteString(temp.String() + " ")
+		}
+	}
+	return strings.TrimSpace(result.String())
 }

@@ -14,8 +14,8 @@ import (
 func TestOutput(t *testing.T) {
 	fileContent := FileContentTests()
 	tests := []tests{
-		{name: "ProcessInputWithHelloGoogle", args: args{fileContents: fileContent, input: "Hello\nGoogle"}, expected: 626},
-		{name: "ProcessOneChar", args: args{fileContents: strings.Split("", "\n"), input: "1"}, expected: 635},
+		{name: "ProcessInputWithHelloGoogle", args: args{fileContents: fileContent, input: "Hello\nGoogle"}, expected: 9},
+		{name: "ProcessOneChar", args: args{fileContents: strings.Split("", "\n"), input: "1"}, expected: 9},
 		{name: "ProcessInputEmptyInput", args: args{fileContents: strings.Split("", "\n"), input: ""}, expected: 0},
 	}
 
@@ -23,8 +23,7 @@ func TestOutput(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			utils.Inputs.Input = tt.args.input
-			actual := len(ascii.Output(tt.args.fileContents))
+			actual := len(ascii.Output(tt.args.input))
 			if !reflect.DeepEqual(actual, tt.expected) {
 				t.Errorf("Output() = %v, expected %v", actual, tt.expected)
 			}

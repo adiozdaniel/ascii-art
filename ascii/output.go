@@ -1,41 +1,43 @@
 package ascii
 
 import (
-	"fmt"
-	"os"
-
 	"strings"
 
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
-// variables declaration
-var reset = "\033[0m"
-var color = strings.TrimSpace(utils.Inputs.Color)
-var reff = utils.Inputs.ColorRef
-var input = strings.Split(strings.ReplaceAll(utils.Inputs.Input, "\\n", "\n"), "\n")
-var art_work strings.Builder
-var height int = 8
+// global variables declaration
+var (
+	reset      = "\033[0m"
+	height int = 8
+)
 
 // Output compiles the banner characters to form the desired ascii art work
-func Output(fileContents []string) string {
-	if utils.Inputs.Input == "" {
+func Output(inputStr string) string {
+	if inputStr == "" {
 		return ""
 	}
 
+	if inputStr == "\\n" && !utils.Inputs.IsWeb {
+		return "\n"
+	}
+
+	var fileContents, _ = FileContents()
 	var ascii_map = AsciiMap(fileContents)
+	var art_work strings.Builder
 
 	if utils.Inputs.IsWeb {
-		processWebInput(ascii_map, fileContents)
+		processWebInput(ascii_map, fileContents, &art_work)
 	} else {
-		processTerminalInput(ascii_map, fileContents)
+		utils.Inputs.Input = strings.ReplaceAll(inputStr, "\\n", "\n")
+		processTerminalInput(ascii_map, fileContents, &art_work)
 	}
 
 	return art_work.String()
 }
 
 // processWebInput processes input from the web
-func processWebInput(ascii_map map[rune]int, fileContents []string) {
+func processWebInput(ascii_map map[rune]int, fileContents []string, art_work *strings.Builder) {
 	for _, line := range strings.Split(utils.Inputs.Input, "\n") {
 		for i := 0; i < height; i++ {
 			var builder strings.Builder
@@ -52,11 +54,10 @@ func processWebInput(ascii_map map[rune]int, fileContents []string) {
 }
 
 // processTerminalInput processes input from the internal
-func processTerminalInput(ascii_map map[rune]int, fileContents []string) {
-	if utils.Inputs.Input == "\\n" {
-		fmt.Println()
-		os.Exit(0)
-	}
+func processTerminalInput(ascii_map map[rune]int, fileContents []string, art_work *strings.Builder) {
+	reff := utils.Inputs.ColorRef
+	input := strings.Split(utils.Inputs.Input, "\n")
+	color := strings.TrimSpace(utils.Inputs.Color)
 
 	for lineIndex, line := range input {
 		if line == "" {
@@ -69,10 +70,14 @@ func processTerminalInput(ascii_map map[rune]int, fileContents []string) {
 			var builder strings.Builder
 			for j, char := range line {
 				if ascii, ok := ascii_map[char]; ok {
+					if char == ' ' && utils.Inputs.Justify == "justify" {
+						builder.WriteRune('$')
+						continue
+					}
 					if color != "" {
 						colorCode := GetColorCode(color)
 
-						if containsReff() {
+						if containsReff(input, &reff) {
 							if _, ok := indexes.indexMap[lineIndex][j]; ok {
 								builder.WriteString(colorCode + fileContents[ascii+i] + reset)
 							} else {
@@ -105,14 +110,17 @@ var indexes = contains{
 }
 
 // containsReff checks for color substrings and initialises contains struct
-func containsReff() bool {
+func containsReff(input []string, reff *string) bool {
 	var hasReff bool
+	indexes = contains{
+		indexMap: make(map[int]map[int]int),
+	}
 
 	for i, line := range input {
-		x, y := len(line), len(reff)
+		x, y := len(line), len(*reff)
 
 		for j := 0; j <= x-y; j++ {
-			if line[j:j+y] == reff {
+			if line[j:j+y] == *reff {
 				if _, ok := indexes.indexMap[i]; !ok {
 					indexes.indexMap[i] = make(map[int]int)
 				}

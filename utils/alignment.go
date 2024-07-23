@@ -13,23 +13,26 @@ It removes ANSI escape codes from the input before applying alignment.
 Supported justifications: "left", "center", "right".
 Inputs.Justify should be set to the desired justification mode.
 */
-func Alignment(fileContents []string, ascii_map map[rune]int, output, nonAsciis string, width int) {
-	justification := Inputs.Justify
+func Alignment(output string, width int) string {
+	alignment := Inputs.Justify
 
 	if width == 0 {
 		width = 80 // fallback to default width
 	}
 
-	switch justification {
+	switch alignment {
 	case "center":
-		fmt.Println(centerAlign(output, width), nonAsciis)
+		return centerAlign(output, width)
 	case "right":
-		fmt.Println(rightAlign(output, width), nonAsciis)
+		return rightAlign(output, width)
 	case "justify":
-		fmt.Println(justifyAlign(fileContents, ascii_map, output, width), nonAsciis)
+		return justifyAlign(output, width)
+	case "left":
+		return leftAlign(output, width)
 	default:
-		fmt.Println(leftAlign(output), nonAsciis)
+		ErrorHandler("justify")
 	}
+	return leftAlign(output, width)
 }
 
 /*
@@ -39,10 +42,8 @@ Returns: The width of the terminal in columns. Zero if the width cannot be deter
 */
 func GetTerminalWidth() int {
 	type winsize struct {
-		Row    uint16
-		Col    uint16
-		Xpixel uint16
-		Ypixel uint16
+		Row uint16
+		Col uint16
 	}
 
 	ws := &winsize{}
@@ -66,8 +67,16 @@ Parameters:
 
 Returns: output as is.
 */
-func leftAlign(output string) string {
-	return output
+func leftAlign(output string, width int) string {
+	lines := strings.Split(output, "\n")
+	var leftLines []string
+	for _, line := range lines {
+		cleanLine := removeANSICodes(line)
+		if len(cleanLine) <= width {
+			leftLines = append(leftLines, line)
+		}
+	}
+	return strings.Join(leftLines, "\n")
 }
 
 /*
@@ -81,16 +90,19 @@ Returns: Centered output.
 */
 func centerAlign(output string, width int) string {
 	lines := strings.Split(output, "\n")
-	var justifiedLines []string
+	var centeredLines []string
 	for _, line := range lines {
 		cleanLine := removeANSICodes(line)
 		padding := (width - len(cleanLine)) / 2
 		if padding < 0 {
 			padding = 0
 		}
-		justifiedLines = append(justifiedLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), line))
+
+		if len(cleanLine) <= width {
+			centeredLines = append(centeredLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), line))
+		}
 	}
-	return strings.Join(justifiedLines, "\n")
+	return strings.Join(centeredLines, "\n")
 }
 
 /*
@@ -104,16 +116,19 @@ Returns: Right-aligned output.
 */
 func rightAlign(output string, width int) string {
 	lines := strings.Split(output, "\n")
-	var justifiedLines []string
+	var rightLines []string
 	for _, line := range lines {
 		cleanLine := removeANSICodes(line)
 		padding := width - len(cleanLine)
 		if padding < 0 {
 			padding = 0
 		}
-		justifiedLines = append(justifiedLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), line))
+
+		if len(cleanLine) <= width {
+			rightLines = append(rightLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), line))
+		}
 	}
-	return strings.Join(justifiedLines, "\n")
+	return strings.Join(rightLines, "\n")
 }
 
 /*
@@ -125,40 +140,45 @@ Parameters:
 
 Returns: Justified output.
 */
-func justifyAlign(fileContents []string, ascii_map map[rune]int, output string, width int) string {
-	var justifiedLine strings.Builder
-	var words = strings.Fields(removeANSICodes(output))
+func justifyAlign(output string, width int) string {
+	lines := strings.Split(output, "\n")
+	var justifiedLines []string
 
-	wordsLength := 0
-	for _, word := range words {
-		wordsLength += len(word)
-	}
+	for _, line := range lines {
+		cleanLine := removeANSICodes(line)
+		slots, ln := spaceSlots(cleanLine)
+		givenSpaces := width - ln
+		var spacePerSlot int
 
-	totalSpaces := width - wordsLength
-	spaceSlots := len(words) - 1
-	evenSpaces := totalSpaces / spaceSlots
-	extraSpaces := totalSpaces % spaceSlots
-
-	for _, line := range strings.Split(Inputs.Input, "\n") {
-		for i := 0; i < 8; i++ {
-			var builder strings.Builder
-			for _, char := range line {
-				if ascii, ok := ascii_map[char]; ok {
-					builder.WriteString(fileContents[ascii+i])
-				}
-				if i < spaceSlots {
-					builder.WriteString(strings.Repeat(" ", evenSpaces))
-					if i < extraSpaces {
-						builder.WriteString(" ")
-						extraSpaces--
-					}
-				}
-			}
-			justifiedLine.WriteString(builder.String())
-			justifiedLine.WriteRune('\n')
+		if slots == 0 {
+			justifiedLines = append(justifiedLines, line)
+		} else if len(cleanLine) <= width {
+			spacePerSlot = givenSpaces / slots
+			justifiedLines = append(justifiedLines, strings.ReplaceAll(string(line), "$", strings.Repeat(" ", spacePerSlot)))
 		}
-		justifiedLine.WriteRune('\n')
 	}
 
-	return justifiedLine.String()
+	return strings.Join(justifiedLines, "\n")
+}
+
+/*
+spaceSlots calculates the number of spaces and words in the given output.
+Parameters:
+
+	output: Output to be analyzed.
+
+Returns: Number of spaces and length of the output.
+*/
+func spaceSlots(output string) (int, int) {
+	var slots int
+	var len int
+
+	for i, char := range strings.Split(output, "\n")[0] {
+		if char == '$' {
+			slots++
+		}
+
+		len = i + 1
+	}
+	return slots, len
 }

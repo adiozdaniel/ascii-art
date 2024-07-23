@@ -14,7 +14,7 @@ var errors = map[string]string{
 	"output":     "Usage: go run . [OPTION] [STRING] [BANNER]\n\nExample: go run . --output=<fileName.txt> something standard",
 	"txt":        "😣 Oops! We currently only support text files\n\nSee Documentation in: ../README.md",
 	"web":        "😮 Oops! Something went wrong",
-	"restricted": "😣 Oops! This is a restricted path: '../banner/'",
+	"restricted": "😣 Oops! this is a restricted path.\nplease use another path.",
 }
 
 // ErrorHandler outputs errors and safely exits the program

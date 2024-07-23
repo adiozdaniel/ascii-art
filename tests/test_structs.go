@@ -4,8 +4,6 @@ package tests
 type args struct {
 	input        string
 	fileContents []string
-	color        string
-	reff         string
 }
 
 type tests struct {

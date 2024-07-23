@@ -1,0 +1,26 @@
+.navbar {
+	background-color: #222;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+	box-shadow: 0 8px 6px rgba(0, 0, 0, 0.5);
+}
+
+.navbar ul {
+	list-style: none;
+}
+
+.navbar ul li {
+	display: inline;
+	padding: 0px 5%;
+}
+
+.navbar ul li a {
+	color: bisque;
+	text-decoration: none;
+	transition: 0.3s;
+}
+
+.navbar ul li a:hover {
+	color: rgb(111, 34, 2);
+}

@@ -32,8 +32,17 @@ func validateBanner(banner []byte) bool {
 
 // FileContents returns a slice of strings containing ascii artwork characters
 func FileContents() ([]string, error) {
-	fileName := utils.Inputs.BannerPath
-	contents, err := os.ReadFile(fileName)
+	if utils.Inputs.BannerPath == "" {
+		utils.Inputs.BannerPath = "../banners/standard.txt"
+	}
+
+	fileNames := utils.Inputs.BannerPath
+	fileParts := strings.Split(fileNames, "/")
+	fileDir := fileParts[1]
+	fileName := fileParts[2]
+	filePath := utils.GetFilePath(fileDir, fileName)
+
+	contents, err := os.ReadFile(filePath)
 
 	if err != nil || !validateBanner(contents) {
 		if utils.Inputs.IsWeb {
@@ -62,7 +71,7 @@ func FileContents() ([]string, error) {
 
 	var fileContents []string
 
-	if fileName == "../banners/thinkertoy.txt" {
+	if fileNames == "../banners/thinkertoy.txt" {
 		fileContents = strings.Split(string(contents), "\r\n")
 	} else {
 		fileContents = strings.Split(string(contents), "\n")

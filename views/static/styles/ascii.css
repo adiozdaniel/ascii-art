@@ -1,0 +1,55 @@
+/* ascii */
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
+}
+
+#home .main-content {
+    background-color: bisque;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+#home .main-content h1, h3 {
+    color: #333;
+}
+
+#home .main-content p {
+    color: #666;
+    line-height: 1.5;
+}
+
+#home .highlight {
+    color: rgb(111, 34, 2);
+    font-weight: bold;
+}
+
+pre {
+	background-color: rgb(1, 2, 19);
+	padding: 30px;
+	margin: 10px auto;
+	border-radius: 8px;
+	box-shadow: 0px 0px 3px 3px rgb(241, 216, 186);
+	display: inline-block;
+	text-align: left;
+}
+
+.ascii {
+	overflow-y: scroll;
+	width: 80%;
+	margin: 30px auto;
+}
+
+.navbar #ascii {
+	background-color: #235525;
+	cursor: not-allowed;
+	color: rgb(233, 230, 230);
+	padding: 5px 10px;
+	border-radius: 5px;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 1);
+	transition: 0.5s;
+}

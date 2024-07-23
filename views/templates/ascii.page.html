@@ -1,0 +1,15 @@
+{{template "base" . }} {{define "css"}}
+<link
+	rel="stylesheet"
+	href="/static/styles/ascii.css"
+/>
+
+{{end}} {{define "title"}} Ascii {{end}} {{define "content"}}
+
+<div class="ascii">
+	{{if .Body}}
+	<pre>{{.Body}}</pre>
+	{{ end }}
+</div>
+
+{{end}}

@@ -1,0 +1,61 @@
+{{template "base" . }}
+
+{{define "css"}}
+<link
+	rel="stylesheet"
+	href="/static/styles/home.css"
+/>
+{{end}}
+
+{{define "title"}}
+Home
+{{end}}
+
+{{define "content"}}
+<form
+	action="/ascii-art"
+	method="POST"
+>
+	<label for="textInput">Enter text:</label>
+	<textarea
+		type="text"
+		id="textInput"
+		name="textInput"
+		placeholder="Type something"
+	></textarea>
+	<br />
+
+	<label>Choose a font:</label>
+	<br />
+	<input
+		type="radio"
+		id="standard"
+		name="FileName"
+		value="standard"
+		checked
+	/>
+	<label for="standard">Standard</label>
+
+	<input
+		type="radio"
+		id="thinkertoy"
+		name="FileName"
+		value="thinkertoy"
+	/>
+	<label for="thinkertoy">Thinkertoy</label>
+
+	<input
+		type="radio"
+		id="shadow"
+		name="FileName"
+		value="shadow"
+	/>
+	<label for="shadow">Shadow</label>
+
+	<br />
+	<input
+		type="submit"
+		value="Submit"
+	/>
+</form>
+{{end}}

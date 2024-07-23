@@ -5,19 +5,34 @@
     padding: 20px;
 }
 
-.main-content {
+#about .main-content {
+    background-color: bisque;
     padding: 20px;
     margin-top: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
-.main-content h2 {
+
+#about .main-content h2, h3 {
     color: #333;
 }
-.main-content p {
+
+#about .main-content p {
     color: #666;
     line-height: 1.5;
 }
-.highlight {
-    color: #a79948;
+
+#about .highlight {
+    color: rgb(111, 34, 2);
     font-weight: bold;
+}
+
+.navbar #about {
+	background-color: #235525;
+	cursor: not-allowed;
+	color: rgb(233, 230, 230);
+	padding: 5px 10px;
+	border-radius: 5px;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 1);
+	transition: 0.5s;
 }

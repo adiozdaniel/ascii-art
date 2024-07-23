@@ -167,8 +167,8 @@ func init() {
 
 // CheckInput checks if there is invalid input in the command line arguments.
 func CheckInput(input []string) {
-	for i, arg := range input {
-		if (strings.HasPrefix(arg, "-align=") || strings.HasPrefix(arg, "--align=")) && i+1 < len(input) && input[i+1] == "--" {
+	for _, arg := range input {
+		if arg == "--" {
 			Inputs.Args = append(Inputs.Args, "--")
 		}
 		if Inputs.Output != "" && Inputs.Output == arg {

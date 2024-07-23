@@ -18,7 +18,7 @@ func Output(inputStr string) string {
 		return ""
 	}
 
-	if inputStr == "\\n" {
+	if inputStr == "\\n" && !utils.Inputs.IsWeb{
 		return "\n"
 	}
 
@@ -26,11 +26,10 @@ func Output(inputStr string) string {
 	var ascii_map = AsciiMap(fileContents)
 	var art_work strings.Builder
 
-	utils.Inputs.Input = strings.ReplaceAll(inputStr, "\\n", "\n")
-
 	if utils.Inputs.IsWeb {
 		processWebInput(ascii_map, fileContents, &art_work)
 	} else {
+		utils.Inputs.Input = strings.ReplaceAll(inputStr, "\\n", "\n")
 		processTerminalInput(ascii_map, fileContents, &art_work)
 	}
 

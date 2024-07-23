@@ -27,9 +27,12 @@ func Alignment(output string, width int) string {
 		return rightAlign(output, width)
 	case "justify":
 		return justifyAlign(output, width)
-	default:
+	case "left":
 		return leftAlign(output, width)
+	default:
+		ErrorHandler("justify")
 	}
+	return leftAlign(output, width)
 }
 
 /*

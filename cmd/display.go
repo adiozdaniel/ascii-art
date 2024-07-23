@@ -32,7 +32,10 @@ func runWeb() {
 		Handler: wrappedMux,
 	}
 
-	fmt.Println("Server is running on http://localhost:8080")
+	utils.Inputs.BannerPath = "../banners/standard.txt"
+	utils.Inputs.Input = "Ascii~"
+	serverOutput := ascii.Output(utils.Inputs.Input)
+	fmt.Println(serverOutput + "=====================================\nserver running @http://localhost:8080")
 	err := server.ListenAndServe()
 	if err != nil {
 		utils.ErrorHandler("web")

@@ -43,6 +43,7 @@ form {
 
 input[type="submit"] {
 	background-color: #235525;
+	margin-top: 20px;
 	color: rgb(233, 230, 230);
 	padding: 10px 20px;
 	width: 25%;
@@ -50,17 +51,6 @@ input[type="submit"] {
 	border-radius: 4px;
 	cursor: pointer;
 	box-shadow: 0 3px 10px rgba(0, 0, 0, 1);
-}
-
-input[type="text"],
-select {
-	padding: 10px;
-	margin: 10px auto;
-	width: calc(100% - 20px);
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	background-color: rgb(217, 218, 206);
-	box-shadow: 0 2px 3px rgba(0, 0, 0, 1);
 }
 
 textarea {

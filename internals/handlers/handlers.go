@@ -60,7 +60,12 @@ func ServerErrorHandler(w http.ResponseWriter, r *http.Request) {
 	renders.RenderTemplate(w, "serverError.page.html", nil)
 }
 
-// AboutHandler handles the aboutpage route '/about'
+// AboutHandler handles the about page route '/about'
 func AboutHandler(w http.ResponseWriter, r *http.Request) {
 	renders.RenderTemplate(w, "about.page.html", nil)
+}
+
+// ContactHandler handles the contact page route '/contact'
+func ContactHandler(w http.ResponseWriter, r *http.Request) {
+	renders.RenderTemplate(w, "contact.page.html", nil)
 }

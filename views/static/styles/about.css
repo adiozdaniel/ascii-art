@@ -7,17 +7,7 @@
     }
 }
 
-header {
-    background: #333;
-    color: #fff;
-    padding: 1rem 0;
-    text-align: center;
-}
-header h1 {
-    margin: 0;
-}
 .main-content {
-    background: #fff;
     padding: 20px;
     margin-top: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -27,8 +17,9 @@ header h1 {
 }
 .main-content p {
     color: #666;
+    line-height: 1.5;
 }
 .highlight {
-    color: #e67e22;
+    color: #a79948;
     font-weight: bold;
 }

@@ -237,14 +237,19 @@ func RemoveQuotes(input string) string {
 				continue
 			}
 
-			if word[i] == '=' && i+2 < len(word) && word[i+1] == '"' {
+			if word[i] == '=' && i+2 < len(word) && (word[i+1] == '"' || word[i+1] == '\'') {
 				temp.WriteByte('=')
 				isSpace = true
 				skipNext = true
-			} else if word[i] == '\\' && i+1 < len(word) && word[i+1] == '"' {
-				temp.WriteByte('"')
+			} else if word[i] == '\\' && i+1 < len(word) && (word[i+1] == '"' || word[i+1] == '\'') {
+				if word[i+1] == '"' {
+					temp.WriteByte('"')
+				}
+				if word[i+1] == '\'' {
+					temp.WriteByte('\'')
+				}
 				skipNext = true
-			} else if word[i] == '"' {
+			} else if word[i] == '"' || word[i] == '\''{
 				if isSpace {
 					temp.WriteByte(word[i])
 					isSpace = false

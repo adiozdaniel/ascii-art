@@ -11,7 +11,9 @@ func NonAsciiOutput() string {
 	nonAsciiMap := NonAsciiMap(Inputs.Input)
 
 	for _, char := range nonAsciiMap {
-		artWork.WriteString(string(char) + " ")
+		if char != 13 {
+			artWork.WriteString(string(char) + " ")
+		}
 	}
 
 	count := len(nonAsciiMap)

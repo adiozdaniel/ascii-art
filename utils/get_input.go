@@ -169,7 +169,7 @@ func init() {
 func CheckInput(input []string) {
 	for _, arg := range input {
 		if arg == "--" {
-			Inputs.Args = append(Inputs.Args, "--")
+			Inputs.Args = append([]string{"--"}, Inputs.Args...)
 		}
 		if Inputs.Output != "" && Inputs.Output == arg {
 			ErrorHandler("output")
@@ -224,7 +224,7 @@ func getFile() {
 // RemoveQuotes removes opening or closing quotes in a string
 func RemoveQuotes(input string) string {
 	var result strings.Builder
-	var newInput = strings.Fields(input)
+	newInput := strings.Fields(input)
 
 	for _, word := range newInput {
 		var temp strings.Builder

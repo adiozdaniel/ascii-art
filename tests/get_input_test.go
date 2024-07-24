@@ -6,6 +6,7 @@ import (
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
+// TestRemoveQuotes tests RemoveQuotes
 func TestRemoveQuotes(t *testing.T) {
 	type args struct {
 		input string

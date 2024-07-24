@@ -8,6 +8,7 @@ import (
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
+// Initialize Global Variables
 var output = ascii.Output(utils.Inputs.Input)
 var nonAsciis = utils.NonAsciiOutput()
 

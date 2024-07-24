@@ -6,6 +6,7 @@ import (
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
+// TestAlignment tests Alignment
 func TestAlignment(t *testing.T) {
 	type args struct {
 		output string

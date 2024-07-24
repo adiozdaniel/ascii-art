@@ -37,8 +37,8 @@ To clone and run this program, you'll need **Git** installed on your computer.
 From the **command line**,
 
 ```Bash
-git clone https://learn.zone01kisumu.ke/git/adaniel/ascii-art-justify.git
-cd ascii-art-justify
+git clone https://learn.zone01kisumu.ke/git/adaniel/ascii-art-web.git
+cd ascii-art-web
 go mod init github.com/adiozdaniel/ascii-art
 code .
 ```

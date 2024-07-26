@@ -97,9 +97,9 @@ func renderServerErrorTemplate(w http.ResponseWriter, errMsg string) {
 </head>
 <body>
 	<div class="container">
-		<h1>404 Oops We can't find what you are looking for! 🙁</h1>
+		<h1>5 Oops See System Admin</h1>
 		<h2>Something went wrong.</h2>
-		<h3>{{.Error}}</h3>
+		<h3>{{.Error}}🙁</h3>
 		<a href="/" title="Go back to the home page" class="btn">
 			<h1>Home</h1>
 		</a>
@@ -109,7 +109,7 @@ func renderServerErrorTemplate(w http.ResponseWriter, errMsg string) {
 
 	t, err := template.New("error").Parse(tmpl)
 	if err != nil {
-		http.Error(w, "Not Found", http.StatusNotFound)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 
 	data := struct {
@@ -119,6 +119,6 @@ func renderServerErrorTemplate(w http.ResponseWriter, errMsg string) {
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	w.WriteHeader(http.StatusNotFound)
+	w.WriteHeader(http.StatusInternalServerError)
 	t.Execute(w, data)
 }

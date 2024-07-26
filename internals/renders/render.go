@@ -24,7 +24,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 	t, _ := getTemplateCache()
 	ts, ok := t[tmpl]
 	if !ok {
-		renderServerErrorTemplate(w, tmpl+" is missing, contact the Network Admin.")
+		renderServerErrorTemplate(w, tmpl+" is missing. ")
 		return
 	}
 
@@ -97,9 +97,9 @@ func renderServerErrorTemplate(w http.ResponseWriter, errMsg string) {
 </head>
 <body>
 	<div class="container">
-		<h1>5 Oops See System Admin</h1>
-		<h2>Something went wrong.</h2>
-		<h3>{{.Error}}🙁</h3>
+		<h1>5 Oops Something went wrong.</h1>
+		<h2>Contact the Network Admin</h2>
+		<h3>{{.Error}} 🙁</h3>
 		<a href="/" title="Go back to the home page" class="btn">
 			<h1>Home</h1>
 		</a>

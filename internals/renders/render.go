@@ -9,19 +9,11 @@ import (
 	"strings"
 
 	"github.com/adiozdaniel/ascii-art/internals/config"
+	"github.com/adiozdaniel/ascii-art/internals/models"
 )
 
-// TemplateData holds the data for the HTML templates
-type TemplateData struct {
-	Ascii     map[string]string
-	CSRFToken string
-	Flash     string
-	Warning   string
-	Error     string
-}
-
 // Data is a global variable to hold the form data
-var Data TemplateData
+// var Data TemplateData
 
 // functions is a map of template functions
 var functions = template.FuncMap{}
@@ -35,7 +27,7 @@ func NewTemplates(a *config.AppConfig) {
 }
 
 // RenderTemplate is a helper function to render HTML templates
-func RenderTemplate(w http.ResponseWriter, tmpl string, data *TemplateData) {
+func RenderTemplate(w http.ResponseWriter, tmpl string, data *models.TemplateData) {
 	var tc map[string]*template.Template
 
 	if app.UseCache {

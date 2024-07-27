@@ -5,12 +5,13 @@ import (
 
 	"github.com/adiozdaniel/ascii-art/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/config"
+	"github.com/adiozdaniel/ascii-art/internals/models"
 	"github.com/adiozdaniel/ascii-art/internals/renders"
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
 // data is the variable that holds the form data
-var data renders.TemplateData
+// var data *models.TemplateData
 
 // Repository is a struct to hold the application configuration
 type Repository struct {
@@ -69,7 +70,7 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	asciiMap["Body"] = output
 	asciiMap["NoAscii"] = noasciis
 
-	renders.RenderTemplate(w, "ascii.page.html", &renders.TemplateData{Ascii: asciiMap})
+	renders.RenderTemplate(w, "ascii.page.html", &models.TemplateData{Ascii: asciiMap})
 }
 
 // NotFoundHandler handles unknown routes; 404 status

@@ -44,6 +44,8 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, data *models.TemplateDat
 		return
 	}
 
+	data = AddDefaultData(data)
+
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	err := ts.Execute(w, data)
 	if err != nil {

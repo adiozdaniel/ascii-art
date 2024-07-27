@@ -23,6 +23,11 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
+// AddDefaultData adds default data to the template data
+func AddDefaultData(data *models.TemplateData) *models.TemplateData {
+	return data
+}
+
 // RenderTemplate is a helper function to render HTML templates
 func RenderTemplate(w http.ResponseWriter, tmpl string, data *models.TemplateData) {
 	var tc map[string]*template.Template

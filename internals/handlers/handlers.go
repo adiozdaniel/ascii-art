@@ -26,7 +26,9 @@ func NewRepo(a *config.AppConfig) *Repository {
 }
 
 // NewHandlers initializes the repository instance and sets the handlers
-func NewHandlers(r *Repository) {}
+func NewHandlers(m *Repository) {
+	Repo = m
+}
 
 // HomeHandler handles the homepage route '/'
 func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {

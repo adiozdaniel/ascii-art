@@ -61,19 +61,22 @@ func RegisterRoutes(mux *http.ServeMux) {
 	})
 }
 
-// SetCookieHandler sets a cookie to the client
+// SetCookieHandler sets a session cookie for the client
 func SetCookieHandler(w http.ResponseWriter, r *http.Request) {
+	sessionID := generateSessionID()
+	sessions[sessionID] = r.RemoteAddr
+
 	expiration := time.Now().Add(15 * time.Minute)
 	cookie := http.Cookie{
-		Name:     "BaseCookie",
-		Value:    "ClientSession",
+		Name:     "session_id",
+		Value:    sessionID,
 		Expires:  expiration,
 		HttpOnly: true,
 		Secure:   false, // TODO Set to true before deploying to production
 		SameSite: http.SameSiteLaxMode,
 	}
 	http.SetCookie(w, &cookie)
-	w.Write([]byte("Cookie has been set"))
+	w.Write([]byte("Session cookie has been set"))
 }
 
 // GetSessionHandler retrieves session data based on the session cookie
@@ -92,4 +95,9 @@ func GetSessionHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write([]byte("Session is valid for user: " + userID))
+}
+
+// Generate a session ID (in a real application, use a more secure method)
+func generateSessionID() string {
+	return time.Now().Format("20060102150405")
 }

@@ -12,9 +12,6 @@ import (
 	"github.com/adiozdaniel/ascii-art/internals/models"
 )
 
-// Data is a global variable to hold the form data
-// var Data TemplateData
-
 // functions is a map of template functions
 var functions = template.FuncMap{}
 

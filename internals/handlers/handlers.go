@@ -66,7 +66,7 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	noasciis := utils.NonAsciiOutput()
 	data.Body = output + "\n" + noasciis
 
-	renders.RenderTemplate(w, "ascii.page.html", data)
+	renders.RenderTemplate(w, "ascii.page.html", &renders.TemplateData{})
 }
 
 // NotFoundHandler handles unknown routes; 404 status

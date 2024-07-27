@@ -17,6 +17,9 @@ var allowedRoutes = map[string]bool{
 	"/contact":   true,
 }
 
+// Simple in-memory session store
+var sessions = map[string]string{} // TODO map[sessionID]userID
+
 // RouteChecker is a middleware that checkes allowed routes
 func RouteChecker(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -38,6 +41,8 @@ func RegisterRoutes(mux *http.ServeMux) {
 	staticDir := renders.GetProjectRoot("views", "static")
 	fs := http.FileServer(http.Dir(staticDir))
 	mux.Handle("/static/", http.StripPrefix("/static/", fs))
+
+	mux.HandleFunc("/set-cookie", SetCookieHandler)
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		handlers.Repo.HomeHandler(w, r)
@@ -64,9 +69,27 @@ func SetCookieHandler(w http.ResponseWriter, r *http.Request) {
 		Value:    "ClientSession",
 		Expires:  expiration,
 		HttpOnly: true,
-		Secure:   false,
+		Secure:   false, // TODO Set to true before deploying to production
 		SameSite: http.SameSiteLaxMode,
 	}
 	http.SetCookie(w, &cookie)
 	w.Write([]byte("Cookie has been set"))
+}
+
+// GetSessionHandler retrieves session data based on the session cookie
+func GetSessionHandler(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("session_id")
+	if err != nil {
+		http.Error(w, "No session found", http.StatusUnauthorized)
+		return
+	}
+
+	sessionID := cookie.Value
+	userID, ok := sessions[sessionID]
+	if !ok {
+		http.Error(w, "Invalid session", http.StatusUnauthorized)
+		return
+	}
+
+	w.Write([]byte("Session is valid for user: " + userID))
 }

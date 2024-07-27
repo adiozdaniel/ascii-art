@@ -21,7 +21,7 @@ var functions = template.FuncMap{}
 
 // RenderTemplate is a helper function to render HTML templates
 func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	t, _ := getTemplateCache()
+	t, _ := GetTemplateCache()
 	ts, ok := t[tmpl]
 	if !ok {
 		renderServerErrorTemplate(w, tmpl+" is missing. ")
@@ -36,7 +36,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 }
 
 // getTemplateCache is a helper function to cache all HTML templates as a map
-func getTemplateCache() (map[string]*template.Template, error) {
+func GetTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
 	baseDir := GetProjectRoot("views", "templates")
 

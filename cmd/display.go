@@ -9,6 +9,8 @@ import (
 	"time"
 
 	"github.com/adiozdaniel/ascii-art/ascii"
+	"github.com/adiozdaniel/ascii-art/internals/config"
+	"github.com/adiozdaniel/ascii-art/internals/renders"
 	"github.com/adiozdaniel/ascii-art/internals/routes"
 	"github.com/adiozdaniel/ascii-art/utils"
 )
@@ -22,6 +24,15 @@ func runOutput() {
 
 // runWeb starts the web server to handle HTTP requests.
 func runWeb() {
+	var app config.AppConfig
+
+	tc, err := renders.GetTemplateCache()
+	if err != nil {
+		utils.ErrorHandler("web")
+	}
+
+	app.TemplateCache = tc
+
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)
 
@@ -36,7 +47,7 @@ func runWeb() {
 	utils.Inputs.Input = "Ascii~"
 	serverOutput := ascii.Output(utils.Inputs.Input)
 	fmt.Println(serverOutput + "=====================================\nserver running @http://localhost:8080")
-	err := server.ListenAndServe()
+	err = server.ListenAndServe()
 	if err != nil {
 		utils.ErrorHandler("web")
 	}

@@ -7,6 +7,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/adiozdaniel/ascii-art/internals/config"
 )
 
 type FormData struct {
@@ -18,6 +20,14 @@ var Data FormData
 
 // functions is a map of template functions
 var functions = template.FuncMap{}
+
+// app is a pointer to the application configuration
+var app *config.AppConfig
+
+// NewTemplates initializes the templates
+func NewTemplates(a *config.AppConfig) {
+	app = a
+}
 
 // RenderTemplate is a helper function to render HTML templates
 func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {

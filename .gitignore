@@ -8,3 +8,6 @@ go.sum
 # ignore development binaries
 cmd/tmp
 tmp
+
+# test coverage or build reports
+*.out

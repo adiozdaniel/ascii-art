@@ -13,7 +13,6 @@ import (
 
 // TemplateData holds the data for the HTML templates
 type TemplateData struct {
-	Body      string
 	Ascii     map[string]string
 	CSRFToken string
 	Flash     string

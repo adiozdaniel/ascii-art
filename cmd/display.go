@@ -32,6 +32,7 @@ func runWeb() {
 	}
 
 	app.TemplateCache = tc
+	renders.NewTemplates(&app)
 
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)

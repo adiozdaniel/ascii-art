@@ -10,6 +10,7 @@ import (
 
 	"github.com/adiozdaniel/ascii-art/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/config"
+	"github.com/adiozdaniel/ascii-art/internals/handlers"
 	"github.com/adiozdaniel/ascii-art/internals/renders"
 	"github.com/adiozdaniel/ascii-art/internals/routes"
 	"github.com/adiozdaniel/ascii-art/utils"
@@ -32,6 +33,10 @@ func runWeb() {
 	}
 
 	app.TemplateCache = tc
+
+	repo := handlers.NewRepo(&app)
+
+	handlers.NewHandlers(repo)
 	renders.NewTemplates(&app)
 
 	mux := http.NewServeMux()

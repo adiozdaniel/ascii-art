@@ -41,7 +41,7 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method == "POST" && r.FormValue(("textInput")) == "" {
-		m.BadRequestHandler(w, r)
+		Repo.BadRequestHandler(w, r)
 		return
 	}
 
@@ -56,7 +56,7 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 
 	_, err := ascii.FileContents()
 	if err != nil {
-		m.ServerErrorHandler(w, r)
+		Repo.ServerErrorHandler(w, r)
 		return
 	}
 

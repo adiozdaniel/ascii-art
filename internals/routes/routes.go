@@ -25,7 +25,7 @@ func RouteChecker(next http.Handler) http.Handler {
 		}
 
 		if _, ok := allowedRoutes[r.URL.Path]; !ok {
-			handlers.NotFoundHandler(w, r)
+			handlers.Repo.NotFoundHandler(w, r)
 			return
 		}
 		next.ServeHTTP(w, r)
@@ -39,18 +39,18 @@ func RegisterRoutes(mux *http.ServeMux) {
 	mux.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		handlers.HomeHandler(w, r)
+		handlers.Repo.HomeHandler(w, r)
 	})
 
 	mux.HandleFunc("/ascii-art", func(w http.ResponseWriter, r *http.Request) {
-		handlers.SubmitHandler(w, r)
+		handlers.Repo.SubmitHandler(w, r)
 	})
 
 	mux.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
-		handlers.AboutHandler(w, r)
+		handlers.Repo.AboutHandler(w, r)
 	})
 
 	mux.HandleFunc("/contact", func(w http.ResponseWriter, r *http.Request) {
-		handlers.ContactHandler(w, r)
+		handlers.Repo.ContactHandler(w, r)
 	})
 }

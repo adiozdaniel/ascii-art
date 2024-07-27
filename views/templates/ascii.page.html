@@ -7,7 +7,7 @@
 {{end}} {{define "title"}} Ascii {{end}} {{define "content"}}
 
 <div class="ascii">
-	{{if .Body}}
+	{{index .Ascii "Body"}}
 	<pre>{{.Body}}</pre>
 	{{ end }}
 </div>

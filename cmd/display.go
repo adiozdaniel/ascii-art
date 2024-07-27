@@ -33,6 +33,7 @@ func runWeb() {
 	}
 
 	app.TemplateCache = tc
+	app.UseCache = false
 
 	repo := handlers.NewRepo(&app)
 

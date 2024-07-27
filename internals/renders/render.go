@@ -31,8 +31,15 @@ func NewTemplates(a *config.AppConfig) {
 
 // RenderTemplate is a helper function to render HTML templates
 func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	t := app.TemplateCache
-	ts, ok := t[tmpl]
+	var tc map[string]*template.Template
+
+	if app.UseCache {
+		tc = app.TemplateCache
+	} else {
+		tc, _ = GetTemplateCache()
+	}
+
+	ts, ok := tc[tmpl]
 	if !ok {
 		renderServerErrorTemplate(w, tmpl+" is missing. ")
 		return

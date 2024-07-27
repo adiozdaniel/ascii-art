@@ -38,7 +38,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 
 	_, err := ascii.FileContents()
 	if err != nil {
-		NotFoundHandler(w, r)
+		ServerErrorHandler(w, r)
 		return
 	}
 

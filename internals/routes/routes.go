@@ -43,6 +43,7 @@ func RegisterRoutes(mux *http.ServeMux) {
 	mux.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	mux.HandleFunc("/set-cookie", SetCookieHandler)
+	mux.HandleFunc("/get-session", GetSessionHandler)
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		handlers.Repo.HomeHandler(w, r)

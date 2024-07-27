@@ -10,9 +10,6 @@ import (
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
-// data is the variable that holds the form data
-// var data *models.TemplateData
-
 // Repository is a struct to hold the application configuration
 type Repository struct {
 	App *config.AppConfig
@@ -65,10 +62,10 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 
 	output := ascii.Output(utils.Inputs.Input)
 	noasciis := utils.NonAsciiOutput()
-	// data.Body = output + "\n" + noasciis
-	asciiMap := make(map[string]string)
-	asciiMap["Body"] = output
-	asciiMap["NoAscii"] = noasciis
+	asciiMap := map[string]string{
+		"Body":    "\n" + output,
+		"NoAscii": noasciis,
+	}
 
 	renders.RenderTemplate(w, "ascii.page.html", &models.TemplateData{Ascii: asciiMap})
 }

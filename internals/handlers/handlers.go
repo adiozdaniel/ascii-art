@@ -10,7 +10,7 @@ import (
 )
 
 // data is the variable that holds the form data
-var data renders.FormData
+var data renders.TemplateData
 
 // Repository is a struct to hold the application configuration
 type Repository struct {

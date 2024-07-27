@@ -11,12 +11,12 @@ import (
 	"github.com/adiozdaniel/ascii-art/internals/config"
 )
 
-type FormData struct {
+type TemplateData struct {
 	Body string
 }
 
 // Data is a global variable to hold the form data
-var Data FormData
+var Data TemplateData
 
 // functions is a map of template functions
 var functions = template.FuncMap{}

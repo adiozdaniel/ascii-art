@@ -3,6 +3,7 @@ package routes
 import (
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/adiozdaniel/ascii-art/internals/handlers"
 	"github.com/adiozdaniel/ascii-art/internals/renders"
@@ -53,4 +54,19 @@ func RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/contact", func(w http.ResponseWriter, r *http.Request) {
 		handlers.Repo.ContactHandler(w, r)
 	})
+}
+
+// SetCookieHandler sets a cookie to the client
+func SetCookieHandler(w http.ResponseWriter, r *http.Request) {
+	expiration := time.Now().Add(15 * time.Minute)
+	cookie := http.Cookie{
+		Name:     "BaseCookie",
+		Value:    "ClientSession",
+		Expires:  expiration,
+		HttpOnly: true,
+		Secure:   false,
+		SameSite: http.SameSiteLaxMode,
+	}
+	http.SetCookie(w, &cookie)
+	w.Write([]byte("Cookie has been set"))
 }

@@ -4,11 +4,25 @@ import (
 	"net/http"
 
 	"github.com/adiozdaniel/ascii-art/ascii"
+	"github.com/adiozdaniel/ascii-art/internals/config"
 	"github.com/adiozdaniel/ascii-art/internals/renders"
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
 var data renders.FormData
+
+// Repository is a struct to hold the application configuration
+type Repository struct {
+	App *config.AppConfig
+}
+
+// Repo is a global variable to hold the Repository instance
+var Repo *Repository
+
+// NewRepository initializes a new Repository instance
+func NewRepository(a *config.AppConfig) *Repository {
+	return &Repository{App: a}
+}
 
 // HomeHandler handles the homepage route '/'
 func HomeHandler(w http.ResponseWriter, r *http.Request) {

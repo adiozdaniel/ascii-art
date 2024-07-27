@@ -9,6 +9,7 @@ import (
 	"github.com/adiozdaniel/ascii-art/utils"
 )
 
+// data is the variable that holds the form data
 var data renders.FormData
 
 // Repository is a struct to hold the application configuration
@@ -23,6 +24,9 @@ var Repo *Repository
 func NewRepo(a *config.AppConfig) *Repository {
 	return &Repository{App: a}
 }
+
+// NewHandlers initializes the repository instance and sets the handlers
+func NewHandlers(r *Repository) {}
 
 // HomeHandler handles the homepage route '/'
 func HomeHandler(w http.ResponseWriter, r *http.Request) {

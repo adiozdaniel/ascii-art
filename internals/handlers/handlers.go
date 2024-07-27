@@ -19,8 +19,8 @@ type Repository struct {
 // Repo is a global variable to hold the Repository instance
 var Repo *Repository
 
-// NewRepository initializes a new Repository instance
-func NewRepository(a *config.AppConfig) *Repository {
+// NewRepo initializes a new Repository instance
+func NewRepo(a *config.AppConfig) *Repository {
 	return &Repository{App: a}
 }
 

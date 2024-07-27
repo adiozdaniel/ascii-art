@@ -1,13 +1,15 @@
-{{template "base" . }} {{define "css"}}
+{{template "base" .}} {{define "css"}}
 <link
 	rel="stylesheet"
 	href="/static/styles/ascii.css"
 />
-
-{{end}} {{define "title"}} Ascii {{end}} {{define "content"}}
+{{end}} {{define "title"}}Ascii{{end}} {{define "content"}}
 <div class="ascii">
 	{{if index .Ascii "Body"}}
-	<pre>	{{index .Ascii "Body"}}</pre>
+	<pre>{{index .Ascii "Body"}}</pre>
+	{{else}}
+	<h1>You didn't pass any data.</h1>
+	<a href="/">Get Started!</a>
 	{{end}}
 </div>
 {{end}}

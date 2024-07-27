@@ -11,8 +11,14 @@ import (
 	"github.com/adiozdaniel/ascii-art/internals/config"
 )
 
+// TemplateData holds the data for the HTML templates
 type TemplateData struct {
-	Body string
+	Body      string
+	Ascii     map[string]string
+	CSRFToken string
+	Flash     string
+	Warning   string
+	Error     string
 }
 
 // Data is a global variable to hold the form data

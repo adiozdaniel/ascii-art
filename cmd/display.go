@@ -32,6 +32,7 @@ func runWeb() {
 		utils.ErrorHandler("web")
 	}
 
+	app.Sessions = make(map[string]string)
 	app.TemplateCache = tc
 	app.UseCache = false
 

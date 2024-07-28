@@ -36,6 +36,32 @@ func RouteChecker(next http.Handler) http.Handler {
 	})
 }
 
+// Middleware to check if session is valid
+func SessionMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		cookie, err := r.Cookie("session_id")
+		if err != nil {
+			http.Error(w, "No session found", http.StatusUnauthorized)
+			return
+		}
+
+		sessionID := cookie.Value
+		_, ok := sessions[sessionID]
+		if !ok {
+			http.Error(w, "Invalid or expired session", http.StatusUnauthorized)
+			return
+		}
+
+		// Set a new expiration time for the session
+		expiration := time.Now().Add(15 * time.Minute)
+		cookie.Expires = expiration
+		http.SetCookie(w, cookie)
+
+		// Continue to the next handler
+		next.ServeHTTP(w, r)
+	})
+}
+
 // RegisterRoutes manages the routes
 func RegisterRoutes(mux *http.ServeMux) {
 	staticDir := renders.GetProjectRoot("views", "static")

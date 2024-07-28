@@ -66,8 +66,8 @@ func RegisterRoutes(mux *http.ServeMux) {
 	fs := http.FileServer(http.Dir(staticDir))
 	mux.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	mux.HandleFunc("/set-cookie", SetCookieHandler)
-	mux.HandleFunc("/get-session", GetSessionHandler)
+	mux.HandleFunc("/set-cookie", handlers.Repo.SetCookieHandler)
+	mux.HandleFunc("/get-session", handlers.Repo.GetSessionHandler)
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		handlers.Repo.HomeHandler(w, r)
@@ -84,45 +84,4 @@ func RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/contact", func(w http.ResponseWriter, r *http.Request) {
 		handlers.Repo.ContactHandler(w, r)
 	})
-}
-
-// SetCookieHandler sets a session cookie for the client
-func SetCookieHandler(w http.ResponseWriter, r *http.Request) {
-	sessionID := generateSessionID()
-	app.Sessions[sessionID] = r.RemoteAddr
-
-	expiration := time.Now().Add(15 * time.Minute)
-	cookie := http.Cookie{
-		Name:     "session_id",
-		Value:    sessionID,
-		Expires:  expiration,
-		HttpOnly: true,
-		Secure:   false, // TODO Set to true before deploying to production
-		SameSite: http.SameSiteLaxMode,
-	}
-	http.SetCookie(w, &cookie)
-	w.Write([]byte("Session cookie has been set"))
-}
-
-// GetSessionHandler retrieves session data based on the session cookie
-func GetSessionHandler(w http.ResponseWriter, r *http.Request) {
-	cookie, err := r.Cookie("session_id")
-	if err != nil {
-		http.Error(w, "No session found", http.StatusUnauthorized)
-		return
-	}
-
-	sessionID := cookie.Value
-	userID, ok := app.Sessions[sessionID]
-	if !ok {
-		http.Error(w, "Invalid session", http.StatusUnauthorized)
-		return
-	}
-
-	w.Write([]byte("Session is valid for user: " + userID))
-}
-
-// Generate a session ID (in a real application, use a more secure method)
-func generateSessionID() string {
-	return time.Now().Format("20060102150405")
 }

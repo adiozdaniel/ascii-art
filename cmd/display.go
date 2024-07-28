@@ -44,8 +44,8 @@ func runWeb() {
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)
 
-	wrappedMux := routes.RouteChecker(
-		routes.SessionMiddleware(mux),
+	wrappedMux := routes.SessionMiddleware(
+		routes.RouteChecker(mux),
 	)
 
 	server := &http.Server{

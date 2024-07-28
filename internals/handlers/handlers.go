@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/adiozdaniel/ascii-art/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/config"
@@ -17,6 +18,9 @@ type Repository struct {
 
 // Repo is a global variable to hold the Repository instance
 var Repo *Repository
+
+// app is a pointer to the application configuration
+var app *config.AppConfig
 
 // NewRepo initializes a new Repository instance
 func NewRepo(a *config.AppConfig) *Repository {
@@ -96,4 +100,45 @@ func (m *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
 // ContactHandler handles the contact page route '/contact'
 func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 	renders.RenderTemplate(w, r, "contact.page.html", nil)
+}
+
+// SetCookieHandler sets a session cookie for the client
+func (m *Repository) SetCookieHandler(w http.ResponseWriter, r *http.Request) {
+	sessionID := generateSessionID()
+	app.Sessions[sessionID] = r.RemoteAddr
+
+	expiration := time.Now().Add(15 * time.Minute)
+	cookie := http.Cookie{
+		Name:     "session_id",
+		Value:    sessionID,
+		Expires:  expiration,
+		HttpOnly: true,
+		Secure:   false, // TODO Set to true before deploying to production
+		SameSite: http.SameSiteLaxMode,
+	}
+	http.SetCookie(w, &cookie)
+	w.Write([]byte("Session cookie has been set"))
+}
+
+// GetSessionHandler retrieves session data based on the session cookie
+func (m *Repository) GetSessionHandler(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("session_id")
+	if err != nil {
+		http.Error(w, "No session found", http.StatusUnauthorized)
+		return
+	}
+
+	sessionID := cookie.Value
+	userID, ok := app.Sessions[sessionID]
+	if !ok {
+		http.Error(w, "Invalid session", http.StatusUnauthorized)
+		return
+	}
+
+	w.Write([]byte("Session is valid for user: " + userID))
+}
+
+// Generate a session ID (in a real application, use a more secure method)
+func generateSessionID() string {
+	return time.Now().Format("20060102150405")
 }

@@ -43,7 +43,9 @@ func runWeb() {
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)
 
-	wrappedMux := routes.RouteChecker(mux)
+	wrappedMux := routes.RouteChecker(
+		routes.SessionMiddleware(mux),
+	)
 
 	server := &http.Server{
 		Addr:    ":8080",

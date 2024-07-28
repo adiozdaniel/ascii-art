@@ -52,12 +52,9 @@ func SessionMiddleware(next http.Handler) http.Handler {
 			return
 		}
 
-		// Set a new expiration time for the session
 		expiration := time.Now().Add(15 * time.Minute)
 		cookie.Expires = expiration
 		http.SetCookie(w, cookie)
-
-		// Continue to the next handler
 		next.ServeHTTP(w, r)
 	})
 }

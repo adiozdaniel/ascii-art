@@ -24,12 +24,12 @@ func NewTemplates(a *config.AppConfig) {
 }
 
 // AddDefaultData adds default data to the template data
-func AddDefaultData(data *models.TemplateData) *models.TemplateData {
+func AddDefaultData(data *models.TemplateData, r *http.Request) *models.TemplateData {
 	return data
 }
 
 // RenderTemplate is a helper function to render HTML templates
-func RenderTemplate(w http.ResponseWriter, tmpl string, data *models.TemplateData) {
+func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data *models.TemplateData) {
 	var tc map[string]*template.Template
 
 	if app.UseCache {
@@ -44,7 +44,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, data *models.TemplateDat
 		return
 	}
 
-	data = AddDefaultData(data)
+	data = AddDefaultData(data, r)
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	err := ts.Execute(w, data)

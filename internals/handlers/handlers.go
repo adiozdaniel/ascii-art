@@ -30,13 +30,13 @@ func NewHandlers(m *Repository) {
 
 // HomeHandler handles the homepage route '/'
 func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
-	renders.RenderTemplate(w, "home.page.html", nil)
+	renders.RenderTemplate(w, r, "home.page.html", nil)
 }
 
 // SubmitHandler handles the output route '/ascii-art'
 func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
-		renders.RenderTemplate(w, "ascii.page.html", &models.TemplateData{})
+		renders.RenderTemplate(w, r, "ascii.page.html", &models.TemplateData{})
 		return
 	}
 
@@ -67,33 +67,33 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		"NoAscii": noasciis,
 	}
 
-	renders.RenderTemplate(w, "ascii.page.html", &models.TemplateData{Ascii: asciiMap})
+	renders.RenderTemplate(w, r, "ascii.page.html", &models.TemplateData{Ascii: asciiMap})
 }
 
 // NotFoundHandler handles unknown routes; 404 status
 func (m *Repository) NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
-	renders.RenderTemplate(w, "notfound.page.html", nil)
+	renders.RenderTemplate(w, r, "notfound.page.html", nil)
 }
 
 // BadRequestHandler handles bad requests routes
 func (m *Repository) BadRequestHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusBadRequest)
-	renders.RenderTemplate(w, "badrequest.page.html", nil)
+	renders.RenderTemplate(w, r, "badrequest.page.html", nil)
 }
 
 // ServerErrorHandler handles server failures that result in status 500
 func (m *Repository) ServerErrorHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusInternalServerError)
-	renders.RenderTemplate(w, "serverError.page.html", nil)
+	renders.RenderTemplate(w, r, "serverError.page.html", nil)
 }
 
 // AboutHandler handles the about page route '/about'
 func (m *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
-	renders.RenderTemplate(w, "about.page.html", nil)
+	renders.RenderTemplate(w, r, "about.page.html", nil)
 }
 
 // ContactHandler handles the contact page route '/contact'
 func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
-	renders.RenderTemplate(w, "contact.page.html", nil)
+	renders.RenderTemplate(w, r, "contact.page.html", nil)
 }

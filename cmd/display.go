@@ -32,21 +32,17 @@ func runWeb() {
 		utils.ErrorHandler("web")
 	}
 
-	app.Sessions = make(map[string]string)
 	app.TemplateCache = tc
 	app.UseCache = false
 
 	repo := handlers.NewRepo(&app)
-
 	handlers.NewHandlers(repo)
 	renders.NewTemplates(&app)
 
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)
 
-	wrappedMux := routes.SessionMiddleware(
-		routes.RouteChecker(mux),
-	)
+	wrappedMux := routes.RouteChecker(mux)
 
 	server := &http.Server{
 		Addr:    ":8080",

@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -34,6 +35,10 @@ func NewHandlers(m *Repository) {
 
 // HomeHandler handles the homepage route '/'
 func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
+	// fmt.Println(app.Sessions)
+	// fmt.Println(app.Sessions)
+	// m.SetCookieHandler(w, r)
+	// fmt.Println(app.Sessions)
 	renders.RenderTemplate(w, r, "home.page.html", nil)
 }
 

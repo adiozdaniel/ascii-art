@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -20,9 +19,6 @@ type Repository struct {
 // Repo is a global variable to hold the Repository instance
 var Repo *Repository
 
-// app is a pointer to the application configuration
-var app *config.AppConfig
-
 // NewRepo initializes a new Repository instance
 func NewRepo(a *config.AppConfig) *Repository {
 	return &Repository{App: a}
@@ -35,10 +31,7 @@ func NewHandlers(m *Repository) {
 
 // HomeHandler handles the homepage route '/'
 func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
-	// fmt.Println(app.Sessions)
-	// fmt.Println(app.Sessions)
-	// m.SetCookieHandler(w, r)
-	// fmt.Println(app.Sessions)
+	m.SetCookieHandler(w, r)
 	renders.RenderTemplate(w, r, "home.page.html", nil)
 }
 
@@ -109,8 +102,9 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 
 // SetCookieHandler sets a session cookie for the client
 func (m *Repository) SetCookieHandler(w http.ResponseWriter, r *http.Request) {
+	m.App.Sessions = make(map[string]string)
 	sessionID := generateSessionID()
-	app.Sessions[sessionID] = r.RemoteAddr
+	m.App.Sessions[sessionID] = r.RemoteAddr
 
 	expiration := time.Now().Add(15 * time.Minute)
 	cookie := http.Cookie{
@@ -134,7 +128,7 @@ func (m *Repository) GetSessionHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sessionID := cookie.Value
-	userID, ok := app.Sessions[sessionID]
+	userID, ok := m.App.Sessions[sessionID]
 	if !ok {
 		http.Error(w, "Invalid session", http.StatusUnauthorized)
 		return

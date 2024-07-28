@@ -116,7 +116,6 @@ func (m *Repository) SetCookieHandler(w http.ResponseWriter, r *http.Request) {
 		SameSite: http.SameSiteLaxMode,
 	}
 	http.SetCookie(w, &cookie)
-	w.Write([]byte("Session cookie has been set"))
 }
 
 // GetSessionHandler retrieves session data based on the session cookie

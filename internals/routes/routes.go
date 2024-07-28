@@ -5,6 +5,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/adiozdaniel/ascii-art/internals/config"
 	"github.com/adiozdaniel/ascii-art/internals/handlers"
 	"github.com/adiozdaniel/ascii-art/internals/renders"
 )
@@ -17,8 +18,8 @@ var allowedRoutes = map[string]bool{
 	"/contact":   true,
 }
 
-// Simple in-memory session store
-var sessions = map[string]string{} // TODO map[sessionID]userID
+// app is a pointer to the application configuration
+var app *config.AppConfig
 
 // RouteChecker is a middleware that checkes allowed routes
 func RouteChecker(next http.Handler) http.Handler {
@@ -46,7 +47,7 @@ func SessionMiddleware(next http.Handler) http.Handler {
 		}
 
 		sessionID := cookie.Value
-		_, ok := sessions[sessionID]
+		_, ok := app.Sessions[sessionID]
 		if !ok {
 			http.Error(w, "Invalid or expired session", http.StatusUnauthorized)
 			return
@@ -88,7 +89,7 @@ func RegisterRoutes(mux *http.ServeMux) {
 // SetCookieHandler sets a session cookie for the client
 func SetCookieHandler(w http.ResponseWriter, r *http.Request) {
 	sessionID := generateSessionID()
-	sessions[sessionID] = r.RemoteAddr
+	app.Sessions[sessionID] = r.RemoteAddr
 
 	expiration := time.Now().Add(15 * time.Minute)
 	cookie := http.Cookie{
@@ -112,7 +113,7 @@ func GetSessionHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sessionID := cookie.Value
-	userID, ok := sessions[sessionID]
+	userID, ok := app.Sessions[sessionID]
 	if !ok {
 		http.Error(w, "Invalid session", http.StatusUnauthorized)
 		return

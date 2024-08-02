@@ -155,6 +155,15 @@ func (i *Input) ParseArgs(args []string) {
 	flag.Parse()
 	i.Args = flag.Args()
 
+	// Apply RemoveQuotes to relevant fields
+	i.Color = RemoveQuotes(i.Color)
+	i.Justify = RemoveQuotes(i.Justify)
+	i.Output = RemoveQuotes(i.Output)
+
+	for index := range i.Args {
+		i.Args[index] = RemoveQuotes(i.Args[index])
+	}
+
 	i.CheckInput()
 
 	if err := i.Validate(); err != nil {

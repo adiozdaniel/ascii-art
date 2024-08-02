@@ -57,68 +57,33 @@ func (i *Input) init() {
 	}
 
 	i.ParseArgs(os.Args[1:])
-	if i.BannerPath != "" {
-		i.isBanner = true
-	}
-
-	getFile := i.GetBannerPath()
-	fmt.Println("Banner file:", getFile)
+	fmt.Println("Banner file:", i.GetBannerPath())
 }
 
 // CheckInput checks if there is invalid input in the command line arguments.
 func (i *Input) CheckInput() {
 	for _, arg := range i.Args {
-		if arg == "--" {
-			i.Args = append([]string{"--"}, i.Args...)
-		}
-		if i.Output != "" && i.Output == arg {
-			ErrorHandler("output")
-		}
-		if i.Color != "" && i.Color == arg {
-			ErrorHandler("colors")
-		}
-		if i.Justify != "" && i.Justify == arg {
-			ErrorHandler("justify")
+		if !validFlags[arg] {
+			fmt.Printf("Error: Invalid flag %s\n", arg)
+			i.PrintUsage()
+			os.Exit(1)
 		}
 	}
 }
 
-// GetFile returns the ascii graphic filepath to use.
-func (i *Input) GetFile() {
-	if i.Justify != "" && len(i.Args) == 0 {
-		ErrorHandler("justify")
-	}
-	if i.Color != "" && len(i.Args) == 0 {
-		ErrorHandler("colors")
-	}
-	if i.Output != "" && len(i.Args) == 0 {
-		ErrorHandler("output")
-	}
-
-	if i.Output != "" && !strings.HasSuffix(i.Output, ".txt") {
-		ErrorHandler("txt")
-	}
-
-	if len(i.Args) == 0 {
-		return
+// GetBannerPath returns the path to the banner file.
+func (i *Input) GetBannerPath() string {
+	if i.BannerPath != "" {
+		return i.BannerPath
 	}
 
 	defaultBanner := "../banners/standard.txt"
-	if len(i.Args) == 1 {
-		i.BannerPath = defaultBanner
-		return
-	}
-
-	if !i.isBanner {
-		if value, ok := BannerFiles[i.Args[len(i.Args)-1]]; ok {
-			i.BannerPath = value
-			i.isBanner = true
-			i.Args = i.Args[:len(i.Args)-1]
-			return
+	if i.isBanner {
+		if path, ok := BannerFiles[i.Args[len(i.Args)-1]]; ok {
+			return path
 		}
 	}
-
-	i.BannerPath = defaultBanner
+	return defaultBanner
 }
 
 // RemoveQuotes removes opening or closing quotes in a string
@@ -167,20 +132,7 @@ func RemoveQuotes(input string) string {
 	return strings.TrimSpace(result.String())
 }
 
-func (i *Input) GetBannerPath() string {
-	if i.BannerPath != "" {
-		return i.BannerPath
-	}
-
-	defaultBanner := "../banners/standard.txt"
-	if i.isBanner {
-		if path, ok := BannerFiles[i.Args[len(i.Args)-1]]; ok {
-			return path
-		}
-	}
-	return defaultBanner
-}
-
+// Validate checks if the Input contains valid arguments and flags.
 func (i *Input) Validate() error {
 	if i.Color != "" && i.ColorRef == "" {
 		return fmt.Errorf("color flag requires a color reference")
@@ -194,6 +146,7 @@ func (i *Input) Validate() error {
 	return nil
 }
 
+// ParseArgs parses command-line arguments and sets Input fields.
 func (i *Input) ParseArgs(args []string) {
 	flag.StringVar(&i.Color, "color", "", "specify a color")
 	flag.StringVar(&i.Justify, "align", "", "specify text justification")
@@ -202,6 +155,8 @@ func (i *Input) ParseArgs(args []string) {
 	flag.Parse()
 	i.Args = flag.Args()
 
+	i.CheckInput()
+
 	if err := i.Validate(); err != nil {
 		fmt.Println("Error:", err)
 		i.PrintUsage()
@@ -209,6 +164,7 @@ func (i *Input) ParseArgs(args []string) {
 	}
 }
 
+// PrintUsage prints the usage instructions for the application.
 func (i *Input) PrintUsage() {
 	fmt.Println("Usage:")
 	fmt.Println("  -color <color>    Specify a color")

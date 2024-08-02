@@ -26,6 +26,10 @@ func (i *Input) ErrorHandler(errType string) {
 		fmt.Println("For web:\ngo run . -web")
 		os.Exit(0)
 	}
-	fmt.Println(errors[errType])
-	os.Exit(0)
+
+	for _, err := range errors {
+		if strings.Contains(errType, err) {
+			fmt.Println(err)
+		}
+	}
 }

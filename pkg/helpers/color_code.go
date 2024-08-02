@@ -47,7 +47,7 @@ func init() {
 // GetColorCode gets the ANSI code of the input color after iterating through the structs in asciiColors
 func GetColorCode(color string) string {
 	if len(color) < 3 {
-		utils.ErrorHandler("color")
+		app.ErrorHandler("color")
 	}
 
 	if strings.HasPrefix(color, "#") {
@@ -77,7 +77,7 @@ func GetColorCode(color string) string {
 		}
 	}
 
-	utils.ErrorHandler("color")
+	app.ErrorHandler("color")
 	return ""
 }
 

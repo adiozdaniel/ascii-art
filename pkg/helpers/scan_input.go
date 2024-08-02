@@ -2,7 +2,7 @@ package helpers
 
 // scanInput reads input from CLI interface and updates the input struct.
 func ScanInput(input string) {
-	cleanInput := utils.RemoveQuotes(input)
+	cleanInput := app.RemoveQuotes(input)
 	words := strings.Fields(cleanInput)
 	var newInput string
 

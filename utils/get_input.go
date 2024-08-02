@@ -280,3 +280,16 @@ func (i *Input) GetBannerPath() string {
 	}
 	return defaultBanner
 }
+
+func (i *Input) Validate() error {
+	if i.Color != "" && i.ColorRef == "" {
+		return fmt.Errorf("color flag requires a color reference")
+	}
+	if i.Justify != "" && i.Justify == "" {
+		return fmt.Errorf("justify flag requires a justification value")
+	}
+	if i.Output != "" && !strings.HasSuffix(i.Output, ".txt") {
+		return fmt.Errorf("output file must have a .txt extension")
+	}
+	return nil
+}

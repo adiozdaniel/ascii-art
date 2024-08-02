@@ -52,7 +52,7 @@ var validFlags = map[string]bool{
 // init initializes the Input
 func (i *Input) init() {
 	if len(os.Args) < 2 {
-		i.PrintUsage()
+		i.ErrorHandler("fatal")
 		os.Exit(1)
 	}
 
@@ -65,7 +65,7 @@ func (i *Input) CheckInput() {
 	for _, arg := range i.Args {
 		if !validFlags[arg] {
 			fmt.Printf("Error: Invalid flag %s\n", arg)
-			i.PrintUsage()
+			i.ErrorHandler("fatal")
 			os.Exit(1)
 		}
 	}
@@ -135,13 +135,13 @@ func (i *Input) RemoveQuotes(input string) string {
 // Validate checks if the Input contains valid arguments and flags.
 func (i *Input) Validate() error {
 	if i.Color != "" && i.ColorRef == "" {
-		return fmt.Errorf("color flag requires a color reference")
+		return fmt.Errorf("colors")
 	}
 	if i.Justify != "" && i.Justify == "" {
-		return fmt.Errorf("justify flag requires a justification value")
+		return fmt.Errorf("justify")
 	}
 	if i.Output != "" && !strings.HasSuffix(i.Output, ".txt") {
-		return fmt.Errorf("output file must have a .txt extension")
+		return fmt.Errorf("output")
 	}
 	return nil
 }
@@ -167,8 +167,7 @@ func (i *Input) ParseArgs(args []string) {
 	i.CheckInput()
 
 	if err := i.Validate(); err != nil {
-		fmt.Println("Error:", err)
-		i.PrintUsage()
+		i.ErrorHandler(err.Error())
 		os.Exit(1)
 	}
 }

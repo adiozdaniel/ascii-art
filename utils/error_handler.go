@@ -18,7 +18,7 @@ var errors = map[string]string{
 }
 
 // ErrorHandler outputs errors and safely exits the program
-func ErrorHandler(errType string) {
+func (i *Input) ErrorHandler(errType string) {
 	if errType == "fatal" {
 		fmt.Printf("For color:\n%s\n", strings.Split(errors["colors"], "\n")[2])
 		fmt.Printf("For output:\n%s\n", strings.Split(errors["output"], "\n")[2])

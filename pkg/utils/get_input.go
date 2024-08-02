@@ -57,7 +57,7 @@ func (i *Input) Init() {
 	}
 
 	i.ParseArgs(os.Args[1:])
-	fmt.Println("Banner file:", i.GetBannerPath())
+	i.BannerPath = i.GetBannerPath()
 }
 
 // CheckInput checks if there is invalid input in the command line arguments.
@@ -80,6 +80,7 @@ func (i *Input) GetBannerPath() string {
 	defaultBanner := "../banners/standard.txt"
 	if !i.isBanner {
 		if path, ok := BannerFiles[i.Args[len(i.Args)-1]]; ok {
+			i.isBanner = true
 			return path
 		}
 	}

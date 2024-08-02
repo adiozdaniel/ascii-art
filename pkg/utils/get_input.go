@@ -78,7 +78,7 @@ func (i *Input) GetBannerPath() string {
 	}
 
 	defaultBanner := "../banners/standard.txt"
-	if i.isBanner {
+	if !i.isBanner {
 		if path, ok := BannerFiles[i.Args[len(i.Args)-1]]; ok {
 			return path
 		}

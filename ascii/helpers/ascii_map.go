@@ -1,4 +1,4 @@
-package ascii
+package helpers
 
 // AsciiMap maps the indices of the characters in the banner file
 func AsciiMap(fileContents []string) map[rune]int {

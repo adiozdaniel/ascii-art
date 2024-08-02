@@ -1,4 +1,4 @@
-package ascii
+package helpers
 
 import (
 	"crypto/sha256"

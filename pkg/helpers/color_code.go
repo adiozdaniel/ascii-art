@@ -5,8 +5,6 @@ import (
 	"math"
 	"strconv"
 	"strings"
-
-	"github.com/adiozdaniel/ascii-art/utils"
 )
 
 // Color struct stores the color name and its ansicode equivalent

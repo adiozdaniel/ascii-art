@@ -12,17 +12,17 @@ import (
 func LogOutput(output string) {
 	cleanOutput := removeANSICodes(output)
 
-	outputDir := filepath.Dir(Inputs.Output)
+	outputDir := filepath.Dir(app.Output)
 	if _, err := os.Stat(outputDir); os.IsNotExist(err) {
 		err := os.MkdirAll(outputDir, 0755)
 		if err != nil {
-			ErrorHandler("restricted")
+			app.ErrorHandler("restricted")
 		}
 	}
 
-	err := os.WriteFile(Inputs.Output, []byte(cleanOutput), 0644)
+	err := os.WriteFile(app.Output, []byte(cleanOutput), 0644)
 	if err != nil {
-		ErrorHandler("restricted")
+		app.ErrorHandler("restricted")
 	}
 }
 

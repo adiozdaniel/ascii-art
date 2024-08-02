@@ -308,3 +308,13 @@ func (i *Input) ParseArgs(args []string) {
 		os.Exit(1)
 	}
 }
+
+func (i *Input) PrintUsage() {
+	fmt.Println("Usage:")
+	fmt.Println("  -color <color>    Specify a color")
+	fmt.Println("  -align <align>    Specify text justification")
+	fmt.Println("  -output <file>    Specify output file")
+	fmt.Println("  --shadow          Use shadow banner")
+	fmt.Println("  --thinkertoy      Use thinkertoy banner")
+	fmt.Println("  --standard        Use standard banner")
+}

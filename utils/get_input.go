@@ -87,7 +87,7 @@ func (i *Input) GetBannerPath() string {
 }
 
 // RemoveQuotes removes opening or closing quotes in a string
-func RemoveQuotes(input string) string {
+func (i *Input) RemoveQuotes(input string) string {
 	var result strings.Builder
 	newInput := strings.Fields(input)
 
@@ -156,12 +156,12 @@ func (i *Input) ParseArgs(args []string) {
 	i.Args = flag.Args()
 
 	// Apply RemoveQuotes to relevant fields
-	i.Color = RemoveQuotes(i.Color)
-	i.Justify = RemoveQuotes(i.Justify)
-	i.Output = RemoveQuotes(i.Output)
+	i.Color = i.RemoveQuotes(i.Color)
+	i.Justify = i.RemoveQuotes(i.Justify)
+	i.Output = i.RemoveQuotes(i.Output)
 
 	for index := range i.Args {
-		i.Args[index] = RemoveQuotes(i.Args[index])
+		i.Args[index] = i.RemoveQuotes(i.Args[index])
 	}
 
 	i.CheckInput()

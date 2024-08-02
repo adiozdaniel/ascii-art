@@ -3,6 +3,7 @@ package outputs
 import (
 	"strings"
 
+	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
 
@@ -23,7 +24,7 @@ func Output(inputStr string) string {
 		return "\n"
 	}
 
-	var fileContents, _ = FileContents()
+	var fileContents, _ = helpers.FileContents()
 	var ascii_map = AsciiMap(fileContents)
 	var art_work strings.Builder
 

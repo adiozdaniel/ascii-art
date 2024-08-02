@@ -1,9 +1,37 @@
-package helpers
+package outputs
 
 import (
 	"fmt"
 	"strings"
 )
+
+// AsciiMap maps the indices of the characters in the banner file
+func AsciiMap(fileContents []string) map[rune]int {
+	ascii_map := make(map[rune]int)
+	ascii := 32
+
+	for index, line := range fileContents {
+		if len(line) == 0 || len(line) == 1 {
+			ascii_map[rune(ascii)] = index + 1
+			ascii++
+		}
+	}
+
+	return ascii_map
+}
+
+// NonAsciiMap maps the non-printable ascii characters
+func NonAsciiMap(input string) map[rune]rune {
+	nonAsciiMap := make(map[rune]rune)
+
+	for _, char := range input {
+		if (char < 32 || char > 126) && char != 10 {
+			nonAsciiMap[char] = char
+		}
+	}
+
+	return nonAsciiMap
+}
 
 // NonAsciiOutput returns the non-printable ascii characters
 func NonAsciiOutput() string {

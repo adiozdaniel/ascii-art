@@ -8,8 +8,11 @@ import (
 	"strings"
 	"time"
 
-	utils "github.com/adiozdaniel/ascii-art/utils"
+	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
+
+// global variables declaration
+var app = utils.Inputs
 
 // constants store the hashed sum of the banner files as hexadecimal strings
 const (
@@ -32,11 +35,11 @@ func validateBanner(banner []byte) bool {
 
 // FileContents returns a slice of strings containing ascii artwork characters
 func FileContents() ([]string, error) {
-	if utils.Inputs.BannerPath == "" {
-		utils.Inputs.BannerPath = "../banners/standard.txt"
+	if app.BannerPath == "" {
+		app.BannerPath = "../banners/standard.txt"
 	}
 
-	fileNames := utils.Inputs.BannerPath
+	fileNames := app.BannerPath
 	fileParts := strings.Split(fileNames, "/")
 	fileDir := fileParts[1]
 	fileName := fileParts[2]
@@ -45,8 +48,8 @@ func FileContents() ([]string, error) {
 	contents, err := os.ReadFile(filePath)
 
 	if err != nil || !validateBanner(contents) {
-		if utils.Inputs.IsWeb {
-			return []string{}, fmt.Errorf("not valid")
+		if app.IsWeb {
+			return []string{}, fmt.Errorf("not found")
 		}
 		fmt.Print("Be patient while downloading...\n")
 		time.Sleep(1 * time.Second)

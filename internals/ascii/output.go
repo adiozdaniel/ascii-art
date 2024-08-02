@@ -3,13 +3,14 @@ package outputs
 import (
 	"strings"
 
-	"github.com/adiozdaniel/ascii-art/utils"
+	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
 
 // global variables declaration
 var (
 	reset      = "\033[0m"
 	height int = 8
+	app        = utils.Inputs
 )
 
 // Output compiles the banner characters to form the desired ascii art work
@@ -18,7 +19,7 @@ func Output(inputStr string) string {
 		return ""
 	}
 
-	if inputStr == "\\n" && !utils.Inputs.IsWeb {
+	if inputStr == "\\n" && !app.IsWeb {
 		return "\n"
 	}
 

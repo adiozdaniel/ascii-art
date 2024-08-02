@@ -4,6 +4,8 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+
+	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
 
 // LogOutput writes ascii art to a given file

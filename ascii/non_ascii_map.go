@@ -1,4 +1,4 @@
-package utils
+package ascii
 
 // NonAsciiMap maps the non-printable ascii characters
 func NonAsciiMap(input string) map[rune]rune {

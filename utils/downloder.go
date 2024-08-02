@@ -36,19 +36,3 @@ func DownloadFile(url string, bannerPath string) error {
 
 	return nil
 }
-
-// CleanPath removes /cmd/ from a path to clean absolute paths
-func CleanPath(path string) string {
-	escapedDirSegment := regexp.QuoteMeta("cmd")
-	pattern := fmt.Sprintf(`%s\/`, escapedDirSegment)
-	regex := regexp.MustCompile(pattern)
-	newPath := regex.ReplaceAllString(path, "")
-
-	return newPath
-}
-
-// GetFilePath returns the absolute path of a file
-func GetFilePath(directory, fileName string) string {
-	var filePrefix, _ = (filepath.Abs(directory))
-	return CleanPath(filePrefix + "/" + fileName)
-}

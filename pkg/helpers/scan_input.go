@@ -11,21 +11,21 @@ func ScanInput(input string) {
 		case strings.Contains(word, "--align") || strings.HasPrefix(word, "-align"):
 			alignment := strings.TrimPrefix(strings.TrimPrefix(word, "--align="), "-align=")
 			if isValidAlignment(alignment) {
-				utils.Inputs.Justify = alignment
+				app.Justify = alignment
 				continue
 			}
 			utils.ErrorHandler("justify")
 		case strings.Contains(word, "--color") || strings.Contains(word, "-color"):
 			color := strings.TrimPrefix(strings.TrimPrefix(word, "--color="), "-color=")
 			if color != "" {
-				utils.Inputs.Color = color
+				app.Color = color
 				continue
 			}
 			utils.ErrorHandler("colors")
 		case strings.Contains(word, "--reff") || strings.Contains(word, "-reff"):
 			reff := strings.TrimPrefix(strings.TrimPrefix(word, "--reff="), "-reff=")
 			if reff != "" {
-				utils.Inputs.ColorRef = reff
+				app.ColorRef = reff
 				continue
 			}
 			utils.ErrorHandler("colors")
@@ -41,8 +41,8 @@ func ScanInput(input string) {
 			newInput += word + " "
 		case isBannerFile(word):
 			if i == len(words)-1 && len(words) != 1 {
-				if value, ok := utils.BannerFiles[word]; ok {
-					utils.Inputs.BannerPath = value
+				if value, ok := app.BannerFiles[word]; ok {
+					app.BannerPath = value
 				}
 				break
 			}
@@ -53,6 +53,17 @@ func ScanInput(input string) {
 	}
 
 	if newInput != "" {
-		utils.Inputs.Input = strings.TrimSpace(newInput)
+		app.Input = strings.TrimSpace(newInput)
 	}
+}
+
+// isValidAlignment checks if the provided alignment is valid.
+func isValidAlignment(alignment string) bool {
+	return alignment == "left" || alignment == "center" || alignment == "right" || alignment == "justify"
+}
+
+// isBannerFile checks if the provided word is a banner file.
+func isBannerFile(word string) bool {
+	_, exists := utils.BannerFiles[word]
+	return exists
 }

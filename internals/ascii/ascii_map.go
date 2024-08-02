@@ -36,7 +36,7 @@ func NonAsciiMap(input string) map[rune]rune {
 // NonAsciiOutput returns the non-printable ascii characters
 func NonAsciiOutput() string {
 	var artWork strings.Builder
-	nonAsciiMap := NonAsciiMap(Inputs.Input)
+	nonAsciiMap := NonAsciiMap(app.Input)
 
 	for _, char := range nonAsciiMap {
 		if char != 13 {

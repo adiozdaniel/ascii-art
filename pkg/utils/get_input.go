@@ -64,8 +64,7 @@ func (i *Input) Init() {
 func (i *Input) CheckInput() {
 	for _, arg := range i.Args {
 		if !validFlags[arg] {
-			fmt.Printf("Error: Invalid flag %s\n", arg)
-			i.ErrorHandler("fatal")
+			i.ErrorHandler(arg)
 			os.Exit(1)
 		}
 	}

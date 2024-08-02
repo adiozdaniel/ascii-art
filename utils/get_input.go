@@ -50,119 +50,19 @@ var validFlags = map[string]bool{
 }
 
 // init initializes the Input
-func init() {
+func (i *Input) init() {
 	if len(os.Args) < 2 {
-		ErrorHandler("fatal")
+		i.PrintUsage()
+		os.Exit(1)
 	}
 
-	if strings.Contains(os.Args[0], "test") || os.Args[1] == "-web" {
-		Inputs.IsWeb = true
-		return
+	i.ParseArgs(os.Args[1:])
+	if i.BannerPath != "" {
+		i.isBanner = true
 	}
 
-	flag.StringVar(&Inputs.Color, "color", "", "specify a color")
-	flag.StringVar(&Inputs.Justify, "align", "", "specify text justification")
-	flag.StringVar(&Inputs.Output, "output", "", "specify output file")
-
-	flag.Usage = func() {
-		fmt.Print("\033[1A")
-		fmt.Print("\033[2K")
-
-		input := os.Args[1:]
-		for _, arg := range input {
-			if strings.Contains(arg, "-align") {
-				ErrorHandler("justify")
-			}
-			if strings.Contains(arg, "-color") {
-				ErrorHandler("colors")
-			}
-
-			if strings.Contains(arg, "-reff") {
-				ErrorHandler("colors")
-			}
-
-			if strings.Contains(arg, "-output") {
-				ErrorHandler("output")
-			}
-		}
-		ErrorHandler("fatal")
-	}
-
-	for _, arg := range os.Args[1:] {
-		if strings.HasPrefix(arg, "-") && strings.Contains(arg, "=") {
-			flagValue := strings.Split(arg, "=")[1]
-			flagName := strings.Split(arg, "=")[0]
-			if !validFlags[flagName] {
-				ErrorHandler("fatal")
-			}
-			if flagValue == "" {
-				if flagName == "--output" {
-					ErrorHandler("output")
-				}
-				if flagName == "--align" {
-					ErrorHandler("justify")
-				}
-				if flagName == "--color" {
-					ErrorHandler("colors")
-				}
-				ErrorHandler("fatal")
-			}
-		}
-	}
-
-	flag.Parse()
-	Inputs.Args = flag.Args()
-
-	CheckInput(os.Args[1:])
-
-	if Inputs.BannerPath != "" {
-		Inputs.isBanner = true
-	}
-
-	getFile()
-
-	if len(Inputs.Args) == 2 && Inputs.Color != "" {
-		Inputs.ColorRef = strings.TrimSpace(Inputs.Args[0])
-		Inputs.Input = Inputs.Args[1]
-		Inputs.Args = Inputs.Args[2:]
-		return
-	}
-
-	if strings.Contains(Inputs.Output, "/banners/") {
-		ErrorHandler("restricted")
-	}
-
-	if Inputs.Output != "" && (len(Inputs.Args) != 1) {
-		ErrorHandler("output")
-	}
-
-	if Inputs.Output != "" && Inputs.Color != "" {
-		ErrorHandler("output")
-	}
-
-	if Inputs.Output != "" && Inputs.Justify != "" {
-		ErrorHandler("output")
-	}
-
-	if len(Inputs.Args) == 1 {
-		Inputs.Input = Inputs.Args[0]
-		Inputs.ColorRef = strings.TrimSpace(Inputs.Args[0])
-	}
-
-	if len(Inputs.Args) > 1 {
-		if Inputs.Justify != "" {
-			ErrorHandler("justify")
-		}
-
-		if Inputs.Color != "" {
-			ErrorHandler("colors")
-		}
-
-		if Inputs.Output != "" {
-			ErrorHandler("output")
-		}
-		ErrorHandler("fatal")
-	}
+	getFile := i.GetBannerPath()
+	fmt.Println("Banner file:", getFile)
 }
 
 // CheckInput checks if there is invalid input in the command line arguments.

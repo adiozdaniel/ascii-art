@@ -66,59 +66,59 @@ func (i *Input) init() {
 }
 
 // CheckInput checks if there is invalid input in the command line arguments.
-func CheckInput(input []string) {
-	for _, arg := range input {
+func (i *Input) CheckInput() {
+	for _, arg := range i.Args {
 		if arg == "--" {
-			Inputs.Args = append([]string{"--"}, Inputs.Args...)
+			i.Args = append([]string{"--"}, i.Args...)
 		}
-		if Inputs.Output != "" && Inputs.Output == arg {
+		if i.Output != "" && i.Output == arg {
 			ErrorHandler("output")
 		}
-		if Inputs.Color != "" && Inputs.Color == arg {
+		if i.Color != "" && i.Color == arg {
 			ErrorHandler("colors")
 		}
-		if Inputs.Justify != "" && Inputs.Justify == arg {
+		if i.Justify != "" && i.Justify == arg {
 			ErrorHandler("justify")
 		}
 	}
 }
 
 // GetFile returns the ascii graphic filepath to use.
-func getFile() {
-	if Inputs.Justify != "" && len(Inputs.Args) == 0 {
+func (i *Input) GetFile() {
+	if i.Justify != "" && len(i.Args) == 0 {
 		ErrorHandler("justify")
 	}
-	if Inputs.Color != "" && len(Inputs.Args) == 0 {
+	if i.Color != "" && len(i.Args) == 0 {
 		ErrorHandler("colors")
 	}
-	if Inputs.Output != "" && len(Inputs.Args) == 0 {
+	if i.Output != "" && len(i.Args) == 0 {
 		ErrorHandler("output")
 	}
 
-	if Inputs.Output != "" && !strings.HasSuffix(Inputs.Output, ".txt") {
+	if i.Output != "" && !strings.HasSuffix(i.Output, ".txt") {
 		ErrorHandler("txt")
 	}
 
-	if len(Inputs.Args) == 0 {
+	if len(i.Args) == 0 {
 		return
 	}
 
-	ourBanner := "../banners/standard.txt"
-	if len(Inputs.Args) == 1 {
-		Inputs.BannerPath = ourBanner
+	defaultBanner := "../banners/standard.txt"
+	if len(i.Args) == 1 {
+		i.BannerPath = defaultBanner
 		return
 	}
 
-	if !Inputs.isBanner {
-		if value, ok := BannerFiles[Inputs.Args[len(Inputs.Args)-1]]; ok {
-			Inputs.BannerPath = value
-			Inputs.isBanner = true
-			Inputs.Args = Inputs.Args[:len(Inputs.Args)-1]
+	if !i.isBanner {
+		if value, ok := BannerFiles[i.Args[len(i.Args)-1]]; ok {
+			i.BannerPath = value
+			i.isBanner = true
+			i.Args = i.Args[:len(i.Args)-1]
 			return
 		}
 	}
 
-	Inputs.BannerPath = ourBanner
+	i.BannerPath = defaultBanner
 }
 
 // RemoveQuotes removes opening or closing quotes in a string

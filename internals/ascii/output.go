@@ -28,10 +28,10 @@ func Output(inputStr string) string {
 	var ascii_map = AsciiMap(fileContents)
 	var art_work strings.Builder
 
-	if utils.Inputs.IsWeb {
+	if app.IsWeb {
 		processWebInput(ascii_map, fileContents, &art_work)
 	} else {
-		utils.Inputs.Input = strings.ReplaceAll(inputStr, "\\n", "\n")
+		app.Input = strings.ReplaceAll(inputStr, "\\n", "\n")
 		processTerminalInput(ascii_map, fileContents, &art_work)
 	}
 
@@ -40,7 +40,7 @@ func Output(inputStr string) string {
 
 // processWebInput processes input from the web
 func processWebInput(ascii_map map[rune]int, fileContents []string, art_work *strings.Builder) {
-	for _, line := range strings.Split(utils.Inputs.Input, "\n") {
+	for _, line := range strings.Split(app.Input, "\n") {
 		for i := 0; i < height; i++ {
 			var builder strings.Builder
 			for _, char := range line {
@@ -57,9 +57,9 @@ func processWebInput(ascii_map map[rune]int, fileContents []string, art_work *st
 
 // processTerminalInput processes input from the internal
 func processTerminalInput(ascii_map map[rune]int, fileContents []string, art_work *strings.Builder) {
-	reff := utils.Inputs.ColorRef
-	input := strings.Split(utils.Inputs.Input, "\n")
-	color := strings.TrimSpace(utils.Inputs.Color)
+	reff := app.ColorRef
+	input := strings.Split(app.Input, "\n")
+	color := strings.TrimSpace(app.Color)
 
 	for lineIndex, line := range input {
 		if line == "" {
@@ -72,12 +72,12 @@ func processTerminalInput(ascii_map map[rune]int, fileContents []string, art_wor
 			var builder strings.Builder
 			for j, char := range line {
 				if ascii, ok := ascii_map[char]; ok {
-					if char == ' ' && utils.Inputs.Justify == "justify" {
+					if char == ' ' && app.Justify == "justify" {
 						builder.WriteRune('$')
 						continue
 					}
 					if color != "" {
-						colorCode := GetColorCode(color)
+						colorCode := helpers.GetColorCode(color)
 
 						if containsReff(input, &reff) {
 							if _, ok := indexes.indexMap[lineIndex][j]; ok {

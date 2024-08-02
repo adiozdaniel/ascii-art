@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 	"syscall"
 	"unsafe"
@@ -30,7 +31,7 @@ func Alignment(output string, width int) string {
 	case "left":
 		return leftAlign(output, width)
 	default:
-		ErrorHandler("justify")
+		app.ErrorHandler("justify")
 	}
 	return leftAlign(output, width)
 }
@@ -53,7 +54,7 @@ func GetTerminalWidth() int {
 		uintptr(unsafe.Pointer(ws)))
 
 	if int(retCode) == -1 {
-		ErrorHandler("align")
+		app.ErrorHandler("align")
 	}
 
 	return int(ws.Col)
@@ -71,7 +72,7 @@ func leftAlign(output string, width int) string {
 	lines := strings.Split(output, "\n")
 	var leftLines []string
 	for _, line := range lines {
-		cleanLine := removeANSICodes(line)
+		cleanLine := RemoveANSICodes(line)
 		if len(cleanLine) <= width {
 			leftLines = append(leftLines, line)
 		}
@@ -92,7 +93,7 @@ func centerAlign(output string, width int) string {
 	lines := strings.Split(output, "\n")
 	var centeredLines []string
 	for _, line := range lines {
-		cleanLine := removeANSICodes(line)
+		cleanLine := RemoveANSICodes(line)
 		padding := (width - len(cleanLine)) / 2
 		if padding < 0 {
 			padding = 0
@@ -118,7 +119,7 @@ func rightAlign(output string, width int) string {
 	lines := strings.Split(output, "\n")
 	var rightLines []string
 	for _, line := range lines {
-		cleanLine := removeANSICodes(line)
+		cleanLine := RemoveANSICodes(line)
 		padding := width - len(cleanLine)
 		if padding < 0 {
 			padding = 0
@@ -145,7 +146,7 @@ func justifyAlign(output string, width int) string {
 	var justifiedLines []string
 
 	for _, line := range lines {
-		cleanLine := removeANSICodes(line)
+		cleanLine := RemoveANSICodes(line)
 		slots, ln := spaceSlots(cleanLine)
 		givenSpaces := width - ln
 		var spacePerSlot int
@@ -181,4 +182,10 @@ func spaceSlots(output string) (int, int) {
 		len = i + 1
 	}
 	return slots, len
+}
+
+// removeANSICodes removes the ansci escape codes
+func RemoveANSICodes(input string) string {
+	re := regexp.MustCompile(`\x1b\[[0-9;]*m`)
+	return re.ReplaceAllString(input, "")
 }

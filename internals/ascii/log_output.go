@@ -3,14 +3,13 @@ package outputs
 import (
 	"os"
 	"path/filepath"
-	"regexp"
 
-	"github.com/adiozdaniel/ascii-art/pkg/utils"
+	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 )
 
 // LogOutput writes ascii art to a given file
 func LogOutput(output string) {
-	cleanOutput := removeANSICodes(output)
+	cleanOutput := helpers.RemoveANSICodes(output)
 
 	outputDir := filepath.Dir(app.Output)
 	if _, err := os.Stat(outputDir); os.IsNotExist(err) {
@@ -24,10 +23,4 @@ func LogOutput(output string) {
 	if err != nil {
 		app.ErrorHandler("restricted")
 	}
-}
-
-// removeANSICodes removes the ansci escape codes
-func removeANSICodes(input string) string {
-	re := regexp.MustCompile(`\x1b\[[0-9;]*m`)
-	return re.ReplaceAllString(input, "")
 }

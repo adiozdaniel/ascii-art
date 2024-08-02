@@ -293,3 +293,18 @@ func (i *Input) Validate() error {
 	}
 	return nil
 }
+
+func (i *Input) ParseArgs(args []string) {
+	flag.StringVar(&i.Color, "color", "", "specify a color")
+	flag.StringVar(&i.Justify, "align", "", "specify text justification")
+	flag.StringVar(&i.Output, "output", "", "specify output file")
+
+	flag.Parse()
+	i.Args = flag.Args()
+
+	if err := i.Validate(); err != nil {
+		fmt.Println("Error:", err)
+		i.PrintUsage()
+		os.Exit(1)
+	}
+}

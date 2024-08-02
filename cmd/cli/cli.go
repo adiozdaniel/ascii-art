@@ -3,8 +3,12 @@ package main
 import (
 	"fmt"
 
-	"github.com/adiozdaniel/ascii-art/utils"
+	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
+
+func main() {
+	utils.Inputs.Init()
+}
 
 // runOutput writes the output to the specified file.
 func runOutput() {

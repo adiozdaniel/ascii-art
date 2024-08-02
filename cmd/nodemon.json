@@ -1,5 +1,0 @@
-{
-  "watch": ["../**/*"],
-  "ext": ["go", "tmpl"],
-  "exec": "./server.sh"
-}

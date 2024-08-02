@@ -266,3 +266,17 @@ func RemoveQuotes(input string) string {
 	}
 	return strings.TrimSpace(result.String())
 }
+
+func (i *Input) GetBannerPath() string {
+	if i.BannerPath != "" {
+		return i.BannerPath
+	}
+
+	defaultBanner := "../banners/standard.txt"
+	if i.isBanner {
+		if path, ok := BannerFiles[i.Args[len(i.Args)-1]]; ok {
+			return path
+		}
+	}
+	return defaultBanner
+}

@@ -58,6 +58,8 @@ var validFlags = map[string]bool{
 	"--thinkertoy": true,
 	"-standard":    true,
 	"--standard":   true,
+	"--reff":       true,
+	"-reff":        true,
 }
 
 // init initializes the Input

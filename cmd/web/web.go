@@ -15,6 +15,7 @@ var (
 )
 
 func main() {
+	app.Init()
 	app.IsWeb = true
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)

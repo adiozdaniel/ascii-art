@@ -92,6 +92,40 @@ func (i *Input) GetBannerPath(key string) string {
 	return "standard.txt"
 }
 
+// Validate checks if the Input contains valid arguments and flags.
+func (i *Input) Validate() error {
+	if i.Flags["output"] != "" && !strings.HasSuffix(i.Flags["output"], ".txt") {
+		return fmt.Errorf("output")
+	}
+	return nil
+}
+
+// ParseArgs parses command-line arguments and sets Input fields.
+func (i *Input) ParseArgs() {
+	for j, input := range i.Args {
+		if j == 0 && i.IsValidFlag(strings.Split(input, "=")[0]) {
+			i.Flags[strings.Split(input, "=")[0]] = strings.Split(input, "=")[1]
+		}
+	}
+
+	if err := i.Validate(); err != nil {
+		i.ErrorHandler(err.Error())
+	}
+}
+
+// IsValidFlag checks if a flag is valid
+func (i *Input) IsValidFlag(flag string) bool {
+	return validFlags[flag]
+}
+
+// RemoveLeadingDashes removes leading '--' from the given string
+func (i *Input) RemoveLeadingDashes(input string) string {
+	re, _ := regexp.Compile("^--")
+	result := re.ReplaceAllString(input, "")
+
+	return result
+}
+
 // RemoveQuotes removes opening or closing quotes in a string
 func (i *Input) RemoveQuotes(input string) string {
 	var result strings.Builder
@@ -138,32 +172,6 @@ func (i *Input) RemoveQuotes(input string) string {
 	return strings.TrimSpace(result.String())
 }
 
-// Validate checks if the Input contains valid arguments and flags.
-func (i *Input) Validate() error {
-	if i.Flags["output"] != "" && !strings.HasSuffix(i.Flags["output"], ".txt") {
-		return fmt.Errorf("output")
-	}
-	return nil
-}
-
-// ParseArgs parses command-line arguments and sets Input fields.
-func (i *Input) ParseArgs() {
-	for j, input := range i.Args {
-		if j == 0 && i.IsValidFlag(strings.Split(input, "=")[0]) {
-			i.Flags[strings.Split(input, "=")[0]] = strings.Split(input, "=")[1]
-		}
-	}
-
-	if err := i.Validate(); err != nil {
-		i.ErrorHandler(err.Error())
-	}
-}
-
-// IsValidFlag checks if a flag is valid
-func (i *Input) IsValidFlag(flag string) bool {
-	return validFlags[flag]
-}
-
 // GetProjectRoot dynamically finds the project root directory
 func (i *Input) GetProjectRoot(path, name string) string {
 	cwd, _ := os.Getwd()
@@ -172,12 +180,4 @@ func (i *Input) GetProjectRoot(path, name string) string {
 		baseDir = filepath.Join(cwd, "../../")
 	}
 	return filepath.Join(baseDir, path, name)
-}
-
-// RemoveLeadingDashes removes leading '--' from the given string
-func (i *Input) RemoveLeadingDashes(input string) string {
-	re, _ := regexp.Compile("^--")
-	result := re.ReplaceAllString(input, "")
-
-	return result
 }

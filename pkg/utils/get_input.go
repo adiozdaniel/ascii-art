@@ -64,7 +64,6 @@ func (i *Input) Init() {
 	}
 
 	i.ParseArgs(os.Args[1:])
-	i.BannerPath = i.GetBannerPath()
 }
 
 // BannerFiles returns the map of banner files for the Input instance
@@ -72,20 +71,12 @@ func (i *Input) BannerFiles() map[string]string {
 	return i.BannerFile
 }
 
-// GetBannerPath returns the path to the banner file.
-func (i *Input) GetBannerPath() string {
-	if i.BannerPath != "" {
-		return i.BannerPath
+// GetBannerPath returns the name for a specific banner key or defaults to "standard.txt"
+func (i *Input) GetBannerPath(key string) string {
+	if name, ok := i.BannerFile[key]; ok {
+		return name
 	}
-
-	defaultBanner := "../banners/standard.txt"
-	if !i.isBanner {
-		if path, ok := BannerFiles[i.Args[len(i.Args)-1]]; ok {
-			i.isBanner = true
-			return path
-		}
-	}
-	return defaultBanner
+	return "standard.txt"
 }
 
 // RemoveQuotes removes opening or closing quotes in a string
@@ -150,11 +141,6 @@ func (i *Input) Validate() error {
 
 // ParseArgs parses command-line arguments and sets Input fields.
 func (i *Input) ParseArgs(args []string) {
-	// Apply RemoveQuotes to relevant fields
-	i.Color = i.RemoveQuotes(i.Color)
-	i.Justify = i.RemoveQuotes(i.Justify)
-	i.Output = i.RemoveQuotes(i.Output)
-
 	for index := range i.Args {
 		i.Args[index] = i.RemoveQuotes(i.Args[index])
 	}

@@ -16,7 +16,7 @@ var (
 
 func main() {
 	app.Init()
-	app.IsWeb = true
+	app.Flags["isWeb"] = "true"
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)
 
@@ -27,9 +27,9 @@ func main() {
 		Handler: wrappedMux,
 	}
 
-	app.Font = "--standard"
-	app.Input = "Ascii~"
-	serverOutput := ascii.Output(app.Input)
+	app.Flags["font"] = "--standard"
+	app.Flags["input"] = "Ascii~"
+	serverOutput := ascii.Output(app.Flags["input"])
 	fmt.Println(serverOutput + "=====================================\nserver running @http://localhost:8080")
 	err := server.ListenAndServe()
 	if err != nil {

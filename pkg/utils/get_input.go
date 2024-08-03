@@ -11,7 +11,7 @@ import (
 type Input struct {
 	Color      string
 	ColorRef   string
-	BannerPath string
+	BannerPath map[string]string
 	isBanner   bool
 	Justify    string
 	Output     string
@@ -22,6 +22,13 @@ type Input struct {
 
 // Inputs is a placeholder for the Input struct
 var Inputs Input
+
+// NewInput creates a new Input instance with default BannerFiles
+func NewInput() *Input {
+	return &Input{
+		BannerPath: BannerFiles,
+	}
+}
 
 // BannerFiles is a map for banner files and their paths
 var BannerFiles = map[string]string{

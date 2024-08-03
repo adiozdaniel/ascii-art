@@ -11,6 +11,7 @@ type Input struct {
 	Color      string
 	ColorRef   string
 	BannerFile map[string]string
+	ValidFlags map[string]bool
 	isBanner   bool
 	Justify    string
 	Output     string
@@ -26,6 +27,7 @@ var Inputs Input
 func NewInput() *Input {
 	return &Input{
 		BannerFile: bannerFiles,
+		ValidFlags: validFlags,
 	}
 }
 

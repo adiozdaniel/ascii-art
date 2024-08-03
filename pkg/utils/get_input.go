@@ -127,7 +127,10 @@ func (i *Input) ParseArgs() {
 		i.ErrorHandler(err.Error())
 	}
 
-	i.Flags["input"] = strings.Join(i.Args, " ")
+	if len(i.Args) > 0 {
+		i.Flags["input"] = strings.Join(i.Args, " ")
+	}
+	i.Args = nil
 }
 
 // IsValidFlag checks if a flag is valid

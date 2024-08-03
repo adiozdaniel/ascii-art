@@ -2,7 +2,6 @@ package helpers
 
 import (
 	"fmt"
-	"regexp"
 	"strings"
 	"syscall"
 	"unsafe"
@@ -186,10 +185,4 @@ func spaceSlots(output string) (int, int) {
 		len = i + 1
 	}
 	return slots, len
-}
-
-// removeANSICodes removes the ansci escape codes
-func RemoveANSICodes(input string) string {
-	re := regexp.MustCompile(`\x1b\[[0-9;]*m`)
-	return re.ReplaceAllString(input, "")
 }

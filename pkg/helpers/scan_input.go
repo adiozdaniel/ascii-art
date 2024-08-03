@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"regexp"
 	"strings"
 )
 
@@ -18,8 +19,8 @@ func isValidAlignment(alignment string) bool {
 	return alignment == "left" || alignment == "center" || alignment == "right" || alignment == "justify"
 }
 
-// isBannerFile checks if the provided word is a banner file.
-func isBannerFile(word string) bool {
-	_, exists := app.BannerFile[word]
-	return exists
+// removeANSICodes removes the ansci escape codes
+func RemoveANSICodes(input string) string {
+	re := regexp.MustCompile(`\x1b\[[0-9;]*m`)
+	return re.ReplaceAllString(input, "")
 }

@@ -149,6 +149,11 @@ func (i *Input) ParseArgs() {
 	}
 }
 
+// IsValidFlag checks if a flag is valid
+func (i *Input) IsValidFlag(flag string) bool {
+	return validFlags[flag]
+}
+
 // GetProjectRoot dynamically finds the project root directory
 func (i *Input) GetProjectRoot(path, name string) string {
 	cwd, _ := os.Getwd()

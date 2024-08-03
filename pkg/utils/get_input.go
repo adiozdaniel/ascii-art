@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"regexp"
 	"strings"
 )
 
@@ -16,19 +15,16 @@ type Input struct {
 	Args       []string
 }
 
-// Inputs is a placeholder for the Input struct
-var Inputs Input
-
-// NewInput creates a new Input instance with default BannerFiles
+// NewInput creates a new Input instance with default values
 func NewInput() *Input {
 	return &Input{
-		BannerFile: make(map[string]string),
-		ValidFlags: make(map[string]bool),
-		Flags:      make(map[string]string),
+		BannerFile: bannerFiles,
+		ValidFlags: validFlags,
+		Flags:      members,
 	}
 }
 
-// BannerFiles is a map for banner files and their paths
+// bannerFiles is a map for banner files and their paths
 var bannerFiles = map[string]string{
 	"-shadow":      "shadow.txt",
 	"--shadow":     "shadow.txt",
@@ -41,8 +37,8 @@ var bannerFiles = map[string]string{
 	"standard":     "standard.txt",
 }
 
-// members holds struct members
-var members = (map[string]string{
+// members holds struct members with default values
+var members = map[string]string{
 	"font":   "--standard",
 	"input":  "",
 	"color":  "",
@@ -50,7 +46,7 @@ var members = (map[string]string{
 	"align":  "",
 	"output": "",
 	"isWeb":  "",
-})
+}
 
 // validFlags stores allowed flags
 var validFlags = map[string]bool{
@@ -70,9 +66,9 @@ var validFlags = map[string]bool{
 	"-reff":        true,
 }
 
-// init initializes the Input
+// Init initializes the Input
 func (i *Input) Init() {
-	if len(os.Args) > 1 {
+	if len(os.Args) <= 1 {
 		i.ErrorHandler("fatal")
 	}
 
@@ -95,27 +91,28 @@ func (i *Input) GetBannerPath(key string) string {
 	return "standard.txt"
 }
 
-// Validate checks if the Input contains valid arguments and flags.
+// Validate checks if the Input contains valid arguments and flags
 func (i *Input) Validate() error {
 	if i.Flags["output"] != "" && !strings.HasSuffix(i.Flags["output"], ".txt") {
-		return fmt.Errorf("output")
+		return fmt.Errorf("output file must have a .txt extension")
 	}
 	return nil
 }
 
-// ParseArgs parses command-line arguments and sets Input fields.
+// ParseArgs parses command-line arguments and sets Input fields
 func (i *Input) ParseArgs() {
-	for j, input := range i.Args {
+	for j := 0; j < len(i.Args); {
+		input := i.Args[j]
 		if i.IsValidFlag(strings.Split(input, "=")[0]) {
 			parsedFlag := i.RemoveLeadingDashes(strings.Split(input, "=")[0])
 			parsedValue := strings.Split(input, "=")[1]
 			i.Flags[parsedFlag] = parsedValue
 			i.Args = append(i.Args[:j], i.Args[j+1:]...)
-		}
-
-		if strings.HasPrefix(input, "-") && !i.IsValidFlag(strings.Split(input, "=")[0]) && strings.Contains(input, "=") {
+		} else if strings.HasPrefix(input, "-") && !i.IsValidFlag(strings.Split(input, "=")[0]) && strings.Contains(input, "=") {
 			i.Args = append(i.Args[:j], i.Args[j+1:]...)
 			continue
+		} else {
+			j++
 		}
 	}
 
@@ -128,60 +125,30 @@ func (i *Input) ParseArgs() {
 
 // IsValidFlag checks if a flag is valid
 func (i *Input) IsValidFlag(flag string) bool {
-	return validFlags[flag]
+	return i.ValidFlags[flag]
 }
 
 // RemoveLeadingDashes removes leading '--' from the given string
 func (i *Input) RemoveLeadingDashes(input string) string {
-	re, _ := regexp.Compile("^--")
-	result := re.ReplaceAllString(input, "")
-
-	return result
+	if strings.HasPrefix(input, "--") {
+		return input[2:]
+	}
+	return input
 }
 
 // RemoveQuotes removes opening or closing quotes in a string
 func (i *Input) RemoveQuotes(input string) string {
 	var result strings.Builder
-	newInput := strings.Fields(input)
+	inQuotes := false
 
-	for _, word := range newInput {
-		var temp strings.Builder
-		var skipNext bool
-		var isSpace bool
-
-		for i := 0; i < len(word); i++ {
-			if skipNext {
-				skipNext = false
-				continue
-			}
-
-			if word[i] == '=' && i+2 < len(word) && (word[i+1] == '"' || word[i+1] == '\'') {
-				temp.WriteByte('=')
-				isSpace = true
-				skipNext = true
-			} else if word[i] == '\\' && i+1 < len(word) && (word[i+1] == '"' || word[i+1] == '\'') {
-				if word[i+1] == '"' {
-					temp.WriteByte('"')
-				}
-				if word[i+1] == '\'' {
-					temp.WriteByte('\'')
-				}
-				skipNext = true
-			} else if word[i] == '"' || word[i] == '\'' {
-				if isSpace {
-					temp.WriteByte(word[i])
-					isSpace = false
-				}
-			} else {
-				temp.WriteByte(word[i])
-			}
-		}
-		if isSpace {
-			result.WriteString(temp.String())
-		} else {
-			result.WriteString(temp.String() + " ")
+	for _, ch := range input {
+		if ch == '"' {
+			inQuotes = !inQuotes
+		} else if ch != '\'' {
+			result.WriteRune(ch)
 		}
 	}
+
 	return strings.TrimSpace(result.String())
 }
 

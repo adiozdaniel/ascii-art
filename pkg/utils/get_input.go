@@ -22,9 +22,9 @@ var Inputs Input
 // NewInput creates a new Input instance with default BannerFiles
 func NewInput() *Input {
 	return &Input{
-		BannerFile: bannerFiles,
-		ValidFlags: validFlags,
-		Flags:      members,
+		BannerFile: make(map[string]string),
+		ValidFlags: make(map[string]bool),
+		Flags:      make(map[string]string),
 	}
 }
 
@@ -42,15 +42,15 @@ var bannerFiles = map[string]string{
 }
 
 // members holds struct members
-var members = map[string]string{
-	"font":   "",
+var members = (map[string]string{
+	"font":   "--standard",
 	"input":  "",
 	"color":  "",
 	"reff":   "",
 	"align":  "",
 	"output": "",
 	"isWeb":  "",
-}
+})
 
 // validFlags stores allowed flags
 var validFlags = map[string]bool{
@@ -76,7 +76,10 @@ func (i *Input) Init() {
 		i.ErrorHandler("fatal")
 	}
 
-	i.Flags["font"] = "--standard"
+	*i = *NewInput()
+	i.Flags = members
+	i.BannerFile = bannerFiles
+	i.ValidFlags = validFlags
 }
 
 // BannerFiles returns the map of banner files for the Input instance

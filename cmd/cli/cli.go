@@ -94,17 +94,3 @@ func isBannerFile(word string) bool {
 	_, exists := utils.BannerFiles[word]
 	return exists
 }
-
-func main() {
-	if utils.Inputs.Output != "" {
-		runOutput()
-		return
-	}
-
-	if utils.Inputs.Justify != "" {
-		justified()
-		return
-	}
-
-	fmt.Print(output, nonAsciis)
-}

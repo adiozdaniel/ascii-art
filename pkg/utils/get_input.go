@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -161,4 +162,12 @@ func (i *Input) GetProjectRoot(path, name string) string {
 		baseDir = filepath.Join(cwd, "../../")
 	}
 	return filepath.Join(baseDir, path, name)
+}
+
+// RemoveLeadingDashes removes leading '--' from the given string
+func (i *Input) RemoveLeadingDashes(input string) string {
+	re, _ := regexp.Compile("^--")
+	result := re.ReplaceAllString(input, "")
+
+	return result
 }

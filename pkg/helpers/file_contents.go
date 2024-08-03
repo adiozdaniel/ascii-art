@@ -38,6 +38,8 @@ func FileContents() ([]string, error) {
 	fileName := app.Font
 	fileDir := "views/static/banners"
 	filePath := app.GetProjectRoot(fileDir, fileName)
+	fmt.Println(fileName)
+	fmt.Println(filePath)
 
 	contents, err := os.ReadFile(filePath)
 	if err != nil || !validateBanner(contents) {

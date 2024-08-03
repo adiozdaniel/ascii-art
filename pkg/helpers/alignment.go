@@ -77,7 +77,7 @@ func leftAlign(output string, width int) string {
 	for _, line := range lines {
 		cleanLine := RemoveANSICodes(line)
 		if len(cleanLine) <= width {
-			leftLines = append(leftLines, line)
+			leftLines = append(leftLines, strings.ReplaceAll(string(line), "$", " "))
 		}
 	}
 	return strings.Join(leftLines, "\n")

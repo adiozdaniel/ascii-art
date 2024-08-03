@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	ascii "github.com/adiozdaniel/ascii-art/ascii"
+	ascii "github.com/adiozdaniel/ascii-art/internals/ascii"
 )
 
 // TestAsciiMap tests fileContents output

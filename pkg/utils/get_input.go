@@ -103,8 +103,16 @@ func (i *Input) Validate() error {
 // ParseArgs parses command-line arguments and sets Input fields.
 func (i *Input) ParseArgs() {
 	for j, input := range i.Args {
-		if j == 0 && i.IsValidFlag(strings.Split(input, "=")[0]) {
-			i.Flags[strings.Split(input, "=")[0]] = strings.Split(input, "=")[1]
+		if i.IsValidFlag(strings.Split(input, "=")[0]) {
+			parsedFlag := i.RemoveLeadingDashes(strings.Split(input, "=")[0])
+			parsedValue := strings.Split(input, "=")[1]
+			i.Flags[parsedFlag] = parsedValue
+			i.Args = append(i.Args[:j], i.Args[j+1:]...)
+		}
+
+		if strings.HasPrefix(input, "-") && !i.IsValidFlag(input) && strings.Contains(input, "=") {
+			i.Args = append(i.Args[:j], i.Args[j+1:]...)
+			continue
 		}
 	}
 

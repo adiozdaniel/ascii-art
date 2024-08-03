@@ -24,6 +24,7 @@ func NewInput() *Input {
 	return &Input{
 		BannerFile: bannerFiles,
 		ValidFlags: validFlags,
+		Flags:      members,
 	}
 }
 
@@ -45,7 +46,7 @@ var members = map[string]string{
 	"color":  "",
 	"reff":   "",
 	"font":   "",
-	"align":  "left",
+	"align":  "",
 	"output": "",
 	"isWeb":  "",
 }
@@ -71,7 +72,7 @@ func (i *Input) Init() {
 		i.ErrorHandler("fatal")
 	}
 
-	i.Font = "--standard"
+	i.Flags["font"] = "--standard"
 }
 
 // BannerFiles returns the map of banner files for the Input instance
@@ -135,7 +136,7 @@ func (i *Input) RemoveQuotes(input string) string {
 
 // Validate checks if the Input contains valid arguments and flags.
 func (i *Input) Validate() error {
-	if i.Output != "" && !strings.HasSuffix(i.Output, ".txt") {
+	if i.Flags["output"] != "" && !strings.HasSuffix(i.Flags["output"], ".txt") {
 		return fmt.Errorf("output")
 	}
 	return nil

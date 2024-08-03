@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"flag"
 	"fmt"
 	"os"
 	"strings"
@@ -11,7 +10,7 @@ import (
 type Input struct {
 	Color      string
 	ColorRef   string
-	BannerPath map[string]string
+	BannerFile map[string]string
 	isBanner   bool
 	Justify    string
 	Output     string
@@ -26,21 +25,21 @@ var Inputs Input
 // NewInput creates a new Input instance with default BannerFiles
 func NewInput() *Input {
 	return &Input{
-		BannerPath: BannerFiles,
+		BannerFile: bannerFiles,
 	}
 }
 
 // BannerFiles is a map for banner files and their paths
-var BannerFiles = map[string]string{
-	"-shadow":      "../banners/shadow.txt",
-	"--shadow":     "../banners/shadow.txt",
-	"shadow":       "../banners/shadow.txt",
-	"-thinkertoy":  "../banners/thinkertoy.txt",
-	"--thinkertoy": "../banners/thinkertoy.txt",
-	"thinkertoy":   "../banners/thinkertoy.txt",
-	"-standard":    "../banners/standard.txt",
-	"--standard":   "../banners/standard.txt",
-	"standard":     "../banners/standard.txt",
+var bannerFiles = map[string]string{
+	"-shadow":      "shadow.txt",
+	"--shadow":     "shadow.txt",
+	"shadow":       "shadow.txt",
+	"-thinkertoy":  "thinkertoy.txt",
+	"--thinkertoy": "thinkertoy.txt",
+	"thinkertoy":   "thinkertoy.txt",
+	"-standard":    "standard.txt",
+	"--standard":   "standard.txt",
+	"standard":     "standard.txt",
 }
 
 // validFlags stores allowed flags
@@ -155,13 +154,6 @@ func (i *Input) Validate() error {
 
 // ParseArgs parses command-line arguments and sets Input fields.
 func (i *Input) ParseArgs(args []string) {
-	flag.StringVar(&i.Color, "color", "", "specify a color")
-	flag.StringVar(&i.Justify, "align", "", "specify text justification")
-	flag.StringVar(&i.Output, "output", "", "specify output file")
-
-	flag.Parse()
-	i.Args = flag.Args()
-
 	// Apply RemoveQuotes to relevant fields
 	i.Color = i.RemoveQuotes(i.Color)
 	i.Justify = i.RemoveQuotes(i.Justify)

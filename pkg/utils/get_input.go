@@ -136,7 +136,7 @@ func (i *Input) Validate() error {
 }
 
 // ParseArgs parses command-line arguments and sets Input fields.
-func (i *Input) ParseArgs(args []string) {
+func (i *Input) ParseArgs() {
 	for index := range i.Args {
 		i.Args[index] = i.RemoveQuotes(i.Args[index])
 	}

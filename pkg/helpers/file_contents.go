@@ -46,10 +46,10 @@ func FileContents() ([]string, error) {
 		}
 		fmt.Print("Be patient while downloading...\n")
 		time.Sleep(1 * time.Second)
-		err := app.DownloadFile("https://learn.zone01kisumu.ke/git/root/public/raw/branch/master/subjects/ascii-art/"+fileName[11:], fileName)
+		err := app.DownloadFile("https://learn.zone01kisumu.ke/git/root/public/raw/branch/master/subjects/ascii-art/"+fileName[11:], filePath)
 		if err != nil {
 			fmt.Println(err)
-			os.Remove(fileName)
+			os.Remove(filePath)
 			os.Exit(0)
 		}
 		fmt.Print("\033[1A", "\033[G", "\033[2K")

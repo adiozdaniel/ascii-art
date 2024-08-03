@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/adiozdaniel/ascii-art/internals/ascii"
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
@@ -41,10 +42,10 @@ func loadCli() {
 				helpers.ScanInput(input)
 			}
 		default:
-			newWidth := utils.GetTerminalWidth()
+			newWidth := helpers.GetTerminalWidth()
 			if shouldUpdate(newWidth, prevWidth, tempStr, prevColor, prevReff, prevBanner) {
 				outputs := ascii.Output(utils.Inputs.Input)
-				termOutput := utils.Alignment(outputs, newWidth)
+				termOutput := helpers.Alignment(outputs, newWidth)
 				clearTerminal()
 				fmt.Print(termOutput)
 				resetCursor()

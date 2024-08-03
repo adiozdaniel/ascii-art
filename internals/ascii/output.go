@@ -1,7 +1,6 @@
 package ascii
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
@@ -17,7 +16,6 @@ var (
 
 // Output compiles the banner characters to form the desired ascii art work
 func Output(inputStr string) string {
-	fmt.Println(inputStr)
 	if inputStr == "" {
 		return ""
 	}

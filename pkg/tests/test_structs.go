@@ -16,5 +16,5 @@ type tests struct {
 
 // global variables used in the tests
 var (
-	app = &utils.Inputs
+	app = &utils.Input{}
 )

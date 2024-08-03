@@ -11,7 +11,7 @@ import (
 var (
 	reset      = "\033[0m"
 	height int = 8
-	app        = utils.Inputs
+	app        = &utils.Input{}
 )
 
 // Output compiles the banner characters to form the desired ascii art work

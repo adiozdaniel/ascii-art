@@ -12,7 +12,7 @@ import (
 // global variables
 var (
 	data renders.FormData
-	app  = &utils.Inputs
+	app  = &utils.Input{}
 )
 
 // HomeHandler handles the homepage route '/'

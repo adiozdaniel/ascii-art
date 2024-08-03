@@ -11,7 +11,7 @@ import (
 
 // global variables
 var (
-	app = &utils.Inputs
+	app = &utils.Input{}
 )
 
 func main() {

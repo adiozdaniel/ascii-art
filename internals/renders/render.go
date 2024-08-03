@@ -16,7 +16,7 @@ type FormData struct {
 // global variables
 var (
 	Data FormData
-	app  = &utils.Inputs
+	app  = &utils.Input{}
 )
 
 // functions is a map of template functions

@@ -71,11 +71,7 @@ func (i *Input) Init() {
 	if len(os.Args) < 1 {
 		i.ErrorHandler("fatal")
 	}
-
 	*i = *NewInput()
-	i.Flags = members
-	i.BannerFile = bannerFiles
-	i.ValidFlags = validFlags
 }
 
 // BannerFiles returns the map of banner files for the Input instance

@@ -20,10 +20,7 @@ var errors = map[string]string{
 // ErrorHandler outputs errors and safely exits the program
 func (i *Input) ErrorHandler(errType string) {
 	if errType == "fatal" {
-		fmt.Printf("For color:\n%s\n", strings.Split(errors["colors"], "\n")[2])
-		fmt.Printf("For output:\n%s\n", strings.Split(errors["output"], "\n")[2])
-		fmt.Printf("For justify:\n%s\n", strings.Split(errors["justify"], "\n")[2])
-		fmt.Println("For web:\ngo run . -web")
+		fmt.Println("For cli mode\ngo run .\nFor web interface:\nNavigate back to web directory\ngo run .")
 		os.Exit(0)
 	}
 

@@ -17,6 +17,10 @@ Inputs.Justify should be set to the desired justification mode.
 func Alignment(output string, width int) string {
 	alignment := app.Flags["align"]
 
+	if !isValidAlignment(alignment) {
+		return ""
+	}
+
 	if width == 0 {
 		width = 80 // fallback to default width
 	}
@@ -33,7 +37,7 @@ func Alignment(output string, width int) string {
 	default:
 		app.ErrorHandler("justify")
 	}
-	return leftAlign(output, width)
+	return ""
 }
 
 /*

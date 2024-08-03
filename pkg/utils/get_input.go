@@ -110,7 +110,7 @@ func (i *Input) ParseArgs() {
 			i.Args = append(i.Args[:j], i.Args[j+1:]...)
 		}
 
-		if strings.HasPrefix(input, "-") && !i.IsValidFlag(input) && strings.Contains(input, "=") {
+		if strings.HasPrefix(input, "-") && !i.IsValidFlag(strings.Split(input, "=")[0]) && strings.Contains(input, "=") {
 			i.Args = append(i.Args[:j], i.Args[j+1:]...)
 			continue
 		}
@@ -119,6 +119,8 @@ func (i *Input) ParseArgs() {
 	if err := i.Validate(); err != nil {
 		i.ErrorHandler(err.Error())
 	}
+
+	i.Flags["input"] = strings.Join(i.Args, " ")
 }
 
 // IsValidFlag checks if a flag is valid

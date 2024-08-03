@@ -72,7 +72,7 @@ func processTerminalInput(ascii_map map[rune]int, fileContents []string, art_wor
 			var builder strings.Builder
 			for j, char := range line {
 				if ascii, ok := ascii_map[char]; ok {
-					if char == ' ' && app.Justify == "justify" {
+					if char == ' ' {
 						builder.WriteRune('$')
 						continue
 					}

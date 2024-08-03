@@ -15,7 +15,7 @@ type Input struct {
 	BannerFile map[string]string
 	ValidFlags map[string]bool
 	Font       string
-	Justify    string
+	Align      string
 	Output     string
 	Input      string
 	IsWeb      bool
@@ -129,12 +129,6 @@ func (i *Input) RemoveQuotes(input string) string {
 
 // Validate checks if the Input contains valid arguments and flags.
 func (i *Input) Validate() error {
-	if i.Color != "" && i.ColorRef == "" {
-		return fmt.Errorf("colors")
-	}
-	if i.Justify != "" && i.Justify == "" {
-		return fmt.Errorf("justify")
-	}
 	if i.Output != "" && !strings.HasSuffix(i.Output, ".txt") {
 		return fmt.Errorf("output")
 	}

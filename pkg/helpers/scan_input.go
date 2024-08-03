@@ -17,7 +17,7 @@ func ScanInput(input string) {
 		case strings.Contains(word, "--align") || strings.HasPrefix(word, "-align"):
 			alignment := strings.TrimPrefix(strings.TrimPrefix(word, "--align="), "-align=")
 			if isValidAlignment(alignment) {
-				app.Justify = alignment
+				app.Align = alignment
 				continue
 			}
 			app.ErrorHandler("justify")

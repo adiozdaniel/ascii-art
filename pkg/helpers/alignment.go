@@ -15,7 +15,7 @@ Supported justifications: "left", "center", "right".
 Inputs.Justify should be set to the desired justification mode.
 */
 func Alignment(output string, width int) string {
-	alignment := app.Justify
+	alignment := app.Align
 
 	if width == 0 {
 		width = 80 // fallback to default width

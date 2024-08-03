@@ -22,7 +22,7 @@ func TestAlignment(t *testing.T) {
 		{name: "single character", args: args{output: "a", width: 80}, want: 1},
 	}
 
-	app.Justify = "left"
+	app.Align = "left"
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := helpers.Alignment(tt.args.output, tt.args.width); len(got) != tt.want {

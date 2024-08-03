@@ -1,8 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"time"
 
+	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
 
@@ -14,13 +18,6 @@ var (
 func main() {
 	app.Init()
 	loadCli()
-}
-
-// runOutput writes the output to the specified file.
-func runOutput() {
-	utils.LogOutput(output)
-	outputString := fmt.Sprintf("  😋 writing.... '%s'. To check output, kindly use: `cat %s | cat -e` %s", utils.Inputs.Input, utils.Inputs.Output, nonAsciis)
-	fmt.Printf("%s\n %s\n", outputString, strings.Repeat("=", len(outputString)-3))
 }
 
 // justified runs the alignment mode of the application.

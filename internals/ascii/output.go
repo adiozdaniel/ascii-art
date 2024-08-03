@@ -20,7 +20,7 @@ func Output(inputStr string) string {
 		return ""
 	}
 
-	if inputStr == "\\n" && !app.IsWeb {
+	if inputStr == "\\n" && app.Flags["isWeb"] != "true" {
 		return "\n"
 	}
 
@@ -28,10 +28,10 @@ func Output(inputStr string) string {
 	var ascii_map = AsciiMap(fileContents)
 	var art_work strings.Builder
 
-	if app.IsWeb {
+	if app.Flags["isWeb"] == "true" {
 		processWebInput(ascii_map, fileContents, &art_work)
 	} else {
-		app.Input = strings.ReplaceAll(inputStr, "\\n", "\n")
+		app.Flags["input"] = strings.ReplaceAll(inputStr, "\\n", "\n")
 		processTerminalInput(ascii_map, fileContents, &art_work)
 	}
 
@@ -40,7 +40,7 @@ func Output(inputStr string) string {
 
 // processWebInput processes input from the web
 func processWebInput(ascii_map map[rune]int, fileContents []string, art_work *strings.Builder) {
-	for _, line := range strings.Split(app.Input, "\n") {
+	for _, line := range strings.Split(app.Flags["input"], "\n") {
 		for i := 0; i < height; i++ {
 			var builder strings.Builder
 			for _, char := range line {
@@ -57,9 +57,9 @@ func processWebInput(ascii_map map[rune]int, fileContents []string, art_work *st
 
 // processTerminalInput processes input from the internal
 func processTerminalInput(ascii_map map[rune]int, fileContents []string, art_work *strings.Builder) {
-	reff := app.ColorRef
-	input := strings.Split(app.Input, "\n")
-	color := strings.TrimSpace(app.Color)
+	reff := app.Flags["reff"]
+	input := strings.Split(app.Flags["input"], "\n")
+	color := strings.TrimSpace(app.Flags["color"])
 
 	for lineIndex, line := range input {
 		if line == "" {

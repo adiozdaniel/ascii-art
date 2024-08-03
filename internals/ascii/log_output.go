@@ -13,7 +13,7 @@ import (
 func LogOutput(output string) {
 	cleanOutput := helpers.RemoveANSICodes(output)
 
-	outputDir := filepath.Dir(app.Output)
+	outputDir := filepath.Dir(app.Flags["output"])
 	if _, err := os.Stat(outputDir); os.IsNotExist(err) {
 		err := os.MkdirAll(outputDir, 0755)
 		if err != nil {
@@ -21,11 +21,11 @@ func LogOutput(output string) {
 		}
 	}
 
-	err := os.WriteFile(app.Output, []byte(cleanOutput), 0644)
+	err := os.WriteFile(app.Flags["output"], []byte(cleanOutput), 0644)
 	if err != nil {
 		app.ErrorHandler("restricted")
 	}
 
-	outputString := fmt.Sprintf("  😋 writing.... '%s'. To check output, kindly use: `cat %s | cat -e` %s", app.Input, app.Output, NonAsciiOutput())
+	outputString := fmt.Sprintf("  😋 writing.... '%s'. To check output, kindly use: `cat %s | cat -e` %s", app.Flags["input"], app.Flags["output"], NonAsciiOutput())
 	fmt.Printf("%s\n %s\n", outputString, strings.Repeat("=", len(outputString)-3))
 }

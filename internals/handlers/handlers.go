@@ -32,21 +32,21 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	app.Input = r.FormValue("textInput")
+	app.Flags["input"] = r.FormValue("textInput")
 	banner := app.BannerFile[r.FormValue("Font")]
 
 	if banner == "" {
 		BadRequestHandler(w, r)
 	}
 
-	app.Font = banner
+	app.Flags["font"] = banner
 	_, err := helpers.FileContents()
 	if err != nil {
 		NotFoundHandler(w, r)
 		return
 	}
 
-	output := ascii.Output(app.Input)
+	output := ascii.Output(app.Flags["input"])
 	noasciis := ascii.NonAsciiOutput()
 	data.Body = output + "\n" + noasciis
 

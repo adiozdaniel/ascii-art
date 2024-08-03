@@ -24,9 +24,9 @@ func main() {
 // justified runs the alignment mode of the application.
 func loadCli() {
 	var (
-		inputChan                                = make(chan string)
-		prevWidth                                int
-		prevColor, prevReff, prevBanner, tempStr string
+		inputChan                              = make(chan string)
+		prevWidth                              int
+		prevColor, prevReff, prevFont, tempStr string
 	)
 
 	go readInput(inputChan)
@@ -43,8 +43,8 @@ func loadCli() {
 			}
 		default:
 			newWidth := helpers.GetTerminalWidth()
-			if shouldUpdate(newWidth, prevWidth, tempStr, prevColor, prevReff, prevBanner) {
-				outputs := ascii.Output(utils.Inputs.Input)
+			if shouldUpdate(newWidth, prevWidth, tempStr, prevColor, prevReff, prevFont) {
+				outputs := ascii.Output(app.Input)
 				termOutput := helpers.Alignment(outputs, newWidth)
 				clearTerminal()
 				fmt.Print(termOutput)
@@ -52,9 +52,9 @@ func loadCli() {
 
 				prevWidth = newWidth
 				tempStr = ""
-				prevColor = utils.Inputs.Color
-				prevReff = utils.Inputs.ColorRef
-				prevBanner = utils.Inputs.BannerPath
+				prevColor = app.Color
+				prevReff = app.ColorRef
+				prevFont = app.Font
 			}
 			time.Sleep(2 * time.Second)
 		}
@@ -71,8 +71,8 @@ func readInput(inputChan chan string) {
 }
 
 // shouldUpdate checks if the terminal output needs to be updated.
-func shouldUpdate(newWidth, prevWidth int, tempStr, prevColor, prevReff, prevBanner string) bool {
-	return newWidth != prevWidth || tempStr != "" || utils.Inputs.Color != prevColor || utils.Inputs.ColorRef != prevReff || utils.Inputs.BannerPath != prevBanner
+func shouldUpdate(newWidth, prevWidth int, tempStr, prevColor, prevReff, prevFont string) bool {
+	return newWidth != prevWidth || tempStr != "" || app.Color != prevColor || app.ColorRef != prevReff || app.Font != prevFont
 }
 
 // clearTerminal clears the terminal screen.
@@ -92,6 +92,6 @@ func isValidAlignment(alignment string) bool {
 
 // isBannerFile checks if the provided word is a banner file.
 func isBannerFile(word string) bool {
-	_, exists := utils.BannerFiles[word]
+	_, exists := app.BannerFile[word]
 	return exists
 }

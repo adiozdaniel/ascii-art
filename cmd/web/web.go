@@ -26,7 +26,7 @@ func main() {
 		Handler: wrappedMux,
 	}
 
-	app.BannerPath = "../banners/standard.txt"
+	app.Font = "--standard"
 	app.Input = "Ascii~"
 	serverOutput := ascii.Output(app.Input)
 	fmt.Println(serverOutput + "=====================================\nserver running @http://localhost:8080")

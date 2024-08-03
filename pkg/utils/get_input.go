@@ -12,6 +12,7 @@ type Input struct {
 	ColorRef   string
 	BannerFile map[string]string
 	ValidFlags map[string]bool
+	Font       string
 	Justify    string
 	Output     string
 	Input      string

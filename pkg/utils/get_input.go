@@ -43,26 +43,29 @@ var bannerFiles = map[string]string{
 
 // members holds struct members
 var members = map[string]string{
+	"font":   "",
+	"input":  "",
 	"color":  "",
 	"reff":   "",
-	"font":   "",
 	"align":  "",
 	"output": "",
 	"isWeb":  "",
-	"input":  "",
 }
 
 // validFlags stores allowed flags
 var validFlags = map[string]bool{
 	"--color":      true,
+	"-color":       true,
 	"--align":      true,
+	"-align":       true,
 	"--output":     true,
-	"-shadow":      true,
+	"-output":      true,
 	"--shadow":     true,
-	"-thinkertoy":  true,
+	"-shadow":      true,
 	"--thinkertoy": true,
-	"-standard":    true,
+	"-thinkertoy":  true,
 	"--standard":   true,
+	"-standard":    true,
 	"--reff":       true,
 	"-reff":        true,
 }

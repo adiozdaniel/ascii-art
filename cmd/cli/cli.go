@@ -21,7 +21,7 @@ func main() {
 	loadCli()
 }
 
-// justified runs the alignment mode of the application.
+// loadCli runs the alignment mode of the application.
 func loadCli() {
 	var (
 		inputChan                              = make(chan string)
@@ -36,7 +36,7 @@ func loadCli() {
 		case input := <-inputChan:
 			if input == "exit" {
 				fmt.Println("\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
-				os.Exit(0)
+				return // Graceful exit from main function
 			} else if input != "" {
 				tempStr = input
 				helpers.ScanInput(input)
@@ -66,6 +66,9 @@ func readInput(inputChan chan string) {
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
 		inputChan <- scanner.Text()
+	}
+	if err := scanner.Err(); err != nil {
+		fmt.Fprintf(os.Stderr, "Error reading input: %v\n", err)
 	}
 	close(inputChan)
 }

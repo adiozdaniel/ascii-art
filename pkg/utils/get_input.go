@@ -67,6 +67,11 @@ func (i *Input) Init() {
 	i.BannerPath = i.GetBannerPath()
 }
 
+// BannerFiles returns the map of banner files for the Input instance
+func (i *Input) BannerFiles() map[string]string {
+	return i.BannerFile
+}
+
 // GetBannerPath returns the path to the banner file.
 func (i *Input) GetBannerPath() string {
 	if i.BannerPath != "" {

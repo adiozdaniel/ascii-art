@@ -139,7 +139,7 @@ func (i *Input) Validate() error {
 // ParseArgs parses command-line arguments and sets Input fields.
 func (i *Input) ParseArgs() {
 	for j, input := range i.Args {
-		if j == 0 && validFlags[strings.Split(input, "=")[0]] {
+		if j == 0 && i.IsValidFlag(strings.Split(input, "=")[0]) {
 			i.Flags[strings.Split(input, "=")[0]] = strings.Split(input, "=")[1]
 		}
 	}

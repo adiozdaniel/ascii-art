@@ -26,6 +26,6 @@ func LogOutput(output string) {
 		app.ErrorHandler("restricted")
 	}
 
-	outputString := fmt.Sprintf("  😋 writing.... '%s'. To check output, kindly use: `cat %s | cat -e` %s", app.Input, app.Output, NonAsciiOutput)
+	outputString := fmt.Sprintf("  😋 writing.... '%s'. To check output, kindly use: `cat %s | cat -e` %s", app.Input, app.Output, NonAsciiOutput())
 	fmt.Printf("%s\n %s\n", outputString, strings.Repeat("=", len(outputString)-3))
 }

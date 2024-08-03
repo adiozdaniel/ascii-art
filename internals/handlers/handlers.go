@@ -5,10 +5,15 @@ import (
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/renders"
-	"github.com/adiozdaniel/ascii-art/utils"
+	"github.com/adiozdaniel/ascii-art/pkg/helpers"
+	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
 
-var data renders.FormData
+// global variables
+var (
+	data renders.FormData
+	app  = &utils.Inputs
+)
 
 // HomeHandler handles the homepage route '/'
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
@@ -27,8 +32,8 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	utils.Inputs.Input = r.FormValue("textInput")
-	banner := utils.BannerFiles[r.FormValue("FileName")]
+	app.Input = r.FormValue("textInput")
+	banner := app.BannerFiles[r.FormValue("FileName")]
 
 	if banner == "" {
 		utils.Inputs.BannerPath = utils.BannerFiles["standard"]
@@ -36,14 +41,14 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		utils.Inputs.BannerPath = banner
 	}
 
-	_, err := ascii.FileContents()
+	_, err := helpers.FileContents()
 	if err != nil {
 		NotFoundHandler(w, r)
 		return
 	}
 
-	output := ascii.Output(utils.Inputs.Input)
-	noasciis := utils.NonAsciiOutput()
+	output := ascii.Output(app.Input)
+	noasciis := ascii.NonAsciiOutput()
 	data.Body = output + "\n" + noasciis
 
 	renders.RenderTemplate(w, "ascii.page.html", data)

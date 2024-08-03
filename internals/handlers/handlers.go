@@ -33,12 +33,10 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	app.Input = r.FormValue("textInput")
-	banner := app.BannerFiles[r.FormValue("FileName")]
+	banner := app.BannerFile[r.FormValue("FileName")]
 
 	if banner == "" {
-		utils.Inputs.BannerPath = utils.BannerFiles["standard"]
-	} else {
-		utils.Inputs.BannerPath = banner
+		BadRequestHandler(w, r)
 	}
 
 	_, err := helpers.FileContents()

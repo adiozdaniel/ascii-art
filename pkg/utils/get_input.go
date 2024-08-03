@@ -60,12 +60,12 @@ var validFlags = map[string]bool{
 
 // init initializes the Input
 func (i *Input) Init() {
-	if len(os.Args) < 2 {
+	if len(os.Args) > 1 {
 		i.ErrorHandler("fatal")
 		os.Exit(1)
 	}
 
-	i.ParseArgs(os.Args[1:])
+	i.Font = "--standard"
 }
 
 // BannerFiles returns the map of banner files for the Input instance

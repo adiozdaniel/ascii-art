@@ -4,10 +4,18 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/adiozdaniel/ascii-art/internals/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/routes"
+	"github.com/adiozdaniel/ascii-art/pkg/utils"
+)
+
+// global variables
+var (
+	app = &utils.Inputs
 )
 
 func main() {
+	app.IsWeb = true
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)
 
@@ -18,9 +26,9 @@ func main() {
 		Handler: wrappedMux,
 	}
 
-	utils.Inputs.BannerPath = "../banners/standard.txt"
-	utils.Inputs.Input = "Ascii~"
-	serverOutput := ascii.Output(utils.Inputs.Input)
+	app.BannerPath = "../banners/standard.txt"
+	app.Input = "Ascii~"
+	serverOutput := ascii.Output(app.Input)
 	fmt.Println(serverOutput + "=====================================\nserver running @http://localhost:8080")
 	err := server.ListenAndServe()
 	if err != nil {

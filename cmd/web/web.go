@@ -32,6 +32,6 @@ func main() {
 	fmt.Println(serverOutput + "=====================================\nserver running @http://localhost:8080")
 	err := server.ListenAndServe()
 	if err != nil {
-		utils.ErrorHandler("web")
+		app.ErrorHandler("web")
 	}
 }

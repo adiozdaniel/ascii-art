@@ -36,7 +36,7 @@ func loadCli() {
 		case input := <-inputChan:
 			if input == "exit" {
 				fmt.Println("\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
-				return // Graceful exit from main function
+				return
 			} else if input != "" {
 				tempStr = input
 				helpers.ScanInput(input)

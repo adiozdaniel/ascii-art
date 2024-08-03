@@ -5,7 +5,12 @@ import (
 	"strings"
 
 	"github.com/adiozdaniel/ascii-art/internals/handlers"
-	"github.com/adiozdaniel/ascii-art/internals/renders"
+	"github.com/adiozdaniel/ascii-art/pkg/utils"
+)
+
+// global variables
+var (
+	app = &utils.Inputs
 )
 
 // Allowed routes
@@ -34,7 +39,7 @@ func RouteChecker(next http.Handler) http.Handler {
 
 // RegisterRoutes manages the routes
 func RegisterRoutes(mux *http.ServeMux) {
-	staticDir := renders.GetProjectRoot("views", "static")
+	staticDir := app.GetProjectRoot("views", "static")
 	fs := http.FileServer(http.Dir(staticDir))
 	mux.Handle("/static/", http.StripPrefix("/static/", fs))
 

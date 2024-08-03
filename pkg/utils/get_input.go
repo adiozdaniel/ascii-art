@@ -11,15 +11,8 @@ import (
 // Input holds all the data passed around in the application
 type Input struct {
 	Flags      map[string]string
-	Color      string
-	ColorRef   string
 	BannerFile map[string]string
 	ValidFlags map[string]bool
-	Font       string
-	Align      string
-	Output     string
-	Input      string
-	IsWeb      bool
 	Args       []string
 }
 
@@ -45,6 +38,16 @@ var bannerFiles = map[string]string{
 	"-standard":    "standard.txt",
 	"--standard":   "standard.txt",
 	"standard":     "standard.txt",
+}
+
+// members holds struct members
+var members = map[string]string{
+	"color":  "",
+	"reff":   "",
+	"font":   "",
+	"align":  "left",
+	"output": "",
+	"isWeb":  "",
 }
 
 // validFlags stores allowed flags

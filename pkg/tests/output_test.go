@@ -17,7 +17,7 @@ func TestOutput(t *testing.T) {
 		{name: "ProcessInputEmptyInput", args: args{fileContents: strings.Split("", "\n"), input: ""}, expected: 0},
 	}
 
-	app.Font = "--standard"
+	app.Flags["font"] = "--standard"
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

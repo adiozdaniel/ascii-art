@@ -35,13 +35,13 @@ func validateBanner(banner []byte) bool {
 
 // FileContents returns a slice of strings containing ascii artwork characters
 func FileContents() ([]string, error) {
-	fileName := app.RemoveLeadingDashes(app.Font) + ".txt"
+	fileName := app.RemoveLeadingDashes(app.Flags["font"]) + ".txt"
 	fileDir := "views/static/banners"
 	filePath := app.GetProjectRoot(fileDir, fileName)
 
 	contents, err := os.ReadFile(filePath)
 	if err != nil || !validateBanner(contents) {
-		if app.IsWeb {
+		if app.Flags["isWeb"] == "true" {
 			return []string{}, fmt.Errorf("not found")
 		}
 		fmt.Print("Be patient while downloading...\n")

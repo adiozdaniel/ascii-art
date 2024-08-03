@@ -4,17 +4,20 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"os"
 	"path/filepath"
-	"strings"
+
+	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
 
 type FormData struct {
 	Body string
 }
 
-// Data is a global variable to hold the form data
-var Data FormData
+// global variables
+var (
+	Data FormData
+	app  = &utils.Inputs
+)
 
 // functions is a map of template functions
 var functions = template.FuncMap{}
@@ -38,7 +41,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 // getTemplateCache is a helper function to cache all HTML templates as a map
 func getTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
-	baseDir := GetProjectRoot("views", "templates")
+	baseDir := app.GetProjectRoot("views", "templates")
 
 	templatesDir := filepath.Join(baseDir, "*.page.html")
 	pages, err := filepath.Glob(templatesDir)
@@ -99,7 +102,7 @@ func renderServerErrorTemplate(w http.ResponseWriter, errMsg string) {
 
 	t, err := template.New("error").Parse(tmpl)
 	if err != nil {
-		http.Error(w, "Not Found", http.StatusNotFound)
+		http.Error(w, "Oops, something went wrong", http.StatusInternalServerError)
 	}
 
 	data := struct {
@@ -109,6 +112,6 @@ func renderServerErrorTemplate(w http.ResponseWriter, errMsg string) {
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	w.WriteHeader(http.StatusNotFound)
+	w.WriteHeader(http.StatusInternalServerError)
 	t.Execute(w, data)
 }

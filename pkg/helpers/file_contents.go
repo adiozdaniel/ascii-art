@@ -35,15 +35,9 @@ func validateBanner(banner []byte) bool {
 
 // FileContents returns a slice of strings containing ascii artwork characters
 func FileContents() ([]string, error) {
-	if app.BannerPath == "" {
-		app.BannerPath = "../banners/standard.txt"
-	}
-
-	fileNames := app.BannerPath
-	fileParts := strings.Split(fileNames, "/")
-	fileDir := fileParts[1]
-	fileName := fileParts[2]
-	filePath := utils.GetFilePath(fileDir, fileName)
+	fileName := app.Font
+	fileDir := "views/static/banners"
+	filePath := app.GetProjectRoot(fileDir, fileName)
 
 	contents, err := os.ReadFile(filePath)
 

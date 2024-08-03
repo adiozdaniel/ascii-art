@@ -154,11 +154,11 @@ func (i *Input) ParseArgs(args []string) {
 }
 
 // GetProjectRoot dynamically finds the project root directory
-func (i *Input) GetProjectRoot(path string) string {
+func (i *Input) GetProjectRoot(path, name string) string {
 	cwd, _ := os.Getwd()
 	baseDir := cwd
 	if strings.HasSuffix(baseDir, "/web") || strings.HasSuffix(baseDir, "/cli") {
 		baseDir = filepath.Join(cwd, "../../")
 	}
-	return filepath.Join(baseDir, path)
+	return filepath.Join(baseDir, path, name)
 }

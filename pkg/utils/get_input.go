@@ -66,16 +66,6 @@ func (i *Input) Init() {
 	i.BannerPath = i.GetBannerPath()
 }
 
-// CheckInput checks if there is invalid input in the command line arguments.
-func (i *Input) CheckInput() {
-	for _, arg := range i.Args {
-		if !validFlags[arg] {
-			i.ErrorHandler(arg)
-			os.Exit(1)
-		}
-	}
-}
-
 // GetBannerPath returns the path to the banner file.
 func (i *Input) GetBannerPath() string {
 	if i.BannerPath != "" {
@@ -162,8 +152,6 @@ func (i *Input) ParseArgs(args []string) {
 	for index := range i.Args {
 		i.Args[index] = i.RemoveQuotes(i.Args[index])
 	}
-
-	i.CheckInput()
 
 	if err := i.Validate(); err != nil {
 		i.ErrorHandler(err.Error())

@@ -43,7 +43,7 @@ var members = map[string]string{
 	"input":  "",
 	"color":  "",
 	"reff":   "",
-	"align":  "",
+	"align":  "left",
 	"output": "",
 	"isWeb":  "",
 }
@@ -105,7 +105,7 @@ func (i *Input) ParseArgs() {
 		input := i.Args[j]
 		parts := strings.SplitN(input, "=", 2)
 		if len(parts) != 2 {
-			j++ // Move to the next argument if '=' is not present
+			j++
 			continue
 		}
 
@@ -115,12 +115,11 @@ func (i *Input) ParseArgs() {
 		if i.IsValidFlag(flag) {
 			parsedFlag := i.RemoveLeadingDashes(flag)
 			i.Flags[parsedFlag] = value
-			i.Args = append(i.Args[:j], i.Args[j+1:]...) // Remove the processed argument
+			i.Args = append(i.Args[:j], i.Args[j+1:]...)
 		} else if strings.HasPrefix(flag, "-") {
-			// If flag is not valid and contains '=', skip it
 			i.Args = append(i.Args[:j], i.Args[j+1:]...)
 		} else {
-			j++ // Move to the next argument if '=' is not present
+			j++
 		}
 	}
 

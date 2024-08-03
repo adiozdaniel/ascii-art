@@ -12,6 +12,9 @@ func ScanInput(input string) {
 	words := strings.Fields(cleanInput)
 	var newInput string
 
+	app.Args = append(app.Args, words...)
+	app.ParseArgs()
+
 	for i, word := range words {
 		switch {
 		case strings.Contains(word, "--align") || strings.HasPrefix(word, "-align"):

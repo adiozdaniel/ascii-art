@@ -20,8 +20,16 @@ var errors = map[string]string{
 // ErrorHandler outputs errors and safely exits the program
 func (i *Input) ErrorHandler(errType string) {
 	if errType == "fatal" {
-		fmt.Println("For cli mode\ngo run .\nFor web interface:\nNavigate back to web directory\ngo run .")
-		os.Exit(0)
+		path, _ := os.Getwd()
+
+		if strings.HasSuffix(path, "cli") {
+			fmt.Println("For cli mode\ngo run .\n\nFor web interface:\nNavigate back to web directory\ngo run .\n\n!")
+		}
+
+		if strings.HasSuffix(path, "web") {
+			fmt.Println("For web interface:\ngo run .\n\nFor cli mode:\nNavigate back to cli directory\ngo run .\n\n!")
+		}
+		os.Exit(1)
 	}
 
 	for _, err := range errors {

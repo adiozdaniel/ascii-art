@@ -63,7 +63,6 @@ var validFlags = map[string]bool{
 func (i *Input) Init() {
 	if len(os.Args) > 1 {
 		i.ErrorHandler("fatal")
-		os.Exit(1)
 	}
 
 	i.Font = "--standard"
@@ -150,7 +149,6 @@ func (i *Input) ParseArgs(args []string) {
 
 	if err := i.Validate(); err != nil {
 		i.ErrorHandler(err.Error())
-		os.Exit(1)
 	}
 }
 

@@ -10,6 +10,7 @@ import (
 
 // Input holds all the data passed around in the application
 type Input struct {
+	Flags      map[string]string
 	Color      string
 	ColorRef   string
 	BannerFile map[string]string
@@ -137,8 +138,10 @@ func (i *Input) Validate() error {
 
 // ParseArgs parses command-line arguments and sets Input fields.
 func (i *Input) ParseArgs() {
-	for index := range i.Args {
-		i.Args[index] = i.RemoveQuotes(i.Args[index])
+	for j, input := range i.Args {
+		if j == 0 && validFlags[strings.Split(input, "=")[0]] {
+			i.Flags[strings.Split(input, "=")[0]] = strings.Split(input, "=")[1]
+		}
 	}
 
 	if err := i.Validate(); err != nil {

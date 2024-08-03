@@ -46,7 +46,7 @@ func loadCli() {
 			if shouldUpdate(newWidth, prevWidth, tempStr, prevColor, prevReff, prevFont) {
 				outputs := ascii.Output(app.Flags["input"])
 				termOutput := helpers.Alignment(outputs, newWidth)
-				clearTerminal()
+				// clearTerminal()
 				fmt.Print(termOutput)
 				resetCursor()
 

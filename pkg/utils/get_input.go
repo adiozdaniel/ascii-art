@@ -72,10 +72,6 @@ func (i *Input) Init() {
 		i.ErrorHandler("fatal")
 	}
 	*i = *NewInput()
-
-	i.Flags = make(map[string]string)
-	i.BannerFile = make(map[string]string)
-	i.ValidFlags = make(map[string]bool)
 }
 
 // BannerFiles returns the map of banner files for the Input instance
@@ -101,6 +97,10 @@ func (i *Input) Validate() error {
 
 // ParseArgs parses command-line arguments and sets Input fields
 func (i *Input) ParseArgs() {
+	if i.Flags == nil {
+		i.Flags = make(map[string]string)
+	}
+
 	for j := 0; j < len(i.Args); {
 		input := i.Args[j]
 		parts := strings.SplitN(input, "=", 2)

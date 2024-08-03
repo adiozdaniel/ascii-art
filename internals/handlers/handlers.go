@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/adiozdaniel/ascii-art/ascii"
+	"github.com/adiozdaniel/ascii-art/internals/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/renders"
 	"github.com/adiozdaniel/ascii-art/utils"
 )

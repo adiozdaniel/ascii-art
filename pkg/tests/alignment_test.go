@@ -3,7 +3,7 @@ package tests
 import (
 	"testing"
 
-	"github.com/adiozdaniel/ascii-art/utils"
+	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 )
 
 // TestAlignment tests Alignment
@@ -22,10 +22,10 @@ func TestAlignment(t *testing.T) {
 		{name: "single character", args: args{output: "a", width: 80}, want: 1},
 	}
 
-	utils.Inputs.Justify = "left"
+	app.Justify = "left"
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := utils.Alignment(tt.args.output, tt.args.width); len(got) != tt.want {
+			if got := helpers.Alignment(tt.args.output, tt.args.width); len(got) != tt.want {
 				t.Errorf("Alignment() = %v, want %v", len(got), tt.want)
 			}
 		})

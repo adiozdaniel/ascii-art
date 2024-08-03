@@ -84,14 +84,3 @@ func clearTerminal() {
 func resetCursor() {
 	fmt.Print("\033[999;1H")
 }
-
-// isValidAlignment checks if the provided alignment is valid.
-func isValidAlignment(alignment string) bool {
-	return alignment == "left" || alignment == "center" || alignment == "right" || alignment == "justify"
-}
-
-// isBannerFile checks if the provided word is a banner file.
-func isBannerFile(word string) bool {
-	_, exists := app.BannerFile[word]
-	return exists
-}

@@ -6,8 +6,14 @@ import (
 	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
 
+// global variables
+var (
+	app = &utils.Inputs
+)
+
 func main() {
-	utils.Inputs.Init()
+	app.Init()
+	loadCli()
 }
 
 // runOutput writes the output to the specified file.
@@ -18,7 +24,7 @@ func runOutput() {
 }
 
 // justified runs the alignment mode of the application.
-func justified() {
+func loadCli() {
 	var (
 		inputChan                                = make(chan string)
 		prevWidth                                int

@@ -5,9 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/adiozdaniel/ascii-art/utils"
-
-	ascii "github.com/adiozdaniel/ascii-art/ascii"
+	"github.com/adiozdaniel/ascii-art/internals/ascii"
 )
 
 // TestOutput tests if the output is meeting requirements by checking the length of its output
@@ -19,7 +17,7 @@ func TestOutput(t *testing.T) {
 		{name: "ProcessInputEmptyInput", args: args{fileContents: strings.Split("", "\n"), input: ""}, expected: 0},
 	}
 
-	utils.Inputs.BannerPath = utils.BannerFiles["standard"]
+	app.Font = "--standard"
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

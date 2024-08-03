@@ -49,6 +49,7 @@ var members = map[string]string{
 	"align":  "",
 	"output": "",
 	"isWeb":  "",
+	"input":  "",
 }
 
 // validFlags stores allowed flags

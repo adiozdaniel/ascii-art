@@ -44,7 +44,7 @@ func loadCli() {
 		default:
 			newWidth := helpers.GetTerminalWidth()
 			if shouldUpdate(newWidth, prevWidth, tempStr, prevColor, prevReff, prevFont) {
-				outputs := ascii.Output(app.Input)
+				outputs := ascii.Output(app.Flags["input"])
 				termOutput := helpers.Alignment(outputs, newWidth)
 				clearTerminal()
 				fmt.Print(termOutput)
@@ -52,9 +52,9 @@ func loadCli() {
 
 				prevWidth = newWidth
 				tempStr = ""
-				prevColor = app.Color
-				prevReff = app.ColorRef
-				prevFont = app.Font
+				prevColor = app.Flags["color"]
+				prevReff = app.Flags["reff"]
+				prevFont = app.Flags["font"]
 			}
 			time.Sleep(2 * time.Second)
 		}
@@ -72,7 +72,7 @@ func readInput(inputChan chan string) {
 
 // shouldUpdate checks if the terminal output needs to be updated.
 func shouldUpdate(newWidth, prevWidth int, tempStr, prevColor, prevReff, prevFont string) bool {
-	return newWidth != prevWidth || tempStr != "" || app.Color != prevColor || app.ColorRef != prevReff || app.Font != prevFont
+	return newWidth != prevWidth || tempStr != "" || app.Flags["color"] != prevColor || app.Flags["reff"] != prevReff || app.Flags["font"] != prevFont
 }
 
 // clearTerminal clears the terminal screen.

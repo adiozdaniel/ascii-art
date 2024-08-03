@@ -1,17 +1,9 @@
-{{template "base" . }}
-
-{{define "css"}}
+{{template "base" . }} {{define "css"}}
 <link
 	rel="stylesheet"
 	href="/static/styles/home.css"
 />
-{{end}}
-
-{{define "title"}}
-Home
-{{end}}
-
-{{define "content"}}
+{{end}} {{define "title"}} Home {{end}} {{define "content"}}
 <form
 	action="/ascii-art"
 	method="POST"
@@ -30,8 +22,8 @@ Home
 	<input
 		type="radio"
 		id="standard"
-		name="FileName"
-		value="standard"
+		name="Font"
+		value="--standard"
 		checked
 	/>
 	<label for="standard">Standard</label>
@@ -39,16 +31,16 @@ Home
 	<input
 		type="radio"
 		id="thinkertoy"
-		name="FileName"
-		value="thinkertoy"
+		name="Font"
+		value="--thinkertoy"
 	/>
 	<label for="thinkertoy">Thinkertoy</label>
 
 	<input
 		type="radio"
 		id="shadow"
-		name="FileName"
-		value="shadow"
+		name="Font"
+		value="--shadow"
 	/>
 	<label for="shadow">Shadow</label>
 

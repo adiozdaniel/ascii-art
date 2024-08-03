@@ -40,14 +40,13 @@ func FileContents() ([]string, error) {
 	filePath := app.GetProjectRoot(fileDir, fileName)
 
 	contents, err := os.ReadFile(filePath)
-
 	if err != nil || !validateBanner(contents) {
 		if app.IsWeb {
 			return []string{}, fmt.Errorf("not found")
 		}
 		fmt.Print("Be patient while downloading...\n")
 		time.Sleep(1 * time.Second)
-		err := utils.DownloadFile("https://learn.zone01kisumu.ke/git/root/public/raw/branch/master/subjects/ascii-art/"+fileName[11:], fileName)
+		err := app.DownloadFile("https://learn.zone01kisumu.ke/git/root/public/raw/branch/master/subjects/ascii-art/"+fileName[11:], fileName)
 		if err != nil {
 			fmt.Println(err)
 			os.Remove(fileName)
@@ -68,7 +67,7 @@ func FileContents() ([]string, error) {
 
 	var fileContents []string
 
-	if fileNames == "../banners/thinkertoy.txt" {
+	if fileName == "thinkertoy.txt" {
 		fileContents = strings.Split(string(contents), "\r\n")
 	} else {
 		fileContents = strings.Split(string(contents), "\n")

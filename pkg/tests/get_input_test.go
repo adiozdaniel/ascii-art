@@ -2,8 +2,6 @@ package tests
 
 import (
 	"testing"
-
-	"github.com/adiozdaniel/ascii-art/utils"
 )
 
 // TestRemoveQuotes tests RemoveQuotes
@@ -22,7 +20,7 @@ func TestRemoveQuotes(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := utils.RemoveQuotes(tt.args.input); got != tt.want {
+			if got := app.RemoveQuotes(tt.args.input); got != tt.want {
 				t.Errorf("RemoveQuotes() = %v, want %v", got, tt.want)
 			}
 		})

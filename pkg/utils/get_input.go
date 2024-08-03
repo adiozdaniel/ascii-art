@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -150,4 +151,14 @@ func (i *Input) ParseArgs(args []string) {
 		i.ErrorHandler(err.Error())
 		os.Exit(1)
 	}
+}
+
+// GetProjectRoot dynamically finds the project root directory
+func (i *Input) GetProjectRoot(path string) string {
+	cwd, _ := os.Getwd()
+	baseDir := cwd
+	if strings.HasSuffix(baseDir, "/web") || strings.HasSuffix(baseDir, "/cli") {
+		baseDir = filepath.Join(cwd, "../../")
+	}
+	return filepath.Join(baseDir, path)
 }

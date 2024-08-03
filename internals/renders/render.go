@@ -71,16 +71,6 @@ func getTemplateCache() (map[string]*template.Template, error) {
 	return myCache, nil
 }
 
-// GetProjectRoot dynamically finds the project root directory
-func GetProjectRoot(first, second string) string {
-	cwd, _ := os.Getwd()
-	baseDir := cwd
-	if strings.HasSuffix(baseDir, "cmd") {
-		baseDir = filepath.Join(cwd, "../")
-	}
-	return filepath.Join(baseDir, first, second)
-}
-
 // renderServerErrorTemplate renders a simple error template directly
 func renderServerErrorTemplate(w http.ResponseWriter, errMsg string) {
 	tmpl := `

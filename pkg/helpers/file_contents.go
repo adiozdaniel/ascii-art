@@ -12,7 +12,7 @@ import (
 )
 
 // global variables declaration
-var app = utils.Inputs
+var app = &utils.Inputs
 
 // constants store the hashed sum of the banner files as hexadecimal strings
 const (

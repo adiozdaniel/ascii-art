@@ -18,9 +18,9 @@ type Input struct {
 // NewInput creates a new Input instance with default values
 func NewInput() *Input {
 	return &Input{
+		Flags:      members,
 		BannerFile: bannerFiles,
 		ValidFlags: validFlags,
-		Flags:      members,
 	}
 }
 
@@ -72,6 +72,10 @@ func (i *Input) Init() {
 		i.ErrorHandler("fatal")
 	}
 	*i = *NewInput()
+
+	i.Flags = make(map[string]string)
+	i.BannerFile = make(map[string]string)
+	i.ValidFlags = make(map[string]bool)
 }
 
 // BannerFiles returns the map of banner files for the Input instance
@@ -99,16 +103,24 @@ func (i *Input) Validate() error {
 func (i *Input) ParseArgs() {
 	for j := 0; j < len(i.Args); {
 		input := i.Args[j]
-		if i.IsValidFlag(strings.Split(input, "=")[0]) {
-			parsedFlag := i.RemoveLeadingDashes(strings.Split(input, "=")[0])
-			parsedValue := strings.Split(input, "=")[1]
-			i.Flags[parsedFlag] = parsedValue
-			i.Args = append(i.Args[:j], i.Args[j+1:]...)
-		} else if strings.HasPrefix(input, "-") && !i.IsValidFlag(strings.Split(input, "=")[0]) && strings.Contains(input, "=") {
-			i.Args = append(i.Args[:j], i.Args[j+1:]...)
+		parts := strings.SplitN(input, "=", 2)
+		if len(parts) != 2 {
+			j++ // Move to the next argument if '=' is not present
 			continue
+		}
+
+		flag := parts[0]
+		value := parts[1]
+
+		if i.IsValidFlag(flag) {
+			parsedFlag := i.RemoveLeadingDashes(flag)
+			i.Flags[parsedFlag] = value
+			i.Args = append(i.Args[:j], i.Args[j+1:]...) // Remove the processed argument
+		} else if strings.HasPrefix(flag, "-") {
+			// If flag is not valid and contains '=', skip it
+			i.Args = append(i.Args[:j], i.Args[j+1:]...)
 		} else {
-			j++
+			j++ // Move to the next argument if '=' is not present
 		}
 	}
 

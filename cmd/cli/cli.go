@@ -13,7 +13,7 @@ import (
 
 // global variables
 var (
-	app = &utils.Input{}
+	app = utils.NewInput()
 )
 
 func main() {

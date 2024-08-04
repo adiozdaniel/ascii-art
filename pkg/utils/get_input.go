@@ -68,7 +68,7 @@ var validFlags = map[string]bool{
 
 // Init initializes the Input
 func (i *Input) Init() {
-	if len(os.Args) < 1 {
+	if len(os.Args) > 1 {
 		i.ErrorHandler("fatal")
 	}
 	*i = *NewInput()

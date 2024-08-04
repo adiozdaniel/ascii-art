@@ -49,7 +49,7 @@ func main() {
 func init() {
 	appData.Init()
 
-	tc, err := renders.CreateTemplateCache()
+	tc, err := appConfig.CreateTemplateCache()
 	if err != nil {
 		appData.ErrorHandler("templates")
 	}

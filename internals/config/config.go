@@ -23,23 +23,23 @@ func App() *AppConfig {
 	}
 }
 
-func (a *AppConfig) CreateBannerCache() error {
+func (a *AppConfig) CreateBannerCache() (map[string]string, error) {
 	baseDir := instance.input.GetProjectRoot("views/static", "banners")
 	bannerDir := filepath.Join(baseDir, "*.txt")
 	banners, err := filepath.Glob(bannerDir)
 	if err != nil {
-		return fmt.Errorf("error globbing banners: %v", err)
+		return nil, fmt.Errorf("error globbing banners: %v", err)
 	}
 
 	for _, banner := range banners {
 		contents, err := os.ReadFile(banner)
 		if err != nil {
-			return fmt.Errorf("error reading banner file %s: %v", banner, err)
+			return nil, fmt.Errorf("error reading banner file %s: %v", banner, err)
 		}
 		a.BannerFileCache[filepath.Base(banner)] = string(contents)
 	}
 
-	return nil
+	return a.BannerFileCache, nil
 }
 
 // CreateTemplateCache is a helper function to cache all HTML templates as a map

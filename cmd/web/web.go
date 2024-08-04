@@ -56,6 +56,11 @@ func init() {
 
 	appConfig.TemplateCache = tc
 
+	bc, err := appConfig.CreateBannerCache()
+	if err != nil {
+		appData.ErrorHandler("banners")
+	}
+
 	appData.Flags["font"] = "--standard"
 	appData.Flags["input"] = "Ascii~"
 	appData.Flags["reff"] = "Ascii"

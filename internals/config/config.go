@@ -22,7 +22,7 @@ func App() *AppConfig {
 	}
 }
 
-func (a *AppConfig) CreateTemplateCache() (map[string]string, error) {
+func (a *AppConfig) CreateBannerCache() (map[string]string, error) {
 	myCache := make(map[string]string)
 	baseDir := instance.input.GetProjectRoot("views/static", "banners")
 
@@ -35,6 +35,8 @@ func (a *AppConfig) CreateTemplateCache() (map[string]string, error) {
 	for _, banner := range banners {
 		a.BannerFileCache[filepath.Base(banner)] = banner
 	}
+
+	fmt.Println(len(a.BannerFileCache), "banners found")
 
 	return myCache, nil
 }

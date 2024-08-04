@@ -16,6 +16,7 @@ var errors = map[string]string{
 	"web":        "😮 Oops! Something went wrong",
 	"restricted": "😣 Oops! this is a restricted path.\nplease use another path.",
 	"templates":  "🤯 Oops! Something went wrong! where are templates?",
+	"banners":    "🤯 Oops! Something went wrong! where are banners?",
 }
 
 // ErrorHandler outputs errors and safely exits the program

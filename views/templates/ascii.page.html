@@ -3,13 +3,16 @@
 	rel="stylesheet"
 	href="/static/styles/ascii.css"
 />
-
 {{end}} {{define "title"}} Ascii {{end}} {{define "content"}}
-
 <div class="ascii">
-	{{if .Body}}
-	<pre>{{.Body}}</pre>
+	{{if .StringMap}}
+	<div class="non-ascii">
+		{{if .StringMap.ascii}}
+		<pre>{{.StringMap.ascii}}</pre>
+		{{end}} {{if .StringMap.nonasciis}}
+		<pre>{{.StringMap.nonasciis}}</pre>
+		{{end}}
+	</div>
 	{{ end }}
 </div>
-
 {{end}}

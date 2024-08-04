@@ -37,3 +37,8 @@ func (sm *StateManager) GetInput() *InputData {
 func (sm *StateManager) GetConfig() *AppConfig {
 	return sm.config
 }
+
+// GetTemplateData returns the TemplateData instance of StateManager
+func (sm *StateManager) GetTemplateData() *TemplateData {
+	return sm.td
+}

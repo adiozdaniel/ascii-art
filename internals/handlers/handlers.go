@@ -13,11 +13,7 @@ import (
 var (
 	sm      = config.GetStateManager()
 	appData = sm.GetInput()
-)
-
-// global variables
-var (
-	data renders.FormData
+	td      = sm.GetTemplateData()
 )
 
 // HomeHandler handles the homepage route '/'
@@ -52,22 +48,13 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	output := ascii.Output(appData.Flags["input"])
-	noasciis := ascii.NonAsciiOutput()
-	data.Body = output + "\n" + noasciis
-
-	stringMap := map[string]string{
-		"Body": output + "\n" + noasciis,
+	nonasciis := ascii.NonAsciiOutput()
+	td.Body = output + "\n"
+	td.StringMap = map[string]string{
+		"nonasciis": output + "\n" + nonasciis,
 	}
 
-	renderData := struct {
-		Body      string            `json:"Body"`
-		StringMap map[string]string `json:"stringMap"`
-	}{
-		Body:      output + "\n" + noasciis,
-		StringMap: stringMap,
-	}
-
-	renders.RenderTemplate(w, "ascii.page.html", renderData)
+	renders.RenderTemplate(w, "ascii.page.html", td)
 }
 
 // NotFoundHandler handles unknown routes; 404 status

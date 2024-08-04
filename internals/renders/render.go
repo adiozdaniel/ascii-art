@@ -1,18 +1,17 @@
 package renders
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
-	"path/filepath"
 
-	appconfig "github.com/adiozdaniel/ascii-art/internals/config"
+	"github.com/adiozdaniel/ascii-art/internals/config"
 )
 
 // get the app state manager
 var (
-	sm  = appconfig.GetStateManager()
-	app = sm.GetInput()
+	sm        = config.GetStateManager()
+	appData   = sm.GetInput()
+	appConfig = sm.GetConfig()
 )
 
 type FormData struct {
@@ -29,7 +28,7 @@ var functions = template.FuncMap{}
 
 // RenderTemplate is a helper function to render HTML templates
 func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	t, _ := CreateTemplateCache()
+	t, _ := appConfig.CreateTemplateCache()
 	ts, ok := t[tmpl]
 	if !ok {
 		renderServerErrorTemplate(w, tmpl+" is missing, contact the Network Admin.")
@@ -41,42 +40,6 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 	if err != nil {
 		return
 	}
-}
-
-// getTemplateCache is a helper function to cache all HTML templates as a map
-func CreateTemplateCache() (map[string]*template.Template, error) {
-	myCache := map[string]*template.Template{}
-	baseDir := app.GetProjectRoot("views", "templates")
-
-	templatesDir := filepath.Join(baseDir, "*.page.html")
-	pages, err := filepath.Glob(templatesDir)
-	if err != nil {
-		return myCache, fmt.Errorf("error globbing templates: %v", err)
-	}
-
-	for _, page := range pages {
-		name := filepath.Base(page)
-		ts, err := template.New(name).Funcs(functions).ParseFiles(page)
-		if err != nil {
-			return myCache, fmt.Errorf("error parsing page %s: %v", name, err)
-		}
-
-		layoutsPath := filepath.Join(baseDir, "*.layout.html")
-		matches, err := filepath.Glob(layoutsPath)
-		if err != nil {
-			return myCache, fmt.Errorf("error finding layout files: %v", err)
-		}
-
-		if len(matches) > 0 {
-			ts, err = ts.ParseGlob(layoutsPath)
-			if err != nil {
-				return myCache, fmt.Errorf("error parsing layout files: %v", err)
-			}
-		}
-
-		myCache[name] = ts
-	}
-	return myCache, nil
 }
 
 // renderServerErrorTemplate renders a simple error template directly

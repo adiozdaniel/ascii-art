@@ -34,8 +34,7 @@ func validateBanner(banner []byte) bool {
 }
 
 // FileContents returns a slice of strings containing ascii artwork characters
-func FileContents() ([]string, error) {
-	fileName := app.RemoveLeadingDashes(app.Flags["font"]) + ".txt"
+func FileContents(fileName string) ([]string, error) {
 	fileDir := "views/static/banners"
 	filePath := app.GetProjectRoot(fileDir, fileName)
 

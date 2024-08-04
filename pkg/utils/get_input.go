@@ -9,10 +9,11 @@ import (
 
 // Input holds all the data passed around in the application
 type Input struct {
-	Flags      map[string]string
-	BannerFile map[string]string
-	ValidFlags map[string]bool
-	Args       []string
+	Flags        map[string]string
+	BannerFile   map[string]string
+	ValidFlags   map[string]bool
+	Args         []string
+	FileContents []string
 }
 
 // NewInput creates a new Input instance with default values

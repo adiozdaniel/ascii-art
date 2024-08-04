@@ -34,14 +34,14 @@ func validateBanner(banner []byte) bool {
 }
 
 // FileContents returns a slice of strings containing ascii artwork characters
-func FileContents(fileName string) ([]string, error) {
+func FileContents(fileName string) error {
 	fileDir := "views/static/banners"
 	filePath := app.GetProjectRoot(fileDir, fileName)
 
 	contents, err := os.ReadFile(filePath)
 	if err != nil || !validateBanner(contents) {
 		if app.Flags["isWeb"] == "true" {
-			return []string{}, fmt.Errorf("not found")
+			return fmt.Errorf("not found")
 		}
 		fmt.Print("Be patient while downloading...\n")
 		time.Sleep(1 * time.Second)
@@ -71,5 +71,7 @@ func FileContents(fileName string) ([]string, error) {
 	} else {
 		fileContents = strings.Split(string(contents), "\n")
 	}
-	return fileContents, nil
+
+	app.FileContents = append(app.FileContents, fileContents...)
+	return nil
 }

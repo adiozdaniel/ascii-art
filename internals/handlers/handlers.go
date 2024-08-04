@@ -49,10 +49,9 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 
 	output := ascii.Output(appData.Flags["input"])
 	nonasciis := ascii.NonAsciiOutput()
-	td.Body = output + "\n"
-	td.StringMap = map[string]string{
-		"nonasciis": output + "\n" + nonasciis,
-	}
+
+	td.Body = output
+	td.StringMap["nonasciis"] = nonasciis
 
 	renders.RenderTemplate(w, "ascii.page.html", td)
 }

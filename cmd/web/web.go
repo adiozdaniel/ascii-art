@@ -31,6 +31,8 @@ func main() {
 
 	app.Flags["font"] = "--standard"
 	app.Flags["input"] = "Ascii~"
+	app.Flags["reff"] = "Ascii"
+	app.Flags["color"] = "red"
 
 	banner := app.BannerFile[app.Flags["font"]]
 	err := helpers.FileContents(banner)

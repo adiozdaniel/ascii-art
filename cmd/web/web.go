@@ -7,6 +7,7 @@ import (
 	appconfig "github.com/adiozdaniel/ascii-art/internals/app_config"
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/routes"
+	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 )
 
 // get the app state manager
@@ -30,9 +31,16 @@ func main() {
 
 	app.Flags["font"] = "--standard"
 	app.Flags["input"] = "Ascii~"
+
+	banner := app.BannerFile[app.Flags["font"]]
+	err := helpers.FileContents(banner)
+	if err != nil {
+		app.ErrorHandler("fatal")
+	}
+
 	serverOutput := ascii.Output(app.Flags["input"])
 	fmt.Println(serverOutput + "=====================================\nserver running @http://localhost:8080")
-	err := server.ListenAndServe()
+	err = server.ListenAndServe()
 	if err != nil {
 		app.ErrorHandler("web")
 	}

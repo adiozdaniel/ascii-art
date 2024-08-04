@@ -18,7 +18,7 @@ var (
 
 func main() {
 	app.Init()
-	app.Flags["isWeb"] = "true"
+
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)
 
@@ -42,6 +42,8 @@ func main() {
 
 	serverOutput := ascii.Output(app.Flags["input"])
 	fmt.Println(serverOutput + "=====================================\nserver running @http://localhost:8080")
+
+	app.Flags["isWeb"] = "true"
 	err = server.ListenAndServe()
 	if err != nil {
 		app.ErrorHandler("web")

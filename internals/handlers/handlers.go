@@ -40,7 +40,7 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	app.Flags["font"] = banner
-	_, err := helpers.FileContents(banner)
+	err := helpers.FileContents(banner)
 	if err != nil {
 		NotFoundHandler(w, r)
 		return

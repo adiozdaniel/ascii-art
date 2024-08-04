@@ -72,6 +72,6 @@ func FileContents(fileName string) error {
 		fileContents = strings.Split(string(contents), "\n")
 	}
 
-	app.FileContents = append(app.FileContents, fileContents...)
+	app.FileContents = fileContents
 	return nil
 }

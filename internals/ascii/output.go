@@ -24,15 +24,14 @@ func Output(inputStr string) string {
 		return "\n"
 	}
 
-	var fileContents, _ = helpers.FileContents()
-	var ascii_map = AsciiMap(fileContents)
+	var ascii_map = AsciiMap(app.FileContents)
 	var art_work strings.Builder
 
 	if app.Flags["isWeb"] == "true" {
-		processWebInput(ascii_map, fileContents, &art_work)
+		processWebInput(ascii_map, app.FileContents, &art_work)
 	} else {
 		app.Flags["input"] = strings.ReplaceAll(inputStr, "\\n", "\n")
-		processTerminalInput(ascii_map, fileContents, &art_work)
+		processTerminalInput(ascii_map, app.FileContents, &art_work)
 	}
 
 	return art_work.String()

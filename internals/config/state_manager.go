@@ -23,7 +23,7 @@ func GetStateManager() *StateManager {
 	once.Do(func() {
 		instance = &StateManager{}
 		instance.input = utils.NewInput()
-		instance.config = &AppConfig{}
+		instance.config = App()
 	})
 	return instance
 }
@@ -31,4 +31,9 @@ func GetStateManager() *StateManager {
 // GetInput returns the Input instance of StateManager
 func (sm *StateManager) GetInput() *utils.Input {
 	return sm.input
+}
+
+// GetConfig returns the AppConfig instance of StateManager
+func (sm *StateManager) GetConfig() *AppConfig {
+	return sm.config
 }

@@ -28,7 +28,7 @@ var functions = template.FuncMap{}
 
 // RenderTemplate is a helper function to render HTML templates
 func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	t, _ := appConfig.CreateTemplateCache()
+	t := appConfig.TemplateCache
 	ts, ok := t[tmpl]
 	if !ok {
 		renderServerErrorTemplate(w, tmpl+" is missing, contact the Network Admin.")

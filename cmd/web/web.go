@@ -6,7 +6,6 @@ import (
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/config"
-	"github.com/adiozdaniel/ascii-art/internals/renders"
 	"github.com/adiozdaniel/ascii-art/internals/routes"
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 )

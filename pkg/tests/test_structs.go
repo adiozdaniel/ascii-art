@@ -1,7 +1,7 @@
 package tests
 
 import (
-	appconfig "github.com/adiozdaniel/ascii-art/internals/app_config"
+	appconfig "github.com/adiozdaniel/ascii-art/internals/config"
 )
 
 // Structs used to store the data in test files

@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	appconfig "github.com/adiozdaniel/ascii-art/internals/app_config"
+	appconfig "github.com/adiozdaniel/ascii-art/internals/config"
 )
 
 // get the app state manager

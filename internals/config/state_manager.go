@@ -1,4 +1,4 @@
-package appconfig
+package config
 
 import (
 	"sync"
@@ -8,7 +8,8 @@ import (
 
 // StateManager manages the application state.
 type StateManager struct {
-	input *utils.Input
+	input  *utils.Input
+	config *AppConfig
 }
 
 // singleton instance of StateManager
@@ -22,6 +23,7 @@ func GetStateManager() *StateManager {
 	once.Do(func() {
 		instance = &StateManager{}
 		instance.input = utils.NewInput()
+		instance.config = &AppConfig{}
 	})
 	return instance
 }

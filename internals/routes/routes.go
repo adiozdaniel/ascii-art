@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	appconfig "github.com/adiozdaniel/ascii-art/internals/app_config"
+	appconfig "github.com/adiozdaniel/ascii-art/internals/config"
 	"github.com/adiozdaniel/ascii-art/internals/handlers"
 )
 

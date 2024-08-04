@@ -9,8 +9,8 @@ import (
 	"os"
 	"time"
 
-	appconfig "github.com/adiozdaniel/ascii-art/internals/app_config"
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
+	appconfig "github.com/adiozdaniel/ascii-art/internals/config"
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 )
 

@@ -8,6 +8,7 @@ import (
 type StateManager struct {
 	input  *InputData
 	config *AppConfig
+	td     *TemplateData
 }
 
 // singleton instance of StateManager
@@ -22,6 +23,7 @@ func GetStateManager() *StateManager {
 		instance = &StateManager{}
 		instance.input = NewInputData()
 		instance.config = App()
+		instance.td = NewTemplateData()
 	})
 	return instance
 }

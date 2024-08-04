@@ -7,11 +7,16 @@ import (
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 )
 
+// get the app state manager
+var (
+	sm  = appconfig.GetStateManager()
+	app = sm.GetInput()
+)
+
 // global variables declaration
 var (
 	reset      = "\033[0m"
 	height int = 8
-	app        = appconfig.GetState()
 )
 
 // Output compiles the banner characters to form the desired ascii art work

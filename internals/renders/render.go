@@ -9,6 +9,12 @@ import (
 	appconfig "github.com/adiozdaniel/ascii-art/internals/app_config"
 )
 
+// get the app state manager
+var (
+	sm  = appconfig.GetStateManager()
+	app = sm.GetInput()
+)
+
 type FormData struct {
 	Body string
 }
@@ -16,7 +22,6 @@ type FormData struct {
 // global variables
 var (
 	Data FormData
-	app  = appconfig.GetState()
 )
 
 // functions is a map of template functions

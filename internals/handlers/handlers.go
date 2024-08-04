@@ -9,10 +9,15 @@ import (
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 )
 
+// get the app state manager
+var (
+	sm  = appconfig.GetStateManager()
+	app = sm.GetInput()
+)
+
 // global variables
 var (
 	data renders.FormData
-	app  = appconfig.GetState()
 )
 
 // HomeHandler handles the homepage route '/'

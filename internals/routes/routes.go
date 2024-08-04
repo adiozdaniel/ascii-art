@@ -8,9 +8,10 @@ import (
 	"github.com/adiozdaniel/ascii-art/internals/handlers"
 )
 
-// global variables
+// get the app state manager
 var (
-	app = appconfig.GetState()
+	sm  = appconfig.GetStateManager()
+	app = sm.GetInput()
 )
 
 // Allowed routes

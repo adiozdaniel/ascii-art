@@ -11,8 +11,11 @@ import (
 	appconfig "github.com/adiozdaniel/ascii-art/internals/app_config"
 )
 
-// global variables declaration
-var app = appconfig.GetState()
+// get the app state manager
+var (
+	sm  = appconfig.GetStateManager()
+	app = sm.GetInput()
+)
 
 // constants store the hashed sum of the banner files as hexadecimal strings
 const (

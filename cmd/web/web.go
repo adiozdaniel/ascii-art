@@ -12,13 +12,11 @@ import (
 
 // get the app state manager
 var (
-	sm  = appconfig.GetStateManager()
-	app = sm.GetInput()
+	sm      = appconfig.GetStateManager()
+	appData = sm.GetInput()
 )
 
 func main() {
-	app.Init()
-
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)
 
@@ -29,23 +27,26 @@ func main() {
 		Handler: wrappedMux,
 	}
 
-	app.Flags["font"] = "--standard"
-	app.Flags["input"] = "Ascii~"
-	app.Flags["reff"] = "Ascii"
-	app.Flags["color"] = "#FABB60"
-
-	banner := app.BannerFile[app.Flags["font"]]
+	banner := appData.BannerFile[appData.Flags["font"]]
 	err := helpers.FileContents(banner)
 	if err != nil {
-		app.ErrorHandler("fatal")
+		appData.ErrorHandler("fatal")
 	}
 
-	serverOutput := ascii.Output(app.Flags["input"])
+	serverOutput := ascii.Output(appData.Flags["input"])
 	fmt.Println(serverOutput + "=====================================\nserver running @http://localhost:8080")
 
-	app.Flags["isWeb"] = "true"
+	appData.Flags["isWeb"] = "true"
 	err = server.ListenAndServe()
 	if err != nil {
-		app.ErrorHandler("web")
+		appData.ErrorHandler("web")
 	}
+}
+
+// init initializes the web data
+func init() {
+	appData.Flags["font"] = "--standard"
+	appData.Flags["input"] = "Ascii~"
+	appData.Flags["reff"] = "Ascii"
+	appData.Flags["color"] = "#FABB60"
 }

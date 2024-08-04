@@ -1,4 +1,4 @@
-package config
+package models
 
 type TemplateData struct {
 	StringMap map[string]string `json:"stringMap"`

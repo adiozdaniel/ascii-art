@@ -4,27 +4,14 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/adiozdaniel/ascii-art/internals/config"
+	"github.com/adiozdaniel/ascii-art/internals/models"
 )
 
 // get the app state manager
 var (
-	sm        = config.GetStateManager()
-	appData   = sm.GetInput()
+	sm        = models.GetStateManager()
 	appConfig = sm.GetConfig()
 )
-
-type FormData struct {
-	Body string
-}
-
-// global variables
-var (
-	Data FormData
-)
-
-// functions is a map of template functions
-var functions = template.FuncMap{}
 
 // RenderTemplate is a helper function to render HTML templates
 func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {

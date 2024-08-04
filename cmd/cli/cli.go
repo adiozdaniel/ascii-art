@@ -10,13 +10,13 @@ import (
 	"time"
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
-	appconfig "github.com/adiozdaniel/ascii-art/internals/config"
+	"github.com/adiozdaniel/ascii-art/internals/models"
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 )
 
 // get the app state manager
 var (
-	sm  = appconfig.GetStateManager()
+	sm  = models.GetStateManager()
 	app = sm.GetInput()
 )
 

@@ -1,7 +1,7 @@
 package tests
 
 import (
-	appconfig "github.com/adiozdaniel/ascii-art/internals/config"
+	"github.com/adiozdaniel/ascii-art/internals/models"
 )
 
 // Structs used to store the data in test files
@@ -18,6 +18,6 @@ type tests struct {
 
 // get the app state manager
 var (
-	sm  = appconfig.GetStateManager()
+	sm  = models.GetStateManager()
 	app = sm.GetInput()
 )

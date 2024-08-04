@@ -4,14 +4,14 @@ import (
 	"net/http"
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
-	"github.com/adiozdaniel/ascii-art/internals/config"
+	"github.com/adiozdaniel/ascii-art/internals/models"
 	"github.com/adiozdaniel/ascii-art/internals/renders"
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 )
 
 // get the app state manager
 var (
-	sm      = config.GetStateManager()
+	sm      = models.GetStateManager()
 	appData = sm.GetInput()
 	td      = sm.GetTemplateData()
 )

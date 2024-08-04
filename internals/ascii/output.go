@@ -3,15 +3,15 @@ package ascii
 import (
 	"strings"
 
+	appconfig "github.com/adiozdaniel/ascii-art/internals/app_config"
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
-	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
 
 // global variables declaration
 var (
 	reset      = "\033[0m"
 	height int = 8
-	app        = utils.NewInput()
+	app        = appconfig.GetState()
 )
 
 // Output compiles the banner characters to form the desired ascii art work

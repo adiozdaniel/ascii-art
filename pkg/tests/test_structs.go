@@ -1,6 +1,8 @@
 package tests
 
-import "github.com/adiozdaniel/ascii-art/pkg/utils"
+import (
+	appconfig "github.com/adiozdaniel/ascii-art/internals/app_config"
+)
 
 // Structs used to store the data in test files
 type args struct {
@@ -16,5 +18,5 @@ type tests struct {
 
 // global variables used in the tests
 var (
-	app = &utils.Input{}
+	app = appconfig.GetState()
 )

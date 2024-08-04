@@ -4,13 +4,13 @@ import (
 	"net/http"
 	"strings"
 
+	appconfig "github.com/adiozdaniel/ascii-art/internals/app_config"
 	"github.com/adiozdaniel/ascii-art/internals/handlers"
-	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
 
 // global variables
 var (
-	app = &utils.Input{}
+	app = appconfig.GetState()
 )
 
 // Allowed routes

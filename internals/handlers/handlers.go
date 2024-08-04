@@ -3,16 +3,16 @@ package handlers
 import (
 	"net/http"
 
+	appconfig "github.com/adiozdaniel/ascii-art/internals/app_config"
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/renders"
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
-	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
 
 // global variables
 var (
 	data renders.FormData
-	app  = utils.NewInput()
+	app  = appconfig.GetState()
 )
 
 // HomeHandler handles the homepage route '/'

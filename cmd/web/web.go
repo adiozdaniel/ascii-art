@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"net/http"
 
+	appconfig "github.com/adiozdaniel/ascii-art/internals/app_config"
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/routes"
-	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
 
 // global variables
 var (
-	app = utils.NewInput()
+	app = appconfig.GetState()
 )
 
 func main() {

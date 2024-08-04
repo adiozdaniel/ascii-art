@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/adiozdaniel/ascii-art/pkg/utils"
+	appconfig "github.com/adiozdaniel/ascii-art/internals/app_config"
 )
 
 type FormData struct {
@@ -16,7 +16,7 @@ type FormData struct {
 // global variables
 var (
 	Data FormData
-	app  = &utils.Input{}
+	app  = appconfig.GetState()
 )
 
 // functions is a map of template functions

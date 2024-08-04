@@ -8,11 +8,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/adiozdaniel/ascii-art/pkg/utils"
+	appconfig "github.com/adiozdaniel/ascii-art/internals/app_config"
 )
 
 // global variables declaration
-var app = utils.NewInput()
+var app = appconfig.GetState()
 
 // constants store the hashed sum of the banner files as hexadecimal strings
 const (

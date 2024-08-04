@@ -55,7 +55,7 @@ func loadCli() {
 				}
 				outputs := ascii.Output(app.Flags["input"])
 				termOutput := helpers.Alignment(outputs, newWidth)
-				// clearTerminal()
+				clearTerminal()
 				fmt.Print(termOutput)
 				resetCursor()
 

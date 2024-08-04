@@ -50,6 +50,7 @@ func loadCli() {
 				}
 
 				err := helpers.FileContents(banner)
+				fmt.Println("Loading Ascii Art...")
 				if err != nil {
 					continue
 				}
@@ -84,6 +85,9 @@ func readInput(inputChan chan string) {
 
 // shouldUpdate checks if the terminal output needs to be updated.
 func shouldUpdate(newWidth, prevWidth int, tempStr, prevColor, prevReff, prevFont string) bool {
+	if app.Flags["input"] == "" {
+		return false
+	}
 	return newWidth != prevWidth || tempStr != "" || app.Flags["color"] != prevColor || app.Flags["reff"] != prevReff || app.Flags["font"] != prevFont
 }
 

@@ -39,6 +39,7 @@ func FileContents(fileName string) error {
 	filePath := app.GetProjectRoot(fileDir, fileName)
 
 	contents, err := os.ReadFile(filePath)
+	fmt.Println(len(contents))
 	if err != nil || !validateBanner(contents) {
 		if app.Flags["isWeb"] == "true" {
 			return fmt.Errorf("not found")

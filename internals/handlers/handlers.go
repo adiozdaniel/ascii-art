@@ -55,7 +55,19 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	noasciis := ascii.NonAsciiOutput()
 	data.Body = output + "\n" + noasciis
 
-	renders.RenderTemplate(w, "ascii.page.html", data)
+	stringMap := map[string]string{
+		"Body": output + "\n" + noasciis,
+	}
+
+	renderData := struct {
+		Body      string            `json:"Body"`
+		StringMap map[string]string `json:"stringMap"`
+	}{
+		Body:      output + "\n" + noasciis,
+		StringMap: stringMap,
+	}
+
+	renders.RenderTemplate(w, "ascii.page.html", renderData)
 }
 
 // NotFoundHandler handles unknown routes; 404 status

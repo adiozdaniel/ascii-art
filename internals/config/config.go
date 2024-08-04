@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"html/template"
+	"os"
 	"path/filepath"
 )
 
@@ -33,10 +34,12 @@ func (a *AppConfig) CreateBannerCache() (map[string]string, error) {
 	}
 
 	for _, banner := range banners {
-		a.BannerFileCache[filepath.Base(banner)] = banner
+		contents, err := os.ReadFile(banner)
+		if err != nil {
+			return myCache, fmt.Errorf("error reading banner file %s: %v", banner, err)
+		}
+		a.BannerFileCache[filepath.Base(banner)] = string(contents)
 	}
-
-	fmt.Println(len(a.BannerFileCache), "banners found")
 
 	return myCache, nil
 }

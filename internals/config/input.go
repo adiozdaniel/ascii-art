@@ -70,7 +70,7 @@ var validFlags = map[string]bool{
 // Init initializes the InputData
 func (i *InputData) Init() {
 	if len(os.Args) > 1 {
-		// i.ErrorHandler("fatal")
+		i.ErrorHandler("fatal")
 	}
 }
 
@@ -124,7 +124,7 @@ func (i *InputData) ParseArgs() {
 	}
 
 	if err := i.Validate(); err != nil {
-		// i.ErrorHandler(err.Error())
+		i.ErrorHandler(err.Error())
 	}
 
 	if len(i.Args) > 0 {

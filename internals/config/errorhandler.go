@@ -18,7 +18,7 @@ var errors = map[string]string{
 }
 
 // ErrorHandler outputs errors and safely exits the program
-func (i *Input) ErrorHandler(errType string) {
+func (i *InputData) ErrorHandler(errType string) {
 	if errType == "fatal" {
 		path, _ := os.Getwd()
 

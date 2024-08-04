@@ -45,6 +45,7 @@ func main() {
 
 // init initializes the web data
 func init() {
+	appData.Init()
 	appData.Flags["font"] = "--standard"
 	appData.Flags["input"] = "Ascii~"
 	appData.Flags["reff"] = "Ascii"

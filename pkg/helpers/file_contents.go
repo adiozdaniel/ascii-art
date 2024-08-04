@@ -9,6 +9,7 @@ import (
 	"time"
 
 	appconfig "github.com/adiozdaniel/ascii-art/internals/config"
+	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
 
 // get the app state manager
@@ -49,7 +50,7 @@ func FileContents(fileName string) error {
 		}
 		fmt.Print("Be patient while downloading...\n")
 		time.Sleep(1 * time.Second)
-		err := app.DownloadFile("https://learn.zone01kisumu.ke/git/root/public/raw/branch/master/subjects/ascii-art/"+fileName[11:], filePath)
+		err := utils.DownloadFile("https://learn.zone01kisumu.ke/git/root/public/raw/branch/master/subjects/ascii-art/"+fileName[11:], filePath)
 		if err != nil {
 			fmt.Println(err)
 			os.Remove(filePath)

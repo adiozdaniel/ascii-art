@@ -1,4 +1,4 @@
-package utils
+package config
 
 import (
 	"fmt"
@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-// Input holds all the data passed around in the application
-type Input struct {
+// InputData holds all the data passed around in the application
+type InputData struct {
 	Flags        map[string]string
 	BannerFile   map[string]string
 	ValidFlags   map[string]bool
@@ -16,9 +16,9 @@ type Input struct {
 	FileContents []string
 }
 
-// NewInput creates a new Input instance with default values
-func NewInput() *Input {
-	return &Input{
+// NewInputData creates a new InputData instance with default values
+func NewInputData() *InputData {
+	return &InputData{
 		Flags:      members,
 		BannerFile: bannerFiles,
 		ValidFlags: validFlags,
@@ -40,13 +40,13 @@ var bannerFiles = map[string]string{
 
 // members holds struct members with default values
 var members = map[string]string{
-	"font":   "--standard",
-	"input":  "",
-	"color":  "",
-	"reff":   "",
-	"align":  "left",
-	"output": "",
-	"isWeb":  "",
+	"font":      "--standard",
+	"InputData": "",
+	"color":     "",
+	"reff":      "",
+	"align":     "left",
+	"output":    "",
+	"isWeb":     "",
 }
 
 // validFlags stores allowed flags
@@ -67,43 +67,43 @@ var validFlags = map[string]bool{
 	"-reff":        true,
 }
 
-// Init initializes the Input
-func (i *Input) Init() {
+// Init initializes the InputData
+func (i *InputData) Init() {
 	if len(os.Args) > 1 {
-		ErrorHandler("fatal")
+		// i.ErrorHandler("fatal")
 	}
 }
 
-// BannerFiles returns the map of banner files for the Input instance
-func (i *Input) BannerFiles() map[string]string {
+// BannerFiles returns the map of banner files for the InputData instance
+func (i *InputData) BannerFiles() map[string]string {
 	return i.BannerFile
 }
 
 // GetBannerPath returns the name for a specific banner key or defaults to "standard.txt"
-func (i *Input) GetBannerPath(key string) string {
+func (i *InputData) GetBannerPath(key string) string {
 	if name, ok := i.BannerFile[key]; ok {
 		return name
 	}
 	return "standard.txt"
 }
 
-// Validate checks if the Input contains valid arguments and flags
-func (i *Input) Validate() error {
+// Validate checks if the InputData contains valid arguments and flags
+func (i *InputData) Validate() error {
 	if i.Flags["output"] != "" && !strings.HasSuffix(i.Flags["output"], ".txt") {
 		return fmt.Errorf("output file must have a .txt extension")
 	}
 	return nil
 }
 
-// ParseArgs parses command-line arguments and sets Input fields
-func (i *Input) ParseArgs() {
+// ParseArgs parses command-line arguments and sets InputData fields
+func (i *InputData) ParseArgs() {
 	if i.Flags == nil {
 		i.Flags = make(map[string]string)
 	}
 
 	for j := 0; j < len(i.Args); {
-		input := i.Args[j]
-		parts := strings.SplitN(input, "=", 2)
+		InputData := i.Args[j]
+		parts := strings.SplitN(InputData, "=", 2)
 		if len(parts) != 2 {
 			j++
 			continue
@@ -124,34 +124,34 @@ func (i *Input) ParseArgs() {
 	}
 
 	if err := i.Validate(); err != nil {
-		ErrorHandler(err.Error())
+		// i.ErrorHandler(err.Error())
 	}
 
 	if len(i.Args) > 0 {
-		i.Flags["input"] = strings.Join(i.Args, " ")
+		i.Flags["InputData"] = strings.Join(i.Args, " ")
 	}
 	i.Args = nil
 }
 
 // IsValidFlag checks if a flag is valid
-func (i *Input) IsValidFlag(flag string) bool {
+func (i *InputData) IsValidFlag(flag string) bool {
 	return i.ValidFlags[flag]
 }
 
 // RemoveLeadingDashes removes leading '--' from the given string
-func (i *Input) RemoveLeadingDashes(input string) string {
-	if strings.HasPrefix(input, "--") {
-		return input[2:]
+func (i *InputData) RemoveLeadingDashes(InputData string) string {
+	if strings.HasPrefix(InputData, "--") {
+		return InputData[2:]
 	}
-	return input
+	return InputData
 }
 
 // RemoveQuotes removes opening or closing quotes in a string
-func (i *Input) RemoveQuotes(input string) string {
+func (i *InputData) RemoveQuotes(InputData string) string {
 	var result strings.Builder
 	inQuotes := false
 
-	for _, ch := range input {
+	for _, ch := range InputData {
 		if ch == '"' {
 			inQuotes = !inQuotes
 		} else if ch != '\'' {
@@ -163,7 +163,7 @@ func (i *Input) RemoveQuotes(input string) string {
 }
 
 // GetProjectRoot dynamically finds the project root directory
-func (i *Input) GetProjectRoot(path, name string) string {
+func (i *InputData) GetProjectRoot(path, name string) string {
 	cwd, _ := os.Getwd()
 	baseDir := cwd
 	if strings.HasSuffix(baseDir, "/web") || strings.HasSuffix(baseDir, "/cli") {

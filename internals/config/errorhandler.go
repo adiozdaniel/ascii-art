@@ -1,4 +1,4 @@
-package utils
+package config
 
 import (
 	"fmt"
@@ -18,7 +18,7 @@ var errors = map[string]string{
 }
 
 // ErrorHandler outputs errors and safely exits the program
-func ErrorHandler(errType string) {
+func (i *Input) ErrorHandler(errType string) {
 	if errType == "fatal" {
 		path, _ := os.Getwd()
 

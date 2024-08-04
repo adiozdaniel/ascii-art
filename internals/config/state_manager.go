@@ -2,13 +2,11 @@ package config
 
 import (
 	"sync"
-
-	"github.com/adiozdaniel/ascii-art/pkg/utils"
 )
 
 // StateManager manages the application state.
 type StateManager struct {
-	input  *utils.Input
+	input  *InputData
 	config *AppConfig
 }
 
@@ -22,14 +20,14 @@ var (
 func GetStateManager() *StateManager {
 	once.Do(func() {
 		instance = &StateManager{}
-		instance.input = utils.NewInput()
+		instance.input = NewInputData()
 		instance.config = App()
 	})
 	return instance
 }
 
 // GetInput returns the Input instance of StateManager
-func (sm *StateManager) GetInput() *utils.Input {
+func (sm *StateManager) GetInput() *InputData {
 	return sm.input
 }
 

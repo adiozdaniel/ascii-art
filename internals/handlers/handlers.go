@@ -16,6 +16,16 @@ var (
 	td      = sm.GetTemplateData()
 )
 
+// Repository handles HTTP requests and application state
+type Repository struct {
+	AppData *models.StateManager
+}
+
+// NewRepository creates a new Repository instance
+func NewRepo(sm *models.StateManager) *Repository {
+	return &Repository{AppData: sm}
+}
+
 // HomeHandler handles the homepage route '/'
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	renders.RenderTemplate(w, "home.page.html", nil)

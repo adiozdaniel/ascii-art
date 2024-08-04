@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
+	"github.com/adiozdaniel/ascii-art/internals/handlers"
 	"github.com/adiozdaniel/ascii-art/internals/models"
 	"github.com/adiozdaniel/ascii-art/internals/routes"
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
@@ -47,6 +48,8 @@ func main() {
 // init initializes the web data
 func init() {
 	appData.Init()
+
+	handlers.NewRepo(sm)
 
 	tc, err := appConfig.CreateTemplateCache()
 	if err != nil {

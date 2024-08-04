@@ -44,18 +44,14 @@ func loadCli() {
 		default:
 			newWidth := helpers.GetTerminalWidth()
 			if shouldUpdate(newWidth, prevWidth, tempStr, prevColor, prevReff, prevFont) {
-				banner := ""
-				if prevFont == "" {
-					banner = app.BannerFile["--standard"]
+				if app.Flags["font"] == "" {
+					app.Flags["font"] = "--standard"
 				}
 
-				if app.Flags["Font"] != "" {
-					banner = app.BannerFile[app.Flags["font"]]
-				}
-
+				banner := app.BannerFile[app.Flags["font"]]
 				err := helpers.FileContents(banner)
 				if err != nil {
-					continue
+					fmt.Println(err)
 				}
 				outputs := ascii.Output(app.Flags["input"])
 				termOutput := helpers.Alignment(outputs, newWidth)

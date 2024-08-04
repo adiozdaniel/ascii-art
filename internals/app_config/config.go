@@ -9,17 +9,21 @@ import (
 // StateManager manages the application state.
 type StateManager struct {
 	input *utils.Input
-	once  sync.Once
 }
 
-// GetState returns the singleton instance of StateManager
-func GetStateManager() *StateManager {
-	var sm StateManager
+// singleton instance of StateManager
+var (
+	instance *StateManager
+	once     sync.Once
+)
 
-	sm.once.Do(func() {
-		sm.input = utils.NewInput()
+// GetStateManager returns the singleton instance of StateManager
+func GetStateManager() *StateManager {
+	once.Do(func() {
+		instance = &StateManager{}
+		instance.input = utils.NewInput()
 	})
-	return &sm
+	return instance
 }
 
 // GetInput returns the Input instance of StateManager

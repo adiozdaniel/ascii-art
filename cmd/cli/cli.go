@@ -49,8 +49,11 @@ func loadCli() {
 					banner = app.BannerFile["--standard"]
 				}
 
+				if app.Flags["Font"] != "" {
+					banner = app.BannerFile[app.Flags["font"]]
+				}
+
 				err := helpers.FileContents(banner)
-				fmt.Println("Loading Ascii Art...")
 				if err != nil {
 					continue
 				}

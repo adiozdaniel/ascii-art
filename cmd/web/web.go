@@ -6,6 +6,7 @@ import (
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
 	appconfig "github.com/adiozdaniel/ascii-art/internals/config"
+	"github.com/adiozdaniel/ascii-art/internals/renders"
 	"github.com/adiozdaniel/ascii-art/internals/routes"
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 )
@@ -46,6 +47,12 @@ func main() {
 // init initializes the web data
 func init() {
 	appData.Init()
+
+	tc, err := renders.CreateTemplateCache()
+	if err != nil {
+		appData.ErrorHandler("templates")
+	}
+
 	appData.Flags["font"] = "--standard"
 	appData.Flags["input"] = "Ascii~"
 	appData.Flags["reff"] = "Ascii"

@@ -15,6 +15,7 @@ var errors = map[string]string{
 	"txt":        "😣 Oops! We currently only support text files\n\nSee Documentation in: ../README.md",
 	"web":        "😮 Oops! Something went wrong",
 	"restricted": "😣 Oops! this is a restricted path.\nplease use another path.",
+	"templates":  "🤯 Oops! Something went wrong! where are templates?",
 }
 
 // ErrorHandler outputs errors and safely exits the program

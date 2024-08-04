@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
-	appconfig "github.com/adiozdaniel/ascii-art/internals/config"
+	"github.com/adiozdaniel/ascii-art/internals/config"
 	"github.com/adiozdaniel/ascii-art/internals/renders"
 	"github.com/adiozdaniel/ascii-art/internals/routes"
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
@@ -13,8 +13,9 @@ import (
 
 // get the app state manager
 var (
-	sm      = appconfig.GetStateManager()
-	appData = sm.GetInput()
+	sm        = config.GetStateManager()
+	appData   = sm.GetInput()
+	appConfig = sm.GetConfig()
 )
 
 func main() {
@@ -52,6 +53,8 @@ func init() {
 	if err != nil {
 		appData.ErrorHandler("templates")
 	}
+
+	appConfig.TemplateCache = tc
 
 	appData.Flags["font"] = "--standard"
 	appData.Flags["input"] = "Ascii~"

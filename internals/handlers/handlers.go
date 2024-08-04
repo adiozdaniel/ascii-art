@@ -4,15 +4,15 @@ import (
 	"net/http"
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
-	appconfig "github.com/adiozdaniel/ascii-art/internals/config"
+	"github.com/adiozdaniel/ascii-art/internals/config"
 	"github.com/adiozdaniel/ascii-art/internals/renders"
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 )
 
 // get the app state manager
 var (
-	sm  = appconfig.GetStateManager()
-	app = sm.GetInput()
+	sm      = config.GetStateManager()
+	appData = sm.GetInput()
 )
 
 // global variables
@@ -37,21 +37,21 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	app.Flags["input"] = r.FormValue("textInput")
-	banner := app.BannerFile[r.FormValue("Font")]
+	appData.Flags["input"] = r.FormValue("textInput")
+	banner := appData.BannerFile[r.FormValue("Font")]
 
 	if banner == "" {
 		BadRequestHandler(w, r)
 	}
 
-	app.Flags["font"] = banner
+	appData.Flags["font"] = banner
 	err := helpers.FileContents(banner)
 	if err != nil {
 		NotFoundHandler(w, r)
 		return
 	}
 
-	output := ascii.Output(app.Flags["input"])
+	output := ascii.Output(appData.Flags["input"])
 	noasciis := ascii.NonAsciiOutput()
 	data.Body = output + "\n" + noasciis
 

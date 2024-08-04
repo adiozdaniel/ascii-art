@@ -21,3 +21,8 @@ func GetStateManager() *StateManager {
 	})
 	return &sm
 }
+
+// GetInput returns the Input instance of StateManager
+func (sm *StateManager) GetInput() *utils.Input {
+	return sm.input
+}

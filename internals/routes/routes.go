@@ -10,8 +10,9 @@ import (
 
 // get the app state manager
 var (
-	sm  = models.GetStateManager()
-	app = sm.GetInput()
+	sm   = models.GetStateManager()
+	app  = sm.GetInput()
+	repo = handlers.NewRepo(sm)
 )
 
 // Allowed routes
@@ -31,7 +32,7 @@ func RouteChecker(next http.Handler) http.Handler {
 		}
 
 		if _, ok := allowedRoutes[r.URL.Path]; !ok {
-			handlers.NotFoundHandler(w, r)
+			repo.NotFoundHandler(w, r)
 			return
 		}
 		next.ServeHTTP(w, r)
@@ -45,18 +46,18 @@ func RegisterRoutes(mux *http.ServeMux) {
 	mux.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		handlers.HomeHandler(w, r)
+		repo.HomeHandler(w, r)
 	})
 
 	mux.HandleFunc("/ascii-art", func(w http.ResponseWriter, r *http.Request) {
-		handlers.SubmitHandler(w, r)
+		repo.SubmitHandler(w, r)
 	})
 
 	mux.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
-		handlers.AboutHandler(w, r)
+		repo.AboutHandler(w, r)
 	})
 
 	mux.HandleFunc("/contact", func(w http.ResponseWriter, r *http.Request) {
-		handlers.ContactHandler(w, r)
+		repo.ContactHandler(w, r)
 	})
 }

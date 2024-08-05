@@ -8,6 +8,13 @@ import (
 	"time"
 )
 
+type contexKey string
+
+const (
+	// SessionKey is the key for storing the session in the context
+	sessionKey contexKey = "session"
+)
+
 // Session represents a user session
 type Session struct {
 	CRSFToken string
@@ -16,14 +23,16 @@ type Session struct {
 
 // SessionManager manages user sessions
 type SessionManager struct {
-	sessions map[string]*Session
-	lock     sync.RWMutex
+	sessions   map[string]*Session
+	SessionKey contexKey
+	lock       sync.RWMutex
 }
 
 // NewSessionManager returns a new instance of SessionManager
 func NewSessionManager() *SessionManager {
 	return &SessionManager{
-		sessions: make(map[string]*Session),
+		sessions:   make(map[string]*Session),
+		SessionKey: sessionKey,
 	}
 }
 

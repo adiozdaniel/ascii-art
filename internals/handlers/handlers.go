@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"context"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/models"
@@ -29,6 +31,36 @@ func NewRepo(sm *models.StateManager) *Repository {
 
 // HomeHandler handles the homepage route '/'
 func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
+	sessionID, err := r.Cookie("session_id")
+	var session *models.Session
+
+	if err == nil {
+		// Retrieve the session from the session manager
+		session, _ = m.AppData.GetSessionManager().GetSession(sessionID.Value)
+	}
+
+	if session == nil {
+		// Create a new session
+		session = m.AppData.GetSessionManager().CreateSession()
+
+		// Set the session cookie
+		http.SetCookie(w, &http.Cookie{
+			Name:    "session_id",
+			Value:   session.CRSFToken,
+			Path:    "/",
+			Expires: time.Now().Add(30 * time.Minute),
+		})
+	}
+
+	// Add the session to the request context
+	ctx := context.WithValue(r.Context(), middlewares.SessionKey, session)
+	r = r.WithContext(ctx)
+
+	// Log the session ID for debugging purposes
+	fmt.Fprintf(w, "Session ID: %s\n", session.CRSFToken)
+	fmt.Printf("Session ID: %s\n", session.CRSFToken)
+
+	// Render the home page
 	renders.RenderTemplate(w, "home.page.html", nil)
 }
 

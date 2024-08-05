@@ -55,8 +55,6 @@ func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Log the session ID for debugging purposes
 	fmt.Printf("Session ID: %s\n", session.CRSFToken)
-
-	// Render the home page
 	renders.RenderTemplate(w, "home.page.html", nil)
 }
 

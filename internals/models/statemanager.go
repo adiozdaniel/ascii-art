@@ -6,9 +6,10 @@ import (
 
 // StateManager manages the application state.
 type StateManager struct {
-	input  *InputData
-	config *AppConfig
-	td     *TemplateData
+	input   *InputData
+	config  *AppConfig
+	td      *TemplateData
+	session *SessionManager
 }
 
 // singleton instance of StateManager
@@ -24,6 +25,7 @@ func GetStateManager() *StateManager {
 		instance.input = NewInputData()
 		instance.config = App()
 		instance.td = NewTemplateData()
+		instance.session = NewSessionManager()
 	})
 	return instance
 }
@@ -41,4 +43,9 @@ func (sm *StateManager) GetConfig() *AppConfig {
 // GetTemplateData returns the TemplateData instance of StateManager
 func (sm *StateManager) GetTemplateData() *TemplateData {
 	return sm.td
+}
+
+// GetSessionManager returns the SessionManager instance of StateManager
+func (sm *StateManager) GetSessionManager() *SessionManager {
+	return sm.session
 }

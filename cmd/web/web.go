@@ -6,6 +6,7 @@ import (
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/handlers"
+	"github.com/adiozdaniel/ascii-art/internals/middlewares"
 	"github.com/adiozdaniel/ascii-art/internals/models"
 	"github.com/adiozdaniel/ascii-art/internals/routes"
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
@@ -22,7 +23,7 @@ func main() {
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)
 
-	wrappedMux := routes.RouteChecker(mux)
+	wrappedMux := middlewares.RouteChecker(mux)
 
 	server := &http.Server{
 		Addr:    ":8080",

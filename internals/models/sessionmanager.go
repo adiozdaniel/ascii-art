@@ -38,6 +38,18 @@ func (sm *SessionManager) CreateSession() *Session {
 	return session
 }
 
+// GetSession retrieves a session by ID
+func (sm *SessionManager) GetSession(sessionID string) (*Session, bool) {
+	sm.lock.RLock()
+	defer sm.lock.RUnlock()
+
+	session, exists := sm.sessions[sessionID]
+	if !exists || session.Expiry.Before(time.Now()) {
+		return nil, false
+	}
+	return session, true
+}
+
 // generateSessionID generates a unique session ID
 func generateSessionID() string {
 	return "unique-session-id"

@@ -8,11 +8,13 @@ import (
 	"github.com/adiozdaniel/ascii-art/internals/models"
 )
 
+const sessionCookieName = "session_id"
+
 // SessionMiddleware sets up sessions for incoming requests
 func SessionMiddleware(sm *models.SessionManager) func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			cookie, err := r.Cookie("session_id")
+			cookie, err := r.Cookie(sessionCookieName)
 			var sessionID string
 
 			if err == nil {
@@ -21,10 +23,12 @@ func SessionMiddleware(sm *models.SessionManager) func(next http.Handler) http.H
 				session := sm.CreateSession()
 				sessionID = session.CRSFToken
 				http.SetCookie(w, &http.Cookie{
-					Name:    "session_id",
-					Value:   sessionID,
-					Path:    "/",
-					Expires: time.Now().Add(30 * time.Minute),
+					Name:     sessionCookieName,
+					Value:    sessionID,
+					Path:     "/",
+					Expires:  time.Now().Add(30 * time.Minute),
+					HttpOnly: true,
+					Secure:   false, // TODO replace with true for production
 				})
 			}
 

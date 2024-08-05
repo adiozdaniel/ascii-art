@@ -50,6 +50,14 @@ func (sm *SessionManager) GetSession(sessionID string) (*Session, bool) {
 	return session, true
 }
 
+// DeleteSession removes a session
+func (sm *SessionManager) DeleteSession(sessionID string) {
+	sm.lock.Lock()
+	defer sm.lock.Unlock()
+
+	delete(sm.sessions, sessionID)
+}
+
 // generateSessionID generates a unique session ID
 func generateSessionID() string {
 	return "unique-session-id"

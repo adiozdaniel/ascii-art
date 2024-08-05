@@ -1,84 +1,161 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #222;
+}
+
 p {
-	padding: 0 80px;
+    padding: 0 80px;
 }
 
 form {
-	background-color: rgb(106, 104, 104);
-	padding: 20px;
-	margin: 50px auto;
-	width: 540px;
-	border-radius: 8px;
-	box-shadow: 0 3px 10px rgba(0, 0, 0, 1);
-	display: inline-block;
-	font-size: larger;
+    background-color: rgb(106, 104, 104);
+    padding: 20px;
+    margin: 50px auto;
+    width: 90%;
+    max-width: 540px;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 1);
+    display: block;
+    font-size: larger;
+    box-sizing: border-box; /* Ensures padding is included in width/height */
 }
 
 .radio-btns {
-	padding: 15px 30px;
-	margin: 20px;
-	border: 1px solid #ccc;
-	display: flex;
-	flex-direction: column;
-	text-align: left;
-	box-shadow: 0 3px 10px rgba(0, 0, 0, 1);
-	border-radius: 8px;
+    padding: 15px 30px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 1);
+    border-radius: 8px;
 }
+
 .radio-btns:hover {
-	box-shadow: 0 3px 20px rgba(0, 0, 0, 1);
-	background-color: rgb(25, 25, 25);
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 1);
+    background-color: rgb(25, 25, 25);
 }
 
 .radio-btns label {
-	padding: 10px 20px;
-	display: inline-block;
-	cursor: pointer;
-	transition: color 0.3s;
+    padding: 10px 20px;
+    display: inline-block;
+    cursor: pointer;
+    transition: color 0.3s;
 }
 
 .radio-btns label:active,
 .radio-btns label:hover,
 .radio-btns label:focus {
-	color: rgb(139, 3, 166);
+    color: rgb(139, 3, 166);
 }
 
 input[type="submit"] {
-	background-color: #235525;
-	margin-top: 20px;
-	color: rgb(233, 230, 230);
-	padding: 10px 20px;
-	width: 25%;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	box-shadow: 0 3px 10px rgba(0, 0, 0, 1);
+    background-color: #235525;
+    margin-top: 20px;
+    color: rgb(233, 230, 230);
+    padding: 10px 20px;
+    width: 100%;
+    max-width: 150px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 1);
 }
 
 textarea {
-	background-color: #010119;
-	color: rgb(233, 230, 230);
-	margin: 20px auto;
-	width: 80%;
-	padding: 20px;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	box-shadow: 0 1px 2px rgb(255, 255, 255);
-	display: block;
+    background-color: #010119;
+    color: rgb(233, 230, 230);
+    margin: 20px auto;
+    width: 90%;
+    max-width: 540px;
+    padding: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgb(255, 255, 255);
+    display: block;
+    box-sizing: border-box;
 }
 
 input[type="submit"]:hover {
-	background-color: #4c9850;
-	color: #222;
-	box-shadow: 0 10px 20px rgba(0, 0, 0, 1);
+    background-color: #4c9850;
+    color: #222;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 1);
 }
 
-
 .navbar #home {
-	background-color: #235525;
-	cursor: not-allowed;
-	color: rgb(233, 230, 230);
-	padding: 5px 10px;
-	border-radius: 5px;
-	box-shadow: 0 3px 5px rgba(0, 0, 0, 1);
-	transition: 0.5s;
+    background-color: #235525;
+    cursor: not-allowed;
+    color: rgb(233, 230, 230);
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 1);
+    transition: 0.5s;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    p {
+        padding: 0 20px;
+    }
+
+    form {
+        margin: 20px auto;
+        width: 95%;
+        padding: 10px;
+    }
+
+    .radio-btns {
+        padding: 10px 20px;
+        margin: 15px 0;
+    }
+
+    .radio-btns label {
+        padding: 5px 10px;
+    }
+
+    input[type="submit"] {
+        width: 100%;
+        padding: 15px;
+        font-size: larger;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    p {
+        padding: 0 10px;
+    }
+
+    form {
+        margin: 10px auto;
+        width: 100%;
+        padding: 5px;
+    }
+
+    .radio-btns {
+        padding: 5px 10px;
+        margin: 10px 0;
+    }
+
+    .radio-btns label {
+        padding: 5px;
+    }
+
+    input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        font-size: medium;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 10px;
+    }
 }

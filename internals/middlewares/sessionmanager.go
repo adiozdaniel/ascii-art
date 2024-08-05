@@ -20,23 +20,27 @@ func SessionMiddleware(sm *models.SessionManager) func(next http.Handler) http.H
 			if err == nil {
 				sessionID = cookie.Value
 			} else {
-				session := sm.CreateSession()
-				sessionID = session.CRSFToken
+				http.Redirect(w, r, "/login", http.StatusSeeOther)
+				return
+			}
+
+			session, exists := sm.GetSession(sessionID)
+			if !exists || session.Expiry.Before(time.Now()) {
 				http.SetCookie(w, &http.Cookie{
 					Name:     sessionCookieName,
-					Value:    sessionID,
+					Value:    "",
 					Path:     "/",
-					Expires:  time.Now().Add(30 * time.Minute),
+					Expires:  time.Now().Add(-time.Hour),
 					HttpOnly: true,
 					Secure:   false, // TODO replace with true for production
 				})
+
+				http.Redirect(w, r, "/login", http.StatusSeeOther)
+				return
 			}
 
-			session, _ := sm.GetSession(sessionID)
-			if session != nil {
-				ctx := context.WithValue(r.Context(), sm.SessionKey, session)
-				r = r.WithContext(ctx)
-			}
+			ctx := context.WithValue(r.Context(), sm.SessionKey, session)
+			r = r.WithContext(ctx)
 
 			next.ServeHTTP(w, r)
 		})

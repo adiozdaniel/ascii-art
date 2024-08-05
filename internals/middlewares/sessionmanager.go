@@ -34,7 +34,7 @@ func SessionMiddleware(sm *models.SessionManager) func(next http.Handler) http.H
 
 			session, _ := sm.GetSession(sessionID)
 			if session != nil {
-				ctx := context.WithValue(r.Context(), SessionKey, session)
+				ctx := context.WithValue(r.Context(), sm.SessionKey, session)
 				r = r.WithContext(ctx)
 			}
 

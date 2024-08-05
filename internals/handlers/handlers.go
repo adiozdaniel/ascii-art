@@ -53,9 +53,9 @@ func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := context.WithValue(r.Context(), ck.SessionKey, session)
 	r = r.WithContext(ctx)
 
-	// Log the session ID for debugging purposes
-	fmt.Printf("Session ID: %s\n", session.CRSFToken)
-	renders.RenderTemplate(w, "home.page.html", nil)
+	if session.CRSFToken != "" && r.Method == "GET" {
+		renders.RenderTemplate(w, "home.page.html", nil)
+	}
 }
 
 // SubmitHandler handles the output route '/ascii-art'

@@ -3,6 +3,7 @@ package middlewares
 import (
 	"context"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/adiozdaniel/ascii-art/internals/models"
@@ -14,6 +15,11 @@ const sessionCookieName = "session_id"
 func SessionMiddleware(sm *models.SessionManager) func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if strings.HasPrefix(r.URL.Path, "/static/") {
+				next.ServeHTTP(w, r)
+				return
+			}
+
 			cookie, err := r.Cookie(sessionCookieName)
 			var sessionID string
 

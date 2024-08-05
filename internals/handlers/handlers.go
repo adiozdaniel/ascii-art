@@ -19,6 +19,8 @@ var (
 	ck      = sm.GetSessionManager()
 )
 
+const sessionCookieName = "session_id"
+
 // Repository handles HTTP requests and application state
 type Repository struct {
 	AppData *models.StateManager
@@ -111,10 +113,35 @@ func (m *Repository) NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	renders.RenderTemplate(w, "notfound.page.html", nil)
 }
 
-// NotFoundHandler handles unknown routes; 404 status
+// LoginHandler handles user login and session creation
 func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusAccepted)
-	renders.RenderTemplate(w, "login.page.html", nil)
+	if r.Method == http.MethodGet {
+		renders.RenderTemplate(w, "login.page.html", nil)
+		return
+	}
+
+	if r.Method == http.MethodPost {
+		username := r.FormValue("username")
+
+		if username != "" {
+			session := m.AppData.GetSessionManager().CreateSession()
+
+			http.SetCookie(w, &http.Cookie{
+				Name:     sessionCookieName,
+				Value:    session.CRSFToken,
+				Path:     "/",
+				Expires:  time.Now().Add(30 * time.Minute),
+				HttpOnly: true,
+				Secure:   false, // TODO replace with true for production
+			})
+
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+			return
+		}
+
+		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
+		return
+	}
 }
 
 // BadRequestHandler handles bad requests routes

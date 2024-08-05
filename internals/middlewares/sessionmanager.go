@@ -18,7 +18,6 @@ func SessionMiddleware(sm *models.SessionManager) func(next http.Handler) http.H
 			if err == nil {
 				sessionID = cookie.Value
 			} else {
-				// Create a new session if cookie doesn't exist
 				session := sm.CreateSession()
 				sessionID = session.CRSFToken
 				http.SetCookie(w, &http.Cookie{
@@ -29,16 +28,12 @@ func SessionMiddleware(sm *models.SessionManager) func(next http.Handler) http.H
 				})
 			}
 
-			// Retrieve session
 			session, _ := sm.GetSession(sessionID)
-
-			// Set the session in the context if it exists
 			if session != nil {
 				ctx := context.WithValue(r.Context(), SessionKey, session)
 				r = r.WithContext(ctx)
 			}
 
-			// Call the next handler
 			next.ServeHTTP(w, r)
 		})
 	}

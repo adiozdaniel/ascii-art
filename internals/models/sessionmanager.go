@@ -1,6 +1,9 @@
 package models
 
 import (
+	"crypto/rand"
+	"encoding/base64"
+	"fmt"
 	"sync"
 	"time"
 )
@@ -60,5 +63,9 @@ func (sm *SessionManager) DeleteSession(sessionID string) {
 
 // generateSessionID generates a unique session ID
 func generateSessionID() string {
-	return "unique-session-id"
+	b := make([]byte, 32)
+	if _, err := rand.Read(b); err != nil {
+		return fmt.Sprintf("%d", time.Now().UnixNano())
+	}
+	return base64.URLEncoding.EncodeToString(b)
 }

@@ -17,6 +17,7 @@ var (
 	sm      = models.GetStateManager()
 	appData = sm.GetInput()
 	td      = sm.GetTemplateData()
+	ck      = sm.GetSessionManager()
 )
 
 // Repository handles HTTP requests and application state
@@ -53,7 +54,7 @@ func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Add the session to the request context
-	ctx := context.WithValue(r.Context(), middlewares.SessionKey, session)
+	ctx := context.WithValue(r.Context(), ck.SessionKey, session)
 	r = r.WithContext(ctx)
 
 	// Log the session ID for debugging purposes

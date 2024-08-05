@@ -111,6 +111,12 @@ func (m *Repository) NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	renders.RenderTemplate(w, "notfound.page.html", nil)
 }
 
+// NotFoundHandler handles unknown routes; 404 status
+func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusAccepted)
+	renders.RenderTemplate(w, "login.page.html", nil)
+}
+
 // BadRequestHandler handles bad requests routes
 func (m *Repository) BadRequestHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusBadRequest)

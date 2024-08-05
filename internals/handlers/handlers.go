@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -67,7 +66,11 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		session, _ = m.AppData.GetSessionManager().GetSession(cookie.Value)
 	}
 
-	fmt.Printf("Session ID: %s\n", session.CRSFToken)
+	// fmt.Printf("Session ID: %s\n", session.CRSFToken)  // Debugging
+	if session == nil || session.CRSFToken == "" {
+		m.NotFoundHandler(w, r)
+		return
+	}
 
 	if r.FormValue("textInput") == "" && r.Method != "POST" {
 		renders.RenderTemplate(w, "ascii.page.html", nil)

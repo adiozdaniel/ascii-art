@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
@@ -33,6 +34,14 @@ func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 // SubmitHandler handles the output route '/ascii-art'
 func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
+	session, ok := r.Context().Value(m.AppData.GetSessionManager()).(*models.Session)
+	if !ok {
+		http.Error(w, "No session found", http.StatusUnauthorized)
+		return
+	}
+
+	fmt.Fprintf(w, "Session ID: %s\n", session.CRSFToken)
+	fmt.Printf("Session ID: %s\n", session.CRSFToken)
 	if r.FormValue("textInput") == "" && r.Method != "POST" {
 		renders.RenderTemplate(w, "ascii.page.html", nil)
 		return

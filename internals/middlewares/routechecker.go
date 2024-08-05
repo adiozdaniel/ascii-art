@@ -20,6 +20,7 @@ var allowedRoutes = map[string]bool{
 	"/ascii-art": true,
 	"/about":     true,
 	"/contact":   true,
+	"/login":     true,
 }
 
 // RouteChecker is a middleware that checkes allowed routes

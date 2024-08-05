@@ -28,6 +28,10 @@ func RegisterRoutes(mux *http.ServeMux) {
 		repo.SubmitHandler(w, r)
 	})
 
+	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+		repo.SubmitHandler(w, r)
+	})
+
 	mux.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
 		repo.AboutHandler(w, r)
 	})

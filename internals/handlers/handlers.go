@@ -32,19 +32,16 @@ func NewRepo(sm *models.StateManager) *Repository {
 
 // HomeHandler handles the homepage route '/'
 func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
-	sessionID, err := r.Cookie("session_id")
+	cookie, err := r.Cookie("session_id")
 	var session *models.Session
 
 	if err == nil {
-		// Retrieve the session from the session manager
-		session, _ = m.AppData.GetSessionManager().GetSession(sessionID.Value)
+		session, _ = m.AppData.GetSessionManager().GetSession(cookie.Value)
 	}
 
 	if session == nil {
-		// Create a new session
 		session = m.AppData.GetSessionManager().CreateSession()
 
-		// Set the session cookie
 		http.SetCookie(w, &http.Cookie{
 			Name:    "session_id",
 			Value:   session.CRSFToken,
@@ -53,7 +50,6 @@ func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 
-	// Add the session to the request context
 	ctx := context.WithValue(r.Context(), ck.SessionKey, session)
 	r = r.WithContext(ctx)
 

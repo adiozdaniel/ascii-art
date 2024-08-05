@@ -14,16 +14,18 @@ import (
 
 // get the app state manager
 var (
-	sm        = models.GetStateManager()
-	appData   = sm.GetInput()
-	appConfig = sm.GetConfig()
+	sm             = models.GetStateManager()
+	appData        = sm.GetInput()
+	appConfig      = sm.GetConfig()
+	sessionManager = sm.GetSessionManager()
 )
 
 func main() {
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)
 
-	wrappedMux := middlewares.RouteChecker(mux)
+	wrappedMux := middlewares.SessionMiddleware(
+		sessionManager)(middlewares.RouteChecker(mux))
 
 	server := &http.Server{
 		Addr:    ":8080",

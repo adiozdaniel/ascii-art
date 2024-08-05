@@ -2,11 +2,13 @@ package models
 
 import (
 	"sync"
+	"time"
 )
 
 // Session represents a user session
 type Session struct {
 	CRSFToken string
+	Expiry    time.Time
 }
 
 // SessionManager manages user sessions
@@ -30,6 +32,7 @@ func (sm *SessionManager) CreateSession() *Session {
 	sessionID := generateSessionID()
 	session := &Session{
 		CRSFToken: sessionID,
+		Expiry:    time.Now().Add(30 * time.Minute),
 	}
 	sm.sessions[sessionID] = session
 	return session

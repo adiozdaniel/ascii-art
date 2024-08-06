@@ -119,6 +119,30 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// LogoutHandler handles user logout by deleting the session
+func (m *Repository) LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("session_id")
+	if err != nil {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	sessionID := cookie.Value
+	sm := m.app.GetSessionManager()
+	sm.DeleteSession(sessionID)
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "session_id",
+		Value:    "",
+		Path:     "/",
+		Expires:  time.Now().Add(-time.Hour),
+		HttpOnly: true,
+		Secure:   false, // TODO replace with true for production
+	})
+
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
+}
+
 // NotFoundHandler handles unknown routes; 404 status
 func (m *Repository) NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)

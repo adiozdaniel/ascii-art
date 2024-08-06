@@ -128,6 +128,8 @@ func (m *Repository) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sessionID := cookie.Value
+	td := m.app.GetTemplateData().StringMap
+	td["username"] = ""
 	sm := m.app.GetSessionManager()
 	sm.DeleteSession(sessionID)
 

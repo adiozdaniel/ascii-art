@@ -8,6 +8,12 @@
 	font-size: 0.9em;
 	justify-content: space-between;
 	align-items: center;
+	transition: transform 0.3s ease;
+}
+
+.user {
+	padding: 0.3em 0;
+	margin: 0.5em;
 }
 
 .user-icon {
@@ -16,7 +22,7 @@
 	display: flex;
 	align-items: center;
 	margin-left: auto;
-	padding: 0 10px;
+	transition: transform 0.3s ease;
 }
 
 .user-icon img {
@@ -26,6 +32,13 @@
 	cursor: pointer;
 	transition: 0.3s;
 	border-radius: 50%;
+	transition: transform 0.3s ease;
+}
+
+.username {
+	font-weight: bold;
+	color: #4c9850;
+	transition: 0.3s ease;
 }
 
 .navbar ul {
@@ -41,6 +54,7 @@
 .navbar ul li {
 	display: inline;
 	padding: 0px 5%;
+	transition: transform 0.3s ease;
 }
 
 .navbar ul li a {
@@ -60,4 +74,9 @@
 	background-color: rgb(197, 14, 4);
 	border-radius: 0.6em;
 	padding: 0.2em 0.9em;
+	transition: transform 0.3s ease;
+}
+
+.user-icon.shrink {
+	transform: scale(0.6);
 }

@@ -36,19 +36,24 @@
 		</li>
 	</ul>
 	{{if .StringMap.username}}
-	<div class="user">
-		<div class="user-icon">
-			<img
-				src="/static/images/user.png"
-				alt="user-icon"
-			/>
-			<div><span>Hello,</span> <span> {{.StringMap.username}}</span></div>
+	<div
+		class="user-icon"
+		hx-get="/toggle-shrink"
+		hx-trigger="click"
+		hx-target=".user-icon"
+	>
+		<img
+			src="/static/images/user.png"
+			alt="user-icon"
+		/>
+		<div>
+			<span>Hello,</span> <span class="username">{{.StringMap.username}}</span>
+			<a
+				id="logout"
+				href="/logout"
+				>Logout</a
+			>
 		</div>
-		<a
-			id="logout"
-			href="/logout"
-			>Logout</a
-		>
 	</div>
 	{{end}}
 </div>

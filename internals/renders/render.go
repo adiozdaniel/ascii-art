@@ -7,15 +7,9 @@ import (
 	"github.com/adiozdaniel/ascii-art/internals/models"
 )
 
-// get the app state manager
-var (
-	sm        = models.GetStateManager()
-	appConfig = sm.GetConfig()
-)
-
 // RenderTemplate is a helper function to render HTML templateseWriter, tmpl string, data
 func RenderTemplate(w http.ResponseWriter, tmpl string, data *models.TemplateData) {
-	t := appConfig.TemplateCache
+	t := models.GetStateManager().GetConfig().TemplateCache
 	ts, ok := t[tmpl]
 	if !ok {
 		renderServerErrorTemplate(w, tmpl+" is missing, contact the Network Admin.")

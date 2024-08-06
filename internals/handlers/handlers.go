@@ -60,7 +60,7 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	td["ascii"] = output
 	td["nonasciis"] = nonasciis
 
-	renders.RenderTemplate(w, "ascii.page.html", td)
+	renders.RenderTemplate(w, "ascii.page.html", m.app.GetTemplateData())
 }
 
 // LoginHandler handles user login and session creation

@@ -13,8 +13,8 @@ var (
 	appConfig = sm.GetConfig()
 )
 
-// RenderTemplate is a helper function to render HTML templates
-func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
+// RenderTemplate is a helper function to render HTML templateseWriter, tmpl string, data
+func RenderTemplate(w http.ResponseWriter, tmpl string, data *models.TemplateData) {
 	t := appConfig.TemplateCache
 	ts, ok := t[tmpl]
 	if !ok {

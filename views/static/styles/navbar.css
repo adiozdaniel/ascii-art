@@ -33,7 +33,7 @@
 	font-size: 0.8em;
 	display: flex;
 	align-items: center;
-	margin-left: auto;
+	padding: 0.6em;
 	transition: transform 0.3s ease;
 }
 
@@ -55,21 +55,20 @@
 
 .navbar ul {
 	list-style: none;
-	width: 70%;
-	margin-right: 2%;
-	padding-right: 5%;
+	width: 55%;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: space-evenly;
 }
 
 .navbar ul li {
-	display: inline;
-	padding: 0px 5%;
+	margin: 0;
+	display: inline-block;
 	transition: transform 0.3s ease;
 }
 
 .navbar ul li a {
+	width: 100%;
 	color: bisque;
 	text-decoration: none;
 	transition: 0.3s;

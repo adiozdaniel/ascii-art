@@ -27,30 +27,6 @@
 	transition: 0.3s;
 }
 
-/* Show hamburger icon on small screens */
-@media (max-width: 768px) {
-	.hamburger {
-		display: flex;
-	}
-	.navbar ul {
-		display: none; /* Hide the menu by default */
-		flex-direction: column;
-		position: absolute;
-		top: 60px;
-		right: 0;
-		background-color: #222;
-		width: 100%;
-	}
-	.navbar ul.show {
-		display: flex; /* Show menu when toggled */
-	}
-	.navbar ul li {
-		display: none;
-		padding: 10px;
-		text-align: center;
-	}
-}
-
 /* User Icon Styles */
 .user-icon {
 	transition: 0.3s;
@@ -119,4 +95,28 @@
 
 .user-icon.shrink {
 	transform: scale(0.6);
+}
+
+/* Show hamburger icon on small screens */
+@media (max-width: 544px) {
+	.hamburger {
+		display: flex;
+	}
+	.navbar ul {
+		display: none; /* Hide the menu by default */
+		flex-direction: column;
+		position: absolute;
+		top: 60px;
+		right: 0;
+		background-color: #222;
+		width: 100%;
+	}
+	.navbar ul.show {
+		display: none; /* Show menu when toggled */
+	}
+	.navbar ul li {
+		display: none;
+		padding: 10px;
+		text-align: center;
+	}
 }

@@ -34,16 +34,22 @@
 				>Contact</a
 			>
 		</li>
-		{{if .StringMap.username}}
+	</ul>
+	{{if .StringMap.username}}
+	<div class="user">
 		<div class="user-icon">
 			<img
 				src="/static/images/user.png"
 				alt="user-icon"
 			/>
-			Hello, {{.StringMap.username}}
-			<a href="/logout">Logout</a>
+			<div><span>Hello,</span>&nbsp; <span> {{.StringMap.username}}</span></div>
 		</div>
-		{{end}}
-	</ul>
+		<a
+			id="logout"
+			href="/logout"
+			>Logout</a
+		>
+	</div>
+	{{end}}
 </div>
 {{end}}

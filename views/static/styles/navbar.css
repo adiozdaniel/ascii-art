@@ -4,23 +4,47 @@
 	padding: 0;
 	margin: 0;
 	box-shadow: 0 8px 6px rgba(0, 0, 0, 0.5);
+	display: flex;
 }
 
-.navbar ul img {
+.user {
+	margin: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.user span {
+	font-size: 0.8em;
+	margin-bottom: 5px;
+}
+
+.user-icon {
+	transition: 0.3s;
+	display: flex;
+	align-items: center;
+}
+
+.user-icon img {
+	display: block;
 	width: 50px;
 	height: 50px;
 	cursor: pointer;
 	transition: 0.3s;
-	display: flex;
 }
 
 .navbar ul {
 	list-style: none;
+	width: 70%;
 	margin-right: 2%;
 	padding-right: 5%;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+}
+
+.navbar #logout {
+	/* display: block;
+	flex-direction: column; */
 }
 
 .navbar ul li {

@@ -91,7 +91,7 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if session != nil && session.CRSFToken != "" && r.Method == "GET" {
-			renders.RenderTemplate(w, "home.page.html", nil)
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 		}
 		return
 	}

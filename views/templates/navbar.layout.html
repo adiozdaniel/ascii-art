@@ -35,10 +35,14 @@
 			>
 		</li>
 		{{if .StringMap.username}}
-		<img
-			src="/static/images/user.png"
-			alt="user-icon"
-		/>
+		<div class="user-icon">
+			<img
+				src="/static/images/user.png"
+				alt="user-icon"
+			/>
+			Hello, {{.StringMap.username}}
+			<a href="/logout">Logout</a>
+		</div>
 		{{end}}
 	</ul>
 </div>

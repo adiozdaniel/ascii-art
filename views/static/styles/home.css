@@ -43,7 +43,7 @@ form {
 
 input[type="submit"] {
 	background-color: #235525;
-	margin-top: 20px;
+	margin: 20px auto;
 	color: rgb(233, 230, 230);
 	padding: 10px 20px;
 	width: 25%;

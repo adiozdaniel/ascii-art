@@ -31,6 +31,7 @@ var allowedRoutes = map[string]bool{
 	"/about":     true,
 	"/contact":   true,
 	"/login":     true,
+	"/logout":    true,
 }
 
 // RouteChecker is a middleware that checkes allowed routes

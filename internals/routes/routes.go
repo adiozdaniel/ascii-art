@@ -32,6 +32,10 @@ func RegisterRoutes(mux *http.ServeMux) {
 		repo.LoginHandler(w, r)
 	})
 
+	mux.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
+		repo.LogoutHandler(w, r)
+	})
+
 	mux.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
 		repo.AboutHandler(w, r)
 	})

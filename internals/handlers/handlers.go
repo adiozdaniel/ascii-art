@@ -74,7 +74,7 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if session == nil {
-			renders.RenderTemplate(w, "login.page.html", nil)
+			renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
 		}
 
 		if session != nil && session.CRSFToken != "" && r.Method == "GET" {
@@ -122,27 +122,27 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 // NotFoundHandler handles unknown routes; 404 status
 func (m *Repository) NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
-	renders.RenderTemplate(w, "notfound.page.html", nil)
+	renders.RenderTemplate(w, "notfound.page.html", m.app.GetTemplateData())
 }
 
 // BadRequestHandler handles bad requests routes
 func (m *Repository) BadRequestHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusBadRequest)
-	renders.RenderTemplate(w, "badrequest.page.html", nil)
+	renders.RenderTemplate(w, "badrequest.page.html", m.app.GetTemplateData())
 }
 
 // ServerErrorHandler handles server failures that result in status 500
 func (m *Repository) ServerErrorHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusInternalServerError)
-	renders.RenderTemplate(w, "serverError.page.html", nil)
+	renders.RenderTemplate(w, "serverError.page.html", m.app.GetTemplateData())
 }
 
 // AboutHandler handles the about page route '/about'
 func (m *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
-	renders.RenderTemplate(w, "about.page.html", nil)
+	renders.RenderTemplate(w, "about.page.html", m.app.GetTemplateData())
 }
 
 // ContactHandler handles the contact page route '/contact'
 func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
-	renders.RenderTemplate(w, "contact.page.html", nil)
+	renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
 }

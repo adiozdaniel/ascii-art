@@ -97,7 +97,7 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if username != "" {
-			m.app.GetTemplateData().StringMap["username"] = username
+			m.app.GetTemplateData().StringMap["username"] = m.app.GetTemplateData().CapitalizeFirst(username)
 
 			session := m.app.GetSessionManager().CreateSession()
 

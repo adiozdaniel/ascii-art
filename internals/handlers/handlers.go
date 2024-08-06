@@ -10,24 +10,16 @@ import (
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 )
 
-// get the app state manager
-var (
-	sm      = models.GetStateManager()
-	appData = sm.GetInput()
-	td      = sm.GetTemplateData()
-	ck      = sm.GetSessionManager()
-)
-
 const sessionCookieName = "session_id"
 
 // Repository handles HTTP requests and application state
 type Repository struct {
-	AppData *models.StateManager
+	app *models.StateManager
 }
 
 // NewRepository creates a new Repository instance
 func NewRepo(sm *models.StateManager) *Repository {
-	return &Repository{AppData: sm}
+	return &Repository{app: sm}
 }
 
 // HomeHandler handles the homepage route '/'
@@ -47,25 +39,26 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	appData.Flags["input"] = r.FormValue("textInput")
-	banner := appData.BannerFile[r.FormValue("Font")]
+	m.app.GetInput().Flags["input"] = r.FormValue("textInput")
+	banner := m.app.GetInput().BannerFile[r.FormValue("Font")]
 
 	if banner == "" {
 		m.BadRequestHandler(w, r)
 	}
 
-	appData.Flags["font"] = banner
+	m.app.GetInput().Flags["font"] = banner
 	err := helpers.FileContents(banner)
 	if err != nil {
 		m.NotFoundHandler(w, r)
 		return
 	}
 
-	output := ascii.Output(appData.Flags["input"])
+	output := ascii.Output(m.app.GetInput().Flags["input"])
 	nonasciis := ascii.NonAsciiOutput()
 
-	td.StringMap["ascii"] = output
-	td.StringMap["nonasciis"] = nonasciis
+	td := m.app.GetTemplateData().StringMap
+	td["ascii"] = output
+	td["nonasciis"] = nonasciis
 
 	renders.RenderTemplate(w, "ascii.page.html", td)
 }
@@ -83,7 +76,7 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		var session *models.Session
 
 		if err == nil {
-			session, _ = m.AppData.GetSessionManager().GetSession(cookie.Value)
+			session, _ = m.app.GetSessionManager().GetSession(cookie.Value)
 		}
 
 		if session == nil {
@@ -110,7 +103,7 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if username != "" {
-			session := m.AppData.GetSessionManager().CreateSession()
+			session := m.app.GetSessionManager().CreateSession()
 
 			http.SetCookie(w, &http.Cookie{
 				Name:     sessionCookieName,

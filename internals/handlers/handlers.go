@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"context"
 	"net/http"
 	"time"
 
@@ -33,30 +32,7 @@ func NewRepo(sm *models.StateManager) *Repository {
 
 // HomeHandler handles the homepage route '/'
 func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
-	cookie, err := r.Cookie("session_id")
-	var session *models.Session
-
-	if err == nil {
-		session, _ = m.AppData.GetSessionManager().GetSession(cookie.Value)
-	}
-
-	if session == nil {
-		session = m.AppData.GetSessionManager().CreateSession()
-
-		http.SetCookie(w, &http.Cookie{
-			Name:    "session_id",
-			Value:   session.CRSFToken,
-			Path:    "/",
-			Expires: time.Now().Add(30 * time.Minute),
-		})
-	}
-
-	ctx := context.WithValue(r.Context(), ck.SessionKey, session)
-	r = r.WithContext(ctx)
-
-	if session.CRSFToken != "" && r.Method == "GET" {
-		renders.RenderTemplate(w, "home.page.html", nil)
-	}
+	renders.RenderTemplate(w, "home.page.html", nil)
 }
 
 // SubmitHandler handles the output route '/ascii-art'
@@ -116,7 +92,31 @@ func (m *Repository) NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 // LoginHandler handles user login and session creation
 func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		renders.RenderTemplate(w, "login.page.html", nil)
+		cookie, err := r.Cookie("session_id")
+		var session *models.Session
+
+		if err == nil {
+			session, _ = m.AppData.GetSessionManager().GetSession(cookie.Value)
+		}
+
+		if session == nil {
+			renders.RenderTemplate(w, "login.page.html", nil)
+			// session = m.AppData.GetSessionManager().CreateSession()
+
+			// http.SetCookie(w, &http.Cookie{
+			// 	Name:    "session_id",
+			// 	Value:   session.CRSFToken,
+			// 	Path:    "/",
+			// 	Expires: time.Now().Add(30 * time.Minute),
+			// })
+		}
+
+		// ctx := context.WithValue(r.Context(), ck.SessionKey, session)
+		// r = r.WithContext(ctx)
+
+		if session.CRSFToken != "" && r.Method == "GET" {
+			renders.RenderTemplate(w, "home.page.html", nil)
+		}
 		return
 	}
 

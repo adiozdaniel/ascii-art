@@ -37,19 +37,6 @@ func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 // SubmitHandler handles the output route '/ascii-art'
 func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
-	cookie, err := r.Cookie("session_id")
-	var session *models.Session
-
-	if err == nil {
-		session, _ = m.AppData.GetSessionManager().GetSession(cookie.Value)
-	}
-
-	// fmt.Printf("Session ID: %s\n", session.CRSFToken)  // Debugging
-	if session == nil || session.CRSFToken == "" {
-		m.NotFoundHandler(w, r)
-		return
-	}
-
 	if r.FormValue("textInput") == "" && r.Method != "POST" {
 		renders.RenderTemplate(w, "ascii.page.html", nil)
 		return
@@ -68,7 +55,7 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	appData.Flags["font"] = banner
-	err = helpers.FileContents(banner)
+	err := helpers.FileContents(banner)
 	if err != nil {
 		m.NotFoundHandler(w, r)
 		return

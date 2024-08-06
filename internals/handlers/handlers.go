@@ -24,7 +24,7 @@ func NewRepo(sm *models.StateManager) *Repository {
 
 // HomeHandler handles the homepage route '/'
 func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
-	renders.RenderTemplate(w, "home.page.html", nil)
+	renders.RenderTemplate(w, "home.page.html", m.app.GetTemplateData())
 }
 
 // SubmitHandler handles the output route '/ascii-art'

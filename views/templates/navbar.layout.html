@@ -36,12 +36,7 @@
 		</li>
 	</ul>
 	{{if .StringMap.username}}
-	<div
-		class="user-icon"
-		hx-get="/toggle-shrink"
-		hx-trigger="click"
-		hx-target=".user-icon"
-	>
+	<div class="user-icon">
 		<img
 			src="/static/images/user.png"
 			alt="user-icon"

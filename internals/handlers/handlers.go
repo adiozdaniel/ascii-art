@@ -63,12 +63,6 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	renders.RenderTemplate(w, "ascii.page.html", td)
 }
 
-// NotFoundHandler handles unknown routes; 404 status
-func (m *Repository) NotFoundHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusNotFound)
-	renders.RenderTemplate(w, "notfound.page.html", nil)
-}
-
 // LoginHandler handles user login and session creation
 func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
@@ -121,6 +115,12 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 		return
 	}
+}
+
+// NotFoundHandler handles unknown routes; 404 status
+func (m *Repository) NotFoundHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotFound)
+	renders.RenderTemplate(w, "notfound.page.html", nil)
 }
 
 // BadRequestHandler handles bad requests routes

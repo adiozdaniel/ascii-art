@@ -98,6 +98,7 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 		if username != "" {
 			m.app.GetTemplateData().StringMap["username"] = username
+
 			session := m.app.GetSessionManager().CreateSession()
 
 			http.SetCookie(w, &http.Cookie{

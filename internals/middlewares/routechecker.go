@@ -14,6 +14,16 @@ var (
 	repo = handlers.NewRepo(sm)
 )
 
+// Middlewares struct
+type Middlewares struct {
+	sm *models.SessionManager
+}
+
+// NewMiddlewares creates a new Middlewares instance
+func NewMiddlewares(sm *models.SessionManager) *Middlewares {
+	return &Middlewares{sm: sm}
+}
+
 // Allowed routes
 var allowedRoutes = map[string]bool{
 	"/":          true,

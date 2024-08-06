@@ -53,6 +53,7 @@ func init() {
 	appData.Init()
 
 	handlers.NewRepo(sm)
+	middlewares.NewMiddlewares(models.GetStateManager().GetSessionManager())
 
 	tc, err := appConfig.CreateTemplateCache()
 	if err != nil {

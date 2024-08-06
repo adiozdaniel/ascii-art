@@ -12,8 +12,12 @@
 }
 
 /* Hamburger Icon Styles */
+.menu-toggle {
+	display: none; /* Hide the checkbox */
+}
+
 .hamburger {
-	display: none; /* Hidden by default */
+	display: none;
 	flex-direction: column;
 	cursor: pointer;
 	padding: 10px;
@@ -101,8 +105,9 @@
 	.hamburger {
 		display: flex;
 	}
+
 	.navbar ul {
-		display: none; /* Hide the menu by default */
+		display: none; /* Hide menu by default */
 		flex-direction: column;
 		position: absolute;
 		top: 60px;
@@ -110,11 +115,12 @@
 		background-color: #222;
 		width: 100%;
 	}
-	.navbar ul.show {
-		display: none; /* Show menu when toggled */
+
+	.menu-toggle:checked + .hamburger + #nav-menu {
+		display: flex; /* Show menu when checkbox is checked */
 	}
+
 	.navbar ul li {
-		display: none;
 		padding: 10px;
 		text-align: center;
 	}

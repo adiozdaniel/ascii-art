@@ -6,15 +6,21 @@
 />
 <div class="navbar">
 	<!-- Hamburger Icon -->
-	<div
+	<input
+		type="checkbox"
+		id="menu-toggle"
+		class="menu-toggle"
+	/>
+	<label
+		for="menu-toggle"
 		class="hamburger"
-		onclick="toggleMenu()"
 	>
 		<div class="bar"></div>
 		<div class="bar"></div>
 		<div class="bar"></div>
-	</div>
+	</label>
 
+	<!-- Navigation Menu -->
 	<ul id="nav-menu">
 		<li>
 			<a
@@ -44,27 +50,25 @@
 				>Contact</a
 			>
 		</li>
-	</ul>
-
-	{{if .StringMap.username}}
-	<div class="user">
-		<div class="user-icon">
-			<img
-				src="/static/images/user.png"
-				alt="user-icon"
-			/>
-			<div>
-				<span>Hello,</span>
-				<span class="username">{{.StringMap.username}}</span>
-				<a
-					id="logout"
-					href="/logout"
-					>Logout</a
-				>
+		{{if .StringMap.username}}
+		<li class="user">
+			<div class="user-icon">
+				<img
+					src="/static/images/user.png"
+					alt="user-icon"
+				/>
+				<div>
+					<span>Hello,</span>
+					<span class="username">{{.StringMap.username}}</span>
+					<a
+						id="logout"
+						href="/logout"
+						>Logout</a
+					>
+				</div>
 			</div>
-		</div>
-	</div>
-	{{end}}
-	<!-- Navigation Menu -->
+		</li>
+		{{end}}
+	</ul>
 </div>
 {{end}}

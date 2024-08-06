@@ -5,50 +5,53 @@
 	type="text/css"
 />
 {{end}} {{define "title"}} Home {{end}} {{define "content"}}
-<form
-	action="/ascii-art"
-	method="POST"
->
-	<label for="textInput">Enter text:</label>
-	<textarea
-		type="text"
-		id="textInput"
-		name="textInput"
-		placeholder="Type something"
-	></textarea>
-	<br />
+<div class="home-page">
+	<h1 id="home-page">Welcome to the World of ASCII Art!</h1>
+	<form
+		action="/ascii-art"
+		method="POST"
+	>
+		<label for="textInput">Enter text:</label>
+		<textarea
+			type="text"
+			id="textInput"
+			name="textInput"
+			placeholder="Type something"
+		></textarea>
+		<br />
 
-	<label>Choose a font:</label>
-	<br />
-	<input
-		type="radio"
-		id="standard"
-		name="Font"
-		value="--standard"
-		checked
-	/>
-	<label for="standard">Standard</label>
+		<label>Choose a font:</label>
+		<br />
+		<input
+			type="radio"
+			id="standard"
+			name="Font"
+			value="--standard"
+			checked
+		/>
+		<label for="standard">Standard</label>
 
-	<input
-		type="radio"
-		id="thinkertoy"
-		name="Font"
-		value="--thinkertoy"
-	/>
-	<label for="thinkertoy">Thinkertoy</label>
+		<input
+			type="radio"
+			id="thinkertoy"
+			name="Font"
+			value="--thinkertoy"
+		/>
+		<label for="thinkertoy">Thinkertoy</label>
 
-	<input
-		type="radio"
-		id="shadow"
-		name="Font"
-		value="--shadow"
-	/>
-	<label for="shadow">Shadow</label>
+		<input
+			type="radio"
+			id="shadow"
+			name="Font"
+			value="--shadow"
+		/>
+		<label for="shadow">Shadow</label>
 
-	<br />
-	<input
-		type="submit"
-		value="Submit"
-	/>
-</form>
+		<br />
+		<input
+			type="submit"
+			value="Submit"
+		/>
+	</form>
+</div>
 {{end}}

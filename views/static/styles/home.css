@@ -3,14 +3,14 @@ p {
 }
 
 form {
+	display: flex;
+	flex-direction: column;
 	background-color: rgb(106, 104, 104);
 	padding: 20px;
-	margin: 50px auto;
-	width: 540px;
+	margin: 10px auto;
+	max-width: 540px;
 	border-radius: 8px;
 	box-shadow: 0 3px 10px rgba(0, 0, 0, 1);
-	display: inline-block;
-	font-size: larger;
 }
 
 .radio-btns {
@@ -72,7 +72,6 @@ input[type="submit"]:hover {
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 1);
 }
 
-
 .navbar #home {
 	background-color: #235525;
 	cursor: not-allowed;
@@ -81,4 +80,12 @@ input[type="submit"]:hover {
 	border-radius: 5px;
 	box-shadow: 0 3px 5px rgba(0, 0, 0, 1);
 	transition: 0.5s;
+}
+
+.home-page {
+	font-size: 0.8em;
+}
+
+#home-page h1 {
+	font-size: 0.5rem;
 }

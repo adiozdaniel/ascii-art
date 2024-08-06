@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -98,10 +97,13 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method == http.MethodPost {
-		fmt.Println(r.Form)
-		username := r.FormValue("username")
-		fmt.Println(username)
+		err := r.ParseForm()
+		if err != nil {
+			m.NotFoundHandler(w, r)
+			return
+		}
 
+		username := r.FormValue("username")
 		if username == "" {
 			m.BadRequestHandler(w, r)
 			return

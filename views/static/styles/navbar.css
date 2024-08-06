@@ -5,7 +5,7 @@
 	margin: 0;
 	box-shadow: 0 8px 6px rgba(0, 0, 0, 0.5);
 	display: flex;
-	font-size: 0.9em;
+	font-size: 0.8em;
 	justify-content: space-between;
 	align-items: center;
 	transition: transform 0.3s ease;
@@ -75,6 +75,10 @@
 	border-radius: 0.6em;
 	padding: 0.2em 0.9em;
 	transition: transform 0.3s ease;
+}
+
+.navbar #logout:hover {
+	background-color: rgb(100, 14, 9);
 }
 
 .user-icon.shrink {

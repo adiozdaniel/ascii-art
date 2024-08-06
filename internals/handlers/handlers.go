@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -88,27 +89,23 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 		if session == nil {
 			renders.RenderTemplate(w, "login.page.html", nil)
-			// session = m.AppData.GetSessionManager().CreateSession()
-
-			// http.SetCookie(w, &http.Cookie{
-			// 	Name:    "session_id",
-			// 	Value:   session.CRSFToken,
-			// 	Path:    "/",
-			// 	Expires: time.Now().Add(30 * time.Minute),
-			// })
 		}
 
-		// ctx := context.WithValue(r.Context(), ck.SessionKey, session)
-		// r = r.WithContext(ctx)
-
-		if session.CRSFToken != "" && r.Method == "GET" {
+		if session != nil && session.CRSFToken != "" && r.Method == "GET" {
 			renders.RenderTemplate(w, "home.page.html", nil)
 		}
 		return
 	}
 
 	if r.Method == http.MethodPost {
+		fmt.Println(r.Form)
 		username := r.FormValue("username")
+		fmt.Println(username)
+
+		if username == "" {
+			m.BadRequestHandler(w, r)
+			return
+		}
 
 		if username != "" {
 			session := m.AppData.GetSessionManager().CreateSession()

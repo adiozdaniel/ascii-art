@@ -10,7 +10,7 @@ svg {
 }
 
 .authors {
-	margin: auto;
+	margin: 2em auto -8em auto;
 }
 
 .author {
@@ -41,6 +41,8 @@ svg {
 	text-align: center;
 	color: bisque;
 	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
 	justify-content: space-between;
 	align-items: center;
 	border-top: 1px solid #444;
@@ -50,4 +52,8 @@ svg {
 .my-footer svg {
 	fill: bisque;
 	margin: 0 10px;
+}
+
+.my-footer span {
+	font-size: 0.8em;
 }

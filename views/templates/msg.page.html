@@ -1,0 +1,16 @@
+{{template "base" . }} {{define "css"}}
+<link
+	rel="stylesheet"
+	href="/static/styles/success.css"
+	type="text/css"
+/>
+{{end}} {{define "title"}} Success {{end}} {{define "content"}}
+
+<div class="success-content">
+	{{if .StringMap.username}}
+	<h2>Heey, {{.StringMap.username}}!</h2>
+	{{end}}
+	<h3>Your message has been received. We will get back to you asap</h3>
+	<h2>Follow Us on Social Media!</h2>
+</div>
+{{end}}

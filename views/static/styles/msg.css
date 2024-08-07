@@ -1,0 +1,26 @@
+.msg-content {
+	display: flex;
+	flex-direction: column;
+	max-width: 80%;
+	min-width: 20%;
+	margin: 2em auto;
+	padding: 20px;
+	margin-top: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.msg-content h3 {
+	color: #333;
+}
+.msg-content p {
+	color: #666;
+}
+
+.navbar #contact {
+	background-color: #235525;
+	cursor: not-allowed;
+	color: rgb(233, 230, 230);
+	padding: 5px 10px;
+	border-radius: 5px;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 1);
+	transition: 0.5s;
+}

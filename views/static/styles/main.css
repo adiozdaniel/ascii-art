@@ -19,11 +19,27 @@ h1 {
 	transform: scale(90%);
 }
 
+@keyframes growShrink {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(0.7);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
 .btn {
 	background-color: #235525;
 	text-decoration: none;
 	color: rgb(47, 109, 128);
+	align-items: center;
+	justify-content: center;
+	animation: growShrink 1s infinite;
 }
+
 .btn:hover {
 	background-color: #5b7e5c;
 	color: blanchedalmond;

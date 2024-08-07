@@ -5,24 +5,25 @@
 	type="text/css"
 />
 {{end}} {{define "title"}} Login {{end}} {{define "content"}}
-<div class="container">
-	<div class="main-content">
-		<h2>Login Here!</h2>
-		<p>Oops, it seems your session came to an end</p>
-
-		<form
-			class="contact-form"
-			method="POST"
-		>
-			<label for="name">Your Name</label>
-			<input
-				type="text"
-				id="username"
-				name="username"
-				placeholder="Your awesome name"
-			/>
-			<button type="submit">Login 🚀</button>
-		</form>
+<p>Oops, it seems you are not logged in</p>
+<h2>Login Here!</h2>
+<form
+	class="login-form"
+	method="POST"
+>
+	<div id="alias">
+		<label for="input">Alias:</label>
+		<input
+			id="username"
+			name="username"
+			placeholder="your awesome name"
+			required
+			type="text"
+		/>
 	</div>
-</div>
+	<input
+		value="Login  🚀"
+		type="submit"
+	/>
+</form>
 {{end}}

@@ -50,6 +50,7 @@ func SessionMiddleware(sm *models.SessionManager) func(next http.Handler) http.H
 				})
 
 				if r.URL.Path != "/login" {
+					models.GetStateManager().GetTemplateData().StringMap["username"] = ""
 					http.Redirect(w, r, "/login", http.StatusSeeOther)
 					return
 				}

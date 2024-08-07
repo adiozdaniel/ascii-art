@@ -8,6 +8,7 @@ form {
 	background-color: rgb(106, 104, 104);
 	padding: 20px;
 	margin: 10px auto;
+	width: 75%;
 	max-width: 540px;
 	border-radius: 8px;
 	box-shadow: 0 3px 10px rgba(0, 0, 0, 1);

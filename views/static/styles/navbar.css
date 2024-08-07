@@ -13,7 +13,7 @@
 
 /* Hamburger Icon Styles */
 .menu-toggle {
-	display: none; /* Hide the checkbox */
+	display: none;
 }
 
 .hamburger {
@@ -110,18 +110,35 @@
 	}
 
 	.navbar ul {
-		display: none; /* Hide menu by default */
+		display: none;
 		flex-direction: column;
 		position: absolute;
 		top: 60px;
 		right: 0;
-		background-color: #222;
 		width: 100%;
 	}
 
-	.menu-toggle:checked + .hamburger + #nav-menu {
+	.menu-toggle:checked + .hamburger #bar1 {
+		transform: rotate(45deg);
+		position: relative;
+		top: 15px;
+	}
+
+	.menu-toggle:checked + .hamburger #bar2 {
+		opacity: 0;
+	}
+
+	.menu-toggle:checked + .hamburger #bar3 {
+		transform: rotate(-45deg);
+		position: relative;
+		top: -10px;
+	}
+
+	.menu-toggle:checked ~ #nav-menu {
 		display: flex;
 		z-index: 500;
+		opacity: 0.8;
+		background-color: #222;
 	}
 
 	.navbar ul li {

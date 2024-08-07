@@ -85,3 +85,10 @@ input[type="submit"]:hover {
 .home-page {
 	font-size: 0.8em;
 }
+
+.radios {
+	display: flex;
+	flex-direction: row;
+	margin: 3px auto;
+	flex-wrap: wrap;
+}

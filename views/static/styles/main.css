@@ -32,7 +32,7 @@ h1 {
 }
 
 .btn {
-	height: 1.4em;
+	height: fit-content;
 	text-decoration: none;
 	color: bisque;
 	letter-spacing: 0.2em;

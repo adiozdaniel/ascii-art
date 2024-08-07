@@ -26,12 +26,13 @@ func NewMiddlewares(sm *models.SessionManager) *Middlewares {
 
 // Allowed routes
 var allowedRoutes = map[string]bool{
-	"/":          true,
-	"/ascii-art": true,
-	"/about":     true,
-	"/contact":   true,
-	"/login":     true,
-	"/logout":    true,
+	"/":            true,
+	"/ascii-art":   true,
+	"/about":       true,
+	"/contact":     true,
+	"/login":       true,
+	"/logout":      true,
+	"/msg-success": true,
 }
 
 // RouteChecker is a middleware that checkes allowed routes

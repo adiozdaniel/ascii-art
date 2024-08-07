@@ -43,4 +43,8 @@ func RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/contact", func(w http.ResponseWriter, r *http.Request) {
 		repo.ContactHandler(w, r)
 	})
+
+	mux.HandleFunc("/msg-success", func(w http.ResponseWriter, r *http.Request) {
+		repo.MsgHandler(w, r)
+	})
 }

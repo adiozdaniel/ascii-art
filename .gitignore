@@ -1,6 +1,3 @@
-# ignore all text files
-*.txt
-
 # ignore Go module file
 go.mod
 go.sum

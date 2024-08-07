@@ -120,7 +120,8 @@
 	}
 
 	.menu-toggle:checked + .hamburger + #nav-menu {
-		display: flex; /* Show menu when checkbox is checked */
+		display: flex;
+		z-index: 500;
 	}
 
 	.navbar ul li {

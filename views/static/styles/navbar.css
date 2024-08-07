@@ -102,6 +102,9 @@
 
 /* Show hamburger icon on small screens */
 @media (max-width: 544px) {
+	h1 {
+		transform: scale(75%);
+	}
 	.hamburger {
 		display: flex;
 	}

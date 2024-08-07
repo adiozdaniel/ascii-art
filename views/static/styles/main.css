@@ -15,6 +15,10 @@ h2 {
 	color: bisque;
 }
 
+h1 {
+	transform: scale(90%);
+}
+
 .btn {
 	background-color: #235525;
 	text-decoration: none;

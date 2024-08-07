@@ -32,16 +32,23 @@ h1 {
 }
 
 .btn {
-	background-color: #235525;
+	height: 1.4em;
 	text-decoration: none;
-	color: rgb(47, 109, 128);
-	align-items: center;
-	justify-content: center;
-	animation: growShrink 1s infinite;
+	color: bisque;
+	letter-spacing: 0.2em;
+	cursor: pointer;
+	background-color: #235525;
+	margin: 20px auto;
+	padding: 2% 5%;
+	width: 30%;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 3px 10px rgb(1, 2, 19);
 }
 
 .btn:hover {
 	background-color: #5b7e5c;
-	color: blanchedalmond;
+	color: rgb(1, 2, 19);
 	text-decoration: none;
+	box-shadow: 0 2px 15px rgb(1, 2, 19);
 }

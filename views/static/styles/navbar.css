@@ -3,7 +3,7 @@
 	overflow: hidden;
 	padding: 0;
 	margin: 0;
-	box-shadow: 0 8px 6px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 8px 6px rgb(1, 2, 19);
 	display: flex;
 	font-size: 0.8em;
 	justify-content: space-between;
@@ -83,21 +83,21 @@
 }
 
 .navbar ul li a:hover {
-	color: rgb(0, 0, 0);
+	color: rgb(1, 2, 19);
 }
 
 .navbar #logout {
 	letter-spacing: 0.2em;
 	font-size: 0.7em;
 	color: bisque;
-	background-color: rgb(197, 14, 4);
+	background-color: rgb(139, 3, 166);
 	border-radius: 0.6em;
 	padding: 0.2em 0.9em;
 	transition: transform 0.3s ease;
 }
 
 .navbar #logout:hover {
-	background-color: rgb(100, 14, 9);
+	background-color: rgb(76, 2, 91);
 }
 
 .user-icon.shrink {
@@ -118,7 +118,7 @@
 		flex-direction: column;
 		position: absolute;
 		top: 60px;
-		right: 0; 
+		right: 0;
 		width: 100%;
 	}
 
@@ -152,7 +152,7 @@
 
 	.navbar ul li {
 		padding: 10px;
-		background-color: #000000;
+		background-color: rgb(1, 2, 19);
 		border-radius: 5%;
 		transition: background-color 0.5s ease;
 	}

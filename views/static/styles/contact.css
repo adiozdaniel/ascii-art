@@ -30,13 +30,6 @@
 	border-radius: 5px;
 }
 
-.btn {
-	border-radius: 1em;
-	height: 2em;
-	color: bisque;
-	letter-spacing: 0.3em;
-	cursor: pointer;
-}
 .navbar #contact {
 	background-color: #235525;
 	cursor: not-allowed;

@@ -1,31 +1,32 @@
 /* ascii */
 .container {
-    width: 80%;
-    margin: auto;
-    overflow: hidden;
-    padding: 20px;
+	width: 80%;
+	margin: auto;
+	overflow: hidden;
+	padding: 20px;
 }
 
 #home .main-content {
-    background-color: bisque;
-    padding: 20px;
-    margin-top: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+	background-color: bisque;
+	padding: 20px;
+	margin-top: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
 }
 
-#home .main-content h1, h3 {
-    color: #333;
+#home .main-content h1,
+h3 {
+	color: #333;
 }
 
 #home .main-content p {
-    color: #666;
-    line-height: 1.5;
+	color: #666;
+	line-height: 1.5;
 }
 
 #home .highlight {
-    color: rgb(111, 34, 2);
-    font-weight: bold;
+	color: rgb(111, 34, 2);
+	font-weight: bold;
 }
 
 pre {
@@ -52,4 +53,8 @@ pre {
 	border-radius: 5px;
 	box-shadow: 0 3px 5px rgba(0, 0, 0, 1);
 	transition: 0.5s;
+}
+
+.btn {
+	display: block;
 }

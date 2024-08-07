@@ -6,7 +6,7 @@
 	margin: 2em auto;
 	padding: 20px;
 	margin-top: 20px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 10px rgb(1, 2, 19);
 }
 .msg-content h3 {
 	color: #333;
@@ -18,9 +18,9 @@
 .navbar #contact {
 	background-color: #235525;
 	cursor: not-allowed;
-	color: rgb(233, 230, 230);
+	color: bisque;
 	padding: 5px 10px;
 	border-radius: 5px;
-	box-shadow: 0 3px 5px rgba(0, 0, 0, 1);
+	box-shadow: 0 3px 5px rgb(1, 2, 19);
 	transition: 0.5s;
 }

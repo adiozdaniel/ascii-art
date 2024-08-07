@@ -20,6 +20,11 @@ func SessionMiddleware(sm *models.SessionManager) func(next http.Handler) http.H
 				return
 			}
 
+			if r.URL.Path == "/contact"{
+				next.ServeHTTP(w, r)
+				return
+			}
+
 			cookie, err := r.Cookie(sessionCookieName)
 			var sessionID string
 

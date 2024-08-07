@@ -6,7 +6,7 @@
 />
 {{end}} {{define "title"}} Ascii {{end}} {{define "content"}}
 <div class="ascii">
-	{{if .StringMap}}
+	{{if and .StringMap (or .StringMap.ascii .StringMap.nonasciis)}}
 	<div class="non-ascii">
 		{{if .StringMap.ascii}}
 		<pre>{{.StringMap.ascii}}</pre>
@@ -14,6 +14,11 @@
 		<pre>{{.StringMap.nonasciis}}</pre>
 		{{end}}
 	</div>
+	<a
+		href="/"
+		class="btn"
+		>More Tests</a
+	>
 	{{ end }}
 </div>
 {{end}}

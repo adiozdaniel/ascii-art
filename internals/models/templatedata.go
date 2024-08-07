@@ -18,5 +18,10 @@ func (s *TemplateData) CapitalizeFirst(input string) string {
 		return input
 	}
 
+	if len(input) > 12 {
+		input = strings.ToLower(input[:12])
+		return strings.ToUpper(input[:1]) + input[1:]
+	}
+
 	return strings.ToUpper(string(input[0])) + strings.ToLower(input[1:])
 }

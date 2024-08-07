@@ -7,68 +7,82 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 )
 
-type FormData struct {
-	Body string
+// Define custom template functions
+var functions = template.FuncMap{
+	"contains": func(s, substr string) bool {
+        return strings.Contains(s, substr)
+    },
+    "toUpper": strings.ToUpper,
 }
 
-// Data is a global variable to hold the form data
-var Data FormData
-
-// functions is a map of template functions
-var functions = template.FuncMap{}
+// Cache to store templates for reuse
+var (
+	templateCache = make(map[string]*template.Template)
+	cacheMutex    sync.RWMutex
+)
 
 // RenderTemplate is a helper function to render HTML templates
 func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	t, _ := getTemplateCache()
-	ts, ok := t[tmpl]
+	// Use the cached template if available
+	ts, ok := getCachedTemplate(tmpl)
 	if !ok {
 		renderServerErrorTemplate(w, tmpl+" is missing, contact the Network Admin.")
 		return
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	err := ts.Execute(w, data)
-	if err != nil {
-		return
+	if err := ts.Execute(w, data); err != nil {
+		http.Error(w, "Error rendering template", http.StatusInternalServerError)
 	}
 }
 
-// getTemplateCache is a helper function to cache all HTML templates as a map
-func getTemplateCache() (map[string]*template.Template, error) {
-	myCache := map[string]*template.Template{}
+// getCachedTemplate fetches the template from cache or loads and caches it if not present
+func getCachedTemplate(name string) (*template.Template, bool) {
+	cacheMutex.RLock()
+	ts, ok := templateCache[name]
+	cacheMutex.RUnlock()
+
+	if ok {
+		return ts, true
+	}
+
+	// Load and cache the template if not found in cache
+	cacheMutex.Lock()
+	defer cacheMutex.Unlock()
+
+	// Double-check if another goroutine already cached the template
+	if ts, ok := templateCache[name]; ok {
+		return ts, true
+	}
+
+	tmpl, err := loadTemplate(name)
+	if err != nil {
+		return nil, false
+	}
+	templateCache[name] = tmpl
+	return tmpl, true
+}
+
+// loadTemplate loads and parses a template
+func loadTemplate(name string) (*template.Template, error) {
 	baseDir := GetProjectRoot("views", "templates")
 
-	templatesDir := filepath.Join(baseDir, "*.page.html")
-	pages, err := filepath.Glob(templatesDir)
+	// Find and parse the template and its layout files
+	pagePath := filepath.Join(baseDir, name+".page.html")
+	tmpl, err := template.New(filepath.Base(pagePath)).Funcs(functions).ParseFiles(pagePath)
 	if err != nil {
-		return myCache, fmt.Errorf("error globbing templates: %v", err)
+		return nil, fmt.Errorf("error parsing page %s: %v", name, err)
 	}
 
-	for _, page := range pages {
-		name := filepath.Base(page)
-		ts, err := template.New(name).Funcs(functions).ParseFiles(page)
-		if err != nil {
-			return myCache, fmt.Errorf("error parsing page %s: %v", name, err)
-		}
-
-		layoutsPath := filepath.Join(baseDir, "*.layout.html")
-		matches, err := filepath.Glob(layoutsPath)
-		if err != nil {
-			return myCache, fmt.Errorf("error finding layout files: %v", err)
-		}
-
-		if len(matches) > 0 {
-			ts, err = ts.ParseGlob(layoutsPath)
-			if err != nil {
-				return myCache, fmt.Errorf("error parsing layout files: %v", err)
-			}
-		}
-
-		myCache[name] = ts
+	layoutsPath := filepath.Join(baseDir, "*.layout.html")
+	if _, err := tmpl.ParseGlob(layoutsPath); err != nil {
+		return nil, fmt.Errorf("error parsing layout files: %v", err)
 	}
-	return myCache, nil
+
+	return tmpl, nil
 }
 
 // GetProjectRoot dynamically finds the project root directory

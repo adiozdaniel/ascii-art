@@ -50,25 +50,25 @@
 				>Contact</a
 			>
 		</li>
-		{{if .StringMap.username}}
-		<li class="user">
-			<div class="user-icon">
-				<img
-					src="/static/images/user.png"
-					alt="user-icon"
-				/>
-				<div>
-					<span>Hello,</span>
-					<span class="username">{{.StringMap.username}}</span>
-					<a
-						id="logout"
-						href="/logout"
-						>Logout</a
-					>
-				</div>
-			</div>
-		</li>
-		{{end}}
 	</ul>
+	{{if .StringMap.username}}
+	<div class="user">
+		<div class="user-icon">
+			<img
+				src="/static/images/user.png"
+				alt="user-icon"
+			/>
+			<div>
+				<span>Hello,</span>
+				<span class="username">{{.StringMap.username}}</span>
+				<a
+					id="logout"
+					href="/logout"
+					>Logout</a
+				>
+			</div>
+		</div>
+	</div>
+	{{end}}
 </div>
 {{end}}

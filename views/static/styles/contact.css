@@ -1,20 +1,20 @@
-.container {
-	width: 80%;
-	margin: auto;
-	overflow: hidden;
-	padding: 20px;
-}
-.main-content {
+.contact-content {
+	display: flex;
+	flex-direction: column;
+	max-width: 80%;
+	min-width: 20%;
+	margin: 2em auto;
 	padding: 20px;
 	margin-top: 20px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-.main-content h3 {
+.contact-content h3 {
 	color: #333;
 }
-.main-content p {
+.contact-content p {
 	color: #666;
 }
+
 .contact-form {
 	display: flex;
 	flex-direction: column;

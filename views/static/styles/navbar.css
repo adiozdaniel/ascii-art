@@ -118,7 +118,7 @@
 		flex-direction: column;
 		position: absolute;
 		top: 60px;
-		right: 0;
+		right: 0; 
 		width: 100%;
 	}
 
@@ -126,16 +126,19 @@
 		transform: rotate(45deg);
 		position: relative;
 		top: 15px;
+		transition: transform 0.4s ease;
 	}
 
 	.menu-toggle:checked + .hamburger #bar2 {
 		opacity: 0;
+		transition: transform 0.4s ease;
 	}
 
 	.menu-toggle:checked + .hamburger #bar3 {
 		transform: rotate(-45deg);
 		position: relative;
 		top: -10px;
+		transition: transform 0.4s ease;
 	}
 
 	.menu-toggle:checked ~ #nav-menu {
@@ -143,6 +146,8 @@
 		z-index: 500;
 		opacity: 0.9;
 		background-color: #222;
+		transition: transform 0.4s ease;
+		transition: background-color 1s ease;
 	}
 
 	.navbar ul li {

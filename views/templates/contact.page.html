@@ -4,15 +4,20 @@
 	href="/static/styles/contact.css"
 	type="text/css"
 />
-{{end}} {{define "title"}} Contact {{end}} {{define "content"}} {{if
-.StringMap.success}}
-<div
-	id="toast"
-	class="toast"
->
-	{{ .StringMap.success}}
+{{end}} {{define "title"}} Contact {{end}} {{define "content"}}
+
+<!-- success toast -->
+{{if .StringMap.success}}
+<div class="toast">
+	<div>{{ .StringMap.success}}</div>
+	<a
+		href="/"
+		class="btn"
+		>ok!</a
+	>
 </div>
 {{end}}
+<!-- toast end-->
 
 <div class="contact-content">
 	<h2>We'd Love to Hear from You! 📬</h2>

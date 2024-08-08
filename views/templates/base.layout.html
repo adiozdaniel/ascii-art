@@ -21,8 +21,12 @@
 		<title>Ascii-Art-Web | {{block "title" .}}{{end}}</title>
 	</head>
 	<body>
-		{{block "navbar" .}} {{end}} {{block "content" .}} {{end}} {{block "footer"
-		.}} {{end}}
+		{{block "navbar" .}} {{end}}
+		<div
+			id="toast"
+			class="toast"
+		></div>
+		{{block "content" .}} {{end}} {{block "footer" .}} {{end}}
 	</body>
 </html>
 {{ end }}

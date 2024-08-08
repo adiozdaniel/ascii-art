@@ -121,11 +121,7 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 // LogoutHandler handles user logout by deleting the session
 func (m *Repository) LogoutHandler(w http.ResponseWriter, r *http.Request) {
-	cookie, err := r.Cookie("session_id")
-	if err != nil {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-		return
-	}
+	cookie, _ := r.Cookie("session_id")
 
 	sessionID := cookie.Value
 	td := m.app.GetTemplateData().StringMap

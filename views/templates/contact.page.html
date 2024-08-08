@@ -4,7 +4,21 @@
 	href="/static/styles/contact.css"
 	type="text/css"
 />
-{{end}} {{define "title"}} Contact {{end}} {{define "content"}}
+{{end}} {{define "title"}} Contact {{end}} {{define "content"}} {{if
+.StringMap.success}}
+<div
+	id="toast"
+	class="toast"
+>
+	{{ .StringMap.success}}
+</div>
+{{end}}
+<div
+	id="toast"
+	class="toast"
+>
+	{{ .StringMap.success}}
+</div>
 
 <div class="contact-content">
 	<h2>We'd Love to Hear from You! 📬</h2>
@@ -14,8 +28,9 @@
 	</p>
 
 	<form
-		action="/"
+		action="#"
 		class="contact-form"
+		method="POST"
 	>
 		<label for="name">Your Name</label>
 		<input

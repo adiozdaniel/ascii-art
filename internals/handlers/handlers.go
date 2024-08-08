@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -147,9 +148,8 @@ func (m *Repository) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 
 // NotFoundHandler handles unknown routes; 404 status
 func (m *Repository) MsgHandler(w http.ResponseWriter, r *http.Request) {
-	m.app.GetTemplateData().StringMap["success"] = "email successfully sent"
 	w.WriteHeader(http.StatusOK)
-	renders.RenderTemplate(w, "home.page.html", m.app.GetTemplateData())
+	renders.RenderTemplate(w, "msg.page.html", m.app.GetTemplateData())
 }
 
 // NotFoundHandler handles unknown routes; 404 status
@@ -177,5 +177,14 @@ func (m *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
 
 // ContactHandler handles the contact page route '/contact'
 func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
-	renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
+	if r.Method == http.MethodGet {
+		renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
+		return
+	}
+
+	if r.Method == http.MethodPost {
+		fmt.Println("this is post request")
+		m.app.GetTemplateData().StringMap["success"] = "email successfully sent"
+		renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
+	}
 }

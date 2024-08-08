@@ -39,3 +39,40 @@
 	box-shadow: 0 3px 5px rgba(0, 0, 0, 1);
 	transition: 0.5s;
 }
+
+.toast {
+	visibility: visible;
+	min-width: 250px;
+	background-color: #4c9850;
+	color: bisque;
+	text-align: center;
+	border-radius: 5px;
+	position: fixed;
+	z-index: 1000;
+	left: 30%;
+	top: 11%;
+	font-size: 17px;
+	padding: 16px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+	transition: opacity 0.5s, visibility 0.5s;
+}
+
+/* Show the toast */
+.toast.show {
+	visibility: visible;
+	opacity: 1;
+}
+
+/* Hide the toast */
+.toast.hide {
+	visibility: hidden;
+	opacity: 0;
+}
+
+@media (max-width: 544px) {
+	.toast {
+		font-size: 15px;
+		left: 5%;
+		top: 12%;
+	}
+}

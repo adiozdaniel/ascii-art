@@ -21,12 +21,8 @@
 		<title>Ascii-Art-Web | {{block "title" .}}{{end}}</title>
 	</head>
 	<body>
-		{{block "navbar" .}} {{end}} {{if and .StringMap (or .StringMap.success)}}
-		<div
-			id="toast"
-			class="toast"
-		></div>
-		{{end}} {{block "content" .}} {{end}} {{block "footer" .}} {{end}}
+		{{block "navbar" .}} {{end}} {{block "content" .}} {{end}} {{block "footer"
+		.}} {{end}}
 	</body>
 </html>
 {{ end }}

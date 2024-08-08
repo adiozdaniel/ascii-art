@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -178,12 +177,12 @@ func (m *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
 // ContactHandler handles the contact page route '/contact'
 func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
+		m.app.GetTemplateData().StringMap["success"] = ""
 		renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
 		return
 	}
 
 	if r.Method == http.MethodPost {
-		fmt.Println("this is post request")
 		m.app.GetTemplateData().StringMap["success"] = "email successfully sent"
 		renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
 	}

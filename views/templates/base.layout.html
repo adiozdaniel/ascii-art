@@ -21,12 +21,13 @@
 		<title>Ascii-Art-Web | {{block "title" .}}{{end}}</title>
 	</head>
 	<body>
-		{{block "navbar" .}} {{end}}
+		{{block "navbar" .}} {{end}} {{if and .StringMap (or .StringMap.success)}}
 		<div
 			id="toast"
 			class="toast"
+			class="show"
 		></div>
-		{{block "content" .}} {{end}} {{block "footer" .}} {{end}}
+		{{end}} {{block "content" .}} {{end}} {{block "footer" .}} {{end}}
 	</body>
 </html>
 {{ end }}

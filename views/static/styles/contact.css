@@ -42,18 +42,18 @@
 
 .toast {
 	visibility: visible;
-	min-width: 250px;
+	min-width: 80%;
 	background-color: #4c9850;
-	color: bisque;
+	color: rgb(1, 2, 19);
 	text-align: center;
 	border-radius: 5px;
 	position: fixed;
 	z-index: 1000;
 	left: 30%;
 	top: 11%;
-	font-size: 17px;
-	padding: 16px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+	font-size: 2em;
+	padding: 5%;
+	box-shadow: 0 2px 6px rgb(1, 2, 19);
 	transition: opacity 0.5s, visibility 0.5s;
 }
 

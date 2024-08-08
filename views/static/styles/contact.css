@@ -57,18 +57,6 @@
 	transition: opacity 0.5s, visibility 0.5s;
 }
 
-/* Show the toast */
-.toast.show {
-	visibility: visible;
-	opacity: 1;
-}
-
-/* Hide the toast */
-.toast.hide {
-	visibility: hidden;
-	opacity: 0;
-}
-
 @media (max-width: 544px) {
 	.toast {
 		font-size: 15px;

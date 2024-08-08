@@ -18,7 +18,7 @@ svg {
 	font-size: 0.7em;
 	color: bisque;
 	text-shadow: 0 0 0.5em rgb(254, 228, 196);
-	text-shadow: 1px 1px 2px rgb(1, 2, 19), 0 0 5px rgb(139, 3, 166);
+	text-shadow: 1px 1px 2px rgb(1, 2, 19), 0 0 5px #222;
 }
 
 .author {

@@ -147,8 +147,9 @@ func (m *Repository) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 
 // NotFoundHandler handles unknown routes; 404 status
 func (m *Repository) MsgHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusNotFound)
-	renders.RenderTemplate(w, "msg.page.html", m.app.GetTemplateData())
+	m.app.GetTemplateData().StringMap["success"] = "email successfully sent"
+	w.WriteHeader(http.StatusOK)
+	renders.RenderTemplate(w, "home.page.html", m.app.GetTemplateData())
 }
 
 // NotFoundHandler handles unknown routes; 404 status

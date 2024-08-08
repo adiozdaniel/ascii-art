@@ -42,7 +42,6 @@ h1 {
 }
 
 .toast {
-	visibility: hidden;
 	min-width: 250px;
 	background-color: #4c9850;
 	color: bisque;

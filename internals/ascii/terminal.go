@@ -83,21 +83,3 @@ func readInput(inputChan chan string) {
 	}
 	close(inputChan)
 }
-
-// shouldUpdate checks if the terminal output needs to be updated.
-func shouldUpdate(newWidth, prevWidth int, tempStr, prevColor, prevReff, prevFont string) bool {
-	if cli.app.GetInput().Flags["input"] == "" {
-		return false
-	}
-	return newWidth != prevWidth || tempStr != "" || cli.app.GetInput().Flags["color"] != prevColor || cli.app.GetInput().Flags["reff"] != prevReff || cli.app.GetInput().Flags["font"] != prevFont
-}
-
-// clearTerminal clears the terminal screen.
-func clearTerminal() {
-	fmt.Print("\033[H\033[2J\033[3J\033[?25h")
-}
-
-// resetCursor resets the terminal cursor to the start.
-func resetCursor() {
-	fmt.Print("\033[999;1H")
-}

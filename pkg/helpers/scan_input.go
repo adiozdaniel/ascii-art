@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 )
@@ -23,4 +24,22 @@ func isValidAlignment(alignment string) bool {
 func RemoveANSICodes(input string) string {
 	re := regexp.MustCompile(`\x1b\[[0-9;]*m`)
 	return re.ReplaceAllString(input, "")
+}
+
+// shouldUpdate checks if the terminal output needs to be updated.
+func ShouldUpdate(newWidth, prevWidth int, tempStr, prevColor, prevReff, prevFont string) bool {
+	if app.Flags["input"] == "" {
+		return false
+	}
+	return newWidth != prevWidth || tempStr != "" || app.Flags["color"] != prevColor || app.Flags["reff"] != prevReff || app.Flags["font"] != prevFont
+}
+
+// clearTerminal clears the terminal screen.
+func ClearTerminal() {
+	fmt.Print("\033[H\033[2J\033[3J\033[?25h")
+}
+
+// resetCursor resets the terminal cursor to the start.
+func ResetCursor() {
+	fmt.Print("\033[999;1H")
 }

@@ -22,10 +22,9 @@ const (
 
 // Cli holds the state for the CLI interface.
 type Cli struct {
-	app                                    *models.StateManager
-	inputChan                              chan string
-	prevWidth                              int
-	prevColor, prevReff, prevFont, tempStr string
+	app       *models.StateManager
+	inputChan chan string
+	state     map[string]interface{}
 }
 
 // NewCli creates a new Cli instance.
@@ -33,6 +32,13 @@ func NewCli(sm *models.StateManager) *Cli {
 	return &Cli{
 		app:       sm,
 		inputChan: make(chan string),
+		state: map[string]interface{}{
+			"prevWidth": 0,
+			"prevColor": "",
+			"prevReff":  "",
+			"prevFont":  "",
+			"tempStr":   "",
+		},
 	}
 }
 
@@ -51,7 +57,10 @@ func (cli *Cli) readInput() {
 // shouldUpdate checks if the terminal output needs to be updated.
 func (cli *Cli) shouldUpdate(newWidth int) bool {
 	flags := cli.app.GetInput().Flags
-	return newWidth != cli.prevWidth || cli.tempStr != "" || flags["color"] != cli.prevColor || flags["reff"] != cli.prevReff || flags["font"] != cli.prevFont
+	return newWidth != cli.state["prevWidth"].(int) || cli.state["tempStr"] != "" ||
+		flags["color"] != cli.state["prevColor"] ||
+		flags["reff"] != cli.state["prevReff"] ||
+		flags["font"] != cli.state["prevFont"]
 }
 
 // updateDisplay updates the terminal display based on the current state.
@@ -68,11 +77,11 @@ func (cli *Cli) updateDisplay(newWidth int) {
 	fmt.Print(termOutput)
 	helpers.ResetCursor()
 
-	cli.prevWidth = newWidth
-	cli.tempStr = ""
-	cli.prevColor = flags["color"]
-	cli.prevReff = flags["reff"]
-	cli.prevFont = flags["font"]
+	cli.state["prevWidth"] = newWidth
+	cli.state["tempStr"] = ""
+	cli.state["prevColor"] = flags["color"]
+	cli.state["prevReff"] = flags["reff"]
+	cli.state["prevFont"] = flags["font"]
 }
 
 // init initializes the CLI interface.
@@ -106,7 +115,7 @@ func main() {
 				fmt.Println("\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
 				return
 			} else if input != "" {
-				cli.tempStr = input
+				cli.state["tempStr"] = input
 				helpers.ScanInput(input)
 			}
 		default:

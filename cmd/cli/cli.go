@@ -29,9 +29,11 @@ func NewCli(sm *models.StateManager) *Cli {
 
 func main() {
 	app.Init()
-
-	NewCli(models.GetStateManager())
 	loadCli()
+}
+
+func init() {
+	NewCli(models.GetStateManager())
 }
 
 // loadCli runs the alignment mode of the application.

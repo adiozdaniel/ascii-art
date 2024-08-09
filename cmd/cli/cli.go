@@ -14,6 +14,12 @@ import (
 // Global Cli instance
 var cli *Cli
 
+// Default values
+const (
+	defaultFont  = "--standard"
+	defaultInput = "Ascii~"
+)
+
 // Cli holds the state for the CLI interface.
 type Cli struct {
 	app                                    *models.StateManager
@@ -44,7 +50,29 @@ func (cli *Cli) readInput() {
 
 // shouldUpdate checks if the terminal output needs to be updated.
 func (cli *Cli) shouldUpdate(newWidth int) bool {
-	return newWidth != cli.prevWidth || cli.tempStr != "" || cli.app.GetInput().Flags["color"] != cli.prevColor || cli.app.GetInput().Flags["reff"] != cli.prevReff || cli.app.GetInput().Flags["font"] != cli.prevFont
+	flags := cli.app.GetInput().Flags
+	return newWidth != cli.prevWidth || cli.tempStr != "" || flags["color"] != cli.prevColor || flags["reff"] != cli.prevReff || flags["font"] != cli.prevFont
+}
+
+// updateDisplay updates the terminal display based on the current state.
+func (cli *Cli) updateDisplay(newWidth int) {
+	flags := cli.app.GetInput().Flags
+	banner := cli.app.GetInput().BannerFile[flags["font"]]
+	if err := helpers.FileContents(banner); err != nil {
+		fmt.Println("Error loading banner file:", err)
+	}
+
+	outputs := ascii.Output(flags["input"])
+	termOutput := helpers.Alignment(outputs, newWidth)
+	helpers.ClearTerminal()
+	fmt.Print(termOutput)
+	helpers.ResetCursor()
+
+	cli.prevWidth = newWidth
+	cli.tempStr = ""
+	cli.prevColor = flags["color"]
+	cli.prevReff = flags["reff"]
+	cli.prevFont = flags["font"]
 }
 
 // init initializes the CLI interface.
@@ -59,8 +87,8 @@ func init() {
 	go cli.readInput()
 	cli.app.GetConfig().BannerFileCache = bc
 
-	cli.app.GetInput().Flags["font"] = "--standard"
-	cli.app.GetInput().Flags["input"] = "Ascii~"
+	cli.app.GetInput().Flags["font"] = defaultFont
+	cli.app.GetInput().Flags["input"] = defaultInput
 }
 
 // main runs the CLI application.
@@ -84,20 +112,7 @@ func main() {
 		default:
 			newWidth := helpers.GetTerminalWidth()
 			if cli.shouldUpdate(newWidth) {
-				banner := cli.app.GetInput().BannerFile[cli.app.GetInput().Flags["font"]]
-				_ = helpers.FileContents(banner)
-
-				outputs := ascii.Output(cli.app.GetInput().Flags["input"])
-				termOutput := helpers.Alignment(outputs, newWidth)
-				helpers.ClearTerminal()
-				fmt.Print(termOutput)
-				helpers.ResetCursor()
-
-				cli.prevWidth = newWidth
-				cli.tempStr = ""
-				cli.prevColor = cli.app.GetInput().Flags["color"]
-				cli.prevReff = cli.app.GetInput().Flags["reff"]
-				cli.prevFont = cli.app.GetInput().Flags["font"]
+				cli.updateDisplay(newWidth)
 			}
 			time.Sleep(2 * time.Second)
 		}

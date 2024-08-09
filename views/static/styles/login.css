@@ -37,11 +37,11 @@ input[type="submit"] {
 input[type="text"] {
 	background-color: rgb(1, 2, 19);
 	color: bisque;
-	margin: 20px auto;
+	margin: 3% auto;
 	width: 80%;
 	max-width: 60%;
 	min-width: 20%;
-	padding: 20px;
+	padding: 3% 6%;
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;

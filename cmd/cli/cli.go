@@ -4,9 +4,11 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/models"
+	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 )
 
 // Cli holds the state for the CLI interface.
@@ -59,4 +61,41 @@ func main() {
 	cli := NewCli(models.GetStateManager())
 	cli.app.GetInput().Init()
 
+	for {
+		select {
+		case input := <-cli.inputChan:
+			if input == "exit" {
+				fmt.Println("\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
+				return
+			} else if input != "" {
+				cli.tempStr = input
+				helpers.ScanInput(input)
+			}
+		default:
+			newWidth := helpers.GetTerminalWidth()
+			if helpers.ShouldUpdate(newWidth, cli.prevWidth, cli.tempStr, cli.prevColor, cli.prevReff, cli.prevFont) {
+				if cli.app.GetInput().Flags["font"] == "" {
+					cli.app.GetInput().Flags["font"] = "--standard"
+				}
+
+				banner := cli.app.GetInput().BannerFile[cli.app.GetInput().Flags["font"]]
+				err := helpers.FileContents(banner)
+				if err != nil {
+					fmt.Println(err)
+				}
+				outputs := ascii.Output(cli.app.GetInput().Flags["input"])
+				termOutput := helpers.Alignment(outputs, newWidth)
+				helpers.ClearTerminal()
+				fmt.Print(termOutput)
+				helpers.ResetCursor()
+
+				cli.prevWidth = newWidth
+				cli.tempStr = ""
+				cli.prevColor = cli.app.GetInput().Flags["color"]
+				cli.prevReff = cli.app.GetInput().Flags["reff"]
+				cli.prevFont = cli.app.GetInput().Flags["font"]
+			}
+			time.Sleep(2 * time.Second)
+		}
+	}
 }

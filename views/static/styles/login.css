@@ -80,6 +80,13 @@ input[type="submit"]:hover {
 	}
 }
 
+@media screen and (max-width: 414px) {
+	form {
+		width: 90%;
+		margin: auto;
+	}
+}
+
 @media screen and (max-width: 319px) {
 	form {
 		width: 85%;

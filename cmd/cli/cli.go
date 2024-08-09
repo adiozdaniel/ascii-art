@@ -44,9 +44,6 @@ func (cli *Cli) readInput() {
 
 // shouldUpdate checks if the terminal output needs to be updated.
 func (cli *Cli) shouldUpdate(newWidth int) bool {
-	if cli.app.GetInput().Flags["input"] == "" {
-		return false
-	}
 	return newWidth != cli.prevWidth || cli.tempStr != "" || cli.app.GetInput().Flags["color"] != cli.prevColor || cli.app.GetInput().Flags["reff"] != cli.prevReff || cli.app.GetInput().Flags["font"] != cli.prevFont
 }
 
@@ -88,10 +85,8 @@ func main() {
 			newWidth := helpers.GetTerminalWidth()
 			if cli.shouldUpdate(newWidth) {
 				banner := cli.app.GetInput().BannerFile[cli.app.GetInput().Flags["font"]]
-				err := helpers.FileContents(banner)
-				if err != nil {
-					fmt.Println("Error loading banner file:", err)
-				}
+				_ = helpers.FileContents(banner)
+
 				outputs := ascii.Output(cli.app.GetInput().Flags["input"])
 				termOutput := helpers.Alignment(outputs, newWidth)
 				helpers.ClearTerminal()

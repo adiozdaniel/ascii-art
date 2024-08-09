@@ -60,6 +60,14 @@ func init() {
 	cli.app.GetInput().Flags["color"] = "#FABB60"
 }
 
+// shouldUpdate checks if the terminal output needs to be updated.
+func shouldUpdate(newWidth, prevWidth int, tempStr, prevColor, prevReff, prevFont string) bool {
+	if cli.app.GetInput().Flags["input"] == "" {
+		return false
+	}
+	return newWidth != prevWidth || tempStr != "" || cli.app.GetInput().Flags["color"] != prevColor || cli.app.GetInput().Flags["reff"] != prevReff || cli.app.GetInput().Flags["font"] != prevFont
+}
+
 func main() {
 	cli.app.GetInput().Init()
 
@@ -79,7 +87,7 @@ func main() {
 			}
 		default:
 			newWidth := helpers.GetTerminalWidth()
-			if helpers.ShouldUpdate(newWidth, cli.prevWidth, cli.tempStr, cli.prevColor, cli.prevReff, cli.prevFont) {
+			if shouldUpdate(newWidth, cli.prevWidth, cli.tempStr, cli.prevColor, cli.prevReff, cli.prevFont) {
 				banner := cli.app.GetInput().BannerFile[cli.app.GetInput().Flags["font"]]
 				err := helpers.FileContents(banner)
 				if err != nil {

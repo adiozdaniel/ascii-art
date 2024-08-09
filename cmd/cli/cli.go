@@ -42,6 +42,14 @@ func (cli *Cli) readInput() {
 	close(cli.inputChan)
 }
 
+// shouldUpdate checks if the terminal output needs to be updated.
+func (cli *Cli) shouldUpdate(newWidth int) bool {
+	if cli.app.GetInput().Flags["input"] == "" {
+		return false
+	}
+	return newWidth != cli.prevWidth || cli.tempStr != "" || cli.app.GetInput().Flags["color"] != cli.prevColor || cli.app.GetInput().Flags["reff"] != cli.prevReff || cli.app.GetInput().Flags["font"] != cli.prevFont
+}
+
 // init initializes the CLI interface.
 func init() {
 	cli = NewCli(models.GetStateManager())
@@ -58,14 +66,7 @@ func init() {
 	cli.app.GetInput().Flags["input"] = "Ascii~"
 }
 
-// shouldUpdate checks if the terminal output needs to be updated.
-func shouldUpdate(newWidth, prevWidth int, tempStr, prevColor, prevReff, prevFont string) bool {
-	if cli.app.GetInput().Flags["input"] == "" {
-		return false
-	}
-	return newWidth != prevWidth || tempStr != "" || cli.app.GetInput().Flags["color"] != prevColor || cli.app.GetInput().Flags["reff"] != prevReff || cli.app.GetInput().Flags["font"] != prevFont
-}
-
+// main runs the CLI application.
 func main() {
 	cli.app.GetInput().Init()
 
@@ -73,6 +74,7 @@ func main() {
 		select {
 		case input, ok := <-cli.inputChan:
 			if !ok {
+				fmt.Println("Input channel closed. Exiting...")
 				return
 			}
 			if input == "exit" {
@@ -84,7 +86,7 @@ func main() {
 			}
 		default:
 			newWidth := helpers.GetTerminalWidth()
-			if shouldUpdate(newWidth, cli.prevWidth, cli.tempStr, cli.prevColor, cli.prevReff, cli.prevFont) {
+			if cli.shouldUpdate(newWidth) {
 				banner := cli.app.GetInput().BannerFile[cli.app.GetInput().Flags["font"]]
 				err := helpers.FileContents(banner)
 				if err != nil {

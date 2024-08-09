@@ -56,8 +56,6 @@ func init() {
 
 	cli.app.GetInput().Flags["font"] = "--standard"
 	cli.app.GetInput().Flags["input"] = "Ascii~"
-	cli.app.GetInput().Flags["reff"] = "Ascii"
-	cli.app.GetInput().Flags["color"] = "#FABB60"
 }
 
 // shouldUpdate checks if the terminal output needs to be updated.
@@ -75,7 +73,6 @@ func main() {
 		select {
 		case input, ok := <-cli.inputChan:
 			if !ok {
-				fmt.Println("Input channel closed")
 				return
 			}
 			if input == "exit" {
@@ -91,11 +88,11 @@ func main() {
 				banner := cli.app.GetInput().BannerFile[cli.app.GetInput().Flags["font"]]
 				err := helpers.FileContents(banner)
 				if err != nil {
-					fmt.Println(err)
+					fmt.Println("Error loading banner file:", err)
 				}
 				outputs := ascii.Output(cli.app.GetInput().Flags["input"])
 				termOutput := helpers.Alignment(outputs, newWidth)
-				// helpers.ClearTerminal()
+				helpers.ClearTerminal()
 				fmt.Print(termOutput)
 				helpers.ResetCursor()
 

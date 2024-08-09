@@ -17,8 +17,20 @@ var (
 	app = sm.GetInput()
 )
 
+// Cli holds the state for the cli interface.
+type Cli struct {
+	app *models.StateManager
+}
+
+// NewCli creates a new Cli instance.
+func NewCli(sm *models.StateManager) *Cli {
+	return &Cli{app: sm}
+}
+
 func main() {
 	app.Init()
+
+	NewCli(models.GetStateManager())
 	loadCli()
 }
 

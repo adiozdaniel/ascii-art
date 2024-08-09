@@ -123,12 +123,8 @@ func (i *InputData) ParseArgs() {
 		}
 	}
 
-	if err := i.Validate(); err != nil {
-		i.ErrorHandler(err.Error())
-	}
-
 	if len(i.Args) > 0 {
-		i.Flags["InputData"] = strings.Join(i.Args, " ")
+		i.Flags["input"] = strings.Join(i.Args, " ")
 	}
 	i.Args = nil
 }

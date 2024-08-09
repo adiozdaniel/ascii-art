@@ -80,8 +80,6 @@ func main() {
 		default:
 			newWidth := helpers.GetTerminalWidth()
 			if helpers.ShouldUpdate(newWidth, cli.prevWidth, cli.tempStr, cli.prevColor, cli.prevReff, cli.prevFont) {
-				fmt.Println(cli.tempStr, cli.app.GetInput().Flags["input"])
-
 				banner := cli.app.GetInput().BannerFile[cli.app.GetInput().Flags["font"]]
 				err := helpers.FileContents(banner)
 				if err != nil {
@@ -99,7 +97,7 @@ func main() {
 				cli.prevReff = cli.app.GetInput().Flags["reff"]
 				cli.prevFont = cli.app.GetInput().Flags["font"]
 			}
-			time.Sleep(5 * time.Second)
+			time.Sleep(2 * time.Second)
 		}
 	}
 }

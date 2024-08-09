@@ -11,12 +11,6 @@ import (
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 )
 
-// get the app state manager
-var (
-	sm  = models.GetStateManager()
-	app = sm.GetInput()
-)
-
 // Cli holds the state for the cli interface.
 type Cli struct {
 	app *models.StateManager
@@ -27,8 +21,11 @@ func NewCli(sm *models.StateManager) *Cli {
 	return &Cli{app: sm}
 }
 
+// app is the input data for the application.
+var cli Cli
+
 func main() {
-	app.Init()
+	cli.app.GetInput().Init()
 	loadCli()
 }
 
@@ -59,16 +56,16 @@ func loadCli() {
 		default:
 			newWidth := helpers.GetTerminalWidth()
 			if shouldUpdate(newWidth, prevWidth, tempStr, prevColor, prevReff, prevFont) {
-				if app.Flags["font"] == "" {
-					app.Flags["font"] = "--standard"
+				if cli.app.GetInput().Flags["font"] == "" {
+					cli.app.GetInput().Flags["font"] = "--standard"
 				}
 
-				banner := app.BannerFile[app.Flags["font"]]
+				banner := cli.app.GetInput().BannerFile[cli.app.GetInput().Flags["font"]]
 				err := helpers.FileContents(banner)
 				if err != nil {
 					fmt.Println(err)
 				}
-				outputs := ascii.Output(app.Flags["input"])
+				outputs := ascii.Output(cli.app.GetInput().Flags["input"])
 				termOutput := helpers.Alignment(outputs, newWidth)
 				clearTerminal()
 				fmt.Print(termOutput)
@@ -76,9 +73,9 @@ func loadCli() {
 
 				prevWidth = newWidth
 				tempStr = ""
-				prevColor = app.Flags["color"]
-				prevReff = app.Flags["reff"]
-				prevFont = app.Flags["font"]
+				prevColor = cli.app.GetInput().Flags["color"]
+				prevReff = cli.app.GetInput().Flags["reff"]
+				prevFont = cli.app.GetInput().Flags["font"]
 			}
 			time.Sleep(2 * time.Second)
 		}
@@ -99,10 +96,10 @@ func readInput(inputChan chan string) {
 
 // shouldUpdate checks if the terminal output needs to be updated.
 func shouldUpdate(newWidth, prevWidth int, tempStr, prevColor, prevReff, prevFont string) bool {
-	if app.Flags["input"] == "" {
+	if cli.app.GetInput().Flags["input"] == "" {
 		return false
 	}
-	return newWidth != prevWidth || tempStr != "" || app.Flags["color"] != prevColor || app.Flags["reff"] != prevReff || app.Flags["font"] != prevFont
+	return newWidth != prevWidth || tempStr != "" || cli.app.GetInput().Flags["color"] != prevColor || cli.app.GetInput().Flags["reff"] != prevReff || cli.app.GetInput().Flags["font"] != prevFont
 }
 
 // clearTerminal clears the terminal screen.

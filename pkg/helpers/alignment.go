@@ -123,7 +123,7 @@ func rightAlign(output string, width int) string {
 	var rightLines []string
 	for _, line := range lines {
 		cleanLine := RemoveANSICodes(line)
-		padding := width - len(cleanLine)
+		padding := width - len(cleanLine) - 1
 		if padding < 0 {
 			padding = 0
 		}

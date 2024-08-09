@@ -11,6 +11,9 @@ import (
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
 )
 
+// Global Cli instance
+var cli *Cli
+
 // Cli holds the state for the CLI interface.
 type Cli struct {
 	app                                    *models.StateManager
@@ -31,6 +34,7 @@ func NewCli(sm *models.StateManager) *Cli {
 func (cli *Cli) readInput() {
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
+		fmt.Println("Received input:", scanner.Text()) // Debugging statement
 		cli.inputChan <- scanner.Text()
 	}
 	if err := scanner.Err(); err != nil {
@@ -41,7 +45,7 @@ func (cli *Cli) readInput() {
 
 // init initializes the CLI interface.
 func init() {
-	cli := NewCli(models.GetStateManager())
+	cli = NewCli(models.GetStateManager())
 
 	bc, err := cli.app.GetConfig().CreateBannerCache()
 	if err != nil {
@@ -58,7 +62,6 @@ func init() {
 }
 
 func main() {
-	cli := NewCli(models.GetStateManager())
 	cli.app.GetInput().Init()
 
 	for {
@@ -68,11 +71,13 @@ func main() {
 				fmt.Println("\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
 				return
 			} else if input != "" {
+				fmt.Println("Heeyy, input is reaching here!") // Debugging statement
 				cli.tempStr = input
 				helpers.ScanInput(input)
 			}
 		default:
 			newWidth := helpers.GetTerminalWidth()
+			fmt.Println(newWidth) // Debugging statement
 			if helpers.ShouldUpdate(newWidth, cli.prevWidth, cli.tempStr, cli.prevColor, cli.prevReff, cli.prevFont) {
 				if cli.app.GetInput().Flags["font"] == "" {
 					cli.app.GetInput().Flags["font"] = "--standard"
@@ -85,7 +90,7 @@ func main() {
 				}
 				outputs := ascii.Output(cli.app.GetInput().Flags["input"])
 				termOutput := helpers.Alignment(outputs, newWidth)
-				helpers.ClearTerminal()
+				// helpers.ClearTerminal()
 				fmt.Print(termOutput)
 				helpers.ResetCursor()
 
@@ -95,7 +100,7 @@ func main() {
 				cli.prevReff = cli.app.GetInput().Flags["reff"]
 				cli.prevFont = cli.app.GetInput().Flags["font"]
 			}
-			time.Sleep(2 * time.Second)
+			time.Sleep(5 * time.Second)
 		}
 	}
 }

@@ -40,13 +40,13 @@ var bannerFiles = map[string]string{
 
 // members holds struct members with default values
 var members = map[string]string{
-	"font":      "--standard",
-	"InputData": "",
-	"color":     "",
-	"reff":      "",
-	"align":     "left",
-	"output":    "",
-	"isWeb":     "",
+	"font":   "--standard",
+	"input":  "",
+	"color":  "",
+	"reff":   "",
+	"align":  "left",
+	"output": "",
+	"isWeb":  "",
 }
 
 // validFlags stores allowed flags
@@ -101,22 +101,25 @@ func (i *InputData) ParseArgs() {
 		i.Flags = make(map[string]string)
 	}
 
-	for j := 0; j < len(i.Args); {
-		InputData := i.Args[j]
-		parts := strings.SplitN(InputData, "=", 2)
-		if len(parts) != 2 {
-			j++
-			continue
+	for j, arg := range i.Args {
+		parts := strings.SplitN(arg, "=", 2)
+		if len(parts) == 2 {
+			flag := parts[0]
+			value := parts[1]
+
+			if i.IsValidFlag(flag) {
+				parsedFlag := i.RemoveLeadingDashes(flag)
+				i.Flags[parsedFlag] = value
+				i.Args = append(i.Args[:j], i.Args[j+1:]...)
+			} else {
+				fmt.Println("Invalid flag: " + arg)
+			}
 		}
 
-		flag := parts[0]
-		value := parts[1]
-
-		if i.IsValidFlag(flag) {
-			parsedFlag := i.RemoveLeadingDashes(flag)
-			i.Flags[parsedFlag] = value
-			i.Args = append(i.Args[:j], i.Args[j+1:]...)
-		} else if strings.HasPrefix(flag, "-") {
+		if strings.HasPrefix(arg, "-") {
+			if _, ok := bannerFiles[arg]; ok {
+				i.Flags["font"] = arg
+			}
 			i.Args = append(i.Args[:j], i.Args[j+1:]...)
 		} else {
 			j++

@@ -37,3 +37,8 @@ func NewForms(data url.Values) *Forms {
 func (f *Forms) Has(field string, r *http.Request) bool {
 	return r.Form.Get(field) != ""
 }
+
+// ValidateForm validates the form data and adds errors to the error map if necessary
+func (f *Forms) ValidateForm() bool {
+	return len(f.Errors) == 0
+}

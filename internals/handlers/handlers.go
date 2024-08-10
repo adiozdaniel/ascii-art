@@ -189,6 +189,16 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 		supportForm.Email = r.Form.Get("email")
 		supportForm.Message = r.Form.Get("message")
 
+		form := m.app.GetTemplateData().Form
+		form.Has("name", r)
+		form.Has("email", r)
+		form.Has("message", r)
+
+		if !form.ValidateForm() {
+			renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
+			return
+		}
+
 		m.app.GetTemplateData().StringMap["success"] = "email successfully sent"
 		renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
 	}

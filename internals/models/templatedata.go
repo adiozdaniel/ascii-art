@@ -1,14 +1,19 @@
 package models
 
-import "strings"
+import (
+	"net/url"
+	"strings"
+)
 
 type TemplateData struct {
 	StringMap map[string]string `json:"stringMap"`
+	Form      *Forms
 }
 
 func NewTemplateData() *TemplateData {
 	return &TemplateData{
 		StringMap: make(map[string]string),
+		Form:      NewForms(make(url.Values)),
 	}
 }
 

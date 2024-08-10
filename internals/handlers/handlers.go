@@ -178,6 +178,17 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method == http.MethodPost {
+		err := r.ParseForm()
+		if err != nil {
+			m.BadRequestHandler(w, r)
+			return
+		}
+
+		supportForm := m.app.GetSupport()
+		supportForm.Name = r.Form.Get("name")
+		supportForm.Email = r.Form.Get("email")
+		supportForm.Message = r.Form.Get("message")
+
 		m.app.GetTemplateData().StringMap["success"] = "email successfully sent"
 		renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
 	}

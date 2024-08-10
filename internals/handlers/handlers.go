@@ -86,7 +86,7 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		err := r.ParseForm()
 		if err != nil {
-			m.ServerErrorHandler(w, r)
+			m.BadRequestHandler(w, r)
 			return
 		}
 		username := r.Form.Get("username")

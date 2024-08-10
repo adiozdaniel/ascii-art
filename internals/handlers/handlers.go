@@ -29,18 +29,18 @@ func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 // SubmitHandler handles the output route '/ascii-art'
 func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
-	if r.FormValue("textInput") == "" && r.Method != "POST" {
+	if r.Form.Get("textInput") == "" && r.Method != http.MethodPost {
 		renders.RenderTemplate(w, "ascii.page.html", m.app.GetTemplateData())
 		return
 	}
 
-	if r.Method == "POST" && r.FormValue(("textInput")) == "" {
+	if r.Method == http.MethodPost && r.Form.Get("textInput") == "" {
 		m.BadRequestHandler(w, r)
 		return
 	}
 
-	m.app.GetInput().Flags["input"] = r.FormValue("textInput")
-	banner := m.app.GetInput().BannerFile[r.FormValue("Font")]
+	m.app.GetInput().Flags["input"] = r.Form.Get("textInput")
+	banner := m.app.GetInput().BannerFile[r.Form.Get("Font")]
 
 	if banner == "" {
 		m.BadRequestHandler(w, r)
@@ -86,11 +86,10 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		err := r.ParseForm()
 		if err != nil {
-			m.NotFoundHandler(w, r)
+			http.Error(w, "Oops, something went wrong", http.StatusInternalServerError)
 			return
 		}
-
-		username := r.FormValue("username")
+		username := r.Form.Get("username")
 		if username == "" {
 			m.BadRequestHandler(w, r)
 			return

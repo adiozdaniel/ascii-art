@@ -1,6 +1,9 @@
 package models
 
-import "net/url"
+import (
+	"net/http"
+	"net/url"
+)
 
 // errors represents a collection of error messages for various fields
 type formErrors map[string][]string
@@ -28,4 +31,9 @@ type Forms struct {
 // NewForms creates a new Forms instance with the given data and initializes an empty error map
 func NewForms(data url.Values) *Forms {
 	return &Forms{data, make(formErrors)}
+}
+
+// Has checks if a field has been submitted and returns true if it has, false otherwise
+func (f *Forms) Has(field string, r *http.Request) bool {
+	return r.Form.Get(field) != ""
 }

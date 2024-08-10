@@ -1,6 +1,7 @@
 package models
 
 import (
+	"net/url"
 	"sync"
 )
 
@@ -10,6 +11,7 @@ type StateManager struct {
 	config  *AppConfig
 	td      *TemplateData
 	session *SessionManager
+	forms   *Forms
 }
 
 // singleton instance of StateManager
@@ -26,6 +28,7 @@ func GetStateManager() *StateManager {
 		instance.config = App()
 		instance.td = NewTemplateData()
 		instance.session = NewSessionManager()
+		instance.forms = NewForms(make(url.Values))
 	})
 	return instance
 }
@@ -48,4 +51,9 @@ func (sm *StateManager) GetTemplateData() *TemplateData {
 // GetSessionManager returns the SessionManager instance of StateManager
 func (sm *StateManager) GetSessionManager() *SessionManager {
 	return sm.session
+}
+
+// GetForms returns the Forms instance of StateManager
+func (sm *StateManager) GetForms() *Forms {
+	return sm.forms
 }

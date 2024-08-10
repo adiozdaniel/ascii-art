@@ -35,10 +35,15 @@ func NewForms(data url.Values) *Forms {
 
 // Has checks if a field has been submitted and returns true if it has, false otherwise
 func (f *Forms) Has(field string, r *http.Request) bool {
+	x := r.Form.Get(field)
+	if x == "" {
+		f.Errors.Add(field, "This field is required")
+		return false
+	}
 	return r.Form.Get(field) != ""
 }
 
-// ValidateForm validates the form data and adds errors to the error map if necessary
+// ValidateForm returns true if all fields in the form have been submitted and have no errors, false otherwise
 func (f *Forms) ValidateForm() bool {
 	return len(f.Errors) == 0
 }

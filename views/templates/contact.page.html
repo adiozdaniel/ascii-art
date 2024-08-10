@@ -31,7 +31,10 @@
 		class="contact-form"
 		method="POST"
 	>
-		<label for="name">Your Name</label>
+		<label for="name">
+			Your Name: {{with .Form.Errors.Get "name"}}
+			<span class="text-danger">{{.}}</span> {{end}}
+		</label>
 		<input
 			type="text"
 			minlength="4"
@@ -40,7 +43,10 @@
 			placeholder="Your awesome name"
 		/>
 
-		<label for="email">Your Email</label>
+		<label for="email"
+			>Your Email: {{with.Form.Errors.Get "email"}}
+			<span class="text-danger">{{.}}</span> {{end}}
+		</label>
 		<input
 			type="email"
 			id="email"
@@ -48,7 +54,10 @@
 			placeholder="Your email address"
 		/>
 
-		<label for="message">Your Message</label>
+		<label for="message"
+			>Your Message: {{with.Form.Errors.Get "message"}}
+			<span class="text-danger">{{.}}</span> {{end}}
+		</label>
 		<textarea
 			minlength="30"
 			id="message"

@@ -103,7 +103,6 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 		form := m.app.GetTemplateData().Form
 		form.Errors.Clear()
-		form.Set("username", r.Form.Get("username"))
 
 		form.Required(r, "username")
 

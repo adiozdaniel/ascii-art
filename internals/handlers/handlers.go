@@ -210,13 +210,12 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 
 		form := m.app.GetTemplateData().Form
 		form.Errors.Clear()
-		form.Has("name", r)
-		form.Has("email", r)
-		form.Has("message", r)
 
 		form.Set("name", r.Form.Get("name"))
 		form.Set("email", r.Form.Get("email"))
 		form.Set("message", r.Form.Get("message"))
+
+		form.Required("name", "email", "message")
 
 		if !form.IsValidForm() {
 

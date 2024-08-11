@@ -3,6 +3,7 @@ package models
 import (
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 // errors represents a collection of error messages for various fields
@@ -55,6 +56,15 @@ func (f *Forms) Has(field string, r *http.Request) bool {
 		return false
 	}
 	return r.Form.Get(field) != ""
+}
+
+func (f *Forms) Required(fields ...string) {
+	for _, field := range fields {
+		value := f.Get(field)
+		if strings.TrimSpace(value) == "" {
+			f.Errors.Add(field, "This field is required")
+		}
+	}
 }
 
 // ValidateForm returns true if all fields in the form have been submitted and have no errors, false otherwise

@@ -5,8 +5,10 @@
 	type="text/css"
 />
 {{end}} {{define "title"}} Ascii {{end}} {{define "content"}}
+
+<!-- Ascii Art Work Display -->
+{{if and .StringMap (or .StringMap.ascii .StringMap.nonasciis)}}
 <div class="ascii">
-	{{if and .StringMap (or .StringMap.ascii .StringMap.nonasciis)}}
 	<div class="non-ascii">
 		{{if .StringMap.ascii}}
 		<pre>{{.StringMap.ascii}}</pre>
@@ -14,11 +16,14 @@
 		<pre>{{.StringMap.nonasciis}}</pre>
 		{{end}}
 	</div>
+</div>
+<div>
 	<a
 		href="/"
 		class="btn"
 		>More Tests</a
 	>
-	{{ end }}
 </div>
+{{ end }}
+<!-- end of Ascii Art Display -->
 {{end}}

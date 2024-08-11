@@ -12,13 +12,18 @@
 	method="POST"
 >
 	<div id="alias">
-		<label for="input">Alias:</label>
-		<input
-			maxlength="12"
-			id="username"
-			name="username"
-			placeholder="your awesome name"
-			type="text"
+		<label for="input">
+			 {{with .Form.Errors.Get "username"}}<span class="text-danger"
+			>{{.}}</span
+		>
+		{{end}}
+		</label>
+		<input class="{{with .Form.Errors.Get "username"}}border-danger{{end}}"
+		maxlength="12"
+		id="username"
+		name="username"
+		placeholder="your awesome name"
+		type="text"
 		/>
 	</div>
 	<input

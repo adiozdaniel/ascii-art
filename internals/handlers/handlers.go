@@ -89,14 +89,15 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 			m.BadRequestHandler(w, r)
 			return
 		}
-		username := r.Form.Get("username")
-		if username == "" {
-			m.BadRequestHandler(w, r)
-			return
-		}
+		loginForm := m.app.GetSupport()
+		loginForm.Username = r.Form.Get("username")
 
-		if username != "" {
-			m.app.GetTemplateData().StringMap["username"] = m.app.GetTemplateData().CapitalizeFirst(username)
+		form := m.app.GetTemplateData().Form
+		form.Errors.Clear()
+		form.Has("username", r)
+
+		if loginForm.Username != "" {
+			m.app.GetTemplateData().StringMap["username"] = m.app.GetTemplateData().CapitalizeFirst(loginForm.Username)
 
 			session := m.app.GetSessionManager().CreateSession()
 
@@ -113,7 +114,10 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
+		if !form.IsValidForm() {
+			renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+			return
+		}
 		return
 	}
 }

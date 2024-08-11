@@ -213,7 +213,6 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 		form.Has("name", r)
 		form.Has("email", r)
 		form.Has("message", r)
-		form.FormValues["name"] = r.Form.Get("name")
 
 		form.Set("name", r.Form.Get("name"))
 		form.Set("email", r.Form.Get("email"))

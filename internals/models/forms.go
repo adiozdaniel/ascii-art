@@ -60,9 +60,9 @@ func (f *Forms) Has(field string, r *http.Request) bool {
 
 func (f *Forms) Required(fields ...string) {
 	for _, field := range fields {
-		value := f.Get(field)
+		value := f.FormValues[field]
 		if strings.TrimSpace(value) == "" {
-			f.Errors.Add(field, "This field is required")
+			f.Errors.Add(field, field+" cannot be empty")
 		}
 	}
 }

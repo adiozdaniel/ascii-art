@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -32,8 +33,8 @@ func (e *formErrors) Get(field string) string {
 type formValues map[string]string
 
 // Set sets the value of a form field
-func (v *Forms) Set(field, value string) {
-	v.FormValues[field] = value
+func (f *Forms) Set(field, value string) {
+	f.FormValues[field] = value
 }
 
 // Forms represents a collection of form data and errors
@@ -52,11 +53,29 @@ func NewForms(data url.Values) *Forms {
 func (f *Forms) Required(r *http.Request, fields ...string) {
 	for _, field := range fields {
 		f.Set(field, r.Form.Get(field))
+		f.MinLength(field)
 
 		value := f.FormValues[field]
 		if strings.TrimSpace(value) == "" {
 			f.Errors.Add(field, field+" cannot be empty")
 		}
+	}
+}
+
+// fieldLengths represents the minimum length required for each form field
+var fieldLengths = map[string]int{
+	"name":    3,
+	"email":   9,
+	"message": 30,
+}
+
+// MinLength checks if a submitted field has a minimum length and prints an error message if it does not
+func (f *Forms) MinLength(field string) {
+	value := f.FormValues[field]
+	if len(value) < fieldLengths[field] {
+		f.Errors.Add(field,
+			fmt.Sprintf("%s must be at least %d characters long",
+				field, fieldLengths[field]))
 	}
 }
 

@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -25,6 +24,7 @@ func NewRepo(sm *models.StateManager) *Repository {
 
 // HomeHandler handles the homepage route '/'
 func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
 	renders.RenderTemplate(w, "home.page.html", m.app.GetTemplateData())
 }
 
@@ -37,12 +37,12 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Form.Get("textInput") == "" && r.Method != http.MethodPost {
+		w.WriteHeader(http.StatusNoContent)
 		renders.RenderTemplate(w, "ascii.page.html", m.app.GetTemplateData())
 		return
 	}
 
 	if r.Method == http.MethodPost && r.Form.Get("textInput") == "" {
-		fmt.Println("It is hereee!")
 		m.BadRequestHandler(w, r)
 		return
 	}
@@ -68,6 +68,7 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	td["ascii"] = output
 	td["nonasciis"] = nonasciis
 
+	w.WriteHeader(http.StatusOK)
 	renders.RenderTemplate(w, "ascii.page.html", m.app.GetTemplateData())
 }
 
@@ -123,6 +124,7 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if !form.IsValidForm() {
+			w.WriteHeader(http.StatusUnauthorized)
 			renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
 			return
 		}
@@ -178,6 +180,7 @@ func (m *Repository) ServerErrorHandler(w http.ResponseWriter, r *http.Request) 
 
 // AboutHandler handles the about page route '/about'
 func (m *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
 	renders.RenderTemplate(w, "about.page.html", m.app.GetTemplateData())
 }
 
@@ -187,6 +190,8 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 		form := m.app.GetTemplateData().Form
 		form.Errors.Clear()
 		m.app.GetTemplateData().StringMap["success"] = ""
+
+		w.WriteHeader(http.StatusOK)
 		renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
 		return
 	}
@@ -215,11 +220,15 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 		form.Set("message", r.Form.Get("message"))
 
 		if !form.IsValidForm() {
+
+			w.WriteHeader(http.StatusBadRequest)
 			renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
 			return
 		}
 
 		m.app.GetTemplateData().StringMap["success"] = "email successfully sent"
+
+		w.WriteHeader(http.StatusAccepted)
 		renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
 	}
 }

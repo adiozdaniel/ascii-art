@@ -65,6 +65,7 @@ func (cli *Cli) shouldUpdate(newWidth int) bool {
 
 // updateDisplay updates the terminal display based on the current state.
 func (cli *Cli) updateDisplay(newWidth int) {
+	fmt.Println(newWidth)
 	flags := cli.app.GetInput().Flags
 	banner := cli.app.GetInput().BannerFile[flags["font"]]
 	if err := helpers.FileContents(banner); err != nil {
@@ -73,7 +74,7 @@ func (cli *Cli) updateDisplay(newWidth int) {
 
 	outputs := ascii.Output(flags["input"])
 	termOutput := helpers.Alignment(outputs, newWidth)
-	helpers.ClearTerminal()
+	// helpers.ClearTerminal()
 	fmt.Print(termOutput)
 	helpers.ResetCursor()
 

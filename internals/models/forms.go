@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strings"
 )
 
@@ -59,6 +60,10 @@ func (f *Forms) Required(r *http.Request, fields ...string) {
 			f.Errors.Add(field, field+" cannot be empty")
 		}
 		f.MinLength(field)
+
+		if field == "email" && !IsValidEmail(value) {
+			f.Errors.Add(field, "Invalid email address")
+		}
 	}
 }
 
@@ -77,6 +82,14 @@ func (f *Forms) MinLength(field string) {
 			fmt.Sprintf("%s must be at least %d characters long",
 				field, fieldLengths[field]))
 	}
+}
+
+// IsValidEmail validates an email address using a regular expression.
+func IsValidEmail(email string) bool {
+	const emailRegex = `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`
+
+	re := regexp.MustCompile(emailRegex)
+	return re.MatchString(email)
 }
 
 // ValidateForm returns true if all fields in the form have been submitted and have no errors, false otherwise

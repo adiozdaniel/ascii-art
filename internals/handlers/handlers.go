@@ -194,7 +194,7 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 		form.Has("email", r)
 		form.Has("message", r)
 
-		if !form.ValidateForm() {
+		if !form.IsValidForm() {
 			renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
 			return
 		}

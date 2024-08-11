@@ -44,6 +44,6 @@ func (f *Forms) Has(field string, r *http.Request) bool {
 }
 
 // ValidateForm returns true if all fields in the form have been submitted and have no errors, false otherwise
-func (f *Forms) ValidateForm() bool {
+func (f *Forms) IsValidForm() bool {
 	return len(f.Errors) == 0
 }

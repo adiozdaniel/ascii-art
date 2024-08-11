@@ -1,5 +1,6 @@
 .contact-content {
 	display: flex;
+	font-size: 0.9em;
 	flex-direction: column;
 	max-width: 80%;
 	min-width: 20%;
@@ -28,6 +29,21 @@
 	margin-bottom: 10px;
 	border: 1px solid #ccc;
 	border-radius: 5px;
+}
+
+.contact-form input,
+.contact-form textarea {
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+.contact-form .text-danger {
+	color: red;
+}
+.contact-form .border-danger {
+	border: 2px solid red;
 }
 
 .navbar #contact {

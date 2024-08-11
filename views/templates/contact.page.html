@@ -32,16 +32,14 @@
 		method="POST"
 	>
 		<label for="name">
-			Your Name: {{with .Form.Errors.Get "name"}}
-			<span class="text-danger">{{.}}</span> {{end}}
+			Your Name: {{with .Form.Errors.Get "name"}}<span class="text-danger"
+				>{{.}}</span
+			>
+			{{end}}
 		</label>
-		<input
-			type="text"
-			minlength="4"
-			id="name"
-			name="name"
-			placeholder="Your awesome name"
-		/>
+		<input class="{{with .Form.Errors.Get "name"}}border-danger{{end}}"
+		type="text" minlength="4" id="name" name="name" placeholder="Your awesome
+		name" />
 
 		<label for="email"
 			>Your Email: {{with.Form.Errors.Get "email"}}

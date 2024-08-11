@@ -45,7 +45,7 @@
 			>Your Email: {{with.Form.Errors.Get "email"}}
 			<span class="text-danger">{{.}}</span> {{end}}
 		</label>
-		<input
+		<input class="{{with .Form.Errors.Get "email"}}border-danger{{end}}"
 			type="email"
 			id="email"
 			name="email"
@@ -56,7 +56,7 @@
 			>Your Message: {{with.Form.Errors.Get "message"}}
 			<span class="text-danger">{{.}}</span> {{end}}
 		</label>
-		<textarea
+		<textarea class="{{with .Form.Errors.Get "message"}}border-danger{{end}}"
 			minlength="30"
 			id="message"
 			name="message"

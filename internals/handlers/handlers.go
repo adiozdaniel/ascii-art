@@ -190,6 +190,7 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 		supportForm.Message = r.Form.Get("message")
 
 		form := m.app.GetTemplateData().Form
+		form.Errors.Clear()
 		form.Has("name", r)
 		form.Has("email", r)
 		form.Has("message", r)

@@ -13,6 +13,11 @@ func (e *formErrors) Add(field, message string) {
 	(*e)[field] = append((*e)[field], message)
 }
 
+// Clear clears all error messages for the specified field
+func (e *formErrors) Clear() {
+	*e = make(map[string][]string)
+}
+
 // Get returns the first error message for a given field, or an empty string if no errors exist
 func (e *formErrors) Get(field string) string {
 	es := (*e)[field]

@@ -176,6 +176,8 @@ func (m *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
 // ContactHandler handles the contact page route '/contact'
 func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
+		form := m.app.GetTemplateData().Form
+		form.Errors.Clear()
 		m.app.GetTemplateData().StringMap["success"] = ""
 		renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
 		return

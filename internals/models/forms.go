@@ -53,12 +53,12 @@ func NewForms(data url.Values) *Forms {
 func (f *Forms) Required(r *http.Request, fields ...string) {
 	for _, field := range fields {
 		f.Set(field, r.Form.Get(field))
-		f.MinLength(field)
 
 		value := f.FormValues[field]
 		if strings.TrimSpace(value) == "" {
 			f.Errors.Add(field, field+" cannot be empty")
 		}
+		f.MinLength(field)
 	}
 }
 

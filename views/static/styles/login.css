@@ -1,5 +1,6 @@
-p {
-	padding: 0 80px;
+.login-container {
+	padding: 0.5%;
+	letter-spacing: 0.1em;
 }
 
 form {
@@ -110,4 +111,5 @@ input[type="submit"]:hover {
 		flex-direction: column;
 		width: 100%;
 	}
+
 }

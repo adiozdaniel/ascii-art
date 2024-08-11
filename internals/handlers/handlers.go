@@ -103,7 +103,9 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 		form := m.app.GetTemplateData().Form
 		form.Errors.Clear()
-		form.Has("username", r)
+		form.Set("username", r.Form.Get("username"))
+
+		form.Required("username")
 
 		if loginForm.Username != "" {
 			m.app.GetTemplateData().StringMap["username"] = m.app.GetTemplateData().CapitalizeFirst(loginForm.Username)

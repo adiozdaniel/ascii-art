@@ -1,6 +1,7 @@
 package models
 
 import (
+	"net/http"
 	"net/url"
 	"strings"
 )
@@ -48,8 +49,10 @@ func NewForms(data url.Values) *Forms {
 }
 
 // Required checks if a submitted field is empty and prints an error message
-func (f *Forms) Required(fields ...string) {
+func (f *Forms) Required(r *http.Request, fields ...string) {
 	for _, field := range fields {
+		f.Set(field, r.Form.Get(field))
+
 		value := f.FormValues[field]
 		if strings.TrimSpace(value) == "" {
 			f.Errors.Add(field, field+" cannot be empty")

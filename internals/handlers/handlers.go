@@ -105,7 +105,7 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		form.Errors.Clear()
 		form.Set("username", r.Form.Get("username"))
 
-		form.Required("username")
+		form.Required(r, "username")
 
 		if loginForm.Username != "" {
 			m.app.GetTemplateData().StringMap["username"] = m.app.GetTemplateData().CapitalizeFirst(loginForm.Username)
@@ -213,11 +213,11 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 		form := m.app.GetTemplateData().Form
 		form.Errors.Clear()
 
-		form.Set("name", r.Form.Get("name"))
-		form.Set("email", r.Form.Get("email"))
-		form.Set("message", r.Form.Get("message"))
+		// form.Set("name", r.Form.Get("name"))
+		// form.Set("email", r.Form.Get("email"))
+		// form.Set("message", r.Form.Get("message"))
 
-		form.Required("name", "email", "message")
+		form.Required(r, "name", "email", "message")
 
 		if !form.IsValidForm() {
 

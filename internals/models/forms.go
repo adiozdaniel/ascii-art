@@ -1,7 +1,6 @@
 package models
 
 import (
-	"net/http"
 	"net/url"
 	"strings"
 )
@@ -48,16 +47,7 @@ func NewForms(data url.Values) *Forms {
 	return &Forms{data, make(formErrors), make(formValues)}
 }
 
-// Has checks if a field has been submitted and returns true if it has, false otherwise
-func (f *Forms) Has(field string, r *http.Request) bool {
-	x := r.Form.Get(field)
-	if x == "" {
-		f.Errors.Add(field, "This field is required")
-		return false
-	}
-	return r.Form.Get(field) != ""
-}
-
+// Required checks if a submitted field is empty and prints an error message
 func (f *Forms) Required(fields ...string) {
 	for _, field := range fields {
 		value := f.FormValues[field]

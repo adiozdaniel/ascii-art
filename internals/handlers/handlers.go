@@ -98,16 +98,16 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 			m.BadRequestHandler(w, r)
 			return
 		}
-		loginForm := m.app.GetSupport()
-		loginForm.Username = r.Form.Get("username")
 
 		form := m.app.GetTemplateData().Form
 		form.Errors.Clear()
 
-		form.Required(r, "username")
+		username := r.Form.Get("username")
 
-		if loginForm.Username != "" {
-			m.app.GetTemplateData().StringMap["username"] = m.app.GetTemplateData().CapitalizeFirst(loginForm.Username)
+		form.Required(r, username)
+
+		if username != "" {
+			m.app.GetTemplateData().StringMap["username"] = m.app.GetTemplateData().CapitalizeFirst(username)
 
 			session := m.app.GetSessionManager().CreateSession()
 

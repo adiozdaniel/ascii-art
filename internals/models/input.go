@@ -120,7 +120,12 @@ func (i *InputData) ParseArgs() {
 			if _, ok := bannerFiles[arg]; ok {
 				i.Flags["font"] = arg
 			}
-			i.Args = append(i.Args[:j], i.Args[j+1:]...)
+
+			if j < len(i.Args)-1 {
+				i.Args = append(i.Args[:j], i.Args[j+1:]...)
+				continue
+			}
+			i.Args = nil
 		} else {
 			j++
 		}

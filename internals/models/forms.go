@@ -30,12 +30,13 @@ func (e *formErrors) Get(field string) string {
 // Forms represents a collection of form data and errors
 type Forms struct {
 	url.Values
-	Errors formErrors
+	Errors     formErrors
+	FormValues map[string]string
 }
 
 // NewForms creates a new Forms instance with the given data and initializes an empty error map
 func NewForms(data url.Values) *Forms {
-	return &Forms{data, make(formErrors)}
+	return &Forms{data, make(formErrors), make(map[string]string)}
 }
 
 // Has checks if a field has been submitted and returns true if it has, false otherwise
@@ -46,6 +47,16 @@ func (f *Forms) Has(field string, r *http.Request) bool {
 		return false
 	}
 	return r.Form.Get(field) != ""
+}
+
+// Set sets the value of a form field
+func (f *Forms) Set(field, value string) {
+	f.FormValues[field] = value
+}
+
+// Get returns the value of a form field, or an empty string if the field does not exist
+func (f *Forms) GetField(field string) string {
+	return f.FormValues[field]
 }
 
 // ValidateForm returns true if all fields in the form have been submitted and have no errors, false otherwise

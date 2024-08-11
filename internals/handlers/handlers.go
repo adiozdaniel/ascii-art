@@ -205,17 +205,8 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		supportForm := m.app.GetSupport()
-		supportForm.Name = r.Form.Get("name")
-		supportForm.Email = r.Form.Get("email")
-		supportForm.Message = r.Form.Get("message")
-
 		form := m.app.GetTemplateData().Form
 		form.Errors.Clear()
-
-		// form.Set("name", r.Form.Get("name"))
-		// form.Set("email", r.Form.Get("email"))
-		// form.Set("message", r.Form.Get("message"))
 
 		form.Required(r, "name", "email", "message")
 

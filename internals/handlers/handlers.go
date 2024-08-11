@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -29,12 +30,19 @@ func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 // SubmitHandler handles the output route '/ascii-art'
 func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		m.BadRequestHandler(w, r)
+		return
+	}
+
 	if r.Form.Get("textInput") == "" && r.Method != http.MethodPost {
 		renders.RenderTemplate(w, "ascii.page.html", m.app.GetTemplateData())
 		return
 	}
 
 	if r.Method == http.MethodPost && r.Form.Get("textInput") == "" {
+		fmt.Println("It is hereee!")
 		m.BadRequestHandler(w, r)
 		return
 	}
@@ -47,7 +55,7 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	m.app.GetInput().Flags["font"] = banner
-	err := helpers.FileContents(banner)
+	err = helpers.FileContents(banner)
 	if err != nil {
 		m.NotFoundHandler(w, r)
 		return

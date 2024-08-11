@@ -49,14 +49,14 @@ input[type="text"] {
 	display: block;
 }
 
-/* #alias .text-danger {
+#alias .text-danger {
 	color: red;
 
 }
 
 #alias .border-danger {
 	border: 2px solid red;
-} */
+}
 
 input[type="submit"]:hover {
 	background-color: #4c9850;

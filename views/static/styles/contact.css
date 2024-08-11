@@ -41,6 +41,7 @@
 
 .contact-form .text-danger {
 	color: red;
+	font-size: 0.8em;
 }
 .contact-form .border-danger {
 	border: 2px solid red;

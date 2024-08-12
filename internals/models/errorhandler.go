@@ -17,6 +17,7 @@ var errors = map[string]string{
 	"restricted": "😣 Oops! this is a restricted path.\nplease use another path.",
 	"templates":  "🤯 Oops! Something went wrong! where are templates?",
 	"banners":    "🤯 Oops! Something went wrong! where are banners?",
+	"cli":        "failed to initialize cli interface\n\nPlease check your configuration or try again.",
 }
 
 // ErrorHandler outputs errors and safely exits the program

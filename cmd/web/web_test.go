@@ -3,14 +3,10 @@ package main
 import (
 	"net/http"
 	"net/http/httptest"
-	"os"
-	"os/signal"
-	"syscall"
 	"testing"
 	"time"
 
 	"github.com/adiozdaniel/ascii-art/internals/middlewares"
-	"github.com/adiozdaniel/ascii-art/internals/models"
 )
 
 // TestRunWeb verifies that the web server starts and responds with a status OK.
@@ -109,31 +105,8 @@ func TestMiddlewares(t *testing.T) {
 	}
 }
 
-// Mocked appData methods
-type MockAppData struct {
-	flags      map[string]string
-	bannerFile map[string]string
-}
-
-func (m *MockAppData) Init() {}
-
+// TestMainFunction tests the main function
 func TestMainFunction(t *testing.T) {
-	// Setup mock appData
-	mockAppData := &MockAppData{
-		flags: map[string]string{
-			"font":  "--standard",
-			"input": "Ascii~",
-		},
-		bannerFile: map[string]string{
-			"--standard": "banner.txt",
-		},
-	}
-
-	// Replace global appData with mock
-	models.NewInputData().Flags = mockAppData.flags
-	models.NewInputData().BannerFile = mockAppData.bannerFile
-
-	// Create a test server and client
 	handler, err := runWeb()
 	if err != nil {
 		t.Fatalf("Failed to run web: %v", err)
@@ -141,17 +114,14 @@ func TestMainFunction(t *testing.T) {
 	server := httptest.NewServer(handler)
 	defer server.Close()
 
-	// Start the main function in a separate goroutine
-	stop := make(chan os.Signal, 1)
-	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
-
 	done := make(chan struct{})
 	go func() {
 		defer close(done)
 		main()
 	}()
 
-	// Simulate HTTP request
+	time.Sleep(1 * time.Second)
+
 	resp, err := http.Get(server.URL)
 	if err != nil {
 		t.Fatalf("Failed to make request: %v", err)
@@ -162,10 +132,13 @@ func TestMainFunction(t *testing.T) {
 		t.Fatalf("Expected status OK, got %v", resp.Status)
 	}
 
-	// Simulate shutdown signal
-	time.Sleep(2 * time.Second) // Allow some time for the server to start
-	stop <- syscall.SIGINT
+	time.Sleep(2 * time.Second)
 
-	// Wait for main to finish
-	<-done
+	TriggerShutdown()
+
+	select {
+	case <-done:
+	case <-time.After(10 * time.Second):
+		t.Fatal("Timeout waiting for main to finish")
+	}
 }

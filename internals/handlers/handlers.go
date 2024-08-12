@@ -30,15 +30,15 @@ func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 // SubmitHandler handles the output route '/ascii-art'
 func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	if err != nil {
-		m.BadRequestHandler(w, r)
+	if r.Method == http.MethodGet {
+		w.WriteHeader(http.StatusOK)
+		renders.RenderTemplate(w, "ascii.page.html", m.app.GetTemplateData())
 		return
 	}
 
-	if r.Form.Get("textInput") == "" && r.Method != http.MethodPost {
-		w.WriteHeader(http.StatusNoContent)
-		renders.RenderTemplate(w, "ascii.page.html", m.app.GetTemplateData())
+	err := r.ParseForm()
+	if err != nil {
+		m.BadRequestHandler(w, r)
 		return
 	}
 

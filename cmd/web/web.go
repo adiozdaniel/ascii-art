@@ -1,7 +1,7 @@
 package main
 
 import (
-	"context" // Import context package
+	"context"
 	"fmt"
 	"net/http"
 	"os"

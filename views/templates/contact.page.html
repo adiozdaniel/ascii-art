@@ -43,7 +43,6 @@
         <input 
             class="{{with .Form.Errors.Get "name"}}border-danger{{end}}"
             type="text"
-            minlength="4"
             id="name"
             name="name"
             placeholder="Your awesome name"
@@ -73,7 +72,6 @@
         </label>
         <textarea 
             class="{{with .Form.Errors.Get "message"}}border-danger{{end}}"
-            minlength="30"
             id="message"
             name="message"
             rows="5"

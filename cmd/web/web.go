@@ -1,8 +1,12 @@
 package main
 
 import (
+	"context" // Import context package
 	"fmt"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/handlers"
@@ -21,22 +25,20 @@ var (
 )
 
 // runWeb initializes the web data
-func runWeb() error {
+func runWeb() (http.Handler, error) {
 	handlers.NewRepo(sm)
-	middlewares.NewMiddlewares(models.GetStateManager().GetSessionManager())
+	middlewares.NewMiddlewares(sessionManager)
 
 	tc, err := appConfig.CreateTemplateCache()
 	if err != nil {
-		return err
+		return nil, fmt.Errorf("creating template cache: %w", err)
 	}
-
 	appConfig.TemplateCache = tc
 
 	bc, err := appConfig.CreateBannerCache()
 	if err != nil {
-		return err
+		return nil, fmt.Errorf("creating banner cache: %w", err)
 	}
-
 	appConfig.BannerFileCache = bc
 
 	appData.Flags["font"] = "--standard"
@@ -44,22 +46,23 @@ func runWeb() error {
 	appData.Flags["reff"] = "Ascii"
 	appData.Flags["color"] = "#FABB60"
 
-	return nil
-}
-
-// main starts the web server
-func main() {
-	appData.Init()
-	err := runWeb()
-	if err != nil {
-		appData.ErrorHandler("web")
-	}
-
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)
 
 	wrappedMux := middlewares.SessionMiddleware(
 		sessionManager)(middlewares.RouteChecker(mux))
+
+	return wrappedMux, nil
+}
+
+// main starts the web server
+func main() {
+	appData.Init()
+	wrappedMux, err := runWeb()
+	if err != nil {
+		appData.ErrorHandler("web")
+		os.Exit(1)
+	}
 
 	server := &http.Server{
 		Addr:    ":8080",
@@ -67,17 +70,33 @@ func main() {
 	}
 
 	banner := appData.BannerFile[appData.Flags["font"]]
-	err = helpers.FileContents(banner)
-	if err != nil {
+	if err := helpers.FileContents(banner); err != nil {
 		appData.ErrorHandler("fatal")
+		os.Exit(1)
 	}
 
 	serverOutput := ascii.Output(appData.Flags["input"])
 	fmt.Println(serverOutput + "=====================================\nserver running @http://localhost:8080")
 
 	appData.Flags["isWeb"] = "true"
-	err = server.ListenAndServe()
-	if err != nil {
+
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
+
+	go func() {
+		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			appData.ErrorHandler("web")
+			fmt.Fprintf(os.Stderr, "Server error: %v\n", err)
+		}
+	}()
+
+	<-stop
+	fmt.Println("Shutting down server...")
+
+	if err := server.Shutdown(context.TODO()); err != nil {
 		appData.ErrorHandler("web")
+		fmt.Fprintf(os.Stderr, "Server shutdown error: %v\n", err)
+	} else {
+		fmt.Println("Server shut down successfully.")
 	}
 }

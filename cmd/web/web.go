@@ -20,6 +20,34 @@ var (
 	sessionManager = sm.GetSessionManager()
 )
 
+// init initializes the web data
+func init() {
+	appData.Init()
+
+	handlers.NewRepo(sm)
+	middlewares.NewMiddlewares(models.GetStateManager().GetSessionManager())
+
+	tc, err := appConfig.CreateTemplateCache()
+	if err != nil {
+		appData.ErrorHandler("templates")
+	}
+
+	appConfig.TemplateCache = tc
+
+	bc, err := appConfig.CreateBannerCache()
+	if err != nil {
+		appData.ErrorHandler("banners")
+	}
+
+	appConfig.BannerFileCache = bc
+
+	appData.Flags["font"] = "--standard"
+	appData.Flags["input"] = "Ascii~"
+	appData.Flags["reff"] = "Ascii"
+	appData.Flags["color"] = "#FABB60"
+}
+
+// main runs the web interface
 func main() {
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)
@@ -46,31 +74,4 @@ func main() {
 	if err != nil {
 		appData.ErrorHandler("web")
 	}
-}
-
-// init initializes the web data
-func init() {
-	appData.Init()
-
-	handlers.NewRepo(sm)
-	middlewares.NewMiddlewares(models.GetStateManager().GetSessionManager())
-
-	tc, err := appConfig.CreateTemplateCache()
-	if err != nil {
-		appData.ErrorHandler("templates")
-	}
-
-	appConfig.TemplateCache = tc
-
-	bc, err := appConfig.CreateBannerCache()
-	if err != nil {
-		appData.ErrorHandler("banners")
-	}
-
-	appConfig.BannerFileCache = bc
-
-	appData.Flags["font"] = "--standard"
-	appData.Flags["input"] = "Ascii~"
-	appData.Flags["reff"] = "Ascii"
-	appData.Flags["color"] = "#FABB60"
 }

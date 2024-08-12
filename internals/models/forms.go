@@ -72,6 +72,7 @@ var fieldLengths = map[string]int{
 	"name":    3,
 	"email":   9,
 	"message": 30,
+	"username": 3,
 }
 
 // MinLength checks if a submitted field has a minimum length and prints an error message if it does not

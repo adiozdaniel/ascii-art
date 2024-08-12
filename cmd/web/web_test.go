@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/adiozdaniel/ascii-art/internals/middlewares"
 )
 
 // TestRunWeb verifies that the web server starts and responds with a status OK.
@@ -59,6 +61,45 @@ func TestRoutes(t *testing.T) {
 
 		if resp.StatusCode != tt.expectedStatusCode {
 			t.Fatalf("For path %v, expected status %v, got %v", tt.path, tt.expectedStatusCode, resp.Status)
+		}
+	}
+}
+
+// TestMiddleware checks the middleware functionality.
+func TestMiddlewares(t *testing.T) {
+	middlewares.NewMiddlewares(sessionManager)
+
+	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
+
+	routeChecker := middlewares.SessionMiddleware(
+		sessionManager)(middlewares.RouteChecker(testHandler))
+
+	tests := []struct {
+		path               string
+		expectedStatusCode int
+	}{
+		{"/", http.StatusSeeOther},
+		{"/ascii-art", http.StatusSeeOther},
+		{"/about", http.StatusSeeOther},
+		{"/contact", http.StatusOK},
+		{"/login", http.StatusOK},
+		{"/logout", http.StatusSeeOther},
+		{"/nonexistent", http.StatusSeeOther},
+	}
+
+	for _, tt := range tests {
+		req, err := http.NewRequest("GET", tt.path, nil)
+		if err != nil {
+			t.Fatalf("Failed to create request for %v: %v", tt.path, err)
+		}
+
+		recorder := httptest.NewRecorder()
+		routeChecker.ServeHTTP(recorder, req)
+
+		if recorder.Code != tt.expectedStatusCode {
+			t.Errorf("For path %v, expected status %v, got %v", tt.path, tt.expectedStatusCode, recorder.Code)
 		}
 	}
 }

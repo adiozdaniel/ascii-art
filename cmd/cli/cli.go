@@ -101,6 +101,7 @@ func init() {
 	cli.app.GetInput().Flags["input"] = defaultInput
 }
 
+// runCli runs the CLI application.
 func runCli() error {
 	for {
 		select {

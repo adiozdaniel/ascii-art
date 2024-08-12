@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-// TestRunWeb tests the handlers
+// TestRunWeb verifies that the web server starts and responds with a status OK.
 func TestRunWeb(t *testing.T) {
 	handler, err := runWeb()
 	if err != nil {
@@ -27,7 +27,7 @@ func TestRunWeb(t *testing.T) {
 	}
 }
 
-// TestRoutes tests the routes in the application
+// TestRoutes checks the status codes for various routes.
 func TestRoutes(t *testing.T) {
 	handler, err := runWeb()
 	if err != nil {

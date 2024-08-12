@@ -10,6 +10,7 @@ type args struct {
 	fileContents []string
 }
 
+// tests holds the tests
 type tests struct {
 	name     string
 	args     args

@@ -47,8 +47,7 @@ func init() {
 	appData.Flags["color"] = "#FABB60"
 }
 
-// main runs the web interface
-func main() {
+func runWeb() error {
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)
 
@@ -63,7 +62,7 @@ func main() {
 	banner := appData.BannerFile[appData.Flags["font"]]
 	err := helpers.FileContents(banner)
 	if err != nil {
-		appData.ErrorHandler("fatal")
+		return err
 	}
 
 	serverOutput := ascii.Output(appData.Flags["input"])
@@ -71,6 +70,12 @@ func main() {
 
 	appData.Flags["isWeb"] = "true"
 	err = server.ListenAndServe()
+	return err
+}
+
+// main runs the web interface
+func main() {
+	err := runWeb()
 	if err != nil {
 		appData.ErrorHandler("web")
 	}

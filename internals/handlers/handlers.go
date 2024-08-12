@@ -106,6 +106,12 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 		form.Required(r, "username")
 
+		if !form.IsValidForm() {
+			w.WriteHeader(http.StatusUnauthorized)
+			renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+			return
+		}
+
 		if username != "" {
 			m.app.GetTemplateData().StringMap["username"] = m.app.GetTemplateData().CapitalizeFirst(username)
 
@@ -124,12 +130,6 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if !form.IsValidForm() {
-			w.WriteHeader(http.StatusUnauthorized)
-			renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
-			return
-		}
-		return
 	}
 }
 

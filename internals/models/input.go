@@ -135,6 +135,10 @@ func (i *InputData) ParseArgs() {
 		i.Flags["input"] = strings.Join(i.Args, " ")
 	}
 	i.Args = nil
+
+	if i.Flags["color"] != "" && i.Flags["reff"] == "" {
+		i.Flags["reff"] = i.Flags["input"]
+	}
 }
 
 // IsValidFlag checks if a flag is valid

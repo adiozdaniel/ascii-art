@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-// Test runWeb function
+// TestRunWeb tests the handlers
 func TestRunWeb(t *testing.T) {
 	handler, err := runWeb()
 	if err != nil {
@@ -27,7 +27,7 @@ func TestRunWeb(t *testing.T) {
 	}
 }
 
-// Test runs tests
+// TestRoutes tests the routes in the application
 func TestRoutes(t *testing.T) {
 	handler, err := runWeb()
 	if err != nil {

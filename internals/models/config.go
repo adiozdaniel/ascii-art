@@ -23,6 +23,7 @@ func App() *AppConfig {
 	}
 }
 
+// CreateBannerCache caches banner files
 func (a *AppConfig) CreateBannerCache() (map[string]string, error) {
 	baseDir := instance.input.GetProjectRoot("views/static", "banners")
 	bannerDir := filepath.Join(baseDir, "*.txt")

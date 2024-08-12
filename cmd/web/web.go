@@ -20,23 +20,21 @@ var (
 	sessionManager = sm.GetSessionManager()
 )
 
-// init initializes the web data
-func init() {
-	appData.Init()
-
+// runWeb initializes the web data
+func runWeb() error {
 	handlers.NewRepo(sm)
 	middlewares.NewMiddlewares(models.GetStateManager().GetSessionManager())
 
 	tc, err := appConfig.CreateTemplateCache()
 	if err != nil {
-		appData.ErrorHandler("templates")
+		return err
 	}
 
 	appConfig.TemplateCache = tc
 
 	bc, err := appConfig.CreateBannerCache()
 	if err != nil {
-		appData.ErrorHandler("banners")
+		return err
 	}
 
 	appConfig.BannerFileCache = bc
@@ -45,9 +43,18 @@ func init() {
 	appData.Flags["input"] = "Ascii~"
 	appData.Flags["reff"] = "Ascii"
 	appData.Flags["color"] = "#FABB60"
+
+	return nil
 }
 
-func runWeb() error {
+// main starts the web server
+func main() {
+	appData.Init()
+	err := runWeb()
+	if err != nil {
+		appData.ErrorHandler("web")
+	}
+
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)
 
@@ -60,9 +67,9 @@ func runWeb() error {
 	}
 
 	banner := appData.BannerFile[appData.Flags["font"]]
-	err := helpers.FileContents(banner)
+	err = helpers.FileContents(banner)
 	if err != nil {
-		return err
+		appData.ErrorHandler("fatal")
 	}
 
 	serverOutput := ascii.Output(appData.Flags["input"])
@@ -70,12 +77,6 @@ func runWeb() error {
 
 	appData.Flags["isWeb"] = "true"
 	err = server.ListenAndServe()
-	return err
-}
-
-// main runs the web interface
-func main() {
-	err := runWeb()
 	if err != nil {
 		appData.ErrorHandler("web")
 	}

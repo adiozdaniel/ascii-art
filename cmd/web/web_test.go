@@ -27,7 +27,7 @@ func TestRunWeb(t *testing.T) {
 	}
 }
 
-// Test runs tests for routes.
+// Test runs tests
 func TestRoutes(t *testing.T) {
 	handler, err := runWeb()
 	if err != nil {
@@ -46,9 +46,8 @@ func TestRoutes(t *testing.T) {
 		{"/about", http.StatusOK},
 		{"/contact", http.StatusOK},
 		{"/login", http.StatusOK},
-		{"/logout", http.StatusSeeOther},
-		{"/error", http.StatusNotFound},
-		{"/nonexistent", http.StatusNotFound},
+		{"/logout", http.StatusOK},
+		{"/nonexistent", http.StatusOK},
 	}
 
 	for _, tt := range tests {

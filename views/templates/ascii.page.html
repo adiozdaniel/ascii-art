@@ -9,13 +9,11 @@
 <!-- Ascii Art Work Display -->
 {{if and .StringMap (or .StringMap.ascii .StringMap.nonasciis)}}
 <div class="ascii">
-	<div class="non-ascii">
 		{{if .StringMap.ascii}}
 		<pre>{{.StringMap.ascii}}</pre>
 		{{end}} {{if .StringMap.nonasciis}}
 		<pre>{{.StringMap.nonasciis}}</pre>
 		{{end}}
-	</div>
 </div>
 <div>
 	<a

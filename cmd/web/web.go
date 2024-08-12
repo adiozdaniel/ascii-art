@@ -53,6 +53,7 @@ func runWeb() (http.Handler, error) {
 	return wrappedMux, nil
 }
 
+// shutdownChan channel closes the server gracefully
 var shutdownChan = make(chan struct{})
 
 // main starts the web server
@@ -98,6 +99,7 @@ func main() {
 	}
 }
 
+// TriggerShutdown gracefully closes the shutdwonChan
 func TriggerShutdown() {
 	close(shutdownChan)
 }

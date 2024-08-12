@@ -104,7 +104,7 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 		username := r.Form.Get("username")
 
-		form.Required(r, username)
+		form.Required(r, "username")
 
 		if username != "" {
 			m.app.GetTemplateData().StringMap["username"] = m.app.GetTemplateData().CapitalizeFirst(username)

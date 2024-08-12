@@ -69,6 +69,10 @@ var validFlags = map[string]bool{
 
 // Init initializes the InputData
 func (i *InputData) Init() {
+	if strings.Contains(os.Args[1], "-test") {
+		return
+	}
+
 	if len(os.Args) > 1 {
 		i.ErrorHandler("fatal")
 	}

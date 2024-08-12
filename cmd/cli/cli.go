@@ -74,7 +74,7 @@ func (cli *Cli) updateDisplay(newWidth int) {
 
 	outputs := ascii.Output(flags["input"])
 	termOutput := helpers.Alignment(outputs, newWidth)
-	// helpers.ClearTerminal()
+	helpers.ClearTerminal()
 	fmt.Print(termOutput)
 	helpers.ResetCursor()
 
@@ -101,20 +101,17 @@ func init() {
 	cli.app.GetInput().Flags["input"] = defaultInput
 }
 
-// main runs the CLI application.
-func main() {
-	cli.app.GetInput().Init()
-
+func runCli() error {
 	for {
 		select {
 		case input, ok := <-cli.inputChan:
 			if !ok {
 				fmt.Println("Input channel closed. Exiting...")
-				return
+				return nil
 			}
 			if input == "exit" {
 				fmt.Println("\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
-				return
+				return nil
 			} else if input != "" {
 				cli.state["tempStr"] = input
 				helpers.ScanInput(input)
@@ -126,5 +123,14 @@ func main() {
 			}
 			time.Sleep(2 * time.Second)
 		}
+	}
+}
+
+// main runs the CLI application.
+func main() {
+	cli.app.GetInput().Init()
+
+	if err := runCli(); err != nil {
+		cli.app.GetInput().ErrorHandler("cli")
 	}
 }

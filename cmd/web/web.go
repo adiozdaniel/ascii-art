@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"os/signal"
-	"syscall"
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/handlers"
@@ -55,6 +53,8 @@ func runWeb() (http.Handler, error) {
 	return wrappedMux, nil
 }
 
+var shutdownChan = make(chan struct{})
+
 // main starts the web server
 func main() {
 	appData.Init()
@@ -80,9 +80,6 @@ func main() {
 
 	appData.Flags["isWeb"] = "true"
 
-	stop := make(chan os.Signal, 1)
-	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
-
 	go func() {
 		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			appData.ErrorHandler("web")
@@ -90,13 +87,17 @@ func main() {
 		}
 	}()
 
-	<-stop
+	<-shutdownChan
 	fmt.Println("Shutting down server...")
 
-	if err := server.Shutdown(context.TODO()); err != nil {
+	if err := server.Shutdown(context.Background()); err != nil {
 		appData.ErrorHandler("web")
 		fmt.Fprintf(os.Stderr, "Server shutdown error: %v\n", err)
 	} else {
 		fmt.Println("Server shut down successfully.")
 	}
+}
+
+func TriggerShutdown() {
+	close(shutdownChan)
 }

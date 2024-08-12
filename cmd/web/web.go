@@ -99,7 +99,7 @@ func main() {
 	}
 }
 
-// TriggerShutdown gracefully closes the shutdwonChan
+// TriggerShutdown gracefully closes the shutdownChan
 func TriggerShutdown() {
 	close(shutdownChan)
 }

@@ -125,7 +125,7 @@ The output can be displayed in different colors in any of the following formats:
 
 2. By adding a color flag and a refference string that is not a substring of the string to be colored, like in the example below, the program will look for the instance of the characters in the string to be colored and color them with the provided color, like this:
 
-   - `--color=blue ho hello`
+   - `--color=blue --reff=ho hello`
 
      ![--color=blue ho hello](/views/static/images/sample4.png)
 

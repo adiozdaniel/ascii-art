@@ -65,7 +65,6 @@ func (cli *Cli) shouldUpdate(newWidth int) bool {
 
 // updateDisplay updates the terminal display based on the current state.
 func (cli *Cli) updateDisplay(newWidth int) {
-	fmt.Println(newWidth)
 	flags := cli.app.GetInput().Flags
 	banner := cli.app.GetInput().BannerFile[flags["font"]]
 	if err := helpers.FileContents(banner); err != nil {

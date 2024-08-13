@@ -1,4 +1,4 @@
-# ASCII-Graphics Tool Version 0.4
+# ASCII-Graphics Tool Version 0.5
 
 ## Description
 
@@ -12,13 +12,6 @@ These fonts and/or formats are represented in the following banner files:
 
 This program can handle an input with printable ASCII characters (numbers, letters, spaces, special characters) and `\n` (newline character).
 
-Here is an example:
-example input:
-`go run . "Hello"`
-
-example output:
-
-![go run . "Hello"](/views/static/images/sample1.png)
 
 ## Implementation
 
@@ -37,8 +30,10 @@ To clone and run this program, you'll need **Git** installed on your computer.
 From the **command line**,
 
 ```Bash
-git clone https://learn.zone01kisumu.ke/git/adaniel/ascii-art-web.git
-cd ascii-art-web
+git clone https://learn.zone01kisumu.ke/git/adaniel/ascii-art.git
+cd ascii-art
+
+# you may be required to re-initialize go mod; this depends on your system 
 go mod init github.com/adiozdaniel/ascii-art
 code .
 ```
@@ -49,16 +44,13 @@ The program supports three interfaces:
 
 ### 1. Command Line Interface (CLI)
 
-- Once the program has been installed, **navigate to the `cmd` directory**.
+- Once the program has been installed, **navigate to the `cmd/cli` directory**.
 
-- Run the program using an input string of choice, like this:
+- To fire up the program:
 
-`go run . "A wonderful day!"`
+`go run .`
 
-With only one argument the program is designed to select the 'standard.txt' banner
-file as the default. Hence the graphical representation will be as per the format in 'standard.txt'.
-
-If you want to use a different format, introduce a second argument; a flag.
+The programs default font is standard.
 
 The flags for the banner files are:
 
@@ -72,11 +64,11 @@ For example:
 
 - To use thinkertoy:
 
-`go run . "Hello\nThere" "-thinkertoy"`
+`"Hello\nThere" "-thinkertoy"`
 
 will have the following output:
 
-![go run . "Hello\nThere" "-thinkertoy"](/views/static/images/sample2.png)
+!["Hello\nThere" "-thinkertoy"](/views/static/images/sample2.png)
 
 **Note:** Remember to use `""` for enclosing grouped input.
 
@@ -89,9 +81,9 @@ the program is designed to print the valid ASCII characters and let you know whi
 
 For instance:
 
-`go run . "Google😋🤯🫣"`
+`"Google😋🤯🫣"`
 
-![go run . "Google😋🤯🫣"](/views/static/images/sample3.png)
+!["Google😋🤯🫣"](/views/static/images/sample3.png)
 
 **Note:**
 These characters will only appear once in the warning output.
@@ -100,7 +92,7 @@ These characters will only appear once in the warning output.
 
 The program writes the ascii output to a given file, when run like this:
 
-`go run . --output=sample.txt "Hello World!"`
+`--output=sample.txt "Hello World!"`
 
 Take a good look at **_--output=sample.txt_**. Here we have to use the flag **_--output=_** and specify the **_text_** file we are writing to, in the exact same format as in this example.
 
@@ -112,10 +104,8 @@ The program displays a graphical Web Interface.
 
 To start the web server:
 
-- Navigate to /cmd: `cd cmd`
-- Start the server by entering: `go run . -web`
-
-The server will start as long as the first argument is '-web' flag.
+- Navigate to /cmd: `cd cmd/web`
+- Start the server by entering: `go run .`
 
 ## Features
 
@@ -127,50 +117,30 @@ The output can be displayed in different colors in any of the following formats:
 
 1. By adding only the color flag and a valid color, like this:
 
-   - `go run . --color=blue hello`
+   - `--color=blue hello`
 
-     ![go run . --color=blue hello](/views/static/images/sample5.png)
+     ![--color=blue hello](/views/static/images/sample5.png)
 
    In this case, all the letters in **_hello_** will be colored in blue. Here, the string `hello` acts as the reference string.
 
 2. By adding a color flag and a refference string that is not a substring of the string to be colored, like in the example below, the program will look for the instance of the characters in the string to be colored and color them with the provided color, like this:
 
-   - `go run . --color=blue ho hello`
+   - `--color=blue ho hello`
 
-     ![go run . --color=blue ho hello](/views/static/images/sample4.png)
+     ![--color=blue ho hello](/views/static/images/sample4.png)
 
      On the terminal, you should be able to see letters **_h_** and **_o_** in blue and the remaining letters in default terminal color(possibly, white).
-
-3. By adding a color flag and a refference string that is a substring of the string to be colored,like in the example below, the program will look for the instance of the substring in the string to be colored and color them with the provided color, like this:
-
-   - `go run . --color=#f0f "Will" "Will will come\nTo fetch the Will\nTo Will James"`
-
-     ![go run . --color=blue ho hello](/views/static/images/sample6.png)
-
-     On the terminal, you should be able to see the substring **_Will_** in yellow (or the provided colour) and the remaining letters in default terminal color(possibly, white).
-
-#### RGB-format
-
-1.  By adding an RGB color code, like this:
-
-    - `go run . "--color=rgb(100, 150, 180)" hello`
 
 #### Hex-format
 
 1.  By adding hexadecimal color codes, like this:
 
-    - `go run . --color=#e3ee38 hello hello`
+    - `--color=#e3ee38 hello`
 
 2.  This program also supports shorthand hexadecimal color codes:
 
-    - `go run . --color=#ff0 hello hello`
-    - `go run . --color=#333 hello hello`
-
-#### HSL-format
-
-1.  By adding HSL color codes, like this:
-    - `go run . "--color=hsl(176, 95%, 50%)" hello hello`
-    - `go run . "--color=HSL(176, 95%, 50%)" hello hello`
+    - `--color=#ff0 hello`
+    - `--color=#333 hello`
 
 **Note:** The HSL and RGB color formats require that the color flag and it's value be enclosed in quotation marks; as shown above. This is because brackets have a syntactical interpretation in bash.
 
@@ -196,15 +166,15 @@ The input follows a specified format:
 
             [OPTION]       [YOUR INPUT]     [BANNER]
 
-`go run . --align=center     "My Papa"       standard`
+`--align=center     "My Papa"       standard`
 
-#### Current Version Updates (v 0.4)
+#### Current Version Updates (v 0.5)
 
 - Supports color as an option and runs with or without [BANNER](#) specified
 - Supports changing alignment options, input and color during runtime
 - For the best experience, use the **full terminal size**
 
-`go run . --color=#ff0 --align=center "Will" "Will will come\nHe has Will\n& Will"`
+`--color=#ff0 --align=center --reff="Will" "Will will come\nHe has Will\n& Will"`
 
 **Note:**
 
@@ -212,11 +182,11 @@ The input follows a specified format:
 
             [       OPTION          ]      [         YOUR INPUT          ]          [BANNER]
 
-`go run . --align=center --color=#ff0       "Papa" "My Papa\nIs Papa?\nNo Papa"    thinkertoy`
+`--align=center --color=#ff0       --reff="Papa" "My Papa\nIs Papa?\nNo Papa"    thinkertoy`
 
     or
 
-`go run . --color=#ff0 --align=center       "Will" "Will will come\nHe has Will\n& Will"`
+`--color=#ff0 --align=center       --reff="Will" "Will will come\nHe has Will\n& Will"`
 
 **_Output that surpasses the screen size will be hidden._**
 
@@ -238,24 +208,10 @@ To quit the program, type `exit` in lowercase only.
 
 ## Disclaimer
 
-The program currently supports three interfaces. You are thus adviced to **explicitly declare** your intended use, or else, you may encounter wrong output or usage errors.
+The program currently supports three interfaces.
+You are thus adviced to **explicitly declare** your intended use, or else, you may encounter wrong output.
 
-For instance:
-
-`go run .` will throw a full fledged usage error like:
-
-```Bash
-For color:
-EX: go run . --color=<color> <substring to be colored> "something" standard
-For output:
-EX: go run . --output=<fileName.txt> something standard
-For justify:
-Example: go run . --align=right something standard
-For web:
-go run . -web
-```
-
-But explicitly telling the program the intended use, such as `go run . --output=sample.txt something`, will prompt the program to use the file interface.
+Incase you encounter a wrong output, re-initialize your inputs by add input again.
 
 
 ## Authors

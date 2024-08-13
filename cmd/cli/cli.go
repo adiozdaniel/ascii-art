@@ -86,6 +86,7 @@ func (cli *Cli) updateDisplay(newWidth int) {
 	}
 
 	fmt.Print(termOutput)
+	fmt.Print(ascii.NonAsciiOutput())
 	helpers.ResetCursor()
 
 	cli.state["prevWidth"] = newWidth

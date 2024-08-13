@@ -13,12 +13,14 @@
 	color: #333;
 }
 .contact-content p {
-	color: #666;
+	color: bisque;
 }
 
 .contact-form {
 	display: flex;
 	flex-direction: column;
+	max-width: 60%;
+	margin-left: 20%;
 }
 .contact-form label {
 	margin: 10px 0 5px;

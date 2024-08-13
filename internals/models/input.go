@@ -106,33 +106,10 @@ func (i *InputData) ParseArgs() {
 	}
 
 	i.Checkbanner()
-	for j, arg := range i.Args {
-		parts := strings.Split(arg, "=")
-		if len(parts) == 2 {
-			flag := parts[0]
-			value := parts[1]
-
-			if i.IsValidFlag(flag) {
-				parsedFlag := i.RemoveLeadingDashes(flag)
-				i.Flags[parsedFlag] = value
-				i.Args = append(i.Args[:j], i.Args[j+1:]...)
-				continue
-			} else {
-				fmt.Println("Invalid flag: " + arg)
-			}
-		}
-
-		if strings.HasPrefix(arg, "-") {
-			if _, ok := bannerFiles[arg]; ok {
-				i.Flags["font"] = arg
-			}
-
-			if j < len(i.Args)-1 {
-				i.Args = append(i.Args[:j], i.Args[j+1:]...)
-				continue
-			}
-			i.Args = nil
-		}
+	j := 0
+	for j < len(i.Args){
+		i.CheckReff(i.Args[j], j)
+		j++
 	}
 
 	if len(i.Args) > 0 {
@@ -158,6 +135,19 @@ func (i *InputData) Checkbanner() {
 	if _, ok := bannerFiles[i.Args[len(i.Args)-1]]; ok {
 		i.Flags["font"] = i.Args[len(i.Args)-1]
 		i.Args = i.Args[:len(i.Args)-1]
+	}
+}
+
+func (i *InputData) CheckReff(flag string, j int) {
+	parts := strings.Split(flag, "=")
+
+	if len(parts) == 2 {
+		flag := parts[0]
+		value := parts[1]
+		fmt.Println(flag, value)
+		parsedFlag := i.RemoveLeadingDashes(flag)
+		i.Flags[parsedFlag] = value
+		i.Args = i.Args[j+1:]
 	}
 }
 

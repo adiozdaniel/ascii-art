@@ -31,7 +31,8 @@ h3 {
 
 pre {
 	background-color: rgb(1, 2, 19);
-	padding: 20px;
+	padding: 5px;
+	font-size: 0.8em;
 	margin: 10px auto;
 	border-radius: 8px;
 	box-shadow: 0px 0px 3px 3px rgb(241, 216, 186);
@@ -66,14 +67,31 @@ pre {
 	display: block;
 }
 
-@media screen and (max-width: 319px) {
+@media screen and (max-width: 544px) {
 	.ascii {
-		padding: 0;
+		padding: 10px;
 		margin: 0.3em;
 	}
 
 	pre {
-		padding: 10px 3px;
+		padding: 5px 3px;
+		font-size: 0.7em;
+	}
+
+}
+
+@media screen and (max-width: 319px) {
+	pre {
+		padding: 5px 3px;
+		font-size: 0.5em;
+	}
+
+}
+
+@media screen and (max-width: 280px) {
+	pre {
+		padding: 5px 3px;
+		font-size: 0.5em;
 	}
 
 }

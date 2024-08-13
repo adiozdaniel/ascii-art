@@ -1,14 +1,21 @@
-{{template "base" .}} {{define "css"}} {{end}} {{define "title"}} BadRequest
-{{end}} {{define "content"}}
+{{template "base" .}} {{define "css"}}
+<link
+	rel="stylesheet"
+	href="/static/styles/badrequest.css"
+	type="text/css"
+/>
+{{end}} {{define "title"}} BadRequest {{end}} {{define "content"}}
 
-<h1>400 Oops Bad Request! 😏</h1>
-<h2>Trying to jump the Gun?</h2>
-<p><strong>You must provide some text.</strong></p>
-<a
-	href="/"
-	title="Go back to the home page"
-	class="btn"
->
-	Home
-</a>
+<div class="badrequest">
+	<h1>400 Oops Bad Request! 😏</h1>
+	<h2>Trying to jump the Gun?</h2>
+	<p><strong>You must provide some text.</strong></p>
+	<a
+		href="/"
+		title="Go back to the home page"
+		class="btn"
+	>
+		Home
+	</a>
+</div>
 {{end}}

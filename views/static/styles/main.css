@@ -21,12 +21,13 @@ h1 {
 
 .btn {
 	height: fit-content;
+	position: relative;
 	text-decoration: none;
 	color: bisque;
 	letter-spacing: 0.2em;
 	cursor: pointer;
 	background-color: #235525;
-	margin: 20px auto;
+	margin: 2% auto;
 	padding: 2% 5%;
 	width: 30%;
 	border: none;

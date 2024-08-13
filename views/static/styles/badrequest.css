@@ -1,0 +1,12 @@
+.badrequest {
+	display: flex;
+	flex-direction: column;
+}
+
+.badrequest h1,
+h2,
+p,
+a {
+	padding: 0;
+	margin: 0.2em;
+}

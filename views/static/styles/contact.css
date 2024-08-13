@@ -20,7 +20,7 @@
 	display: flex;
 	flex-direction: column;
 	max-width: 60%;
-	margin-left: 20%;
+	margin-left: 20% ;
 }
 .contact-form label {
 	margin: 10px 0 5px;
@@ -78,7 +78,12 @@
 	transition: opacity 0.5s, visibility 0.5s;
 }
 
-@media (max-width: 544px) {
+@media screen and (max-width: 544px) {
+	.contact-form {
+		max-width: 100%;
+		margin: 0.2em;
+	}
+
 	.toast {
 		font-size: 0.7;
 		width: 60%;
@@ -91,7 +96,12 @@
 	}
 }
 
-@media (max-width: 310px) {
+@media screen and (max-width: 310px) {
+	.contact-form {
+		max-width: 100%;
+		margin: 0;
+	}
+
 	.toast {
 		font-size: 0.7;
 		width: 70%;

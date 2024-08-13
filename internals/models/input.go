@@ -106,7 +106,7 @@ func (i *InputData) ParseArgs() {
 	}
 
 	for j, arg := range i.Args {
-		parts := strings.SplitN(arg, "=", 2)
+		parts := strings.Split(arg, "=")
 		if len(parts) == 2 {
 			flag := parts[0]
 			value := parts[1]
@@ -115,6 +115,7 @@ func (i *InputData) ParseArgs() {
 				parsedFlag := i.RemoveLeadingDashes(flag)
 				i.Flags[parsedFlag] = value
 				i.Args = append(i.Args[:j], i.Args[j+1:]...)
+				continue
 			} else {
 				fmt.Println("Invalid flag: " + arg)
 			}
@@ -130,8 +131,6 @@ func (i *InputData) ParseArgs() {
 				continue
 			}
 			i.Args = nil
-		} else {
-			j++
 		}
 	}
 

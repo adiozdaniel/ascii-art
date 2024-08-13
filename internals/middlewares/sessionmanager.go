@@ -20,7 +20,7 @@ func SessionMiddleware(sm *models.SessionManager) func(next http.Handler) http.H
 				return
 			}
 
-			if r.URL.Path == "/contact"{
+			if r.URL.Path == "/contact" {
 				next.ServeHTTP(w, r)
 				return
 			}

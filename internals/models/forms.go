@@ -69,9 +69,9 @@ func (f *Forms) Required(r *http.Request, fields ...string) {
 
 // fieldLengths represents the minimum length required for each form field
 var fieldLengths = map[string]int{
-	"name":    3,
-	"email":   9,
-	"message": 30,
+	"name":     3,
+	"email":    9,
+	"message":  30,
 	"username": 3,
 }
 

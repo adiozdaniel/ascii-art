@@ -74,6 +74,17 @@ func (cli *Cli) updateDisplay(newWidth int) {
 	outputs := ascii.Output(flags["input"])
 	termOutput := helpers.Alignment(outputs, newWidth)
 	helpers.ClearTerminal()
+	if cli.app.GetInput().Flags["output"] != "" {
+		ascii.LogOutput(termOutput)
+		cli.state["prevWidth"] = newWidth
+		cli.state["tempStr"] = ""
+		cli.state["prevColor"] = flags["color"]
+		cli.state["prevReff"] = flags["reff"]
+		cli.state["prevFont"] = flags["font"]
+		cli.app.GetInput().Flags["output"] = ""
+		return
+	}
+
 	fmt.Print(termOutput)
 	helpers.ResetCursor()
 

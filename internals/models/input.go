@@ -105,6 +105,7 @@ func (i *InputData) ParseArgs() {
 		i.Flags = make(map[string]string)
 	}
 
+	i.Checkbanner()
 	for j, arg := range i.Args {
 		parts := strings.Split(arg, "=")
 		if len(parts) == 2 {
@@ -147,6 +148,17 @@ func (i *InputData) ParseArgs() {
 // IsValidFlag checks if a flag is valid
 func (i *InputData) IsValidFlag(flag string) bool {
 	return i.ValidFlags[flag]
+}
+
+// Checkbanner checks if arguments has bannerfile
+func (i *InputData) Checkbanner() {
+	if len(i.Args) == 1 || len(i.Args) == 0 {
+		return
+	}
+	if _, ok := bannerFiles[i.Args[len(i.Args)-1]]; ok {
+		i.Flags["font"] = i.Args[len(i.Args)-1]
+		i.Args = i.Args[:len(i.Args)-1]
+	}
 }
 
 // RemoveLeadingDashes removes leading '--' from the given string

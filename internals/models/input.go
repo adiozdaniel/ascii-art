@@ -107,9 +107,12 @@ func (i *InputData) ParseArgs() {
 
 	i.Checkbanner()
 	j := 0
-	for j < len(i.Args){
+	for {
+		n := len(i.Args)
 		i.CheckReff(i.Args[j], j)
-		j++
+		if n == len(i.Args){
+			break
+		}
 	}
 
 	if len(i.Args) > 0 {
@@ -129,6 +132,17 @@ func (i *InputData) IsValidFlag(flag string) bool {
 
 // Checkbanner checks if arguments has bannerfile
 func (i *InputData) Checkbanner() {
+	if len(i.Args) == 1 || len(i.Args) == 0 {
+		return
+	}
+	if _, ok := bannerFiles[i.Args[len(i.Args)-1]]; ok {
+		i.Flags["font"] = i.Args[len(i.Args)-1]
+		i.Args = i.Args[:len(i.Args)-1]
+	}
+}
+
+// Checkbanner checks if arguments has bannerfile
+func (i *InputData) CheckAlignment() {
 	if len(i.Args) == 1 || len(i.Args) == 0 {
 		return
 	}

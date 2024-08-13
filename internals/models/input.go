@@ -106,11 +106,14 @@ func (i *InputData) ParseArgs() {
 	}
 
 	i.Checkbanner()
-	j := 0
+
 	for {
 		n := len(i.Args)
-		i.CheckReff(i.Args[j], j)
-		if n == len(i.Args){
+		if i.Args != nil {
+			i.CheckReff(i.Args[0])
+		}
+
+		if n == len(i.Args) {
 			break
 		}
 	}
@@ -152,7 +155,7 @@ func (i *InputData) CheckAlignment() {
 	}
 }
 
-func (i *InputData) CheckReff(flag string, j int) {
+func (i *InputData) CheckReff(flag string) {
 	parts := strings.Split(flag, "=")
 
 	if len(parts) == 2 {
@@ -161,7 +164,12 @@ func (i *InputData) CheckReff(flag string, j int) {
 		fmt.Println(flag, value)
 		parsedFlag := i.RemoveLeadingDashes(flag)
 		i.Flags[parsedFlag] = value
-		i.Args = i.Args[j+1:]
+
+		if len(i.Args) > 1 {
+			i.Args = i.Args[1:]
+		} else {
+			i.Args = nil
+		}
 	}
 }
 

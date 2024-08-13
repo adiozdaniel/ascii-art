@@ -157,8 +157,15 @@
 
 	.navbar ul li {
 		padding: 10px;
-		background-color: rgb(1, 2, 19);
+		width: 50%;
+		background-color: rgb(19, 9, 1);
 		border-radius: 5%;
 		transition: background-color 0.5s ease;
+	}
+}
+
+@media (max-width: 280px) {
+	.navbar ul li {
+		width: 60%;
 	}
 }

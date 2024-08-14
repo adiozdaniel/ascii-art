@@ -44,7 +44,7 @@ getTerminalWidth retrieves the current width of the terminal.
 It uses a system call to obtain terminal size information.
 Returns: The width of the terminal in columns. Zero if the width cannot be determined.
 */
-func GetTerminalWidth() int {
+func GetTerminalWidth() (int, int) {
 	type winsize struct {
 		Row uint16
 		Col uint16
@@ -60,7 +60,7 @@ func GetTerminalWidth() int {
 		app.ErrorHandler("align")
 	}
 
-	return int(ws.Col)
+	return int(ws.Row), int(ws.Col)
 }
 
 /*

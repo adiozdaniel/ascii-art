@@ -135,12 +135,16 @@ func (i *InputData) IsValidFlag(flag string) bool {
 
 // Checkbanner checks if arguments has bannerfile
 func (i *InputData) Checkbanner() {
-	if len(i.Args) == 1 || len(i.Args) == 0 {
-		return
-	}
+	// if len(i.Args) == 1 || len(i.Args) == 0 {
+	// 	return
+	// }
 	if _, ok := bannerFiles[i.Args[len(i.Args)-1]]; ok {
 		i.Flags["font"] = i.Args[len(i.Args)-1]
-		i.Args = i.Args[:len(i.Args)-1]
+		if len(i.Args) == 1 {
+			i.Args = nil
+		} else {
+			i.Args = i.Args[:len(i.Args)-1]
+		}
 	}
 }
 

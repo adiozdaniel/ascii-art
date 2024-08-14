@@ -77,17 +77,17 @@ func (i *InputData) Init() {
 		i.ErrorHandler("fatal")
 	}
 
-	bc, err := App().CreateBannerCache()
+	bc, err := GetStateManager().config.CreateBannerCache()
 	if err != nil {
 		i.ErrorHandler("banners")
 	}
-	App().BannerFileCache = bc
+	GetStateManager().config.BannerFileCache = bc
 
-	tc, err := App().CreateTemplateCache()
+	tc, err := GetStateManager().config.CreateTemplateCache()
 	if err != nil {
 		i.ErrorHandler("banners")
 	}
-	App().TemplateCache = tc
+	GetStateManager().config.TemplateCache = tc
 }
 
 // BannerFiles returns the map of banner files for the InputData instance

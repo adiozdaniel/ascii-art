@@ -11,11 +11,7 @@ import (
 
 // TestRunWeb verifies that the web server starts and responds with a status OK.
 func TestRunWeb(t *testing.T) {
-	handler, err := runWeb()
-	if err != nil {
-		t.Fatalf("Failed to run web: %v", err)
-	}
-
+	handler := runWeb()
 	server := httptest.NewServer(handler)
 	defer server.Close()
 
@@ -32,11 +28,7 @@ func TestRunWeb(t *testing.T) {
 
 // TestRoutes checks the status codes for various routes.
 func TestRoutes(t *testing.T) {
-	handler, err := runWeb()
-	if err != nil {
-		t.Fatalf("Failed to run web: %v", err)
-	}
-
+	handler := runWeb()
 	server := httptest.NewServer(handler)
 	defer server.Close()
 
@@ -107,10 +99,7 @@ func TestMiddlewares(t *testing.T) {
 
 // TestMainFunction tests the main function
 func TestMainFunction(t *testing.T) {
-	handler, err := runWeb()
-	if err != nil {
-		t.Fatalf("Failed to run web: %v", err)
-	}
+	handler := runWeb()
 	server := httptest.NewServer(handler)
 	defer server.Close()
 

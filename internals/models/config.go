@@ -43,6 +43,11 @@ func (a *AppConfig) CreateBannerCache() (map[string]string, error) {
 	return a.BannerFileCache, nil
 }
 
+// GetBannerCache returns the banner contents for a given banner file.
+func (a *AppConfig) GetBannerCache(file string) string {
+	return a.BannerFileCache[file]
+}
+
 // CreateTemplateCache is a helper function to cache all HTML templates as a map
 func (a *AppConfig) CreateTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}

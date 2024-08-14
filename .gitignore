@@ -8,4 +8,4 @@ tmp
 
 # ignore test files
 cmd/*/*.txt
-./*.txt
+*.txt

@@ -9,11 +9,11 @@
 <!-- Ascii Art Work Display -->
 {{if and .StringMap (or .StringMap.ascii .StringMap.nonasciis)}}
 <div class="ascii">
-		{{if .StringMap.ascii}}
-		<pre>{{.StringMap.ascii}}</pre>
-		{{end}} {{if .StringMap.nonasciis}}
-		<pre>{{.StringMap.nonasciis}}</pre>
-		{{end}}
+	{{if .StringMap.ascii}}
+	<pre>{{.StringMap.ascii}}</pre>
+	{{end}} {{if .StringMap.nonasciis}}
+	<pre>{{.StringMap.nonasciis}}</pre>
+	{{end}}
 </div>
 <div>
 	<a
@@ -21,10 +21,21 @@
 		class="btn"
 		>More Tests</a
 	>
+	or
+	<a
+		href="/download-ascii"
+		class="btn"
+		download
+		>Download-Ascii</a
+	>
 </div>
 {{else}}
-<p>Uh-Oh! You need to enter some text </p>
-<a href="/" class="btn">here</a>
+<p>Uh-Oh! You need to enter some text</p>
+<a
+	href="/"
+	class="btn"
+	>here</a
+>
 {{ end }}
 <!-- end of Ascii Art Display -->
 {{end}}

@@ -232,6 +232,7 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 // DownloadHandler handles file download requests.
 func (m *Repository) DownloadHandler(w http.ResponseWriter, r *http.Request) {
 	filePath := filepath.Join("ascii-art.txt")
+	m.app.GetInput().Flags["output"] = "ascii-art.txt"
 
 	output := ascii.Output(m.app.GetInput().Flags["input"])
 	ascii.LogOutput(strings.ReplaceAll(output, "$", " "))

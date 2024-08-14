@@ -14,12 +14,6 @@ import (
 // Global Cli instance
 var cli *Cli
 
-// Default values
-const (
-	defaultFont  = "--standard"
-	defaultInput = "Ascii~"
-)
-
 // Cli holds the state for the CLI interface.
 type Cli struct {
 	app       *models.StateManager
@@ -107,9 +101,6 @@ func init() {
 
 	go cli.readInput()
 	cli.app.GetConfig().BannerFileCache = bc
-
-	cli.app.GetInput().Flags["font"] = defaultFont
-	cli.app.GetInput().Flags["input"] = defaultInput
 }
 
 // runCli runs the CLI application.

@@ -27,23 +27,6 @@ func runWeb() (http.Handler, error) {
 	handlers.NewRepo(sm)
 	middlewares.NewMiddlewares(sessionManager)
 
-	tc, err := appConfig.CreateTemplateCache()
-	if err != nil {
-		return nil, fmt.Errorf("creating template cache: %w", err)
-	}
-	appConfig.TemplateCache = tc
-
-	bc, err := appConfig.CreateBannerCache()
-	if err != nil {
-		return nil, fmt.Errorf("creating banner cache: %w", err)
-	}
-	appConfig.BannerFileCache = bc
-
-	appData.Flags["font"] = "--standard"
-	appData.Flags["input"] = "Ascii~"
-	appData.Flags["reff"] = "Ascii"
-	appData.Flags["color"] = "#FABB60"
-
 	mux := http.NewServeMux()
 	routes.RegisterRoutes(mux)
 

@@ -41,9 +41,9 @@ var bannerFiles = map[string]string{
 // members holds struct members with default values
 var members = map[string]string{
 	"font":   "--standard",
-	"input":  "",
-	"color":  "",
-	"reff":   "",
+	"input":  "Ascii~",
+	"color":  "#FABB60",
+	"reff":   "Ascii",
 	"align":  "left",
 	"output": "",
 	"isWeb":  "",
@@ -72,6 +72,18 @@ func (i *InputData) Init() {
 	if len(os.Args) > 1 && strings.Contains(os.Args[1], "-test") {
 		return
 	}
+
+	bc, err := App().CreateBannerCache()
+	if err != nil {
+		i.ErrorHandler("banners")
+	}
+	App().BannerFileCache = bc
+
+	tc, err := App().CreateTemplateCache()
+	if err != nil {
+		i.ErrorHandler("banners")
+	}
+	App().TemplateCache = tc
 
 	if len(os.Args) > 1 {
 		i.ErrorHandler("fatal")

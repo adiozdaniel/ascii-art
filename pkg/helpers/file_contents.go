@@ -44,9 +44,6 @@ func FileContents(fileName string) error {
 	contents, err := sm.GetConfig().GetBannerCache(fileName)
 
 	if err != nil || !validateBanner(contents) {
-		if app.Flags["isWeb"] == "true" {
-			return fmt.Errorf("not found")
-		}
 		fmt.Print("Be patient while downloading...\n")
 		time.Sleep(1 * time.Second)
 		err := utils.DownloadFile("https://learn.zone01kisumu.ke/git/root/public/raw/branch/master/subjects/ascii-art/"+fileName[11:], filePath)

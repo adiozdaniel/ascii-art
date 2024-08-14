@@ -80,8 +80,7 @@ func (cli *Cli) updateDisplay(newWidth int) {
 		return
 	}
 
-	fmt.Print(termOutput)
-	// helpers.ResetCursor()
+	fmt.Print("\n", termOutput)
 	Footer()
 
 	cli.state["prevWidth"] = newWidth
@@ -93,20 +92,19 @@ func (cli *Cli) updateDisplay(newWidth int) {
 
 // Footer writes the footer for CLI mode
 func Footer() {
-	var title = "ASCII Art Application - CLI Mode"
-	var version = "Version 5.0.1"
+	var title = "ASCII Art Application - CLI Mode. Version 5.0.1"
 	var message = "Type 'exit' to quit"
 	var help = "For help, use the documentation"
 	var _, col = helpers.GetTerminalWidth()
-	var footer = fmt.Sprintf("\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n",
+	var footer = fmt.Sprintf("\n%s\n%s\n%s\n%s\n%s\n%s\n",
 		strings.Repeat("=", col), ascii.NonAsciiOutput(),
-		title, version, message, help,
+		title, message, help,
 		strings.Repeat("=", col),
 	)
 	fmt.Printf("%s", strings.Repeat("\n", 5))
 	fmt.Println(footer)
 	time.Sleep(1 * time.Second)
-	fmt.Printf("\033[%dA", 10)
+	fmt.Printf("\033[%dA", 9)
 }
 
 // init initializes the CLI interface.

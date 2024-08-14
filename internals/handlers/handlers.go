@@ -2,6 +2,8 @@ package handlers
 
 import (
 	"net/http"
+	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
@@ -225,4 +227,17 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusAccepted)
 		renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
 	}
+}
+
+// DownloadHandler handles file download requests.
+func (m *Repository) DownloadHandler(w http.ResponseWriter, r *http.Request) {
+	filePath := filepath.Join("ascii-art.txt")
+
+	output := ascii.Output(m.app.GetInput().Flags["input"])
+	ascii.LogOutput(strings.ReplaceAll(output, "$", " "))
+
+	http.ServeFile(w, r, filePath)
+
+	w.Header().Set("Content-Disposition", "attachment; filename=report.txt")
+	w.Header().Set("Content-Type", "application/octet-stream")
 }

@@ -11,20 +11,20 @@ import (
 type AppConfig struct {
 	UseCache        bool
 	TemplateCache   map[string]*template.Template
-	BannerFileCache map[string]string
+	BannerFileCache map[string][]byte
 }
 
 // App is the instance of AppConfig.
 func App() *AppConfig {
 	return &AppConfig{
 		TemplateCache:   make(map[string]*template.Template),
-		BannerFileCache: make(map[string]string),
+		BannerFileCache: make(map[string][]byte),
 		UseCache:        false,
 	}
 }
 
 // CreateBannerCache caches banner files
-func (a *AppConfig) CreateBannerCache() (map[string]string, error) {
+func (a *AppConfig) CreateBannerCache() (map[string][]byte, error) {
 	baseDir := instance.input.GetProjectRoot("views/static", "banners")
 	bannerDir := filepath.Join(baseDir, "*.txt")
 	banners, err := filepath.Glob(bannerDir)
@@ -37,7 +37,7 @@ func (a *AppConfig) CreateBannerCache() (map[string]string, error) {
 		if err != nil {
 			return nil, fmt.Errorf("error reading banner file %s: %v", banner, err)
 		}
-		a.BannerFileCache[filepath.Base(banner)] = string(contents)
+		a.BannerFileCache[filepath.Base(banner)] = contents
 	}
 
 	return a.BannerFileCache, nil

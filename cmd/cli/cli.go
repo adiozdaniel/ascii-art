@@ -103,6 +103,7 @@ func Footer() {
 		title, version, message, help,
 		strings.Repeat("=", col),
 	)
+	fmt.Printf("%s", strings.Repeat("\n", 5))
 	fmt.Println(footer)
 	time.Sleep(1 * time.Second)
 	fmt.Printf("\033[%dA", 9)
@@ -131,6 +132,7 @@ func runCli() error {
 				return nil
 			}
 			if input == "exit" {
+				helpers.ClearTerminal()
 				fmt.Println("\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
 				return nil
 			} else if input != "" {

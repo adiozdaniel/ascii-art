@@ -41,8 +41,7 @@ func validateBanner(banner []byte) bool {
 func FileContents(fileName string) error {
 	fileDir := "views/static/banners"
 	filePath := app.GetProjectRoot(fileDir, fileName)
-
-	contents, err := os.ReadFile(filePath)
+	contents, err := sm.GetConfig().GetBannerCache(fileName)
 
 	if err != nil || !validateBanner(contents) {
 		if app.Flags["isWeb"] == "true" {

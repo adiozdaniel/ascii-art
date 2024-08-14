@@ -106,7 +106,7 @@ func Footer() {
 	fmt.Printf("%s", strings.Repeat("\n", 5))
 	fmt.Println(footer)
 	time.Sleep(1 * time.Second)
-	fmt.Printf("\033[%dA", 9)
+	fmt.Printf("\033[%dA", 10)
 }
 
 // init initializes the CLI interface.

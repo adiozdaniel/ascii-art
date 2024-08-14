@@ -1,4 +1,4 @@
-# ASCII-Graphics Tool Version 0.5
+# ASCII-Graphics Tool Version 5.0.1
 
 ## Description
 
@@ -11,7 +11,6 @@ These fonts and/or formats are represented in the following banner files:
 - thinkertoy.txt.
 
 This program can handle an input with printable ASCII characters (numbers, letters, spaces, special characters) and `\n` (newline character).
-
 
 ## Implementation
 
@@ -33,7 +32,7 @@ From the **command line**,
 git clone https://learn.zone01kisumu.ke/git/adaniel/ascii-art.git
 cd ascii-art
 
-# you may be required to re-initialize go mod; this depends on your system 
+# you may be required to re-initialize go mod; this depends on your system
 go mod init github.com/adiozdaniel/ascii-art
 code .
 ```
@@ -204,7 +203,7 @@ The input follows a specified format:
     - `--thinkertoy` for thinkertoy font styling
     - `--shadow` for shadow font styling
 
-To quit the program, type `exit` in lowercase only. 
+To quit the program, type `exit` in lowercase only.
 
 ## Disclaimer
 
@@ -212,7 +211,6 @@ The program currently supports three interfaces.
 You are thus adviced to **explicitly declare** your intended use, or else, you may encounter wrong output.
 
 Incase you encounter a wrong output, re-initialize your inputs by add input again.
-
 
 ## Authors
 

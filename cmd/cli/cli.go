@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
@@ -80,14 +81,29 @@ func (cli *Cli) updateDisplay(newWidth int) {
 	}
 
 	fmt.Print(termOutput)
-	fmt.Print(ascii.NonAsciiOutput())
 	helpers.ResetCursor()
+	fmt.Print(Footer())
 
 	cli.state["prevWidth"] = newWidth
 	cli.state["tempStr"] = ""
 	cli.state["prevColor"] = flags["color"]
 	cli.state["prevReff"] = flags["reff"]
 	cli.state["prevFont"] = flags["font"]
+}
+
+// Footer writes the footer for CLI mode
+func Footer() string {
+	var title = "ASCII Art Application - CLI Mode"
+	var version = "Version 5.0.1"
+	var message = "Type 'exit' to quit"
+	var help = "For help, use the documentation"
+	var _, col = helpers.GetTerminalWidth()
+	var footer = fmt.Sprintf("\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n",
+		strings.Repeat("=", col), ascii.NonAsciiOutput(),
+		title, version, message, help,
+		strings.Repeat("=", col),
+	)
+	return footer
 }
 
 // init initializes the CLI interface.
@@ -120,7 +136,7 @@ func runCli() error {
 				helpers.ScanInput(input)
 			}
 		default:
-			newWidth := helpers.GetTerminalWidth()
+			_, newWidth := helpers.GetTerminalWidth()
 			if cli.shouldUpdate(newWidth) {
 				cli.updateDisplay(newWidth)
 			}

@@ -73,6 +73,10 @@ func (i *InputData) Init() {
 		return
 	}
 
+	if len(os.Args) > 1 {
+		i.ErrorHandler("fatal")
+	}
+
 	bc, err := App().CreateBannerCache()
 	if err != nil {
 		i.ErrorHandler("banners")
@@ -84,10 +88,6 @@ func (i *InputData) Init() {
 		i.ErrorHandler("banners")
 	}
 	App().TemplateCache = tc
-
-	if len(os.Args) > 1 {
-		i.ErrorHandler("fatal")
-	}
 }
 
 // BannerFiles returns the map of banner files for the InputData instance

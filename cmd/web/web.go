@@ -18,7 +18,6 @@ import (
 var (
 	sm             = models.GetStateManager()
 	appData        = sm.GetInput()
-	appConfig      = sm.GetConfig()
 	sessionManager = sm.GetSessionManager()
 )
 

@@ -5,3 +5,7 @@ go.sum
 # ignore development binaries
 cmd/tmp
 tmp
+
+# ignore test files
+cmd/*/*.txt
+./*.txt

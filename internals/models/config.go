@@ -45,7 +45,6 @@ func (a *AppConfig) CreateBannerCache() (map[string][]byte, error) {
 
 // GetBannerCache returns the banner contents for a given banner file.
 func (a *AppConfig) GetBannerCache(file string) ([]byte, error) {
-	fmt.Println(len(a.BannerFileCache))
 	if bannerFiles, ok := a.BannerFileCache[file]; ok {
 		return []byte(bannerFiles), nil
 	}

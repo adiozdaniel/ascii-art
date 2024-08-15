@@ -46,7 +46,7 @@
             id="name"
             name="name"
             placeholder="Your awesome name"
-            value="{{ $res.name }}"
+           value="{{if $res.name}}{{ $res.name }}{{else}}{{ .StringMap.username }}{{end}}"
         />
 
         <label for="email">

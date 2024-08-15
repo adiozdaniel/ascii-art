@@ -19,6 +19,7 @@ const (
 type Session struct {
 	CRSFToken string
 	Expiry    time.Time
+	Data      *TemplateData
 }
 
 // SessionManager manages user sessions
@@ -45,6 +46,7 @@ func (sm *SessionManager) CreateSession() *Session {
 	session := &Session{
 		CRSFToken: sessionID,
 		Expiry:    time.Now().Add(30 * time.Minute),
+		Data:      NewTemplateData(),
 	}
 	sm.sessions[sessionID] = session
 	return session

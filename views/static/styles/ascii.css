@@ -64,9 +64,13 @@ pre {
 }
 
 .btn {
-	display: block;
-	padding: 10px 0;
+	display: inline;
+	padding: 15px 15px;
 	font-size: 16px;
+}
+
+.between {
+	padding: 10px;
 }
 
 img {
@@ -86,10 +90,28 @@ img {
 
 }
 
+@media screen and (max-width: 414px) {
+	pre {
+		padding: 10px 10px;
+		font-size: 0.5em;
+	}
+
+	.btn {
+		display: inline;
+		padding: 8px 10px;
+	}
+
+}
+
 @media screen and (max-width: 320px) {
 	pre {
 		padding: 5px 3px;
 		font-size: 0.5em;
+	}
+
+	.btn {
+		display: block;
+		padding: 8px 10px;
 	}
 
 }
@@ -98,6 +120,10 @@ img {
 	pre {
 		padding: 5px 3px;
 		font-size: 0.5em;
+	}
+
+	.btn .text {
+		display: none;
 	}
 
 }

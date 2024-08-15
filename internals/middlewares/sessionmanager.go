@@ -40,9 +40,11 @@ func SessionMiddleware(sm *models.SessionManager) func(next http.Handler) http.H
 
 			session, exists := sm.GetSession(sessionID)
 			if !exists || session.Expiry.Before(time.Now()) {
+				sessionID = sm.CreateSession().CRSFToken
+				session, _ = sm.GetSession(sessionID)
 				http.SetCookie(w, &http.Cookie{
 					Name:     sessionCookieName,
-					Value:    "",
+					Value:    sessionID,
 					Path:     "/",
 					Expires:  time.Now().Add(-time.Hour),
 					HttpOnly: true,

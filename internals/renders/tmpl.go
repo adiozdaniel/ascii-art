@@ -6,312 +6,39 @@ var Tmpl = `
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<style>
-	html,
-body {
-	background-color: #333;
-	font-family: Arial, sans-serif;
-	text-align: center;
-	margin: 0;
-	padding: 0;
-	color: bisque;
-	font-size: 1.2em;
-	height: 100vh;
-}
+	<link
+		rel="icon"
+		href="/static/images/favicon.ico"
+		type="image/x-icon"
+	/>
 
-h1,
-h2 {
-	color: bisque;
-}
+	<link
+			rel="stylesheet"
+			href="/static/styles/main.css"
+			type="text/css"
+	/>
 
-h1 {
-	transform: scale(90%);
-}
+	<link
+	rel="stylesheet"
+	href="/static/styles/footer.css"
+	type="text/css"
+	/>
 
-.btn {
-	height: fit-content;
-	position: relative;
-	text-decoration: none;
-	color: bisque;
-	letter-spacing: 0.2em;
-	cursor: pointer;
-	background-color: #235525;
-	margin: 2% auto;
-	padding: 2% 5%;
-	width: 30%;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 3px 10px rgb(1, 2, 19);
-}
+	<link
+	rel="stylesheet"
+	href="/static/styles/navbar.css"
+	type="text/css"
+	/>
 
-.btn:hover {
-	background-color: #5b7e5c;
-	color: rgb(1, 2, 19);
-	text-decoration: none;
-	box-shadow: 0 2px 15px rgb(1, 2, 19);
-}
-
-.navbar {
-	background-color: #222;
-	overflow: hidden;
-	padding: 0;
-	margin: 0;
-	box-shadow: 0 8px 6px rgb(1, 2, 19);
-	display: flex;
-	font-size: 0.8em;
-	justify-content: space-between;
-	align-items: center;
-	transition: transform 0.3s ease;
-}
-
-/* Hamburger Icon Styles */
-.menu-toggle {
-	display: none;
-}
-
-.hamburger {
-	display: none;
-	flex-direction: column;
-	cursor: pointer;
-	padding: 10px;
-}
-
-.hamburger .bar {
-	width: 30px;
-	height: 3px;
-	background-color: bisque;
-	margin: 5px 0;
-	transition: 0.3s;
-}
-
-/* User Icon Styles */
-.user-icon {
-	transition: 0.3s;
-	font-size: 0.8em;
-	display: flex;
-	align-items: center;
-	padding: 0.6em;
-	transition: transform 0.3s ease;
-}
-
-.user-icon img {
-	display: block;
-	width: 40px;
-	height: 40px;
-	cursor: pointer;
-	transition: 0.3s;
-	border-radius: 50%;
-	transition: transform 0.3s ease;
-}
-
-.username {
-	font-weight: bold;
-	color: #4c9850;
-	transition: 0.3s ease;
-}
-
-.navbar ul {
-	list-style: none;
-	margin: 0;
-  	padding: 0;
-	width: 55%;
-	display: flex;
-	align-items: center;
-	justify-content: space-evenly;
-}
-
-.navbar ul li {
-	width: 20%;
-	margin: 0.5%;
-	transition: transform 0.3s ease;
-}
-
-.navbar ul li:hover {
-	background-color: #4c9850;
-}
-
-.navbar ul li a {
-	display: block;
-  	text-align: center;
-  	padding: 14px 5px;
-	width: 100%;
-	color: bisque;
-	text-decoration: none;
-	transition: 0.3s;
-}
-
-.navbar ul li a:hover {
-	color: rgb(1, 2, 19);
-}
-
-.navbar #logout {
-	letter-spacing: 0.2em;
-	font-size: 0.7em;
-	color: bisque;
-	background-color: rgb(139, 3, 166);
-	border-radius: 0.6em;
-	padding: 0.2em 0.9em;
-	transition: transform 0.3s ease;
-}
-
-.navbar #logout:hover {
-	background-color: rgb(76, 2, 91);
-}
-
-.user-icon.shrink {
-	transform: scale(0.6);
-}
-
-/* Show hamburger icon on small screens */
-@media (max-width: 544px) {
-	h1 {
-		transform: scale(75%);
-	}
-	.hamburger {
-		display: flex;
-	}
-
-	.navbar ul {
-		display: none;
-		flex-direction: column;
-		position: absolute;
-		top: 60px;
-		right: 0;
-		width: 100%;
-	}
-
-	.menu-toggle:checked + .hamburger #bar1 {
-		transform: rotate(45deg);
-		position: relative;
-		top: 15px;
-		transition: transform 0.4s ease;
-	}
-
-	.menu-toggle:checked + .hamburger #bar2 {
-		opacity: 0;
-		transition: transform 0.4s ease;
-	}
-
-	.menu-toggle:checked + .hamburger #bar3 {
-		transform: rotate(-45deg);
-		position: relative;
-		top: -10px;
-		transition: transform 0.4s ease;
-	}
-
-	.menu-toggle:checked ~ #nav-menu {
-		display: flex;
-		z-index: 500;
-		opacity: 0.9;
-		background-color: #222;
-		transition: transform 0.4s ease;
-		transition: background-color 1s ease;
-	}
-
-	.navbar ul li {
-		padding: 10px;
-		width: 50%;
-		background-color: rgb(19, 9, 1);
-		border-radius: 5%;
-		transition: background-color 0.5s ease;
-	}
-}
-
-@media (max-width: 280px) {
-	.navbar ul li {
-		width: 60%;
-	}
-}
-
-.wrapper {
-	bottom: 0%;
-	margin-top: 10%;
-	width: 100%;
-	position: relative;
-}
-
-svg {
-	padding: 10px;
-}
-
-.authors {
-	margin: 2em auto -8em auto;
-}
-
-.authors p {
-	margin-top: -1.5em;
-	font-size: 0.7em;
-	color: bisque;
-	text-shadow: 0 0 0.5em rgb(254, 228, 196);
-	text-shadow: 1px 1px 2px rgb(1, 2, 19), 0 0 5px #222;
-}
-
-.author {
-	display: inline-block;
-	margin: 5%;
-	text-align: center;
-	font-size: medium;
-}
-
-.author img {
-	border-radius: 50%;
-	width: 80px;
-	height: 80px;
-	object-fit: cover;
-	box-shadow: 2px 8px 15px rgb(1, 2, 19);
-}
-
-.author-name {
-	margin-top: 10px;
-	color: bisque;
-	font-size: 1.2em;
-}
-
-.my-footer {
-	background-color: #222;
-	padding: 1% 20%;
-	margin: 0 auto;
-	text-align: center;
-	color: bisque;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: space-between;
-	align-items: center;
-	border-top: 1px solid #444;
-	border-bottom: 1px solid #444;
-}
-
-.my-footer svg {
-	fill: bisque;
-	margin: 0 10px;
-}
-
-.my-footer span {
-	font-size: 0.8em;
-}
-
-@media screen and (max-width: 544px) {
-	p {
-		padding: 0;
-		font-size: 0.9em;
-	}
-
-	h2 {
-		font-size: 1.2em;
-	}
-
-	.authors p {
-		margin-top: -1.2em;
-		font-size: 0.5em;
-	}
-}
-
-	</style>
-
+	<link
+	rel="stylesheet"
+	href="/static/styles/servererror.css"
+	type="text/css"
+	/>
     <title>Server Error</title>
 </head>
 <body>
+    <!-- nabar starts-->
     <div class="navbar">
         <!-- Hamburger Icon -->
         <input
@@ -352,9 +79,11 @@ svg {
                 <a href="/contact">Contact</a>
             </li>
         </ul>
+	</div>
+	<!-- nabar ends-->
 
-        <!-- server error content -->
-    <div>
+    <!-- server error content -->
+    <div class="servererror">
         <h1>500 Oops! Server Error 🙁</h1>
 			<h2>Something went wrong.</h2>
 			<h3>{{.Error}}</h3>
@@ -362,8 +91,9 @@ svg {
 			<h1>Home</h1>
 			</a>
     </div>
-        <!-- content end -->
+    <!-- content end -->
 
+	<!-- footer starts-->
     <div class="wrapper">
         <!-- Authors Section -->
         <div class="authors">
@@ -479,7 +209,7 @@ svg {
                 </svg>
             </div>
         </footer>
-        <!-- Footer-End -->
     </div>
+	<!-- Footer-End -->
 </body>
 </html>`

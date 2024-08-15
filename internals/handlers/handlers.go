@@ -26,6 +26,18 @@ func NewRepo(sm *models.StateManager) *Repository {
 
 // HomeHandler handles the homepage route '/'
 func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("session_id")
+	var session *models.Session
+
+	if err == nil {
+		session, _ = m.app.GetSessionManager().GetSession(cookie.Value)
+	}
+
+	if session == nil {
+		renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+	}
+
+	w.WriteHeader(http.StatusOK)
 	renders.RenderTemplate(w, "home.page.html", m.app.GetTemplateData())
 }
 

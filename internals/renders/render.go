@@ -17,6 +17,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, data *models.TemplateDat
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
 	err := ts.Execute(w, data)
 	if err != nil {
 		return

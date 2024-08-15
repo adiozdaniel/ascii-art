@@ -26,14 +26,12 @@ func NewRepo(sm *models.StateManager) *Repository {
 
 // HomeHandler handles the homepage route '/'
 func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
 	renders.RenderTemplate(w, "home.page.html", m.app.GetTemplateData())
 }
 
 // SubmitHandler handles the output route '/ascii-art'
 func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		w.WriteHeader(http.StatusOK)
 		renders.RenderTemplate(w, "ascii.page.html", m.app.GetTemplateData())
 		return
 	}
@@ -70,7 +68,6 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	td["ascii"] = output
 	td["nonasciis"] = nonasciis
 
-	w.WriteHeader(http.StatusOK)
 	renders.RenderTemplate(w, "ascii.page.html", m.app.GetTemplateData())
 }
 
@@ -162,12 +159,6 @@ func (m *Repository) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // NotFoundHandler handles unknown routes; 404 status
-func (m *Repository) MsgHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	renders.RenderTemplate(w, "msg.page.html", m.app.GetTemplateData())
-}
-
-// NotFoundHandler handles unknown routes; 404 status
 func (m *Repository) NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
 	renders.RenderTemplate(w, "notfound.page.html", m.app.GetTemplateData())
@@ -187,7 +178,6 @@ func (m *Repository) ServerErrorHandler(w http.ResponseWriter, r *http.Request) 
 
 // AboutHandler handles the about page route '/about'
 func (m *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
 	renders.RenderTemplate(w, "about.page.html", m.app.GetTemplateData())
 }
 
@@ -198,7 +188,6 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 		form.Errors.Clear()
 		m.app.GetTemplateData().StringMap["success"] = ""
 
-		w.WriteHeader(http.StatusOK)
 		renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
 		return
 	}

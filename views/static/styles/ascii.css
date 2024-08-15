@@ -80,7 +80,7 @@ pre {
 
 }
 
-@media screen and (max-width: 319px) {
+@media screen and (max-width: 320px) {
 	pre {
 		padding: 5px 3px;
 		font-size: 0.5em;

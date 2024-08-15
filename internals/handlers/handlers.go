@@ -27,28 +27,31 @@ func NewRepo(sm *models.StateManager) *Repository {
 // HomeHandler handles the homepage route '/'
 func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session_id")
-	var session *models.Session
-
-	if err == nil {
-		session, _ = m.app.GetSessionManager().GetSession(cookie.Value)
-	}
-
-	if session == nil {
+	if err != nil {
 		renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	renders.RenderTemplate(w, "home.page.html", m.app.GetTemplateData())
+	data := m.app.GetSessionManager().GetSessionData(cookie.Value)
+	renders.RenderTemplate(w, "home.page.html", data)
 }
 
 // SubmitHandler handles the output route '/ascii-art'
 func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet {
-		renders.RenderTemplate(w, "ascii.page.html", m.app.GetTemplateData())
+	cookie, err := r.Cookie("session_id")
+	if err != nil {
+		renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
 		return
 	}
 
-	err := r.ParseForm()
+	data := m.app.GetSessionManager().GetSessionData(cookie.Value)
+
+	if r.Method == http.MethodGet {
+		renders.RenderTemplate(w, "ascii.page.html", data)
+		return
+	}
+
+	err = r.ParseForm()
 	if err != nil {
 		m.BadRequestHandler(w, r)
 		return
@@ -64,37 +67,38 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 
 	if banner == "" {
 		m.BadRequestHandler(w, r)
+		return
 	}
 
 	m.app.GetInput().Flags["font"] = banner
 	err = helpers.FileContents(banner)
 	if err != nil {
-		m.NotFoundHandler(w, r)
+		m.ServerErrorHandler(w, r)
 		return
 	}
 
 	output := ascii.Output(m.app.GetInput().Flags["input"])
 	nonasciis := ascii.NonAsciiOutput()
 
-	td := m.app.GetTemplateData().StringMap
+	td := data.StringMap
 	td["ascii"] = output
 	td["nonasciis"] = nonasciis
 
-	renders.RenderTemplate(w, "ascii.page.html", m.app.GetTemplateData())
+	renders.RenderTemplate(w, "ascii.page.html", data)
 }
 
 // LoginHandler handles user login and session creation
 func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		cookie, err := r.Cookie("session_id")
 		var session *models.Session
-
+		cookie, err := r.Cookie("session_id")
 		if err == nil {
 			session, _ = m.app.GetSessionManager().GetSession(cookie.Value)
 		}
 
 		if session == nil {
 			renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+			return
 		}
 
 		if session != nil && session.CRSFToken != "" && r.Method == "GET" {
@@ -106,7 +110,7 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		err := r.ParseForm()
 		if err != nil {
-			m.BadRequestHandler(w, r)
+			m.ServerErrorHandler(w, r)
 			return
 		}
 
@@ -114,7 +118,6 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		form.Errors.Clear()
 
 		username := r.Form.Get("username")
-
 		form.Required(r, "username")
 
 		if !form.IsValidForm() {
@@ -124,9 +127,9 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if username != "" {
-			m.app.GetTemplateData().StringMap["username"] = m.app.GetTemplateData().CapitalizeFirst(username)
-
 			session := m.app.GetSessionManager().CreateSession()
+			var data = m.app.GetSessionManager().GetSessionData(session.CRSFToken)
+			data.StringMap["username"] = data.CapitalizeFirst(username)
 
 			http.SetCookie(w, &http.Cookie{
 				Name:     sessionCookieName,
@@ -153,7 +156,8 @@ func (m *Repository) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sessionID := cookie.Value
-	td := m.app.GetTemplateData().StringMap
+	var data = m.app.GetSessionManager().GetSessionData(sessionID)
+	td := data.StringMap
 	td["username"] = ""
 	sm := m.app.GetSessionManager()
 	sm.DeleteSession(sessionID)
@@ -172,35 +176,66 @@ func (m *Repository) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 
 // NotFoundHandler handles unknown routes; 404 status
 func (m *Repository) NotFoundHandler(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("session_id")
+	if err != nil {
+		renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+		return
+	}
+
+	data := m.app.GetSessionManager().GetSessionData(cookie.Value)
 	w.WriteHeader(http.StatusNotFound)
-	renders.RenderTemplate(w, "notfound.page.html", m.app.GetTemplateData())
+	renders.RenderTemplate(w, "notfound.page.html", data)
 }
 
 // BadRequestHandler handles bad requests routes
 func (m *Repository) BadRequestHandler(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("session_id")
+	if err != nil {
+		renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+		return
+	}
+
+	data := m.app.GetSessionManager().GetSessionData(cookie.Value)
 	w.WriteHeader(http.StatusBadRequest)
-	renders.RenderTemplate(w, "badrequest.page.html", m.app.GetTemplateData())
+	renders.RenderTemplate(w, "badrequest.page.html", data)
 }
 
 // ServerErrorHandler handles server failures that result in status 500
 func (m *Repository) ServerErrorHandler(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("session_id")
+	if err != nil {
+		renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+		return
+	}
+
+	data := m.app.GetSessionManager().GetSessionData(cookie.Value)
 	w.WriteHeader(http.StatusInternalServerError)
-	renders.RenderTemplate(w, "serverError.page.html", m.app.GetTemplateData())
+	renders.RenderTemplate(w, "serverError.page.html", data)
 }
 
 // AboutHandler handles the about page route '/about'
 func (m *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
-	renders.RenderTemplate(w, "about.page.html", m.app.GetTemplateData())
+	cookie, err := r.Cookie("session_id")
+	if err != nil {
+		renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+		return
+	}
+
+	data := m.app.GetSessionManager().GetSessionData(cookie.Value)
+	renders.RenderTemplate(w, "about.page.html", data)
 }
 
 // ContactHandler handles the contact page route '/contact'
 func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
+	cookie, _ := r.Cookie("session_id")
+	data := m.app.GetSessionManager().GetSessionData(cookie.Value)
+
 	if r.Method == http.MethodGet {
 		form := m.app.GetTemplateData().Form
 		form.Errors.Clear()
 		m.app.GetTemplateData().StringMap["success"] = ""
 
-		renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
+		renders.RenderTemplate(w, "contact.page.html", data)
 		return
 	}
 
@@ -217,7 +252,6 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 		form.Required(r, "name", "email", "message")
 
 		if !form.IsValidForm() {
-
 			w.WriteHeader(http.StatusBadRequest)
 			renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
 			return
@@ -226,7 +260,7 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 		m.app.GetTemplateData().StringMap["success"] = "email successfully sent"
 
 		w.WriteHeader(http.StatusAccepted)
-		renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
+		renders.RenderTemplate(w, "contact.page.html", data)
 	}
 }
 

@@ -101,7 +101,7 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if session != nil && session.CRSFToken != "" && r.Method == "GET" {
+		if session.CRSFToken != "" && r.Method == "GET" {
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 		}
 		return
@@ -228,12 +228,15 @@ func (m *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
 // ContactHandler handles the contact page route '/contact'
 func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, _ := r.Cookie("session_id")
-	data := m.app.GetSessionManager().GetSessionData(cookie.Value)
+	data := m.app.GetTemplateData()
+	if cookie != nil {
+		data = m.app.GetSessionManager().GetSessionData(cookie.Value)
+	}
 
 	if r.Method == http.MethodGet {
-		form := m.app.GetTemplateData().Form
+		form := data.Form
 		form.Errors.Clear()
-		m.app.GetTemplateData().StringMap["success"] = ""
+		data.StringMap["success"] = ""
 
 		renders.RenderTemplate(w, "contact.page.html", data)
 		return
@@ -246,18 +249,18 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		form := m.app.GetTemplateData().Form
+		form := data.Form
 		form.Errors.Clear()
 
 		form.Required(r, "name", "email", "message")
 
 		if !form.IsValidForm() {
 			w.WriteHeader(http.StatusBadRequest)
-			renders.RenderTemplate(w, "contact.page.html", m.app.GetTemplateData())
+			renders.RenderTemplate(w, "contact.page.html", data)
 			return
 		}
 
-		m.app.GetTemplateData().StringMap["success"] = "email successfully sent"
+		data.StringMap["success"] = "email successfully sent"
 
 		w.WriteHeader(http.StatusAccepted)
 		renders.RenderTemplate(w, "contact.page.html", data)

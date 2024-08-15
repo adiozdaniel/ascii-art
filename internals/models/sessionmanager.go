@@ -64,6 +64,15 @@ func (sm *SessionManager) GetSession(sessionID string) (*Session, bool) {
 	return session, true
 }
 
+// GetSessionData retrieves session data by ID
+func (sm *SessionManager) GetSessionData(sessionID string) *TemplateData {
+	session, exists := sm.GetSession(sessionID)
+	if exists {
+		return session.Data
+	}
+	return nil
+}
+
 // DeleteSession removes a session
 func (sm *SessionManager) DeleteSession(sessionID string) {
 	sm.lock.Lock()

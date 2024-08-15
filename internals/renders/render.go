@@ -8,7 +8,7 @@ import (
 )
 
 // RenderTemplate is a helper function to render HTML templateseWriter, tmpl string, data
-func RenderTemplate(w http.ResponseWriter, tmpl string, data *models.TemplateData) {
+func RenderTemplate(w http.ResponseWriter, status int, tmpl string, data *models.TemplateData) {
 	t := models.GetStateManager().GetConfig().TemplateCache
 	ts, ok := t[tmpl]
 	if !ok {
@@ -17,7 +17,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, data *models.TemplateDat
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(status)
 	err := ts.Execute(w, data)
 	if err != nil {
 		return

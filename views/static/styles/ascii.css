@@ -65,6 +65,12 @@ pre {
 
 .btn {
 	display: block;
+	padding: 10px 0;
+	font-size: 16px;
+}
+
+img {
+	font-family: Arial, sans-serif;
 }
 
 @media screen and (max-width: 544px) {

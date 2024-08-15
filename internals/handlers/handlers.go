@@ -28,26 +28,26 @@ func NewRepo(sm *models.StateManager) *Repository {
 func (m *Repository) HomeHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session_id")
 	if err != nil {
-		renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+		renders.RenderTemplate(w, http.StatusUnauthorized, "login.page.html", m.app.GetTemplateData())
 		return
 	}
 
 	data := m.app.GetSessionManager().GetSessionData(cookie.Value)
-	renders.RenderTemplate(w, "home.page.html", data)
+	renders.RenderTemplate(w, http.StatusOK, "home.page.html", data)
 }
 
 // SubmitHandler handles the output route '/ascii-art'
 func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session_id")
 	if err != nil {
-		renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+		renders.RenderTemplate(w, http.StatusUnauthorized, "login.page.html", m.app.GetTemplateData())
 		return
 	}
 
 	data := m.app.GetSessionManager().GetSessionData(cookie.Value)
 
 	if r.Method == http.MethodGet {
-		renders.RenderTemplate(w, "ascii.page.html", data)
+		renders.RenderTemplate(w, http.StatusOK, "ascii.page.html", data)
 		return
 	}
 
@@ -84,7 +84,7 @@ func (m *Repository) SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	td["ascii"] = output
 	td["nonasciis"] = nonasciis
 
-	renders.RenderTemplate(w, "ascii.page.html", data)
+	renders.RenderTemplate(w, http.StatusOK, "ascii.page.html", data)
 }
 
 // LoginHandler handles user login and session creation
@@ -97,7 +97,7 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if session == nil {
-			renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+			renders.RenderTemplate(w, http.StatusOK, "login.page.html", m.app.GetTemplateData())
 			return
 		}
 
@@ -121,8 +121,7 @@ func (m *Repository) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		form.Required(r, "username")
 
 		if !form.IsValidForm() {
-			w.WriteHeader(http.StatusUnauthorized)
-			renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+			renders.RenderTemplate(w, http.StatusForbidden, "login.page.html", m.app.GetTemplateData())
 			return
 		}
 
@@ -178,51 +177,48 @@ func (m *Repository) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session_id")
 	if err != nil {
-		renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+		renders.RenderTemplate(w, http.StatusUnauthorized, "login.page.html", m.app.GetTemplateData())
 		return
 	}
 
 	data := m.app.GetSessionManager().GetSessionData(cookie.Value)
-	w.WriteHeader(http.StatusNotFound)
-	renders.RenderTemplate(w, "notfound.page.html", data)
+	renders.RenderTemplate(w, http.StatusNotFound, "notfound.page.html", data)
 }
 
 // BadRequestHandler handles bad requests routes
 func (m *Repository) BadRequestHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session_id")
 	if err != nil {
-		renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+		renders.RenderTemplate(w, http.StatusUnauthorized, "login.page.html", m.app.GetTemplateData())
 		return
 	}
 
 	data := m.app.GetSessionManager().GetSessionData(cookie.Value)
-	w.WriteHeader(http.StatusBadRequest)
-	renders.RenderTemplate(w, "badrequest.page.html", data)
+	renders.RenderTemplate(w, http.StatusBadRequest, "badrequest.page.html", data)
 }
 
 // ServerErrorHandler handles server failures that result in status 500
 func (m *Repository) ServerErrorHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session_id")
 	if err != nil {
-		renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+		renders.RenderTemplate(w, http.StatusUnauthorized, "login.page.html", m.app.GetTemplateData())
 		return
 	}
 
 	data := m.app.GetSessionManager().GetSessionData(cookie.Value)
-	w.WriteHeader(http.StatusInternalServerError)
-	renders.RenderTemplate(w, "serverError.page.html", data)
+	renders.RenderTemplate(w, http.StatusInternalServerError, "serverError.page.html", data)
 }
 
 // AboutHandler handles the about page route '/about'
 func (m *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session_id")
 	if err != nil {
-		renders.RenderTemplate(w, "login.page.html", m.app.GetTemplateData())
+		renders.RenderTemplate(w, http.StatusUnauthorized, "login.page.html", m.app.GetTemplateData())
 		return
 	}
 
 	data := m.app.GetSessionManager().GetSessionData(cookie.Value)
-	renders.RenderTemplate(w, "about.page.html", data)
+	renders.RenderTemplate(w, http.StatusOK, "about.page.html", data)
 }
 
 // ContactHandler handles the contact page route '/contact'
@@ -238,7 +234,7 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 		form.Errors.Clear()
 		data.StringMap["success"] = ""
 
-		renders.RenderTemplate(w, "contact.page.html", data)
+		renders.RenderTemplate(w, http.StatusOK, "contact.page.html", data)
 		return
 	}
 
@@ -255,15 +251,12 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 		form.Required(r, "name", "email", "message")
 
 		if !form.IsValidForm() {
-			w.WriteHeader(http.StatusBadRequest)
-			renders.RenderTemplate(w, "contact.page.html", data)
+			renders.RenderTemplate(w, http.StatusForbidden, "contact.page.html", data)
 			return
 		}
 
 		data.StringMap["success"] = "email successfully sent"
-
-		w.WriteHeader(http.StatusAccepted)
-		renders.RenderTemplate(w, "contact.page.html", data)
+		renders.RenderTemplate(w, http.StatusAccepted, "contact.page.html", data)
 	}
 }
 

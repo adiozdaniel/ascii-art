@@ -50,8 +50,9 @@ func FileContents(fileName string) error {
 		if err != nil {
 			fmt.Println(err)
 			os.Remove(filePath)
-			os.Exit(0)
+			return err
 		}
+
 		fmt.Print("\033[1A", "\033[G", "\033[2K")
 		fmt.Println("Download Complete, This is awesome right?😎😎😎")
 		fmt.Print("\033[2K")
@@ -61,7 +62,7 @@ func FileContents(fileName string) error {
 		contents, err = os.ReadFile(fileName)
 		if err != nil {
 			fmt.Println("not succesfull")
-			os.Exit(0)
+			return err
 		}
 	}
 

@@ -69,19 +69,17 @@ var validFlags = map[string]bool{
 
 // Init initializes the InputData
 func (i *InputData) Init() {
-	if len(os.Args) > 1 && strings.Contains(os.Args[1], "-test") {
-		return
-	}
-
-	if len(os.Args) > 1 {
+	if len(os.Args) > 1 && !strings.Contains(os.Args[1], "-test") {
 		i.ErrorHandler("fatal")
 	}
 
+	fmt.Println("Fire up the state manager")
 	bc, err := GetStateManager().config.CreateBannerCache()
 	if err != nil {
 		i.ErrorHandler("banners")
 	}
 	GetStateManager().config.BannerFileCache = bc
+	fmt.Println("BannerFileCache", len(GetStateManager().config.BannerFileCache))
 
 	tc, err := GetStateManager().config.CreateTemplateCache()
 	if err != nil {

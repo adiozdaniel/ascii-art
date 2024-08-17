@@ -22,7 +22,7 @@ var (
 )
 
 // runWeb initializes the web data
-func runWeb() (*http.Server, error) {
+func runServer() (*http.Server, error) {
 	handlers.NewRepo(sm)
 	middlewares.NewMiddlewares(sessionManager)
 
@@ -54,7 +54,7 @@ var shutdownChan = make(chan struct{})
 // main starts the web server
 func main() {
 	appData.Init()
-	server, err := runWeb()
+	server, err := runServer()
 	if err != nil {
 		appData.ErrorHandler("fatal")
 	}

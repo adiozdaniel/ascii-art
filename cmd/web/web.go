@@ -22,7 +22,7 @@ var (
 )
 
 // runWeb initializes the web data
-func runWeb() http.Handler {
+func runWeb() (*http.Server, error) {
 	handlers.NewRepo(sm)
 	middlewares.NewMiddlewares(sessionManager)
 
@@ -32,7 +32,20 @@ func runWeb() http.Handler {
 	wrappedMux := middlewares.SessionMiddleware(
 		sessionManager)(middlewares.RouteChecker(mux))
 
-	return wrappedMux
+	server := &http.Server{
+		Addr:    ":8080",
+		Handler: wrappedMux,
+	}
+
+	banner := appData.BannerFile[appData.Flags["font"]]
+	if err := helpers.FileContents(banner); err != nil {
+		return nil, err
+	}
+
+	serverOutput := ascii.Output(appData.Flags["input"])
+	fmt.Println(serverOutput + "=====================================\nserver running @http://localhost:8080")
+
+	return server, nil
 }
 
 // shutdownChan channel closes the server gracefully
@@ -41,20 +54,10 @@ var shutdownChan = make(chan struct{})
 // main starts the web server
 func main() {
 	appData.Init()
-	wrappedMux := runWeb()
-
-	server := &http.Server{
-		Addr:    ":8080",
-		Handler: wrappedMux,
-	}
-
-	banner := appData.BannerFile[appData.Flags["font"]]
-	if err := helpers.FileContents(banner); err != nil {
+	server, err := runWeb()
+	if err != nil {
 		appData.ErrorHandler("fatal")
 	}
-
-	serverOutput := ascii.Output(appData.Flags["input"])
-	fmt.Println(serverOutput + "=====================================\nserver running @http://localhost:8080")
 
 	appData.Flags["isWeb"] = "true"
 

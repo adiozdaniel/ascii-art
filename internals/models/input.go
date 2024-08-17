@@ -73,13 +73,11 @@ func (i *InputData) Init() {
 		i.ErrorHandler("fatal")
 	}
 
-	fmt.Println("Fire up the state manager")
 	bc, err := GetStateManager().config.CreateBannerCache()
 	if err != nil {
 		i.ErrorHandler("banners")
 	}
 	GetStateManager().config.BannerFileCache = bc
-	fmt.Println("BannerFileCache", len(GetStateManager().config.BannerFileCache))
 
 	tc, err := GetStateManager().config.CreateTemplateCache()
 	if err != nil {

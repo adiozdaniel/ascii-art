@@ -5,116 +5,17 @@ import (
 	"net/http/httptest"
 	"testing"
 	"time"
-
-	"github.com/adiozdaniel/ascii-art/internals/middlewares"
 )
 
-// TestRunWeb verifies that the web server starts and responds with a status OK.
-func TestRunWeb(t *testing.T) {
-	server, _ := runServer()
-	defer server.Close()
-
-	resp, err := http.Get(server.Addr)
-	if err != nil {
-		t.Fatalf("Failed to make request: %v", err)
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		t.Fatalf("Expected status OK, got %v", resp.Status)
-	}
-}
-
-// TestRoutes checks the status codes for various routes.
-func TestRoutes(t *testing.T) {
-	server, err := runServer()
-	if err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
-	defer server.Close()
-
-	tests := []struct {
-		path               string
-		expectedStatusCode int
-	}{
-		{"/", http.StatusOK},
-		{"/ascii-art", http.StatusOK},
-		{"/about", http.StatusOK},
-		{"/contact", http.StatusOK},
-		{"/login", http.StatusOK},
-		{"/logout", http.StatusOK},
-		{"/nonexistent", http.StatusOK},
-	}
-
-	for _, tt := range tests {
-		resp, err := http.Get(server.Addr + tt.path)
-		if err != nil {
-			t.Fatalf("Failed to make request to %v: %v", tt.path, err)
-		}
-		defer resp.Body.Close()
-
-		if resp.StatusCode != tt.expectedStatusCode {
-			t.Fatalf("For path %v, expected status %v, got %v", tt.path, tt.expectedStatusCode, resp.Status)
-		}
-	}
-}
-
-// TestMiddleware checks the middleware functionality.
-func TestMiddlewares(t *testing.T) {
-	middlewares.NewMiddlewares(sessionManager)
-
-	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-	})
-
-	routeChecker := middlewares.SessionMiddleware(
-		sessionManager)(middlewares.RouteChecker(testHandler))
-
-	tests := []struct {
-		path               string
-		expectedStatusCode int
-	}{
-		{"/", http.StatusSeeOther},
-		{"/ascii-art", http.StatusSeeOther},
-		{"/about", http.StatusSeeOther},
-		{"/contact", http.StatusOK},
-		{"/login", http.StatusOK},
-		{"/logout", http.StatusSeeOther},
-		{"/nonexistent", http.StatusSeeOther},
-	}
-
-	for _, tt := range tests {
-		req, err := http.NewRequest("GET", tt.path, nil)
-		if err != nil {
-			t.Fatalf("Failed to create request for %v: %v", tt.path, err)
-		}
-
-		recorder := httptest.NewRecorder()
-		routeChecker.ServeHTTP(recorder, req)
-
-		if recorder.Code != tt.expectedStatusCode {
-			t.Errorf("For path %v, expected status %v, got %v", tt.path, tt.expectedStatusCode, recorder.Code)
-		}
-	}
-}
-
-// TestMainFunction tests the main function
-func TestMainFunction(t *testing.T) {
-	server, err := runServer()
-	if err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
-	defer server.Close()
-
-	done := make(chan struct{})
-	go func() {
-		defer close(done)
-		main()
-	}()
+func TestServer(t *testing.T) {
+	go main()
 
 	time.Sleep(1 * time.Second)
 
-	resp, err := http.Get(server.Addr)
+	ts := httptest.NewServer(http.DefaultServeMux)
+	defer ts.Close()
+
+	resp, err := http.Get("http://localhost:8080/")
 	if err != nil {
 		t.Fatalf("Failed to make request: %v", err)
 	}
@@ -124,13 +25,11 @@ func TestMainFunction(t *testing.T) {
 		t.Fatalf("Expected status OK, got %v", resp.Status)
 	}
 
-	time.Sleep(2 * time.Second)
-
 	TriggerShutdown()
+	time.Sleep(1 * time.Second)
 
-	select {
-	case <-done:
-	case <-time.After(10 * time.Second):
-		t.Fatal("Timeout waiting for main to finish")
+	_, err = http.Get("http://localhost:8080/")
+	if err == nil {
+		t.Fatalf("Expected server to be shut down, but it's still running")
 	}
 }

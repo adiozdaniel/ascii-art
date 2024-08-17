@@ -11,11 +11,10 @@ import (
 
 // TestRunWeb verifies that the web server starts and responds with a status OK.
 func TestRunWeb(t *testing.T) {
-	handler := runWeb()
-	server := httptest.NewServer(handler)
+	server, _ := runServer()
 	defer server.Close()
 
-	resp, err := http.Get(server.URL)
+	resp, err := http.Get(server.Addr)
 	if err != nil {
 		t.Fatalf("Failed to make request: %v", err)
 	}
@@ -28,8 +27,10 @@ func TestRunWeb(t *testing.T) {
 
 // TestRoutes checks the status codes for various routes.
 func TestRoutes(t *testing.T) {
-	handler := runWeb()
-	server := httptest.NewServer(handler)
+	server, err := runServer()
+	if err != nil {
+		t.Fatalf("Failed to start server: %v", err)
+	}
 	defer server.Close()
 
 	tests := []struct {
@@ -46,7 +47,7 @@ func TestRoutes(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		resp, err := http.Get(server.URL + tt.path)
+		resp, err := http.Get(server.Addr + tt.path)
 		if err != nil {
 			t.Fatalf("Failed to make request to %v: %v", tt.path, err)
 		}
@@ -99,8 +100,10 @@ func TestMiddlewares(t *testing.T) {
 
 // TestMainFunction tests the main function
 func TestMainFunction(t *testing.T) {
-	handler := runWeb()
-	server := httptest.NewServer(handler)
+	server, err := runServer()
+	if err != nil {
+		t.Fatalf("Failed to start server: %v", err)
+	}
 	defer server.Close()
 
 	done := make(chan struct{})
@@ -111,7 +114,7 @@ func TestMainFunction(t *testing.T) {
 
 	time.Sleep(1 * time.Second)
 
-	resp, err := http.Get(server.URL)
+	resp, err := http.Get(server.Addr)
 	if err != nil {
 		t.Fatalf("Failed to make request: %v", err)
 	}

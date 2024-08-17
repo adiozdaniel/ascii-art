@@ -43,7 +43,7 @@ func runServer() (*http.Server, error) {
 	}
 
 	serverOutput := ascii.Output(appData.Flags["input"])
-	fmt.Println(serverOutput + "=====================================\nserver running @http://localhost:8080")
+	fmt.Println(serverOutput + "=====================================")
 
 	return server, nil
 }
@@ -60,6 +60,7 @@ func main() {
 	}
 
 	appData.Flags["isWeb"] = "true"
+	fmt.Println("server running @http://localhost:8080")
 
 	go func() {
 		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {

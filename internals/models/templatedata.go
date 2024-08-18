@@ -9,6 +9,7 @@ import (
 type TemplateData struct {
 	StringMap map[string]string `json:"stringMap"`
 	Form      *Forms
+	EmailData *EmailData
 }
 
 // NewTemplateData initializes a new TemplateData
@@ -16,6 +17,7 @@ func NewTemplateData() *TemplateData {
 	return &TemplateData{
 		StringMap: make(map[string]string),
 		Form:      NewForms(make(url.Values)),
+		EmailData: NewEmailData("", "", "", ""),
 	}
 }
 

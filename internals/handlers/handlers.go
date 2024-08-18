@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"net/http"
-	"net/smtp"
 	"path/filepath"
 	"strings"
 	"time"
@@ -225,14 +224,15 @@ func (m *Repository) AboutHandler(w http.ResponseWriter, r *http.Request) {
 // ContactHandler handles the contact page route '/contact'
 func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 	data := m.app.GetTemplateData()
+	form := data.Form
 
-	cookie, err := r.Cookie("session_id")
-	if err == nil && cookie != nil {
+	cookie, _ := r.Cookie("session_id")
+	if cookie != nil {
 		data = m.app.GetSessionManager().GetSessionData(cookie.Value)
 	}
 
 	if r.Method == http.MethodGet {
-		data.Form.Errors.Clear()
+		form.Errors.Clear()
 		data.StringMap["success"] = ""
 
 		renders.RenderTemplate(w, http.StatusOK, "contact.page.html", data)
@@ -246,21 +246,11 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		form := data.Form
 		form.Errors.Clear()
-
 		form.Required(r, "name", "email", "message")
 
 		if !form.IsValidForm() {
 			renders.RenderTemplate(w, http.StatusForbidden, "contact.page.html", data)
-			return
-		}
-
-		from := "asciigurus@zone01kisumu.co.ke"
-		auth := smtp.PlainAuth("", from, "", "localhost")
-		err = smtp.SendMail("smtp.gmail.com:587", auth, from, []string{r.Form.Get("email")}, []byte(r.Form.Get("message")))
-		if err != nil {
-			m.ServerErrorHandler(w, r)
 			return
 		}
 

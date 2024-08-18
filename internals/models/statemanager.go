@@ -11,6 +11,7 @@ type StateManager struct {
 	td      *TemplateData
 	session *SessionManager
 	support chan *EmailData
+	mails   *SMTPServer
 }
 
 // singleton instance of StateManager
@@ -28,6 +29,7 @@ func GetStateManager() *StateManager {
 		instance.td = NewTemplateData()
 		instance.session = NewSessionManager()
 		instance.support = make(chan *EmailData)
+		instance.mails = NewSMTPServer()
 	})
 	return instance
 }
@@ -55,4 +57,9 @@ func (sm *StateManager) GetSessionManager() *SessionManager {
 // GetSupportChannel returns the channel for sending email support requests
 func (sm *StateManager) GetSupportChannel() chan *EmailData {
 	return sm.support
+}
+
+// SendEmail sends an email using the configured SMTP server
+func (sm *StateManager) GetSendEmail() *SMTPServer {
+	return sm.mails
 }

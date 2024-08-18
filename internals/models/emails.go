@@ -1,6 +1,9 @@
 package models
 
-import "html/template"
+import (
+	"html/template"
+	"time"
+)
 
 // EmailData represents data for sending email
 type EmailData struct {
@@ -18,4 +21,15 @@ func NewEmailData(subject, content, to, from string) *EmailData {
 		To:      to,
 		From:    from,
 	}
+}
+
+// SMTPServer holds configuration for the SMTP server
+type SMTPServer struct {
+	Host           string
+	Port           int
+	Username       string
+	Password       string
+	KeepAlive      bool
+	ConnectTimeout time.Duration
+	SendTimeout    time.Duration
 }

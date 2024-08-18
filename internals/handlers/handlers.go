@@ -232,8 +232,7 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method == http.MethodGet {
-		form := data.Form
-		form.Errors.Clear()
+		data.Form.Errors.Clear()
 		data.StringMap["success"] = ""
 
 		renders.RenderTemplate(w, http.StatusOK, "contact.page.html", data)

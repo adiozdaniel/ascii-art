@@ -52,3 +52,8 @@ func (sm *StateManager) GetTemplateData() *TemplateData {
 func (sm *StateManager) GetSessionManager() *SessionManager {
 	return sm.session
 }
+
+// GetSupportChannel returns the channel for sending email support requests
+func (sm *StateManager) GetSupportChannel() <-chan *EmailData {
+	return sm.support
+}

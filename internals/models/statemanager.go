@@ -53,6 +53,6 @@ func (sm *StateManager) GetSessionManager() *SessionManager {
 }
 
 // GetSupportChannel returns the channel for sending email support requests
-func (sm *StateManager) GetSupportChannel() chan<- *EmailData {
+func (sm *StateManager) GetSupportChannel() chan *EmailData {
 	return sm.support
 }

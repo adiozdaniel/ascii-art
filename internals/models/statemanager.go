@@ -29,6 +29,7 @@ func GetStateManager() *StateManager {
 		instance.session = NewSessionManager()
 		instance.support = make(chan *EmailData)
 	})
+	defer close(instance.support)
 	return instance
 }
 

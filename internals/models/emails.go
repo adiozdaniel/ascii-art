@@ -38,7 +38,15 @@ type SMTPServer struct {
 
 // NewSMTPServer initializes and returns a new SMTPServer instance
 func NewSMTPServer() *SMTPServer {
-	return &SMTPServer{}
+	return &SMTPServer{
+		Host:           "smtp.gmail.com",
+		Port:           587,
+		Username:       "asciiart@gmail.com",
+		Password:       "my-password",
+		KeepAlive:      false,
+		ConnectTimeout: 10 * time.Second,
+		SendTimeout:    10 * time.Second,
+	}
 }
 
 // SendMail sends an email using the configured SMTP server

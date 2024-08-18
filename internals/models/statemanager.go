@@ -10,7 +10,7 @@ type StateManager struct {
 	config  *AppConfig
 	td      *TemplateData
 	session *SessionManager
-	support *Support
+	support chan *EmailData
 }
 
 // singleton instance of StateManager
@@ -27,7 +27,7 @@ func GetStateManager() *StateManager {
 		instance.config = App()
 		instance.td = NewTemplateData()
 		instance.session = NewSessionManager()
-		instance.support = NewSupport()
+		instance.support = make(chan *EmailData)
 	})
 	return instance
 }
@@ -50,9 +50,4 @@ func (sm *StateManager) GetTemplateData() *TemplateData {
 // GetSessionManager returns the SessionManager instance of StateManager
 func (sm *StateManager) GetSessionManager() *SessionManager {
 	return sm.session
-}
-
-// GetSupport returns the Support instance of StateManager
-func (sm *StateManager) GetSupport() *Support {
-	return sm.support
 }

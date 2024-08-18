@@ -1,7 +1,9 @@
 package models
 
 import (
+	"fmt"
 	"html/template"
+	"net/smtp"
 	"time"
 )
 
@@ -37,4 +39,16 @@ type SMTPServer struct {
 // NewSMTPServer initializes and returns a new SMTPServer instance
 func NewSMTPServer() *SMTPServer {
 	return &SMTPServer{}
+}
+
+// SendMail sends an email using the configured SMTP server
+func (s *SMTPServer) SendMail(from, to, subject, body string) error {
+	auth := smtp.PlainAuth("", s.Username, s.Password, s.Host)
+
+	msg := []byte("To: " + to + "\r\n" +
+		"Subject: " + subject + "\r\n" +
+		"\r\n" + body + "\r\n")
+
+	addr := fmt.Sprintf("%s:%d", s.Host, s.Port)
+	return smtp.SendMail(addr, auth, from, []string{to}, msg)
 }

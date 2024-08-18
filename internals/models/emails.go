@@ -33,3 +33,8 @@ type SMTPServer struct {
 	ConnectTimeout time.Duration
 	SendTimeout    time.Duration
 }
+
+// NewSMTPServer initializes and returns a new SMTPServer instance
+func NewSMTPServer() *SMTPServer {
+	return &SMTPServer{}
+}

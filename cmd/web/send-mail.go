@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/adiozdaniel/ascii-art/internals/models"
 )
@@ -20,9 +20,7 @@ func sendEmail(m *models.EmailData) {
 	go func() {
 		err := sm.GetSendEmail().SendMail(m.From, m.To, m.Subject, string(m.Content))
 		if err != nil {
-			fmt.Printf("Error sending email: %v", err)
-		} else {
-			fmt.Printf("Email successfully sent to %s\n", m.To)
+			log.Printf("Error sending email: %v", err)
 		}
 	}()
 }

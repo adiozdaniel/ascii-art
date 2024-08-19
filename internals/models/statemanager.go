@@ -29,6 +29,7 @@ func GetStateManager() *StateManager {
 		instance.td = NewTemplateData()
 		instance.session = NewSessionManager()
 		instance.support = make(chan *EmailData)
+		instance.mails.LoadEnv()
 		instance.mails = NewSMTPServer()
 	})
 	return instance

@@ -80,12 +80,14 @@ func (s *SMTPServer) LoadEnv() error {
 			continue
 		}
 
+		line = strings.TrimPrefix(line, "export ")
 		parts := strings.SplitN(line, "=", 2)
 		if len(parts) != 2 {
 			continue
 		}
+
 		key := strings.TrimSpace(parts[0])
-		value := strings.TrimSpace(parts[1])
+		value := strings.Trim(strings.TrimSpace(parts[1]), "\"")
 
 		err := os.Setenv(key, value)
 		if err != nil {

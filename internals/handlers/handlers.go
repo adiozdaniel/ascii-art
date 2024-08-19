@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"path/filepath"
 	"strings"
@@ -254,9 +255,17 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		emailData := models.NewEmailData(
-			"Your Contact Form Submission",
+		msg := fmt.Sprintf("%sRef: %s%s%s%s",
+			"You are getting this email from the Ascii-Gurus Help Center; because you contacted us.\n\n",
+			m.app.GetSessionManager().GenerateSessionID(),
+			"\nWe got you: \n",
+			"We will get back to you asap\n",
 			r.Form.Get("message"),
+		)
+
+		emailData := models.NewEmailData(
+			"Ascii-Gurus Help Center",
+			msg,
 			r.Form.Get("email"),
 			"zonegurus@gmail.com",
 		)

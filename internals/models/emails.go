@@ -1,10 +1,12 @@
 package models
 
 import (
+	"bufio"
 	"fmt"
 	"html/template"
 	"net/smtp"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -60,4 +62,40 @@ func (s *SMTPServer) SendMail(from, to, subject, body string) error {
 
 	addr := fmt.Sprintf("%s:%d", s.Host, s.Port)
 	return smtp.SendMail(addr, auth, from, []string{to}, msg)
+}
+
+// LoadEnv loads environment variables from a .env file
+func (s *SMTPServer) LoadEnv() error {
+	filename := instance.input.GetProjectRoot("./", ".env")
+	file, err := os.Open(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if strings.HasPrefix(line, "#") || line == "" {
+			continue
+		}
+
+		parts := strings.SplitN(line, "=", 2)
+		if len(parts) != 2 {
+			continue
+		}
+		key := strings.TrimSpace(parts[0])
+		value := strings.TrimSpace(parts[1])
+
+		err := os.Setenv(key, value)
+		if err != nil {
+			return err
+		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -254,6 +254,15 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		emailData := models.NewEmailData(
+			"Your Contact Form Submission",
+			r.Form.Get("message"),
+			r.Form.Get("email"),
+			"adiozdaniel@gmail.com",
+		)
+
+		m.app.GetSupportChannel() <- emailData
+
 		data.StringMap["success"] = "email successfully sent"
 		renders.RenderTemplate(w, http.StatusAccepted, "contact.page.html", data)
 	}

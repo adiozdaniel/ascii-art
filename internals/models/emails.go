@@ -58,7 +58,9 @@ func (s *SMTPServer) SendMail(from, to, subject, body string) error {
 
 	msg := []byte("To: " + to + "\r\n" +
 		"Subject: " + subject + "\r\n" +
-		"\r\n" + body + "\r\n")
+		"MIME-version: 1.0;\r\n" +
+		"Content-Type: text/html; charset=\"UTF-8\";\r\n\r\n" +
+		body + "\r\n")
 
 	addr := fmt.Sprintf("%s:%d", s.Host, s.Port)
 	return smtp.SendMail(addr, auth, from, []string{to}, msg)

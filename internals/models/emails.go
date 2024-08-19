@@ -41,8 +41,8 @@ func NewSMTPServer() *SMTPServer {
 	return &SMTPServer{
 		Host:           "smtp.gmail.com",
 		Port:           587,
-		Username:       "asciiart@gmail.com",
-		Password:       "my-password",
+		Username:       "adiozdaniel@gmail.com",
+		Password:       "Java0382#",
 		KeepAlive:      false,
 		ConnectTimeout: 10 * time.Second,
 		SendTimeout:    10 * time.Second,

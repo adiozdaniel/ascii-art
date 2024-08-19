@@ -258,7 +258,7 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 			"Your Contact Form Submission",
 			r.Form.Get("message"),
 			r.Form.Get("email"),
-			"adiozdaniel@gmail.com",
+			"zonegurus@gmail.com",
 		)
 
 		m.app.GetSupportChannel() <- emailData

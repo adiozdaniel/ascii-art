@@ -42,7 +42,7 @@ func (sm *SessionManager) CreateSession() *Session {
 	sm.lock.Lock()
 	defer sm.lock.Unlock()
 
-	sessionID := generateSessionID()
+	sessionID := sm.GenerateSessionID()
 	session := &Session{
 		CRSFToken: sessionID,
 		Expiry:    time.Now().Add(30 * time.Minute),
@@ -82,7 +82,7 @@ func (sm *SessionManager) DeleteSession(sessionID string) {
 }
 
 // generateSessionID generates a unique session ID
-func generateSessionID() string {
+func (sm *SessionManager) GenerateSessionID() string {
 	b := make([]byte, 32)
 	if _, err := rand.Read(b); err != nil {
 		return fmt.Sprintf("%d", time.Now().UnixNano())

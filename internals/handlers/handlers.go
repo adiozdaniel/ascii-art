@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
+	"os"
 	"path/filepath"
 	"strings"
 	"time"
@@ -255,13 +255,17 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		msg := fmt.Sprintf("%sRef: %s%s%s%s",
-			"You are getting this email from the Ascii-Gurus Help Center; because you contacted us.\n\n",
-			m.app.GetSessionManager().GenerateSessionID(),
-			"\nWe got you: \n",
-			"We will get back to you asap\n",
-			r.Form.Get("message"),
-		)
+		contact := m.app.GetInput().GetProjectRoot("internals/renders", "contact.html")
+		contactData, err := os.ReadFile(contact)
+		if err != nil {
+			m.ServerErrorHandler(w, r)
+			return
+		}
+
+		mailTemplate := string(contactData)
+		body := strings.Replace(mailTemplate, "[%body%]", r.Form.Get("message"), 1)
+		msg := strings.Replace(body, "[%reference%]",
+			m.app.GetSessionManager().GenerateSessionID(), 1)
 
 		emailData := models.NewEmailData(
 			"Ascii-Gurus Help Center",

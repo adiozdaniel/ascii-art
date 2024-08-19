@@ -54,6 +54,7 @@ var shutdownChan = make(chan struct{})
 // main starts the web server
 func main() {
 	appData.Init()
+	sm.GetSendEmail().LoadEnv()
 	server, err := runServer()
 	if err != nil {
 		appData.ErrorHandler("fatal")

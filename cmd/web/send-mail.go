@@ -21,6 +21,8 @@ func sendEmail(m *models.EmailData) {
 		err := sm.GetSendEmail().SendMail(m.From, m.To, m.Subject, string(m.Content))
 		if err != nil {
 			fmt.Printf("Error sending email: %v", err)
+		} else {
+			fmt.Printf("Email successfully sent to %s\n", m.To)
 		}
 	}()
 }

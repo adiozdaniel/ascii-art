@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/smtp"
+	"os"
 	"time"
 )
 
@@ -41,8 +42,8 @@ func NewSMTPServer() *SMTPServer {
 	return &SMTPServer{
 		Host:           "smtp.gmail.com",
 		Port:           587,
-		Username:       "adiozdaniel@gmail.com",
-		Password:       "Java0382#",
+		Username:       os.Getenv("SMTP_USERNAME"),
+		Password:       os.Getenv("SMTP_PASSWORD"),
 		KeepAlive:      false,
 		ConnectTimeout: 10 * time.Second,
 		SendTimeout:    10 * time.Second,

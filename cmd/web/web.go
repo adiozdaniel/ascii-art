@@ -69,6 +69,8 @@ func main() {
 		}
 	}()
 
+	listenForMail()
+
 	<-shutdownChan
 	fmt.Println("Shutting down server...")
 

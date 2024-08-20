@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+// TestServer runs tests ont the web server
 func TestServer(t *testing.T) {
 	go main()
 

@@ -235,7 +235,7 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == http.MethodGet {
 		form.Errors.Clear()
-		
+
 		renders.RenderTemplate(w, http.StatusOK, "contact.page.html", data)
 		return
 	}
@@ -263,7 +263,7 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		mailTemplate := string(contactData)
-		named := strings.Replace(mailTemplate, "[%name%]", r.Form.Get("name"),1)
+		named := strings.Replace(mailTemplate, "[%name%]", r.Form.Get("name"), 1)
 		body := strings.Replace(named, "[%body%]", r.Form.Get("message"), 1)
 		msg := strings.Replace(body, "[%reference%]",
 			m.app.GetSessionManager().GenerateSessionID(), 1)

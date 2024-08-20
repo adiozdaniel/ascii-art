@@ -1,0 +1,4 @@
+# build the image minus the following
+.git
+.gitignore
+Dockerfile

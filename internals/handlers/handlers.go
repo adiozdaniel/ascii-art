@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -289,9 +288,9 @@ func (m *Repository) DownloadHandler(w http.ResponseWriter, r *http.Request) {
 
 	if userInput == "" {
 		userInput = m.app.GetInput().Flags["input"]
+	} else {
+		m.app.GetInput().Flags["input"] = userInput
 	}
-
-	fmt.Println(userInput)
 
 	filePath := filepath.Join("ascii-art.txt")
 	m.app.GetInput().Flags["output"] = "ascii-art.txt"

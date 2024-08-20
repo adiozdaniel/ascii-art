@@ -50,7 +50,7 @@
 
 ## Step 13: Build the Docker Image
 
-- `docker build -t ascii-web`
+- `docker build --no-cache -t ascii-web:v5.0.1 .` To ignore caching.
 
 ## Step 14: Run the Docker Container
 

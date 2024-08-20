@@ -9,12 +9,13 @@ COPY . .
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o main cmd/web/*.go
 
-FROM scratch
+FROM alpine:latest
 
 WORKDIR /root/
 
 COPY --from=builder /app/main .
 COPY ./views /root/views
+COPY ./.env /root/
 
 EXPOSE 8080
 

@@ -164,6 +164,7 @@ func (i *InputData) CheckAlignment() {
 	}
 }
 
+// CheckReff populates the flags with values
 func (i *InputData) CheckReff(flag string) {
 	parts := strings.Split(flag, "=")
 

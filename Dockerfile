@@ -20,3 +20,8 @@ COPY ./.env /root/
 EXPOSE 8080
 
 CMD ["./main"]
+
+LABEL version="v5.0.1"
+LABEL frontend_engineer="josephineopondo5@gmail.com"
+LABEL backend_engineer="andyovvo@gmail.com"
+LABEL documentation="adiozdaniel@gmail.com"

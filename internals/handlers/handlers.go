@@ -292,10 +292,17 @@ func (m *Repository) DownloadHandler(w http.ResponseWriter, r *http.Request) {
 		m.app.GetInput().Flags["input"] = userInput[0]
 	}
 
-	if userInput[1] == "" {
-		userInput[1] = m.app.GetInput().Flags["font"]
-	} else {
-		m.app.GetInput().Flags["font"] = userInput[1]
+	if len(userInput) > 1 {
+		banner := m.app.GetInput().BannerFile[userInput[1]]
+		if banner == "" {
+			http.Error(w, "Missing required input", http.StatusBadRequest)
+			return
+		}
+
+		if err := helpers.FileContents(banner); err != nil {
+			http.Error(w, "Something went wrong", http.StatusInternalServerError)
+			return
+		}
 	}
 
 	filePath := filepath.Join("ascii-art.txt")

@@ -108,9 +108,20 @@ To start the web server:
 
 ## Features
 
-### Download Generated Ascii Art
+### Ascii Art Api Usage
 
 - Ascii Art file export is generated using an Application Intergrated Interface (api): `/api/download-ascii`
+- Use the API with the following format: `/api/download-ascii/<Your Text>/<--desired font>`
+  **Your Text** represents the text to be processed. **desired font** is the font.
+  **Note**: font must have a prefix of `--` and ends with `/`.
+  For instance: if you want to work on `hello world` and your font is `--thinkertoy`
+
+  - Create a directory. Navigate to the directory and run:
+    `http://localhost:8080/api/download-ascii/Mark/--thinkertoy/`
+  - Allowed fonts:
+    - `--thinkertoy`
+    - `--standard`
+    - `--shadow`
 
 ### Color
 

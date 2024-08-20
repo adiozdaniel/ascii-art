@@ -284,18 +284,24 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 
 // DownloadHandler handles file download requests.
 func (m *Repository) DownloadHandler(w http.ResponseWriter, r *http.Request) {
-	userInput := strings.Split(strings.TrimPrefix(r.URL.Path, "/api/download-ascii/"), "/")[0]
+	userInput := strings.Split(strings.TrimPrefix(r.URL.Path, "/api/download-ascii/"), "/")
 
-	if userInput == "" {
-		userInput = m.app.GetInput().Flags["input"]
+	if userInput[0] == "" {
+		userInput[0] = m.app.GetInput().Flags["input"]
 	} else {
-		m.app.GetInput().Flags["input"] = userInput
+		m.app.GetInput().Flags["input"] = userInput[0]
+	}
+
+	if userInput[1] == "" {
+		userInput[1] = m.app.GetInput().Flags["font"]
+	} else {
+		m.app.GetInput().Flags["font"] = userInput[1]
 	}
 
 	filePath := filepath.Join("ascii-art.txt")
 	m.app.GetInput().Flags["output"] = "ascii-art.txt"
 
-	output := ascii.Output(userInput)
+	output := ascii.Output(userInput[0])
 	ascii.LogOutput(strings.ReplaceAll(output, "$", " "))
 
 	w.Header().Set("Content-Length", strconv.Itoa(len(output)))

@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// contexKey is context type
 type contexKey string
 
 const (

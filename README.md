@@ -108,6 +108,10 @@ To start the web server:
 
 ## Features
 
+### Download Generated Ascii Art
+
+- Ascii Art file export is generated using an Application Intergrated Interface (api): `/api/download-ascii`
+
 ### Color
 
 The output can be displayed in different colors in any of the following formats:

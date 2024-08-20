@@ -26,20 +26,19 @@ func NewMiddlewares(sm *models.SessionManager) *Middlewares {
 
 // Allowed routes
 var allowedRoutes = map[string]bool{
-	"/":               true,
-	"/ascii-art":      true,
-	"/about":          true,
-	"/contact":        true,
-	"/login":          true,
-	"/logout":         true,
-	"/download-ascii": true,
-	"/msg-success":    true,
+	"/":            true,
+	"/ascii-art":   true,
+	"/about":       true,
+	"/contact":     true,
+	"/login":       true,
+	"/logout":      true,
+	"/msg-success": true,
 }
 
 // RouteChecker is a middleware that checkes allowed routes
 func RouteChecker(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if strings.HasPrefix(r.URL.Path, "/static/") {
+		if strings.HasPrefix(r.URL.Path, "/static/") || strings.HasPrefix(r.URL.Path, "/api/download-ascii"){
 			next.ServeHTTP(w, r)
 			return
 		}

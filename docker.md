@@ -43,3 +43,15 @@
 ## Step 11: Run the binary program
 
 - `CMD ["./main"]`
+
+## Step 12: Create a .dockerignore file
+
+- To exclude unnecessary build files during in the image
+
+## Step 13: Build the Docker Image
+
+- `docker build -t ascii-web`
+
+## Step 14: Run the Docker Container
+
+- `docker run -p 8080:8080 ascii-web`

@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 
@@ -289,6 +290,7 @@ func (m *Repository) DownloadHandler(w http.ResponseWriter, r *http.Request) {
 	output := ascii.Output(m.app.GetInput().Flags["input"])
 	ascii.LogOutput(strings.ReplaceAll(output, "$", " "))
 
+	w.Header().Set("Content-Length", strconv.Itoa(len(output)))
 	w.Header().Set("Content-Disposition", "attachment; filename=\""+filePath+"\"")
 	w.Header().Set("Content-Type", "application/octet-stream")
 	http.ServeFile(w, r, filePath)

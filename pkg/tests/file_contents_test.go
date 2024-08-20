@@ -8,8 +8,7 @@ import (
 
 // FileContentTests checks the content of a bannerfile
 func FileContentTests() []string {
-	path := app.GetProjectRoot("/views/static/banners", "standard.txt")
-	fileName := path
+	fileName := app.GetProjectRoot("/views/static/banners", "standard.txt")
 	contents, err := os.ReadFile(fileName)
 	if err != nil {
 		fmt.Println(err)

@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -285,11 +284,16 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 
 // DownloadHandler handles file download requests.
 func (m *Repository) DownloadHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("vkjgkvl")
+	userInput := strings.Split(strings.TrimPrefix(r.URL.Path, "/api/download-ascii/"), "/")[0]
+
+	if userInput == "" {
+		userInput = m.app.GetInput().Flags["input"]
+	}
+
 	filePath := filepath.Join("ascii-art.txt")
 	m.app.GetInput().Flags["output"] = "ascii-art.txt"
 
-	output := ascii.Output(m.app.GetInput().Flags["input"])
+	output := ascii.Output(userInput)
 	ascii.LogOutput(strings.ReplaceAll(output, "$", " "))
 
 	w.Header().Set("Content-Length", strconv.Itoa(len(output)))

@@ -50,33 +50,33 @@
 
 ## Step 13: Build the Docker Image
 
-- `sudo docker image build -f Dockerfile -t ascii-web:v5.0.1 .`
+- `docker image build -f Dockerfile -t ascii-web:v5.0.1 .`
 
 ### To see images
 
-- `sudo docker images -a`
-- `sudo docker ps -a`
+- `docker images -a`
+- `docker ps -a`
 
 ## Step 14: Run the Docker Container
 
-- `sudo docker container run -p 8080:8080 --detach --name ascii-web-container ascii-web:v5.0.1`
+- `docker container run -p 8080:8080 --detach --name ascii-web-container ascii-web:v5.0.1`
 
 ### To Resolve conflicts
 
-- `sudo docker stop ascii-web-container`
-- `sudo docker rm ascii-web-container`
+- `docker stop ascii-web-container`
+- `docker rm ascii-web-container`
 
 or
 
-- `sudo docker rmi $(sudo docker images -a -q) --force`. To remove all existing images.
+- `docker rmi $(sudo docker images -a -q) --force`. To remove all existing images.
 
 ### To Check if it is running
 
-- `sudo docker ps`
+- `docker ps -a`
 
 ## To see file system
 
-- `sudo docker exec -it ascii-web-container /bin/sh`
+- `docker exec -it ascii-web-container /bin/sh`
 
 ### Perform required tasks
 

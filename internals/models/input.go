@@ -211,7 +211,7 @@ func (i *InputData) RemoveQuotes(InputData string) string {
 func (i *InputData) GetProjectRoot(path, name string) string {
 	cwd, _ := os.Getwd()
 	baseDir := cwd
-	if strings.HasSuffix(baseDir, "/web") || strings.HasSuffix(baseDir, "/cli") {
+	if strings.HasSuffix(baseDir, "/web") || strings.HasSuffix(baseDir, "/cli") || strings.HasSuffix(baseDir, "/tests") {
 		baseDir = filepath.Join(cwd, "../../")
 	}
 	return filepath.Join(baseDir, path, name)

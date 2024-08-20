@@ -1,4 +1,4 @@
-# ASCII-Graphics Tool Version 5.0.1
+# ASCII-Graphics Tool Version 5.0.2
 
 ## Description
 

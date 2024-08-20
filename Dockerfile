@@ -21,7 +21,7 @@ EXPOSE 8080
 
 CMD ["./main"]
 
-LABEL version="v5.0.1"
+LABEL version="v5.0.2"
 LABEL frontend_engineer="josephineopondo5@gmail.com"
 LABEL backend_engineer="andyovvo8@gmail.com"
 LABEL documentation="adiozdaniel@gmail.com"

@@ -50,7 +50,7 @@
 
 ## Step 13: Build the Docker Image
 
-- `docker image build -f Dockerfile -t ascii-web:v5.0.1 .`
+- `docker image build -f Dockerfile -t ascii-web:v5.0.2 .`
 
 ### To see images
 
@@ -59,7 +59,7 @@
 
 ## Step 14: Run the Docker Container
 
-- `docker container run -p 8080:8080 --detach --name ascii-web-container ascii-web:v5.0.1`
+- `docker container run -p 8080:8080 --detach --name ascii-web-container ascii-web:v5.0.2`
 
 ### To Resolve conflicts
 

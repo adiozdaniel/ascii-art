@@ -26,6 +26,8 @@ func LogOutput(output string) {
 		app.ErrorHandler("restricted")
 	}
 
-	outputString := fmt.Sprintf("  😋 writing.... '%s'. To check output, kindly use: `cat %s | cat -e` %s", app.Flags["input"], app.Flags["output"], NonAsciiOutput())
-	fmt.Printf("%s\n %s\n", outputString, strings.Repeat("=", len(outputString)-3))
+	if app.Flags["isWeb"] != "true" {
+		outputString := fmt.Sprintf("  😋 writing.... '%s'. To check output, kindly use: `cat %s | cat -e` %s", app.Flags["input"], app.Flags["output"], NonAsciiOutput())
+		fmt.Printf("%s\n %s\n", outputString, strings.Repeat("=", len(outputString)-3))
+	}
 }

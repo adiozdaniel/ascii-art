@@ -1,5 +1,6 @@
 package renders
 
+// Tmpl is a built in template to be used incase templates are unreachable
 var Tmpl = `
 <!DOCTYPE html>
 <html lang="en">

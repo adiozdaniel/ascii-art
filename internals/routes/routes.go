@@ -44,7 +44,7 @@ func RegisterRoutes(mux *http.ServeMux) {
 		repo.ContactHandler(w, r)
 	})
 
-	mux.HandleFunc("/download-ascii", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/download-ascii", func(w http.ResponseWriter, r *http.Request) {
 		repo.DownloadHandler(w, r)
 	})
 }

@@ -50,8 +50,35 @@
 
 ## Step 13: Build the Docker Image
 
-- `sudo docker build --no-cache -t ascii-web:v5.0.1 .` To ignore caching.
+- `sudo docker image build -f Dockerfile -t ascii-web:v5.0.1 .`
+
+### To see images
+
+- `sudo docker images -a`
+- `sudo docker ps -a`
 
 ## Step 14: Run the Docker Container
 
-- `sudo docker run -p 8080:8080 ascii-web:v5.0.1`
+- `sudo docker container run -p 8080:8080 --detach --name ascii-web-container ascii-web:v5.0.1`
+
+### To Resolve conflicts
+
+- `sudo docker stop ascii-web-container`
+- `sudo docker rm ascii-web-container`
+
+or
+
+- `sudo docker rmi $(sudo docker images -a -q) --force`. To remove all existing images.
+
+### To Check if it is running
+
+- `sudo docker ps`
+
+## To see file system
+
+- `sudo docker exec -it ascii-web-container /bin/sh`
+
+### Perform required tasks
+
+- `ls` to list, `cd` to change directory e.t.c
+- you can exit by using `exit`.

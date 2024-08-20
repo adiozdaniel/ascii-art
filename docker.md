@@ -54,4 +54,4 @@
 
 ## Step 14: Run the Docker Container
 
-- `docker run -p 8080:8080 ascii-web`
+- `docker run -p 8080:8080 ascii-web .`

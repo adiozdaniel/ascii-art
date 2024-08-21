@@ -284,6 +284,14 @@ func (m *Repository) ContactHandler(w http.ResponseWriter, r *http.Request) {
 
 // DownloadHandler handles file download requests.
 func (m *Repository) DownloadHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	if r.Method == http.MethodOptions {
+		return
+	}
+
 	userInput := strings.Split(strings.TrimPrefix(r.URL.Path, "/api/download-ascii/"), "/")
 
 	if userInput[0] == "" {

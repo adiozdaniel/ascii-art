@@ -117,7 +117,7 @@ To start the web server:
   For instance: if you want to work on `hello world` and your font is `--thinkertoy`
 
   - Create a directory. Navigate to the directory and run:
-    `http://localhost:8080/api/download-ascii/Mark/--thinkertoy/`
+    `curl -X GET http://localhost:8080/api/download-ascii/Mark/--thinkertoy/`
   - Allowed fonts:
     - `--thinkertoy`
     - `--standard`

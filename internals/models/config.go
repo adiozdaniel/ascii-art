@@ -12,6 +12,7 @@ type AppConfig struct {
 	UseCache        bool
 	TemplateCache   map[string]*template.Template
 	BannerFileCache map[string][]byte
+	CharacterMap    map[rune]string
 }
 
 // App is the instance of AppConfig.

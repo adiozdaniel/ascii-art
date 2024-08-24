@@ -52,6 +52,15 @@ func (a *AppConfig) GetBannerCache(file string) ([]byte, error) {
 	return []byte{}, fmt.Errorf("banner file missing: %s", file)
 }
 
+// CharachterMap maps the bannerCache to their string representation
+func (a *AppConfig) CharachterMap() map[rune]string {
+	for key, bannerFile := range a.BannerFileCache {
+		a.CharacterMap[key] = string(bannerFile)
+		fmt.Println(key, len(bannerFile))
+	}
+	return a.CharacterMap
+}
+
 // CreateTemplateCache is a helper function to cache all HTML templates as a map
 func (a *AppConfig) CreateTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}

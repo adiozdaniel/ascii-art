@@ -12,7 +12,7 @@ type AppConfig struct {
 	UseCache        bool
 	TemplateCache   map[string]*template.Template
 	BannerFileCache map[string][]byte
-	CharacterMap    map[rune]string
+	CharacterMap    map[string]string
 }
 
 // App is the instance of AppConfig.
@@ -53,7 +53,7 @@ func (a *AppConfig) GetBannerCache(file string) ([]byte, error) {
 }
 
 // CharachterMap maps the bannerCache to their string representation
-func (a *AppConfig) CharachterMap() map[rune]string {
+func (a *AppConfig) CharachterMap() map[string]string {
 	for key, bannerFile := range a.BannerFileCache {
 		a.CharacterMap[key] = string(bannerFile)
 		fmt.Println(key, len(bannerFile))

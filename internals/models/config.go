@@ -18,9 +18,10 @@ type AppConfig struct {
 // App is the instance of AppConfig.
 func App() *AppConfig {
 	return &AppConfig{
-		TemplateCache:   make(map[string]*template.Template),
-		BannerFileCache: make(map[string][]byte),
-		UseCache:        false,
+		false,
+		make(map[string]*template.Template),
+		make(map[string][]byte),
+		make(map[string]string),
 	}
 }
 

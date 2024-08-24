@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // AppConfig holds configuration for the application.
@@ -55,11 +56,21 @@ func (a *AppConfig) GetBannerCache(file string) ([]byte, error) {
 
 // CharachterMap maps the bannerCache to their string representation
 func (a *AppConfig) CharachterMap() (map[string]map[string]string, error) {
+	var charactermap = make(map[string]map[string]string)
 
-	for key, bannerFile := range a.BannerFileCache {
-		a.CharacterMap[key] = string(bannerFile)
-		fmt.Println(key, len(bannerFile))
+	for bannerName, bannerFile := range a.BannerFileCache {
+		if _, ok := charactermap[bannerName]; !ok {
+			charactermap[bannerName] = make(map[string]string)
+		}
+
+		var fileContents = strings.Split(string(bannerFile), "\n")
+		var ascii_map = AsciiMapper(fileContents)
+		var buildChar = CharacterBuilder(ascii_map, fileContents)
+		charactermap[bannerName] = buildChar
 	}
+
+	a.CharacterMap = charactermap
+	// fmt.Println(a.CharacterMap["standard.txt"]["g"])
 	return a.CharacterMap, nil
 }
 

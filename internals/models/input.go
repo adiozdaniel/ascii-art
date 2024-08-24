@@ -79,6 +79,11 @@ func (i *InputData) Init() {
 	}
 	GetStateManager().config.BannerFileCache = bc
 
+	_, err = GetStateManager().config.CharachterMap()
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	tc, err := GetStateManager().config.CreateTemplateCache()
 	if err != nil {
 		i.ErrorHandler("banners")

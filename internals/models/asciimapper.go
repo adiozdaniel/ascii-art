@@ -1,6 +1,8 @@
 package models
 
-import "strings"
+import (
+	"strings"
+)
 
 func AsciiMapper(fileContents []string) map[rune]int {
 	ascii_map := make(map[rune]int)
@@ -18,8 +20,8 @@ func AsciiMapper(fileContents []string) map[rune]int {
 
 var input = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
-func CharacterBuilder(ascii_map map[rune]int, fileContents []string) string {
-	var character strings.Builder
+func CharacterBuilder(ascii_map map[rune]int, fileContents []string) map[string]string {
+	var characterMap = make(map[string]string)
 
 	for _, char := range input {
 		var builder strings.Builder
@@ -27,11 +29,11 @@ func CharacterBuilder(ascii_map map[rune]int, fileContents []string) string {
 			if ascii, ok := ascii_map[char]; ok {
 				builder.WriteString(fileContents[ascii+i])
 			}
-
 			builder.WriteString(builder.String())
 			builder.WriteRune('\n')
 		}
-		character.WriteRune('\n')
+
+		characterMap[string(char)] = builder.String()
 	}
-	return character.String()
+	return characterMap
 }

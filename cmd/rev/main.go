@@ -22,6 +22,12 @@ func main() {
 	// fmt.Println(len(lines))
 	asciimap := InitMap()
 	// fmt.Println(len(asciimap))
+	result := Reverse(lines, asciimap)
+	fmt.Println(result)
+	// fmt.Println(len(lines))
+}
+
+func Reverse(lines []string, asciimap map[string]rune) string {
 	final := ""
 	res := ""
 	for len(lines) != 0 {
@@ -60,8 +66,7 @@ func main() {
 			}
 		}
 	}
-	fmt.Println(final)
-	// fmt.Println(len(lines))
+	return final
 }
 
 func validate(input string) string {

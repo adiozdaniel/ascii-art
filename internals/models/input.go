@@ -40,13 +40,14 @@ var bannerFiles = map[string]string{
 
 // members holds struct members with default values
 var members = map[string]string{
-	"font":   "--standard",
-	"input":  "Ascii~",
-	"color":  "#FABB60",
-	"reff":   "Ascii",
-	"align":  "left",
-	"output": "",
-	"isWeb":  "",
+	"font":      "--standard",
+	"input":     "Ascii~",
+	"color":     "#FABB60",
+	"reff":      "Ascii",
+	"align":     "left",
+	"output":    "",
+	"isWeb":     "",
+	"--reverse": "",
 }
 
 // validFlags stores allowed flags
@@ -65,6 +66,7 @@ var validFlags = map[string]bool{
 	"-standard":    true,
 	"--reff":       true,
 	"-reff":        true,
+	"--reverse":    true,
 }
 
 // Init initializes the InputData
@@ -192,6 +194,9 @@ func (i *InputData) CheckReff(flag string) {
 func (i *InputData) RemoveLeadingDashes(InputData string) string {
 	if strings.HasPrefix(InputData, "--") {
 		return InputData[2:]
+	}
+	if strings.HasPrefix(InputData, "-") {
+		return InputData[1:]
 	}
 	return InputData
 }

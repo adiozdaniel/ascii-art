@@ -1,4 +1,4 @@
-package main
+package reverse
 
 import (
 	"fmt"
@@ -6,12 +6,12 @@ import (
 	"strings"
 )
 
-func main() {
-	if len(os.Args) != 2 {
-		fmt.Println("Usage: go run main.go --reverse=<file>")
-		return
-	}
-	filename := validate(os.Args[1])
+func CheckReverse(input string) {
+	// if len(os.Args) != 2 {
+	// 	fmt.Println("Usage: go run main.go --reverse=<file>")
+	// 	return
+	// }
+	filename := validate(input)
 	fileData, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Println(err)
@@ -31,7 +31,7 @@ func Reverse(lines []string, asciimap map[string]rune) string {
 	final := ""
 	res := ""
 	for len(lines) != 0 {
-		if  len(lines[0]) == 0 {
+		if len(lines[0]) == 0 {
 			lines = lines[1:]
 			if len(lines) != 0 {
 				final += "\\n"
@@ -43,7 +43,7 @@ func Reverse(lines []string, asciimap map[string]rune) string {
 				for j := 0; j < 8 && len(lines[j]) == len(lines[0]); j++ {
 					character += lines[j][start:i] + "\n"
 				}
-		
+
 				if char, ok := asciimap[character]; ok {
 					res += string(char)
 					start = i
@@ -84,7 +84,7 @@ func validate(input string) string {
 
 func InitMap() map[string]rune {
 	asciimap := make(map[string]rune)
-	files := []string{"standard.txt","shadow.txt", "thinkertoy.txt"}
+	files := []string{"standard.txt", "shadow.txt", "thinkertoy.txt"}
 	for _, file := range files {
 		var char rune = 31
 		ascii := ""

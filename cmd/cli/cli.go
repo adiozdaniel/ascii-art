@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	reverse "github.com/adiozdaniel/ascii-art/cmd/rev"
 	"github.com/adiozdaniel/ascii-art/internals/ascii"
 	"github.com/adiozdaniel/ascii-art/internals/models"
 	"github.com/adiozdaniel/ascii-art/pkg/helpers"
@@ -134,8 +135,9 @@ func runCli() error {
 				fmt.Println("\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
 				return nil
 			} else if input != "" {
-				cli.state["tempStr"] = input
-				helpers.ScanInput(input)
+				// cli.state["tempStr"] = input
+				// helpers.ScanInput(input)
+				reverse.CheckReverse(input)
 			}
 		default:
 			_, newWidth := helpers.GetTerminalWidth()

@@ -99,8 +99,6 @@ func (cli *Cli) updateDisplay(newWidth int) {
 
 	fmt.Print("\n", termOutput)
 
-	fmt.Print("\n")
-	fmt.Printf("%+v\n", flags)
 	Footer()
 
 	cli.state["prevWidth"] = newWidth

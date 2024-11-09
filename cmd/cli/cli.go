@@ -29,11 +29,12 @@ func NewCli(sm *models.StateManager) *Cli {
 		app:       sm,
 		inputChan: make(chan string),
 		state: map[string]interface{}{
-			"prevWidth": 0,
-			"prevColor": "",
-			"prevReff":  "",
-			"prevFont":  "",
-			"tempStr":   "",
+			"prevWidth":   0,
+			"prevColor":   "",
+			"prevReff":    "",
+			"prevFont":    "",
+			"tempStr":     "",
+			"prevReverse": "",
 		},
 	}
 }
@@ -56,7 +57,7 @@ func (cli *Cli) shouldUpdate(newWidth int) bool {
 	return newWidth != cli.state["prevWidth"].(int) || cli.state["tempStr"] != "" ||
 		flags["color"] != cli.state["prevColor"] ||
 		flags["reff"] != cli.state["prevReff"] ||
-		flags["font"] != cli.state["prevFont"]
+		flags["font"] != cli.state["prevFont"] || flags["reverse"] != cli.state["prevReverse"]
 }
 
 // updateDisplay updates the terminal display based on the current state.
@@ -74,14 +75,32 @@ func (cli *Cli) updateDisplay(newWidth int) {
 		ascii.LogOutput(termOutput)
 		cli.state["prevWidth"] = newWidth
 		cli.state["tempStr"] = ""
+		cli.state["prevReverse"] = ""
 		cli.state["prevColor"] = flags["color"]
 		cli.state["prevReff"] = flags["reff"]
 		cli.state["prevFont"] = flags["font"]
 		cli.app.GetInput().Flags["output"] = ""
+		cli.app.GetInput().Flags["reverse"] = ""
+		return
+	}
+
+	if cli.app.GetInput().Flags["reverse"] != "" {
+		reverse.CheckReverse(flags["reverse"])
+		cli.state["prevWidth"] = newWidth
+		cli.state["tempStr"] = ""
+		cli.state["prevReverse"] = ""
+		cli.state["prevColor"] = flags["color"]
+		cli.state["prevReff"] = flags["reff"]
+		cli.state["prevFont"] = flags["font"]
+		cli.app.GetInput().Flags["output"] = ""
+		cli.app.GetInput().Flags["reverse"] = ""
 		return
 	}
 
 	fmt.Print("\n", termOutput)
+
+	fmt.Print("\n")
+	fmt.Printf("%+v\n", flags)
 	Footer()
 
 	cli.state["prevWidth"] = newWidth
@@ -135,9 +154,8 @@ func runCli() error {
 				fmt.Println("\n🤩 You were wonderful. Hope you enjoyed.\nExiting the Ascii-Art...")
 				return nil
 			} else if input != "" {
-				// cli.state["tempStr"] = input
-				// helpers.ScanInput(input)
-				reverse.CheckReverse(input)
+				cli.state["tempStr"] = input
+				helpers.ScanInput(input)
 			}
 		default:
 			_, newWidth := helpers.GetTerminalWidth()

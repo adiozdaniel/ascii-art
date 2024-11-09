@@ -7,11 +7,7 @@ import (
 )
 
 func CheckReverse(input string) {
-	// if len(os.Args) != 2 {
-	// 	fmt.Println("Usage: go run main.go --reverse=<file>")
-	// 	return
-	// }
-	filename := validate(input)
+	filename := input
 	fileData, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Println(err)

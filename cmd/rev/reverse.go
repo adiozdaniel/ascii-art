@@ -4,23 +4,25 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/adiozdaniel/ascii-art/internals/models"
+)
+
+var (
+	sm = models.GetStateManager()
 )
 
 func CheckReverse(input string) {
-	filename := input
-	fileData, err := os.ReadFile(filename)
+	fileData, err := os.ReadFile(input)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	lines := strings.Split(string(fileData), "\n")
 
-	// fmt.Println(len(lines))
 	asciimap := InitMap()
-	// fmt.Println(len(asciimap))
 	result := Reverse(lines, asciimap)
 	fmt.Println(result)
-	// fmt.Println(len(lines))
 }
 
 func Reverse(lines []string, asciimap map[string]rune) string {
@@ -65,31 +67,16 @@ func Reverse(lines []string, asciimap map[string]rune) string {
 	return final
 }
 
-func validate(input string) string {
-	if !strings.HasPrefix(input, "--reverse=") {
-		fmt.Println("Usage: go run main.go --reverse=<file>")
-		os.Exit(1)
-	}
-	file := strings.TrimPrefix(input, "--reverse=")
-	if !strings.HasSuffix(file, ".txt") {
-		fmt.Println("File must have a .txt extension")
-		os.Exit(1)
-	}
-	return file
-}
-
 func InitMap() map[string]rune {
 	asciimap := make(map[string]rune)
 	files := []string{"standard.txt", "shadow.txt", "thinkertoy.txt"}
+
 	for _, file := range files {
 		var char rune = 31
 		ascii := ""
-		contents, err := Filecontents(file)
-		if err != nil {
-			fmt.Println(err)
-			return nil
-		}
-		for _, line := range contents {
+		contents := sm.GetConfig().BannerFileCache[file]
+
+		for _, line := range strings.Split(string(contents), "\n") {
 			if line == "" {
 				asciimap[ascii] = char
 				char++
@@ -100,15 +87,4 @@ func InitMap() map[string]rune {
 		}
 	}
 	return asciimap
-}
-
-func Filecontents(filename string) ([]string, error) {
-	content, err := os.ReadFile(filename)
-	if err != nil {
-		return nil, err
-	}
-	if filename == "thinkertoy.txt" {
-		return strings.Split(string(content), "\r\n"), nil
-	}
-	return strings.Split(string(content), "\n"), nil
 }

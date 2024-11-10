@@ -22,26 +22,26 @@ func CheckReverse(input string) {
 
 	asciimap := InitMap()
 	result := Reverse(lines, asciimap)
-	fmt.Println( strings.Repeat(" ", spaces),result)
+	fmt.Println(strings.Repeat(" ", spaces), result)
 }
 
-func RemoveLeadingspace(lines []string) (int,[]string) {
+func RemoveLeadingspace(lines []string) (int, []string) {
 	if len(lines) < 8 {
-		return 0,nil
+		return 0, nil
 	}
 	for i := 0; i < len(lines[0]); i++ {
 		for j := 0; j < 8 && len(lines[j]) == len(lines[0]); j++ {
-			if lines[j][i] != ' '{
+			if lines[j][i] != ' ' {
 				spaces := 0
 				if i >= 6 {
-					spaces = i/6
+					spaces = i / 6
 				}
 				for k := 0; k < 8; k++ {
 					lines[k] = lines[k][i:]
 				}
 				return spaces, lines
 			}
-		} 
+		}
 	}
 	return 0, lines
 }
@@ -55,7 +55,7 @@ func Reverse(lines []string, asciimap map[string]rune) string {
 			if len(lines) != 0 {
 				final += "\\n"
 			}
-		} else  if len(lines) >= 8 {
+		} else if len(lines) >= 8 {
 			start := 0
 			for i := 1; i <= len(lines[0]); i++ {
 				character := ""

@@ -19,9 +19,6 @@ func CheckReverse(input string) {
 		return
 	}
 	spaces, lines := RemoveLeadingspace(strings.Split(string(fileData), "\n"))
-	for _, f := range lines{
-		fmt.Println(f)
-	}
 
 	asciimap := InitMap()
 	result := Reverse(lines, asciimap)
@@ -58,7 +55,7 @@ func Reverse(lines []string, asciimap map[string]rune) string {
 			if len(lines) != 0 {
 				final += "\\n"
 			}
-		} else {
+		} else  if len(lines) >= 8 {
 			start := 0
 			for i := 1; i <= len(lines[0]); i++ {
 				character := ""
@@ -86,6 +83,8 @@ func Reverse(lines []string, asciimap map[string]rune) string {
 					}
 				}
 			}
+		} else {
+			break
 		}
 	}
 	return final

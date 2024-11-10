@@ -77,7 +77,7 @@ func leftAlign(output string, width int) string {
 	for _, line := range lines {
 		cleanLine := RemoveANSICodes(line)
 		if len(cleanLine) <= width {
-			leftLines = append(leftLines, strings.ReplaceAll(string(line), "$", "      "))
+			leftLines = append(leftLines, strings.ReplaceAll(string(line), "$", strings.Repeat(" ", 6)))
 		}
 	}
 	return strings.Join(leftLines, "\n")
@@ -103,7 +103,7 @@ func centerAlign(output string, width int) string {
 		}
 
 		if len(cleanLine) <= width {
-			centeredLines = append(centeredLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), strings.ReplaceAll(string(line), "$", "  ")))
+			centeredLines = append(centeredLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), strings.ReplaceAll(string(line), "$", strings.Repeat(" ", 6))))
 		}
 	}
 	return strings.Join(centeredLines, "\n")
@@ -129,7 +129,7 @@ func rightAlign(output string, width int) string {
 		}
 
 		if len(cleanLine) <= width {
-			rightLines = append(rightLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), strings.ReplaceAll(line, "$", "  ")))
+			rightLines = append(rightLines, fmt.Sprintf("%s%s", strings.Repeat(" ", padding), strings.ReplaceAll(line, "$", strings.Repeat(" ", 6))))
 		}
 	}
 	return strings.Join(rightLines, "\n")

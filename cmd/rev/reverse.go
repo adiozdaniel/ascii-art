@@ -18,11 +18,35 @@ func CheckReverse(input string) {
 		fmt.Println(err)
 		return
 	}
-	lines := strings.Split(string(fileData), "\n")
+	spaces, lines := RemoveLeadingspace(strings.Split(string(fileData), "\n"))
+	for _, f := range lines{
+		fmt.Println(f)
+	}
 
 	asciimap := InitMap()
 	result := Reverse(lines, asciimap)
-	fmt.Println(result)
+	fmt.Println( strings.Repeat(" ", spaces),result)
+}
+
+func RemoveLeadingspace(lines []string) (int,[]string) {
+	if len(lines) < 8 {
+		return 0,nil
+	}
+	for i := 0; i < len(lines[0]); i++ {
+		for j := 0; j < 8 && len(lines[j]) == len(lines[0]); j++ {
+			if lines[j][i] != ' '{
+				spaces := 0
+				if i >= 6 {
+					spaces = i/6
+				}
+				for k := 0; k < 8; k++ {
+					lines[k] = lines[k][i:]
+				}
+				return spaces, lines
+			}
+		} 
+	}
+	return 0, lines
 }
 
 func Reverse(lines []string, asciimap map[string]rune) string {

@@ -70,7 +70,7 @@ func (cli *Cli) updateDisplay(newWidth int) {
 
 	outputs := ascii.Output(flags["input"])
 	termOutput := helpers.Alignment(outputs, newWidth)
-	helpers.ClearTerminal()
+	// helpers.ClearTerminal()
 	if cli.app.GetInput().Flags["output"] != "" {
 		ascii.LogOutput(termOutput)
 		cli.state["prevWidth"] = newWidth

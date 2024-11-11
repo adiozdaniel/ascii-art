@@ -182,6 +182,22 @@ The input follows a specified format:
 
 `--align=center     "My Papa"       standard`
 
+### ASCII Art Reversal
+
+This feature allows the reversal of ASCII art text from a specified file, adjusting the leading spaces and reformatting the ASCII art for further processing. ASCII character maps are initialized from multiple font files, supporting different styles and customization.
+
+How It Works
+Character Mapping: The InitMap function reads ASCII character representations from specified font files (standard.txt, shadow.txt, and thinkertoy.txt) and maps them to their corresponding characters for use in the reversal process.
+Leading Space Removal: The RemoveLeadingspace function processes input lines by removing extra leading spaces.
+Reversal Process: The Reverse function takes the formatted lines, reverses the ASCII art based on the initialized character map, and formats the output with preserved leading spaces.
+
+### ASCII Art Reversal Usage
+
+- Create an ASCII art file. `--output=file.txt`. The `file.txt` being a file of your choice.
+- Reverse an ASCII art file `--reverse=file.txt`. The `file.txt` being a file of your choice.
+
+  **NB:** This feature works with your generated ascii art file of your choice; but it only supports a limited set of ascii art files. See the documentation.
+
 #### Current Version Updates (v 0.5)
 
 - Supports color as an option and runs with or without [BANNER](#) specified

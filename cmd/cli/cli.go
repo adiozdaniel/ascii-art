@@ -85,7 +85,6 @@ func (cli *Cli) updateDisplay(newWidth int) {
 	}
 
 	if cli.app.GetInput().Flags["reverse"] != "" {
-		reverse.CheckReverse(flags["reverse"])
 		cli.state["prevWidth"] = newWidth
 		cli.state["tempStr"] = ""
 		cli.state["prevReverse"] = ""
@@ -93,6 +92,20 @@ func (cli *Cli) updateDisplay(newWidth int) {
 		cli.state["prevReff"] = flags["reff"]
 		cli.state["prevFont"] = flags["font"]
 		cli.app.GetInput().Flags["output"] = ""
+
+		reversed, err := reverse.CheckReverse(flags["reverse"])
+		if err != nil {
+			fmt.Printf(" Ouch! 🤯  %s\n\n", err)
+			cli.app.GetInput().Flags["reverse"] = ""
+			return
+		}
+
+		if strings.ReplaceAll(reversed, "\n", "") == "" {
+			fmt.Printf("%s\n\n did you want just newlines above? 🤗\n\n you can generate output by:\n\n --output=file.txt Hello World\n\n 'file.txt' being the file of your choice\n 'Hello World' being text of your choice", reversed)
+			cli.app.GetInput().Flags["reverse"] = ""
+		}
+
+		fmt.Println(reversed)
 		cli.app.GetInput().Flags["reverse"] = ""
 		return
 	}

@@ -44,7 +44,7 @@ var members = map[string]string{
 	"input":     "Ascii~",
 	"color":     "#FABB60",
 	"reff":      "Ascii",
-	"align":     "left",
+	"align":     "center",
 	"output":    "",
 	"isWeb":     "",
 	"--reverse": "",

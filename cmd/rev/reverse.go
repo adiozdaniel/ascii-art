@@ -87,7 +87,6 @@ func Reverse(lines []string, asciimap map[string]rune) (string, error) {
 						res = ""
 						break
 					} else {
-						lines = lines[1:]
 						final += "\\n"
 						return final, fmt.Errorf("unexpected characters found in your file")
 					}

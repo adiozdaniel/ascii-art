@@ -21,6 +21,7 @@ type Cli struct {
 	app       *models.StateManager
 	inputChan chan string
 	state     map[string]interface{}
+	counter   int
 }
 
 // NewCli creates a new Cli instance.
@@ -62,10 +63,17 @@ func (cli *Cli) shouldUpdate(newWidth int) bool {
 
 // updateDisplay updates the terminal display based on the current state.
 func (cli *Cli) updateDisplay(newWidth int) {
+	cli.counter++
+
 	flags := cli.app.GetInput().Flags
 	banner := cli.app.GetInput().BannerFile[flags["font"]]
 	if err := helpers.FileContents(banner); err != nil {
 		fmt.Println("Error loading banner file:", err)
+	}
+
+	if cli.counter != 1 {
+		cli.app.GetInput().Flags["reff"] = ""
+		cli.app.GetInput().Flags["align"] = "left"
 	}
 
 	outputs := ascii.Output(flags["input"])

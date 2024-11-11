@@ -12,17 +12,23 @@ var (
 	sm = models.GetStateManager()
 )
 
-func CheckReverse(input string) {
+func CheckReverse(input string) (string, error) {
 	fileData, err := os.ReadFile(input)
 	if err != nil {
-		fmt.Println(err)
-		return
+		return "", err
 	}
 	spaces, lines := RemoveLeadingspace(strings.Split(string(fileData), "\n"))
 
 	asciimap := InitMap()
-	result := Reverse(lines, asciimap)
-	fmt.Println(strings.Repeat(" ", spaces), result)
+	result, err := Reverse(lines, asciimap)
+	if err != nil {
+		return "", err
+	}
+
+	spaced := strings.Repeat(" ", spaces)
+	formated := fmt.Sprintf("%s%s\n\n", spaced, result)
+
+	return formated, nil
 }
 
 func RemoveLeadingspace(lines []string) (int, []string) {
@@ -46,14 +52,14 @@ func RemoveLeadingspace(lines []string) (int, []string) {
 	return 0, lines
 }
 
-func Reverse(lines []string, asciimap map[string]rune) string {
+func Reverse(lines []string, asciimap map[string]rune) (string, error) {
 	final := ""
 	res := ""
 	for len(lines) != 0 {
 		if len(lines[0]) == 0 {
 			lines = lines[1:]
 			if len(lines) != 0 {
-				final += "\\n"
+				final += "\n"
 			}
 		} else if len(lines) >= 8 {
 			start := 0
@@ -79,7 +85,7 @@ func Reverse(lines []string, asciimap map[string]rune) string {
 					} else {
 						lines = lines[1:]
 						final += "\\n"
-						break
+						return final, fmt.Errorf("unexpected characters found in your file")
 					}
 				}
 			}
@@ -87,7 +93,7 @@ func Reverse(lines []string, asciimap map[string]rune) string {
 			break
 		}
 	}
-	return final
+	return final, nil
 }
 
 func InitMap() map[string]rune {

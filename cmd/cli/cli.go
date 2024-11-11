@@ -105,7 +105,8 @@ func (cli *Cli) updateDisplay(newWidth int) {
 			cli.app.GetInput().Flags["reverse"] = ""
 		}
 
-		fmt.Println(reversed)
+		output := fmt.Sprintf("%v\n", strings.ReplaceAll(reversed, "\\n", "\n"))
+		fmt.Println(output)
 		cli.app.GetInput().Flags["reverse"] = ""
 		return
 	}
